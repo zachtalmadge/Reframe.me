@@ -1,0 +1,170 @@
+Continue working in the same JavaScript (NOT TypeScript) + React + Tailwind CSS project, using a mobile-first design.
+
+Now implement the Unified Multi-Step Form that adapts based on the user’s Selection Page choice (Narrative, Response Letter, or Both). Use the screen and field structure already defined in our planning docs.
+
+Business requirement – Unified Form
+
+Create a multi-step wizard that:
+
+Uses a dynamic progress indicator that:
+
+Shows the current step out of total steps (e.g., “Step 2 of 5”), and
+
+Renders a progress bar that fills as the user completes the form, updating as they move between steps (and recalculating total steps based on whether they selected Narrative, Response Letter, or Both).
+
+Collects shared background info first (offenses, programs, skills, additional context).
+
+Step 1 must allow the user to enter month and year released, and the UI should automatically calculate and display how long it has been since release (e.g., “Released 3 years, 2 months ago”), updating when the user changes that date.
+
+Step 1 and Step 2 must include a LinkedIn-style “chips” / pill interface:
+
+When the user adds programs or skills, each entry appears as a small rounded button (chip) with the label and a small “x” icon to remove it.
+
+The chips should visually resemble how LinkedIn shows added skills in profile settings.
+
+Conditionally adds extra steps when the user chose Response Letter or Both (job details + OIL framework sections).
+
+Limits to max ~5 inputs per step for cognitive ease.
+
+Acceptance criteria (Given / When / Then)
+Scenario: Shared steps for all users
+
+Given the user selected any option on the Selection Page
+
+When they reach the form
+
+Then they are guided through shared steps, including:
+
+Step 1: Background / Offenses
+
+Offense details with an “Add another offense” dynamic UI (user can add/remove multiple offenses).
+
+Fields for Month released and Year released (e.g., dropdowns or pickers).
+
+When a valid month and year are provided, the UI automatically displays a calculated “Time since release” summary (e.g., “Released 18 months ago”), and this value updates whenever the date changes.
+
+Ability to associate relevant programs or interventions with an offense using LinkedIn-style chips (add program name → appears as a pill button → can remove it).
+
+Step 2: Programs & Skills
+
+Inputs for programs and skills that use a chip-based interface:
+
+Given the user types a program/skill name and confirms (e.g., presses Enter or taps an “Add” button),
+
+When the entry is added,
+
+Then it appears as a pill-style button with the label and a removable “x”, similar to LinkedIn’s “Add skills” pattern.
+
+Users can add multiple chips and remove them individually without losing others.
+
+Step 3: Additional free-text context
+
+A single optional text area, with a 300 character max, and a visible character counter.
+
+Scenario: Conditional steps for Response Letter / Both
+
+Given the user selected Response Letter or Both
+
+When they advance past the shared steps
+
+Then they see additional steps that collect:
+
+Job application details (job title, employer name, and any other fields defined in planning docs).
+
+OIL framework sections: Ownership, Impact, Lessons Learned.
+
+Optional Clarifying Relevance section (togglable on/off by the user).
+
+Reinforcing Qualifications section.
+
+And the progress bar dynamically recalculates total steps and fill percentage to reflect these additional steps.
+
+Scenario: Narrative-only users
+
+Given the user selected Narrative Generator only
+
+When they complete the shared steps
+
+Then:
+
+They are taken directly to the Loading screen (no OIL steps).
+
+The progress bar reaches 100% upon completing the last shared step.
+
+Scenario: Navigation & validation
+
+Given the user is in any step
+
+When they tap “Next”
+
+Then:
+
+Required fields in that step are validated.
+
+Inline errors are shown for missing/invalid entries.
+
+Only valid step submission moves them forward.
+
+And:
+
+They can tap “Previous” to go back without losing entered data in previous steps.
+
+The dynamic progress bar:
+
+Always reflects the currently active step and total number of steps (which may vary depending on the user’s selection).
+
+Keeps its state consistent when moving back and forth between steps.
+
+What I want you (Replit AI) to do
+
+Assess the enhancement and list required steps (component structure, state shape, validation approach, dynamic progress bar logic, release-date calculation, chip-based inputs).
+
+Describe your understanding of how the multi-step wizard works, including:
+
+Conditional logic based on selected tool(s).
+
+How the dynamic progress bar should compute total steps and fill percentage.
+
+How release date and “time since release” should be calculated on the client.
+
+How the LinkedIn-style chip inputs should behave for programs/skills.
+
+Identify key considerations, including:
+
+Centralized form state vs per-step state.
+
+How this form will later pass data into the API call.
+
+Ensuring the progress bar, chip components, and release-date logic don’t break existing Home/Selection routing.
+
+Propose best-practice UX for a mobile multi-step form:
+
+Progress indicator behavior.
+
+Back behavior.
+
+Error handling and character counters.
+
+Chip interactions on small screens.
+
+Assess other best practices (accessibility, keyboard navigation, screen reader labels, handling date input carefully for users with older phones).
+
+Generate a step-by-step implementation plan, including:
+
+Data model for form state (including arrays for offenses, programs, skills, chip components).
+
+Utility function for computing “time since release” from month/year.
+
+React component hierarchy (FormWizard, Step, ProgressBar, ChipInput, DynamicOffenseList, etc.).
+
+Where Tailwind classes & layout live.
+
+Limit scope to the form, navigation, and the dynamic progress bar; for now, submitting the final step should still just transition to a stubbed Loading screen.
+
+Propose a skeleton framework with key components, props, and main state hooks (useState / useReducer), including how the progress bar gets its currentStep and totalSteps, and how chip data is stored.
+
+Do not edit any files yet.
+
+First, output your understanding, considerations, and implementation plan.
+
+Wait for my confirmation that your approach and understanding are sound before you make any code changes.
