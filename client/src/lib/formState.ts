@@ -161,3 +161,38 @@ export function getStepTitle(step: number, tool: ToolType): string {
   if (tool !== "narrative") return conditionalTitles[step] || "";
   return "";
 }
+
+export type GenerationStatus = "idle" | "loading" | "success" | "error";
+
+export type GenerationErrorType = "network" | "server" | "timeout" | "unknown";
+
+export interface GenerationError {
+  type: GenerationErrorType;
+  message: string;
+}
+
+export interface GenerationState {
+  status: GenerationStatus;
+  error: GenerationError | null;
+  retryCount: number;
+}
+
+export const initialGenerationState: GenerationState = {
+  status: "idle",
+  error: null,
+  retryCount: 0,
+};
+
+export function getErrorMessage(errorType: GenerationErrorType): string {
+  switch (errorType) {
+    case "network":
+      return "Please check your internet connection and try again.";
+    case "server":
+      return "Our service is temporarily unavailable. Please try again in a moment.";
+    case "timeout":
+      return "The request took too long. Please try again.";
+    case "unknown":
+    default:
+      return "Something unexpected happened. Please try again.";
+  }
+}
