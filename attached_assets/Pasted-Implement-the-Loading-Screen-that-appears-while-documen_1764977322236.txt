@@ -1,0 +1,65 @@
+Implement the Loading Screen that appears while documents are being generated, plus basic error handling screens for failed generation.
+
+Business requirement – Loading & feedback
+
+Provide a reassuring, simple Loading screen after the form submission, and prepare error handling states for generation failures (network/API issues) while preserving user data.
+
+Acceptance criteria (Given / When / Then)
+
+Scenario: Normal loading
+
+Given the user has completed the multi-step form and tapped the final “Generate my documents” button
+
+When the request to generate documents is initiated
+
+Then they see:
+
+A heading like “Preparing your documents…”
+
+brief explanatory text (“This usually takes less than a minute…”)
+
+A visual loader (spinner or subtle animation)
+
+Optional rotating supportive quote/messages block
+
+Scenario: Loading → Success placeholder
+
+Given the Loading screen is active
+
+When the mock or real API resolves successfully
+
+Then the app will later route to the Disclaimer modal + Documents page (for now, you can route to a placeholder success screen).
+
+Scenario: Loading → Error
+
+Given there is a network or server error when generating
+
+When the request fails
+
+Then the user sees an Error screen with:
+
+Message like “We couldn’t generate your documents right now. Nothing you entered was lost.”
+
+Buttons: “Try Again” (retries generation) and “Go back to form” (returns to last form step with state intact).
+
+What I want you (Replit AI) to do
+
+Same checklist:
+
+Assess enhancement and outline steps for integrating the Loading and Error states into the existing flow.
+
+Describe your understanding of how navigation transitions: Form → Loading → (Success or Error).
+
+Identify considerations for preserving form data and not breaking previous pages.
+
+Propose best-practice UX for loading and transient error states in a sensitive context.
+
+Note any other best practices (retry logic, user messaging, accessibility).
+
+Generate a step-by-step implementation plan (components, hooks, state machine or status enums).
+
+Keep scope focused on client-side loading/error behavior; backend will be wired in next prompt.
+
+Propose skeleton updates (e.g., status enum idle | loading | success | error, where it lives).
+
+Wait for my confirmation before editing.
