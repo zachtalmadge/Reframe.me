@@ -27,6 +27,7 @@ import {
 interface FormWizardProps {
   tool: ToolType;
   onComplete: (data: FormState) => void;
+  initialState?: FormState;
 }
 
 type ValidationResult = {
@@ -129,9 +130,9 @@ function validateStep(
   };
 }
 
-export function FormWizard({ tool, onComplete }: FormWizardProps) {
+export function FormWizard({ tool, onComplete, initialState }: FormWizardProps) {
   const [, navigate] = useLocation();
-  const [state, dispatch] = useReducer(formReducer, initialFormState);
+  const [state, dispatch] = useReducer(formReducer, initialState || initialFormState);
 
   const totalSteps = getTotalSteps(tool);
   const stepTitle = getStepTitle(state.currentStep, tool);

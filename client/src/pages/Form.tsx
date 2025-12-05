@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useSearch, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, FileText, Mail, Files } from "lucide-react";
 import Layout from "@/components/Layout";
 import { FormWizard } from "@/components/form";
 import { FormState, ToolType } from "@/lib/formState";
+import { saveFormData, loadFormData } from "@/lib/formPersistence";
 
 const toolInfo: Record<
   ToolType,
@@ -32,13 +33,28 @@ export default function Form() {
   const searchString = useSearch();
   const params = new URLSearchParams(searchString);
   const toolParam = params.get("tool") as ToolType | null;
+  
+  const [restoredState, setRestoredState] = useState<FormState | undefined>(undefined);
+  const [isRestoring, setIsRestoring] = useState(true);
 
   const tool = toolParam && toolInfo[toolParam] ? toolParam : "narrative";
   const { title, description, icon: Icon } = toolInfo[tool];
 
+  useEffect(() => {
+    const persisted = loadFormData();
+    if (persisted && persisted.tool === tool) {
+      const restoredFormState: FormState = {
+        ...persisted.formState,
+        errors: {},
+      };
+      setRestoredState(restoredFormState);
+    }
+    setIsRestoring(false);
+  }, [tool]);
+
   const handleFormComplete = (data: FormState) => {
-    const encodedData = encodeURIComponent(JSON.stringify(data));
-    navigate(`/loading?tool=${tool}&data=${encodedData}`);
+    saveFormData(data, tool);
+    navigate(`/loading?tool=${tool}`);
   };
 
   return (
@@ -83,7 +99,14 @@ export default function Form() {
             </div>
           </div>
 
-          <FormWizard tool={tool} onComplete={handleFormComplete} />
+          {!isRestoring && (
+            <FormWizard 
+              key={restoredState ? "restored" : "fresh"}
+              tool={tool} 
+              onComplete={handleFormComplete}
+              initialState={restoredState}
+            />
+          )}
         </div>
       </section>
     </Layout>
