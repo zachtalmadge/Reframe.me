@@ -86,7 +86,7 @@ export default function Home() {
           <div className="flex flex-wrap justify-center gap-4 md:gap-8 text-sm text-muted-foreground">
             <div className="flex items-center gap-2">
               <Clock className="w-4 h-4 text-primary" aria-hidden="true" />
-              <span>Takes 10-15 minutes</span>
+              <span>Takes 5-10 minutes</span>
             </div>
             <div className="flex items-center gap-2">
               <Shield className="w-4 h-4 text-primary" aria-hidden="true" />
