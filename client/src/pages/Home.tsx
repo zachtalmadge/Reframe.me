@@ -2,7 +2,16 @@ import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { FileText, Mail, ArrowRight, Clock, Shield, Heart, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  FileText,
+  Mail,
+  ArrowRight,
+  Clock,
+  Shield,
+  Heart,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 import Layout from "@/components/Layout";
 import { useInView } from "@/hooks/useInView";
 
@@ -32,13 +41,11 @@ const stories = [
   },
   {
     role: "First-time applicant after reentry",
-    quote:
-      "I turned a terrifying letter into a clear, professional response.",
+    quote: "I turned a terrifying letter into a clear, professional response.",
   },
   {
     role: "Job seeker, tech support",
-    quote:
-      "For the first time, I feel ready to explain my past and my growth.",
+    quote: "For the first time, I feel ready to explain my past and my growth.",
   },
   {
     role: "Retail candidate",
@@ -48,7 +55,9 @@ const stories = [
 ];
 
 export default function Home() {
-  const { ref: howItWorksRef, isInView: howItWorksInView } = useInView({ threshold: 0.2 });
+  const { ref: howItWorksRef, isInView: howItWorksInView } = useInView({
+    threshold: 0.2,
+  });
   const [heroMounted, setHeroMounted] = useState(false);
   const [showAfter, setShowAfter] = useState(false);
   const [storyIndex, setStoryIndex] = useState(0);
@@ -56,7 +65,9 @@ export default function Home() {
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
   useEffect(() => {
-    const prefersReduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    const prefersReduced = window.matchMedia?.(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
     setPrefersReducedMotion(prefersReduced);
     if (prefersReduced) {
       setHeroMounted(true);
@@ -93,19 +104,19 @@ export default function Home() {
 
   return (
     <Layout>
-      <section 
+      <section
         className="relative py-12 md:py-20 px-4 sm:px-6 lg:px-8 overflow-hidden"
         aria-labelledby="hero-heading"
       >
-        <div 
+        <div
           className="pointer-events-none absolute -left-20 -top-10 h-72 w-72 rounded-full bg-primary/10 blur-3xl animate-float-slow motion-reduce:animate-none"
           aria-hidden="true"
         />
-        <div 
+        <div
           className="pointer-events-none absolute -right-16 top-1/3 h-80 w-80 rounded-full bg-chart-2/10 blur-3xl animate-float-slow-reverse motion-reduce:animate-none"
           aria-hidden="true"
         />
-        <div 
+        <div
           className="pointer-events-none absolute left-1/4 -bottom-20 h-56 w-56 rounded-full bg-primary/5 blur-2xl animate-float-slow motion-reduce:animate-none"
           style={{ animationDelay: "-8s" }}
           aria-hidden="true"
@@ -121,78 +132,105 @@ export default function Home() {
               }`}
               aria-hidden="true"
             />
-            
+
             <div className="relative text-center space-y-6 md:space-y-8">
               <div className="space-y-4">
-                <h1 
+                <h1
                   id="hero-heading"
                   className="text-4xl md:text-5xl font-bold leading-tight text-foreground"
                 >
                   Prepare for Your Next Opportunity
                 </h1>
                 <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-                  You deserve tools that help you tell your story with confidence. 
-                  Reframe.me creates personalized materials to support your job search journey.
+                  You deserve tools that help you tell your story with
+                  confidence. Reframe.me creates personalized materials to
+                  support your job search journey.
                 </p>
               </div>
 
-              <div className="w-16 h-1 bg-primary mx-auto rounded-full" aria-hidden="true" />
+              <div
+                className="w-16 h-1 bg-primary mx-auto rounded-full"
+                aria-hidden="true"
+              />
 
-              <div 
+              <div
                 className="max-w-md mx-auto text-left space-y-3 pt-4"
                 data-testid="before-after-block"
               >
-                <div 
+                <div
                   className={`text-sm text-muted-foreground/80 italic transition-opacity duration-300 motion-reduce:transition-none ${
                     heroMounted ? "opacity-100" : "opacity-0"
                   }`}
                 >
-                  <span className="font-medium text-muted-foreground not-italic">Before:</span>{" "}
+                  <span className="font-medium text-muted-foreground not-italic">
+                    Before:
+                  </span>{" "}
                   "I freeze when employers ask about my record."
                 </div>
-                <div 
+                <div
                   className={`text-sm text-foreground font-medium transition-all duration-300 motion-reduce:transition-none ${
-                    showAfter 
-                      ? "opacity-100 translate-y-0" 
+                    showAfter
+                      ? "opacity-100 translate-y-0"
                       : "opacity-0 translate-y-1"
                   }`}
                 >
-                  <span className="text-primary">After:</span>{" "}
-                  "Now I have language that explains my past and what I've done since."
+                  <span className="text-primary">After:</span> "Now I have
+                  language that explains my past and what I've done since."
                 </div>
+              </div>
+
+              <div className="pt-4">
+                <Link href="/selection">
+                  <Button 
+                    size="lg"
+                    className="group w-full sm:w-auto min-h-[48px] px-8 text-lg font-medium shadow-md"
+                    data-testid="button-get-started-hero"
+                  >
+                    Get Started
+                    <span className="inline-flex transition-transform duration-150 ease-out group-hover:translate-x-1 group-focus-visible:translate-x-1 motion-reduce:transform-none">
+                      <ArrowRight className="w-5 h-5" aria-hidden="true" />
+                    </span>
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
         </div>
+        
       </section>
 
-      <section 
+      <section
         className="py-8 md:py-12 px-4 sm:px-6 lg:px-8"
         aria-labelledby="tools-heading"
       >
         <div className="max-w-4xl mx-auto">
-          <h2 id="tools-heading" className="sr-only">Available Tools</h2>
-          
+          <h2 id="tools-heading" className="sr-only">
+            Available Tools
+          </h2>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card 
+            <Card
               className="group border-border shadow-sm cursor-default transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-lg focus-within:-translate-y-1 focus-within:shadow-lg motion-reduce:transition-none motion-reduce:hover:translate-y-0"
               tabIndex={0}
               data-testid="card-disclosure-narratives"
             >
               <CardContent className="p-6 md:p-8 space-y-4">
                 <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center transition-transform duration-200 ease-out group-hover:scale-110 group-focus-within:scale-110 motion-reduce:group-hover:scale-100">
-                  <FileText className="w-6 h-6 text-primary" aria-hidden="true" />
+                  <FileText
+                    className="w-6 h-6 text-primary"
+                    aria-hidden="true"
+                  />
                 </div>
                 <div className="space-y-2">
                   <h3 className="text-xl font-semibold text-foreground">
                     5 Disclosure Narratives
                   </h3>
                   <p className="text-muted-foreground leading-relaxed">
-                    You can generate five unique ways to discuss your background with 
-                    potential employers. Each narrative is tailored to help you 
-                    communicate your story professionally and confidently.
+                    You can generate five unique ways to discuss your background
+                    with potential employers. Each narrative is tailored to help
+                    you communicate your story professionally and confidently.
                   </p>
-                  <p 
+                  <p
                     className="text-sm font-medium text-primary opacity-0 translate-y-1 transition-all duration-200 ease-out group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:opacity-100 group-focus-within:translate-y-0 motion-reduce:transition-none"
                     aria-hidden="true"
                   >
@@ -202,7 +240,7 @@ export default function Home() {
               </CardContent>
             </Card>
 
-            <Card 
+            <Card
               className="group border-border shadow-sm cursor-default transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-lg focus-within:-translate-y-1 focus-within:shadow-lg motion-reduce:transition-none motion-reduce:hover:translate-y-0"
               tabIndex={0}
               data-testid="card-pre-adverse-response"
@@ -216,11 +254,11 @@ export default function Home() {
                     Pre-Adverse Action Response
                   </h3>
                   <p className="text-muted-foreground leading-relaxed">
-                    You can create a professional response letter if you receive 
-                    a pre-adverse action notice. This letter helps you present 
+                    You can create a professional response letter if you receive
+                    a pre-adverse action notice. This letter helps you present
                     additional context about your circumstances.
                   </p>
-                  <p 
+                  <p
                     className="text-sm font-medium text-chart-2 opacity-0 translate-y-1 transition-all duration-200 ease-out group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:opacity-100 group-focus-within:translate-y-0 motion-reduce:transition-none"
                     aria-hidden="true"
                   >
@@ -233,7 +271,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section 
+      <section
         className="py-10 md:py-14 px-4 sm:px-6 lg:px-8"
         aria-labelledby="safe-space-heading"
         data-testid="section-safe-space"
@@ -248,28 +286,37 @@ export default function Home() {
               </div>
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <h2 
-                    id="safe-space-heading" 
+                  <h2
+                    id="safe-space-heading"
                     className="text-xl md:text-2xl font-semibold text-foreground"
                   >
                     A judgement-free space, built for your reality.
                   </h2>
                   <p className="text-muted-foreground leading-relaxed">
-                    We don't store what you write in this session. You decide what to share, 
-                    and you can close this tab at any time.
+                    We don't store what you write in this session. You decide
+                    what to share, and you can close this tab at any time.
                   </p>
                 </div>
                 <ul className="space-y-2 text-sm text-muted-foreground">
                   <li className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-chart-2" aria-hidden="true" />
+                    <span
+                      className="w-1.5 h-1.5 rounded-full bg-chart-2"
+                      aria-hidden="true"
+                    />
                     No account required.
                   </li>
                   <li className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-chart-2" aria-hidden="true" />
+                    <span
+                      className="w-1.5 h-1.5 rounded-full bg-chart-2"
+                      aria-hidden="true"
+                    />
                     No tracking of your answers.
                   </li>
                   <li className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-chart-2" aria-hidden="true" />
+                    <span
+                      className="w-1.5 h-1.5 rounded-full bg-chart-2"
+                      aria-hidden="true"
+                    />
                     You decide what to keep, copy, or delete.
                   </li>
                 </ul>
@@ -279,7 +326,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section 
+      <section
         ref={howItWorksRef as React.RefObject<HTMLElement>}
         className="py-12 md:py-16 px-4 sm:px-6 lg:px-8 bg-muted/30"
         aria-labelledby="how-it-works-heading"
@@ -287,8 +334,8 @@ export default function Home() {
       >
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-10">
-            <h2 
-              id="how-it-works-heading" 
+            <h2
+              id="how-it-works-heading"
               className="text-2xl md:text-3xl font-semibold text-foreground"
             >
               How it works
@@ -299,9 +346,9 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 relative">
-            <div 
-              className="hidden md:block absolute top-8 left-[16.67%] right-[16.67%] h-0.5 bg-border" 
-              aria-hidden="true" 
+            <div
+              className="hidden md:block absolute top-8 left-[16.67%] right-[16.67%] h-0.5 bg-border"
+              aria-hidden="true"
             />
 
             {howItWorksSteps.map((step, index) => (
@@ -313,7 +360,9 @@ export default function Home() {
                     : "opacity-0 translate-y-4"
                 }`}
                 style={{
-                  transitionDelay: howItWorksInView ? `${index * 100}ms` : "0ms",
+                  transitionDelay: howItWorksInView
+                    ? `${index * 100}ms`
+                    : "0ms",
                 }}
                 data-testid={`step-${index + 1}`}
               >
@@ -331,12 +380,14 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section 
+      <section
         className="py-8 md:py-12 px-4 sm:px-6 lg:px-8"
         aria-labelledby="benefits-heading"
       >
         <div className="max-w-4xl mx-auto">
-          <h2 id="benefits-heading" className="sr-only">Benefits</h2>
+          <h2 id="benefits-heading" className="sr-only">
+            Benefits
+          </h2>
 
           <div className="flex flex-wrap justify-center gap-4 md:gap-8 text-sm text-muted-foreground">
             <div className="flex items-center gap-2">
@@ -351,15 +402,17 @@ export default function Home() {
         </div>
       </section>
 
-      <section 
+      <section
         className="py-10 md:py-14 px-4 sm:px-6 lg:px-8"
         aria-labelledby="cta-heading"
       >
         <div className="max-w-4xl mx-auto text-center space-y-6">
-          <h2 id="cta-heading" className="sr-only">Get Started</h2>
-          
+          <h2 id="cta-heading" className="sr-only">
+            Get Started
+          </h2>
+
           <Link href="/selection">
-            <Button 
+            <Button
               size="lg"
               className="group w-full sm:w-auto min-h-[48px] px-8 text-lg font-medium shadow-md"
               data-testid="button-get-started"
@@ -370,22 +423,22 @@ export default function Home() {
               </span>
             </Button>
           </Link>
-          
+
           <p className="text-sm text-muted-foreground">
             Your information stays private and is not stored after your session.
           </p>
         </div>
       </section>
 
-      <section 
+      <section
         className="py-10 md:py-14 px-4 sm:px-6 lg:px-8"
         aria-labelledby="stories-heading"
         data-testid="section-stories"
       >
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-8">
-            <h2 
-              id="stories-heading" 
+            <h2
+              id="stories-heading"
               className="text-xl md:text-2xl font-semibold text-foreground"
             >
               Stories of change
@@ -395,23 +448,21 @@ export default function Home() {
             </p>
           </div>
 
-          <div 
+          <div
             className="relative max-w-xl mx-auto"
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
           >
-            <div 
+            <div
               className="relative rounded-xl border border-border bg-card p-6 md:p-8 min-h-[140px] flex flex-col justify-center"
               role="region"
               aria-roledescription="carousel"
               aria-label="Stories of change"
             >
-              <div 
+              <div
                 key={storyIndex}
                 className={`text-center ${
-                  prefersReducedMotion 
-                    ? "" 
-                    : "animate-fade-in"
+                  prefersReducedMotion ? "" : "animate-fade-in"
                 }`}
                 role="group"
                 aria-roledescription="slide"
@@ -437,7 +488,11 @@ export default function Home() {
                 <ChevronLeft className="w-5 h-5" aria-hidden="true" />
               </Button>
 
-              <div className="flex items-center gap-2" role="tablist" aria-label="Story slides">
+              <div
+                className="flex items-center gap-2"
+                role="tablist"
+                aria-label="Story slides"
+              >
                 {stories.map((_, index) => (
                   <button
                     key={index}
@@ -468,8 +523,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-
     </Layout>
   );
 }
