@@ -11,6 +11,7 @@ import {
   GenerationErrorType,
 } from "@/lib/formState";
 import { loadFormData, clearFormData } from "@/lib/formPersistence";
+import { saveResults, GenerationResult } from "@/lib/resultsPersistence";
 import { DisclaimerModal } from "@/components/disclaimer/DisclaimerModal";
 
 const loadingMessages = [
@@ -20,8 +21,27 @@ const loadingMessages = [
   "Almost there...",
 ];
 
-async function generateDocuments(): Promise<void> {
-  await new Promise((resolve) => setTimeout(resolve, 3000));
+async function generateDocuments(
+  selection: ToolType,
+  formData: Record<string, unknown>
+): Promise<GenerationResult> {
+  const response = await fetch("/api/generate-documents", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      selection,
+      formData,
+    }),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.errors?.[0]?.detail || `Server error: ${response.status}`);
+  }
+
+  return response.json();
 }
 
 export default function Loading() {
@@ -45,8 +65,8 @@ export default function Loading() {
   }, [generationState.status]);
 
   const startGeneration = useCallback(async () => {
-    const formData = loadFormData();
-    if (!formData) {
+    const persistedData = loadFormData();
+    if (!persistedData) {
       navigate(`/form?tool=${tool}`);
       return;
     }
@@ -58,7 +78,14 @@ export default function Loading() {
     }));
 
     try {
-      await generateDocuments();
+      const result = await generateDocuments(tool, persistedData.formState);
+      
+      if (result.status === "total_fail") {
+        throw new Error(result.errors[0]?.detail || "Failed to generate documents");
+      }
+
+      saveResults(result, tool);
+      
       setGenerationState((prev) => ({
         ...prev,
         status: "success",
@@ -69,11 +96,11 @@ export default function Loading() {
       let errorType: GenerationErrorType = "unknown";
       
       if (err instanceof Error) {
-        if (err.message.includes("network") || err.message.includes("fetch")) {
+        if (err.message.includes("network") || err.message.includes("fetch") || err.message.includes("Failed to fetch")) {
           errorType = "network";
         } else if (err.message.includes("timeout")) {
           errorType = "timeout";
-        } else if (err.message.includes("500") || err.message.includes("server")) {
+        } else if (err.message.includes("500") || err.message.includes("server") || err.message.includes("Server error")) {
           errorType = "server";
         }
       }
