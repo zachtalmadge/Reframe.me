@@ -1,4 +1,5 @@
 import { Label } from "@/components/ui/label";
+import { ErrorMessage } from "@/components/ui/error-message";
 import { ChipInput } from "../ChipInput";
 import { FormState, FormAction } from "@/lib/formState";
 
@@ -89,11 +90,7 @@ export function Step2ProgramsSkills({
           </p>
         </div>
 
-        {errors.programsSkills && (
-          <p className="text-sm text-destructive" data-testid="error-programs-skills">
-            {errors.programsSkills}
-          </p>
-        )}
+        <ErrorMessage message={errors.programsSkills} data-testid="error-programs-skills" />
       </div>
     </div>
   );

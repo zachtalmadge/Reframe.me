@@ -1,5 +1,6 @@
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import { ErrorMessage } from "@/components/ui/error-message";
 import { CharacterCountTextarea } from "../CharacterCountTextarea";
 import { FormState, FormAction } from "@/lib/formState";
 
@@ -82,9 +83,7 @@ export function Step9Qualifications({
                 rows={6}
                 data-testid="textarea-resume"
               />
-              {errors.resumeText && (
-                <p className="text-sm text-destructive">{errors.resumeText}</p>
-              )}
+              <ErrorMessage message={errors.resumeText} />
             </div>
 
             <div className="space-y-3">
@@ -106,9 +105,7 @@ export function Step9Qualifications({
                 rows={5}
                 data-testid="textarea-job-posting"
               />
-              {errors.jobPostingText && (
-                <p className="text-sm text-destructive">{errors.jobPostingText}</p>
-              )}
+              <ErrorMessage message={errors.jobPostingText} />
             </div>
           </div>
         )}

@@ -1,5 +1,6 @@
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import { ErrorMessage } from "@/components/ui/error-message";
 import { CharacterCountTextarea } from "../CharacterCountTextarea";
 import { FormState, FormAction } from "@/lib/formState";
 
@@ -83,11 +84,7 @@ export function Step8ClarifyingRelevance({
               rows={5}
               data-testid="textarea-clarifying-relevance"
             />
-            {errors.clarifyingRelevance && (
-              <p className="text-sm text-destructive">
-                {errors.clarifyingRelevance}
-              </p>
-            )}
+            <ErrorMessage message={errors.clarifyingRelevance} />
           </div>
         )}
 

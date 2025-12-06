@@ -1,5 +1,6 @@
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { ErrorMessage } from "@/components/ui/error-message";
 import { FormState, FormAction } from "@/lib/formState";
 
 interface Step4JobDetailsProps {
@@ -43,9 +44,7 @@ export function Step4JobDetails({
             placeholder="e.g., Warehouse Associate, Customer Service Representative"
             data-testid="input-job-title"
           />
-          {errors.jobTitle && (
-            <p className="text-sm text-destructive">{errors.jobTitle}</p>
-          )}
+          <ErrorMessage message={errors.jobTitle} />
         </div>
 
         <div className="space-y-3">
@@ -65,9 +64,7 @@ export function Step4JobDetails({
             placeholder="e.g., ABC Company, Local Grocery Store"
             data-testid="input-employer-name"
           />
-          {errors.employerName && (
-            <p className="text-sm text-destructive">{errors.employerName}</p>
-          )}
+          <ErrorMessage message={errors.employerName} />
         </div>
 
         <div className="p-4 rounded-lg bg-primary/5 border border-primary/20">

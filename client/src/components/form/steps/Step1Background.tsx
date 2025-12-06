@@ -9,6 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { ErrorMessage } from "@/components/ui/error-message";
 import { ChipInput } from "../ChipInput";
 import { FormState, FormAction, Offense } from "@/lib/formState";
 import { calculateTimeSinceRelease } from "@/lib/utils";
@@ -176,11 +177,7 @@ export function Step1Background({
                         ))}
                       </SelectContent>
                     </Select>
-                    {errors[`offense-${offense.id}-type`] && (
-                      <p className="text-sm text-destructive">
-                        {errors[`offense-${offense.id}-type`]}
-                      </p>
-                    )}
+                    <ErrorMessage message={errors[`offense-${offense.id}-type`]} />
                   </div>
 
                   <div className="space-y-2">
@@ -200,11 +197,7 @@ export function Step1Background({
                       placeholder="e.g., Theft, DUI, etc."
                       data-testid={`input-offense-description-${index}`}
                     />
-                    {errors[`offense-${offense.id}-description`] && (
-                      <p className="text-sm text-destructive">
-                        {errors[`offense-${offense.id}-description`]}
-                      </p>
-                    )}
+                    <ErrorMessage message={errors[`offense-${offense.id}-description`]} />
                   </div>
 
                   <div className="space-y-2">
@@ -278,11 +271,7 @@ export function Step1Background({
               </Select>
             </div>
           </div>
-          {(errors.releaseMonth || errors.releaseYear) && (
-            <p className="text-sm text-destructive">
-              {errors.releaseMonth || errors.releaseYear}
-            </p>
-          )}
+          <ErrorMessage message={errors.releaseMonth || errors.releaseYear} />
           {timeSinceRelease && (
             <p
               className="text-sm text-primary font-medium"

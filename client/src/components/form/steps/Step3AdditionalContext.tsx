@@ -1,4 +1,5 @@
 import { Label } from "@/components/ui/label";
+import { ErrorMessage } from "@/components/ui/error-message";
 import { CharacterCountTextarea } from "../CharacterCountTextarea";
 import { FormState, FormAction } from "@/lib/formState";
 
@@ -55,9 +56,7 @@ export function Step3AdditionalContext({
             rows={5}
             data-testid="textarea-additional-context"
           />
-          {errors.additionalContext && (
-            <p className="text-sm text-destructive">{errors.additionalContext}</p>
-          )}
+          <ErrorMessage message={errors.additionalContext} />
         </div>
 
         <div className="p-4 rounded-lg bg-muted/50 border border-border">
