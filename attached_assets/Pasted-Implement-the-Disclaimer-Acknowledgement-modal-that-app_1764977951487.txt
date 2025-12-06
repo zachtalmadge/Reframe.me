@@ -1,0 +1,65 @@
+Implement the Disclaimer / Acknowledgement modal that appears after documents are generated successfully, before users see or download them.
+
+Business requirement – Legal/safety disclaimer
+
+Before users access their generated narratives or letters, they must see a prominent disclaimer explaining:
+
+Documents are AI-generated based on their input
+
+This is not legal advice
+
+They must review carefully and are responsible for final content
+
+They are encouraged to consult trusted advisors/legal support
+
+The modal must require explicit acknowledgment via checkbox before proceeding.
+
+Acceptance criteria (Given / When / Then)
+
+Scenario: Disclaimer must be acknowledged
+
+Given the backend has returned a success or partial_fail response
+
+When the frontend transitions from Loading to the next step
+
+Then the user sees a modal overlay with:
+
+Scrollable disclaimer text
+
+A single checkbox labeled “I understand and agree”
+
+A “Continue” button that is disabled until the checkbox is checked.
+
+Scenario: Proceed to Documents Page
+
+Given the disclaimer modal is visible
+
+When the user checks the box and taps “Continue”
+
+Then the modal closes and the Documents Page is shown.
+
+What I want you (Replit AI) to do
+
+Same pattern:
+
+Assess the enhancement and describe steps for inserting the modal into the existing flow (Loading → Disclaimer → Documents Page).
+
+Describe your understanding of the requirements and where disclaimer content should live (JSON/config vs inline).
+
+Identify considerations:
+
+Accessibility (focus trap, ESC behavior, keyboard navigation)
+
+Ensuring users can’t bypass the modal
+
+Propose best-practice UX for this kind of serious disclaimer in a supportive tone.
+
+Note other best practices (reusability of modal component, Tailwind patterns).
+
+Generate a step-by-step implementation plan and component structure (Modal, DisclaimerModal, state flags).
+
+Keep scope limited to the modal and flow integration; do not change document generation logic.
+
+Propose a skeleton showing where modal state is managed (e.g., in a parent “ResultsFlow” component).
+
+Wait for my confirmation before editing.
