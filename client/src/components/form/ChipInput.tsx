@@ -1,7 +1,8 @@
 import { useState, KeyboardEvent } from "react";
-import { X } from "lucide-react";
+import { X, Plus } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 interface ChipInputProps {
@@ -9,6 +10,7 @@ interface ChipInputProps {
   onAdd: (value: string) => void;
   onRemove: (index: number) => void;
   placeholder?: string;
+  helperText?: string;
   maxChips?: number;
   className?: string;
   inputClassName?: string;
@@ -21,6 +23,7 @@ export function ChipInput({
   onAdd,
   onRemove,
   placeholder = "Type and press Enter to add",
+  helperText = "Type an item and press Enter or tap 'Add' to save it.",
   maxChips,
   className,
   inputClassName,
@@ -29,25 +32,30 @@ export function ChipInput({
 }: ChipInputProps) {
   const [inputValue, setInputValue] = useState("");
 
+  const isMaxReached = maxChips !== undefined && chips.length >= maxChips;
+  const canAdd = inputValue.trim().length > 0 && !isMaxReached;
+
+  const handleAdd = () => {
+    const trimmedValue = inputValue.trim();
+    
+    if (!trimmedValue) return;
+    if (chips.includes(trimmedValue)) return;
+    if (maxChips && chips.length >= maxChips) return;
+
+    onAdd(trimmedValue);
+    setInputValue("");
+  };
+
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      const trimmedValue = inputValue.trim();
-      
-      if (!trimmedValue) return;
-      if (chips.includes(trimmedValue)) return;
-      if (maxChips && chips.length >= maxChips) return;
-
-      onAdd(trimmedValue);
-      setInputValue("");
+      handleAdd();
     }
 
     if (e.key === "Backspace" && !inputValue && chips.length > 0) {
       onRemove(chips.length - 1);
     }
   };
-
-  const isMaxReached = maxChips !== undefined && chips.length >= maxChips;
 
   return (
     <div className={cn("space-y-3", className)}>
@@ -73,24 +81,38 @@ export function ChipInput({
         ))}
       </div>
       
-      <Input
-        id={id}
-        type="text"
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-        onKeyDown={handleKeyDown}
-        placeholder={isMaxReached ? `Maximum ${maxChips} items reached` : placeholder}
-        disabled={isMaxReached}
-        className={inputClassName}
-        data-testid={testId ? `${testId}-input` : "chip-input"}
-        aria-describedby={isMaxReached ? "chip-limit-reached" : undefined}
-      />
+      <div className="flex gap-2">
+        <Input
+          id={id}
+          type="text"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          onKeyDown={handleKeyDown}
+          placeholder={isMaxReached ? `Maximum ${maxChips} items reached` : placeholder}
+          disabled={isMaxReached}
+          className={cn("flex-1", inputClassName)}
+          data-testid={testId ? `${testId}-input` : "chip-input"}
+          aria-describedby={`${id}-helper`}
+        />
+        <Button
+          type="button"
+          variant="secondary"
+          onClick={handleAdd}
+          disabled={!canAdd}
+          aria-label="Add item"
+          data-testid={testId ? `${testId}-add-button` : "chip-add-button"}
+        >
+          <Plus className="w-4 h-4 mr-1" aria-hidden="true" />
+          Add
+        </Button>
+      </div>
       
-      {isMaxReached && (
-        <p id="chip-limit-reached" className="sr-only">
-          Maximum number of items reached
-        </p>
-      )}
+      <p 
+        id={`${id}-helper`}
+        className="text-xs text-muted-foreground"
+      >
+        {isMaxReached ? `Maximum ${maxChips} items reached.` : helperText}
+      </p>
     </div>
   );
 }

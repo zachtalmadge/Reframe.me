@@ -56,6 +56,7 @@ export function Step2ProgramsSkills({
             onAdd={handleAddProgram}
             onRemove={handleRemoveProgram}
             placeholder="e.g., GED, Vocational training, Counseling"
+            helperText="Type a program and press Enter or tap 'Add' to save it."
             data-testid="chip-input-programs"
           />
         </div>
@@ -75,6 +76,7 @@ export function Step2ProgramsSkills({
             onAdd={handleAddSkill}
             onRemove={handleRemoveSkill}
             placeholder="e.g., Communication, Leadership, Problem-solving"
+            helperText="Type a skill or strength and press Enter or tap 'Add' to save it."
             data-testid="chip-input-skills"
           />
         </div>
