@@ -11,6 +11,7 @@ import {
   GenerationErrorType,
 } from "@/lib/formState";
 import { loadFormData, clearFormData } from "@/lib/formPersistence";
+import { DisclaimerModal } from "@/components/disclaimer/DisclaimerModal";
 
 const loadingMessages = [
   "Analyzing your information...",
@@ -31,6 +32,7 @@ export default function Loading() {
 
   const [generationState, setGenerationState] = useState<GenerationState>(initialGenerationState);
   const [messageIndex, setMessageIndex] = useState(0);
+  const [showDisclaimer, setShowDisclaimer] = useState(false);
 
   useEffect(() => {
     if (generationState.status !== "loading") return;
@@ -62,7 +64,7 @@ export default function Loading() {
         status: "success",
       }));
       clearFormData();
-      navigate(`/results?tool=${tool}`);
+      setShowDisclaimer(true);
     } catch (err) {
       let errorType: GenerationErrorType = "unknown";
       
@@ -98,6 +100,10 @@ export default function Loading() {
 
   const handleGoBack = useCallback(() => {
     navigate(`/form?tool=${tool}`);
+  }, [navigate, tool]);
+
+  const handleDisclaimerContinue = useCallback(() => {
+    navigate(`/results?tool=${tool}`);
   }, [navigate, tool]);
 
   if (generationState.status === "error") {
@@ -202,6 +208,11 @@ export default function Loading() {
           </div>
         </div>
       </section>
+
+      <DisclaimerModal
+        open={showDisclaimer}
+        onContinue={handleDisclaimerContinue}
+      />
     </Layout>
   );
 }
