@@ -81,7 +81,7 @@ export function ChipInput({
         ))}
       </div>
       
-      <div className="flex gap-2">
+      <div className="relative">
         <Input
           id={id}
           type="text"
@@ -90,21 +90,25 @@ export function ChipInput({
           onKeyDown={handleKeyDown}
           placeholder={isMaxReached ? `Maximum ${maxChips} items reached` : placeholder}
           disabled={isMaxReached}
-          className={cn("flex-1", inputClassName)}
+          className={cn("pr-20", inputClassName)}
           data-testid={testId ? `${testId}-input` : "chip-input"}
           aria-describedby={`${id}-helper`}
         />
-        <Button
-          type="button"
-          variant="secondary"
-          onClick={handleAdd}
-          disabled={!canAdd}
-          aria-label="Add item"
-          data-testid={testId ? `${testId}-add-button` : "chip-add-button"}
-        >
-          <Plus className="w-4 h-4 mr-1" aria-hidden="true" />
-          Add
-        </Button>
+        <div className="absolute inset-y-0 right-1 flex items-center">
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            onClick={handleAdd}
+            disabled={!canAdd}
+            className="h-7 px-2 text-xs font-medium"
+            aria-label="Add item"
+            data-testid={testId ? `${testId}-add-button` : "chip-add-button"}
+          >
+            <Plus className="w-3 h-3 mr-1" aria-hidden="true" />
+            Add
+          </Button>
+        </div>
       </div>
       
       <p 
