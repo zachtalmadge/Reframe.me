@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
-import { FileText, Mail, ArrowLeft, ArrowRight, Files, Check } from "lucide-react";
+import { FileText, Mail, ArrowLeft, ArrowRight, Files, Check, Shield } from "lucide-react";
 import Layout from "@/components/Layout";
 
 type ToolSelection = "narrative" | "responseLetter" | "both" | null;
@@ -44,6 +44,7 @@ const options: SelectionOption[] = [
 
 export default function Selection() {
   const [selected, setSelected] = useState<ToolSelection>(null);
+  const [hasMadeSelection, setHasMadeSelection] = useState(false);
   const [, navigate] = useLocation();
 
   const handleContinue = () => {
@@ -52,10 +53,17 @@ export default function Selection() {
     }
   };
 
+  const handleSelect = (optionId: ToolSelection) => {
+    setSelected(optionId);
+    if (!hasMadeSelection) {
+      setHasMadeSelection(true);
+    }
+  };
+
   const handleKeyDown = (e: React.KeyboardEvent, optionId: ToolSelection) => {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
-      setSelected(optionId);
+      handleSelect(optionId);
     }
   };
 
@@ -107,7 +115,7 @@ export default function Selection() {
                   type="button"
                   role="radio"
                   aria-checked={isSelected}
-                  onClick={() => setSelected(option.id)}
+                  onClick={() => handleSelect(option.id)}
                   onKeyDown={(e) => handleKeyDown(e, option.id)}
                   className={`
                     w-full text-left rounded-xl p-5 md:p-6 transition-all duration-150
@@ -167,6 +175,23 @@ export default function Selection() {
               Continue
               <ArrowRight className="w-5 h-5 ml-2" aria-hidden="true" />
             </Button>
+
+            <div
+              className={`
+                rounded-lg border px-4 py-3 transition-opacity duration-300
+                border-amber-500/50 bg-amber-50 dark:bg-amber-950/30
+                ${hasMadeSelection ? "opacity-100" : "opacity-0 pointer-events-none h-0 p-0 m-0 overflow-hidden"}
+              `}
+              data-testid="alert-privacy-warning"
+            >
+              <div className="flex items-start gap-3">
+                <Shield className="w-5 h-5 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" aria-hidden="true" />
+                <p className="text-sm text-amber-800 dark:text-amber-200 leading-relaxed">
+                  <span className="font-medium">We take your privacy seriously.</span>{" "}
+                  If you refresh the page at any point, your information will be cleared and you'll need to start over.
+                </p>
+              </div>
+            </div>
             
             <p className="text-center text-sm text-muted-foreground">
               Your information stays private and is not stored after your session.
