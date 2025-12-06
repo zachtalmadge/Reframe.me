@@ -66,7 +66,10 @@ export function Step9Qualifications({
                 </Label>
                 <p className="text-sm text-muted-foreground">
                   Paste the text content of your resume. This helps us highlight
-                  your relevant experience and skills.
+                  your relevant experience and skills.{" "}
+                  <span className="font-semibold text-amber-600 dark:text-amber-400">
+                    Do not include any personal information.
+                  </span>
                 </p>
               </div>
               <CharacterCountTextarea

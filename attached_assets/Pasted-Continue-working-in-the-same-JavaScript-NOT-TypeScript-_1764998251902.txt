@@ -1,0 +1,195 @@
+Continue working in the same JavaScript (NOT TypeScript) + React + Tailwind CSS, mobile-first project.
+The unified multi-step form includes Step 9: Reinforcing Your Qualifications, which has:
+
+A toggle to enable using the resume and job posting.
+
+When toggled ON, it reveals:
+
+A “Your Resume (Text Only)” text area.
+
+A Job Posting text area.
+
+I want to update the helper text for the Resume field so that it clearly warns users not to include personal information, and I want that warning to stand out visually.
+
+Important for this fix:
+For this change, DO NOT perform any end-to-end (e2e) tests or automated full-flow testing.
+You may do local/component-level checks only. I will manually confirm in the UI.
+
+Business requirement – Add a prominent “Do not include any personal information” note
+
+When the Step 9 toggle is ON and the Resume text area is visible:
+
+The Resume label and helper text currently say something like:
+
+Label: Your Resume (Text Only)
+
+Helper text:
+
+“Paste the text content of your resume. This helps us highlight your relevant experience and skills.”
+
+I want to append the following sentence immediately after that helper text, and make it stand out:
+
+“Do not include any personal information.”
+
+The final helper text should read conceptually like:
+
+“Paste the text content of your resume. This helps us highlight your relevant experience and skills. Do not include any personal information.”
+
+The “Do not include any personal information.” part must be visually emphasized, for example by:
+
+Bold text, and/or
+
+Using a warning/secondary color (e.g., orange secondary or a clear warning tone) while still remaining accessible and readable.
+
+This change applies only to the Resume helper text in Step 9 (Reinforcing Your Qualifications), not to other fields.
+
+Acceptance criteria (Given / When / Then)
+Scenario: Resume helper text with strong privacy warning
+
+Given the user is on Step 9: Reinforcing Your Qualifications
+
+And the toggle to use the resume and job posting is ON
+
+When the “Your Resume (Text Only)” field is visible
+
+Then:
+
+The helper text under the Resume text area includes both:
+
+The existing explanation about using resume content to highlight experience and skills, and
+
+The new sentence: “Do not include any personal information.”
+
+The “Do not include any personal information.” part is visually emphasized (e.g., bold and/or in a warning/secondary color) so it clearly stands out to the user.
+
+Scenario: No change when toggle is OFF
+
+Given the user is on Step 9 and the toggle is OFF
+
+When the Resume field is hidden
+
+Then:
+
+No Resume helper text is visible (same as current behavior).
+
+No other parts of the step are affected.
+
+Scenario: Job Posting helper text unchanged
+
+Given the user is on Step 9 with the toggle ON
+
+When they look at the Job Posting text area
+
+Then:
+
+The Job Posting label and helper text remain as they currently are (unless already modified by prior prompts).
+
+Only the Resume helper text gains the added “Do not include any personal information.” warning and emphasis.
+
+What I want you (Replit AI) to do
+
+Assess the Step 9 implementation
+
+Locate the component and JSX for Step 9: Reinforcing Your Qualifications.
+
+Identify the existing label and helper text for the Resume text area (shown when the toggle is ON).
+
+Describe your understanding of the requirements
+
+Explain in your own words:
+
+That you need to append “Do not include any personal information.” to the Resume helper text.
+
+That this new sentence must be visually emphasized so it’s hard to miss.
+
+That no other helper texts should be changed.
+
+Identify key considerations to avoid disrupting existing functionality
+
+Ensure:
+
+The toggle ON/OFF behavior remains the same.
+
+Validation rules (resume/job posting required when toggle is ON) are unaffected.
+
+The layout remains mobile-friendly and the helper text wraps gracefully on small screens.
+
+The warning styling remains accessible (good contrast, readable font size).
+
+Propose best-practice UX and styling
+
+Suggest how to implement emphasis, for example:
+
+Use a <span> wrapping the warning sentence with:
+
+font-semibold or font-bold
+
+And/or a color class that fits your design (e.g., your orange secondary or a warning color like text-amber-700 with bg-amber-50 if you want a subtle highlight).
+
+Keep the overall helper text as a single block of text, but make the warning visually distinct.
+
+Generate a step-by-step implementation plan
+
+At a minimum include:
+
+Step 1: Locate the JSX for the Resume text area in Step 9.
+
+Step 2: Update the helper text string to include the new sentence in the copy:
+
+“Paste the text content of your resume. This helps us highlight your relevant experience and skills. Do not include any personal information.”
+
+Step 3: Wrap the “Do not include any personal information.” part in a span (or similar) with emphasis styling (e.g., bold + warning color).
+
+Step 4: Verify the updated helper text appears only when the toggle is ON.
+
+Step 5: Manually test on mobile and desktop to ensure the helper text looks good and is readable.
+
+Keep the scope limited
+
+Do not:
+
+Change validation logic for Step 9.
+
+Modify Job Posting helper text or any other steps’ labels.
+
+Alter toggle behavior or generateResponseLetter logic.
+
+Only adjust:
+
+The copy and styling of the Resume helper text to include the emphasized privacy warning.
+
+Propose a skeleton framework
+
+Provide a simplified example of the updated Resume field JSX, for example:
+
+<div>
+  <label className="block text-sm font-medium">
+    Your Resume (Text Only)
+  </label>
+  <textarea
+    value={resumeText}
+    onChange={e => setResumeText(e.target.value)}
+    className="mt-1 w-full border rounded-md px-3 py-2 text-sm min-h-[120px]"
+    placeholder="Paste the text of your resume here..."
+  />
+  <p className="mt-1 text-xs text-gray-600">
+    Paste the text content of your resume. This helps us highlight your relevant
+    experience and skills.{" "}
+    <span className="font-semibold text-amber-700">
+      Do not include any personal information.
+    </span>
+  </p>
+</div>
+
+
+Replace text-amber-700 with your actual secondary orange or appropriate warning color if you prefer.
+
+Do not run e2e tests
+
+For this prompt:
+
+You may update the Step 9 component and helper text styling.
+
+You may perform manual checks or simple component-level tests.
+
+Do NOT run or modify any end-to-end (e2e) tests; I will manually verify the behavior.
