@@ -136,36 +136,65 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 relative">
+          <div className="relative">
             <div 
-              className="hidden md:block absolute top-8 left-[16.67%] right-[16.67%] h-0.5 bg-border" 
-              aria-hidden="true" 
+              className="hidden md:block absolute top-5 left-[16.67%] right-[16.67%] h-1 bg-border rounded-full overflow-hidden" 
+              aria-hidden="true"
+            >
+              <div 
+                className={`h-full bg-primary rounded-full transition-all duration-700 ease-out motion-reduce:transition-none ${
+                  howItWorksInView ? "w-full" : "w-0"
+                }`}
+                style={{ transitionDelay: howItWorksInView ? "100ms" : "0ms" }}
+              />
+            </div>
+            
+            <div 
+              className="hidden md:block absolute top-5 h-3 w-3 -mt-1 rounded-full bg-primary shadow-md transition-all duration-700 ease-out motion-reduce:transition-none z-20"
+              style={{ 
+                left: howItWorksInView ? "calc(83.33% - 6px)" : "calc(16.67% - 6px)",
+                transitionDelay: howItWorksInView ? "100ms" : "0ms"
+              }}
+              aria-hidden="true"
             />
 
-            {howItWorksSteps.map((step, index) => (
-              <div
-                key={step.title}
-                className={`relative bg-background rounded-xl border border-border p-6 text-center transition-all duration-300 ease-out motion-reduce:transition-none ${
-                  howItWorksInView
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-4"
-                }`}
-                style={{
-                  transitionDelay: howItWorksInView ? `${index * 100}ms` : "0ms",
-                }}
-                data-testid={`step-${index + 1}`}
-              >
-                <div className="flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 text-primary font-semibold text-lg mx-auto mb-4 relative z-10">
-                  {index + 1}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+              {howItWorksSteps.map((step, index) => (
+                <div
+                  key={step.title}
+                  className={`relative bg-background rounded-xl border border-border p-6 text-center transition-all duration-300 ease-out motion-reduce:transition-none ${
+                    howItWorksInView
+                      ? "opacity-100 translate-y-0"
+                      : "opacity-0 translate-y-4"
+                  }`}
+                  style={{
+                    transitionDelay: howItWorksInView ? `${index * 100}ms` : "0ms",
+                  }}
+                  data-testid={`step-${index + 1}`}
+                >
+                  <div className="flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 text-primary font-semibold text-lg mx-auto mb-4 relative z-10">
+                    {index + 1}
+                  </div>
+                  <h3 className="text-base font-semibold text-foreground mb-2">
+                    {step.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {step.description}
+                  </p>
                 </div>
-                <h3 className="text-base font-semibold text-foreground mb-2">
-                  {step.title}
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {step.description}
-                </p>
+              ))}
+            </div>
+
+            <div className="md:hidden flex justify-center mt-6" aria-hidden="true">
+              <div className="relative w-32 h-1 bg-border rounded-full overflow-hidden">
+                <div 
+                  className={`h-full bg-primary rounded-full transition-all duration-700 ease-out motion-reduce:transition-none ${
+                    howItWorksInView ? "w-full" : "w-0"
+                  }`}
+                  style={{ transitionDelay: howItWorksInView ? "300ms" : "0ms" }}
+                />
               </div>
-            ))}
+            </div>
           </div>
         </div>
       </section>

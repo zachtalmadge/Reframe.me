@@ -1,0 +1,333 @@
+Continue working in the same JavaScript (NOT TypeScript) + React + Tailwind CSS, mobile-first project.
+I already have (or am adding) a “How It Works” section on the Home page with 3 steps:
+
+Share your situation
+
+We help reframe your story
+
+Leave with talking points & documents
+
+Now I want to add small motion to this strip:
+
+As the user scrolls and the section comes into view, each step should slide/fade in from left to right.
+
+A small animated dot or line should move along the steps to show progression.
+
+Important for this fix:
+For this change, DO NOT perform any end-to-end (e2e) tests or automated full-flow testing.
+You may do local/component-level checks only. I will manually confirm the behavior in the UI.
+
+Business requirement – Scroll-triggered step animations + moving progress dot/line
+
+Enhance the How It Works strip so that:
+
+Steps animate in on scroll (left → right)
+
+When the How It Works section first enters the viewport:
+
+Each step card should:
+
+Start in a slightly offset, transparent state (e.g., opacity-0, translate-y-4 or a small translate-x offset).
+
+Animate to opacity-100 and translate-0 as it becomes visible.
+
+Steps should appear in a staggered sequence:
+
+Step 1 → Step 2 → Step 3, each delayed by a small amount (e.g., 80–120ms).
+
+Animated dot/line showing progression
+
+Add a simple visual progress indicator tied to the 3 steps:
+
+This can be a line running under or above the steps with a dot that moves from Step 1 → Step 2 → Step 3 as the steps animate in.
+
+Or a segmented line that “fills” from left to right when the section becomes visible.
+
+Behavior:
+
+When the How It Works section becomes visible:
+
+The line should animate outward (e.g., width grows from left to right).
+
+A dot or marker should travel along the line or highlight each step position in sequence.
+
+Motion should be subtle and occur once per view (or per mount), not looping constantly.
+
+Scroll trigger behavior
+
+Use a scroll-based trigger (e.g., Intersection Observer or similar) so that:
+
+The animations start when the section enters the viewport, not immediately on page load.
+
+Once the animation has run, it’s okay if it doesn’t replay unless the user refreshes or navigates away and back.
+
+Responsive layout
+
+On desktop:
+
+Steps may be in a 3-column layout with a horizontal line/dot underneath or above them.
+
+On mobile:
+
+Steps can stack vertically, and the line/dot can:
+
+Either run horizontally beneath a condensed row of step indicators, or
+
+Use a simplified version (e.g., a vertical line with a dot moving down).
+
+Maintain readability and spacing at all breakpoints.
+
+Tone and accessibility
+
+The animations should:
+
+Feel calm, modern, and explanatory, not gimmicky.
+
+Clearly support understanding of “3 steps, in this order.”
+
+Respect prefers-reduced-motion:
+
+If reduced motion is requested, you can:
+
+Still show all steps, but skip the sliding transitions and moving dot (or reduce to minimal opacity fade).
+
+The section should remain fully understandable with no animation.
+
+Acceptance criteria (Given / When / Then)
+Scenario: Steps slide/fade in on scroll
+
+Given the user is on the Home page and has not yet scrolled to the How It Works section
+
+When they scroll until the How It Works section enters the viewport
+
+Then:
+
+Step 1 appears first, fading/sliding in from a slightly offset position.
+
+Step 2 and Step 3 follow in sequence with a short staggered delay.
+
+Once visible, all steps remain fully opaque and stationary.
+
+Scenario: Moving dot/line shows progression
+
+Given the How It Works section has just entered the viewport
+
+When the step animations are playing
+
+Then:
+
+A line and/or dot animates left→right to visually indicate progression from Step 1 to Step 3.
+
+The dot’s movement (or line fill) is synchronized with the step appearance (e.g., reaches Step 3 as the last step finishes animating).
+
+After completing, the dot/line remains in the final state (e.g., fully filled).
+
+Scenario: Behavior on mobile and desktop
+
+Given the user views the page on:
+
+A small/mobile screen, and
+
+A larger/desktop screen
+
+When they reach the How It Works section
+
+Then:
+
+Steps are laid out appropriately (vertical stack on mobile, horizontal on desktop).
+
+The animations run cleanly without breaking layout in either context.
+
+Scenario: Reduced motion users
+
+Given the user has prefers-reduced-motion: reduce set in their OS/browser
+
+When they view the How It Works section
+
+Then:
+
+They still see all three steps and the progress indicator, but without or with minimal motion (e.g., no slide-in / path animation, just static content or simple fade).
+
+The section remains fully understandable.
+
+What I want you (Replit AI) to do
+
+Assess the current How It Works section implementation
+
+Locate the component that renders the How It Works section (e.g., HowItWorksSection.jsx or inline in the Home page).
+
+Identify:
+
+How the steps are defined (likely an array of objects with title / description).
+
+How they’re currently laid out (grid/flex).
+
+Whether any animation logic already exists.
+
+Describe your understanding of the requirements
+
+Explain in your own words:
+
+That each step needs a scroll-triggered fade + slide animation, with stagger.
+
+That a dot/line progress indicator should animate along the 3 steps as they appear.
+
+That the animations should run when the section comes into view and not loop continuously.
+
+Identify key considerations to avoid breaking existing functionality
+
+Ensure:
+
+The base layout and copy of the How It Works section remain intact.
+
+The Home page structure still flows logically around this section.
+
+No heavy animation library is introduced; keep it light and compatible with the rest of the codebase.
+
+You clean up any Intersection Observer or event listeners (avoid memory leaks).
+
+Propose best-practice implementation (React + Tailwind)
+
+Use a small custom hook or utility for Intersection Observer, e.g.:
+
+useInView returning [ref, hasEnteredView].
+
+For step cards:
+
+Apply base classes like:
+
+opacity-0 translate-y-4 (or translate-x-4)
+
+transition-opacity transition-transform duration-300 ease-out
+
+When hasEnteredView is true, switch to:
+
+opacity-100 translate-y-0 (or translate-x-0), with transitionDelay based on index.
+
+For the line/dot:
+
+Render a horizontal line under the steps (e.g., h-px bg-muted).
+
+Render a dot (h-3 w-3 rounded-full bg-primary) whose transform: translateX is animated from left to right when hasEnteredView becomes true.
+
+Use transition-transform duration-500 with delay to sync with step animations, or a simple CSS keyframe.
+
+Generate a step-by-step implementation plan
+
+At a minimum include:
+
+Step 1: Confirm or create a useInView / useIntersectionObserver hook to detect when the How It Works section enters the viewport.
+
+Step 2: Attach the ref from that hook to the section container.
+
+Step 3: For each step card:
+
+Add Tailwind classes for initial hidden state (opacity + small translation).
+
+When hasEnteredView is true, apply active classes with staggered transitionDelay per step index.
+
+Step 4: Implement the progress line/dot:
+
+Add a horizontal line that spans under/above the steps.
+
+Add a dot positioned relative to the line; when hasEnteredView is true, animate the dot’s translateX from the position of Step 1 to Step 3 (e.g., via inline style using percentage or a simple keyframes animation).
+
+Step 5: Optionally add prefers-reduced-motion handling:
+
+Check window.matchMedia("(prefers-reduced-motion: reduce)") and, if true, bypass transforms or only do a quick fade.
+
+Step 6: Manually test:
+
+Scroll down to the section; verify steps animate in L→R with stagger.
+
+Confirm the line/dot animation feels aligned to the step sequence.
+
+Resize to mobile/desktop and ensure layout + animations are still clean.
+
+Keep the scope limited
+
+Do not:
+
+Change the text content of the steps (beyond minor wording tweaks if absolutely necessary).
+
+Alter other sections of the Home page.
+
+Add heavy dependencies for animation.
+
+Only adjust:
+
+The How It Works section’s layout & animation behavior.
+
+Propose a skeleton framework
+
+Example (simplified):
+
+const steps = [
+  { title: "Share your situation", description: "Answer a few questions..." },
+  { title: "We help reframe your story", description: "Our tool turns your answers..." },
+  { title: "Leave with talking points & documents", description: "You’ll get narratives..." },
+];
+
+function HowItWorksSection() {
+  const [ref, hasEnteredView] = useInView({ threshold: 0.2 });
+
+  return (
+    <section ref={ref} className="py-12 px-4">
+      <div className="max-w-4xl mx-auto text-center mb-8">
+        <h2 className="text-xl font-semibold">How it works</h2>
+      </div>
+
+      <div className="relative max-w-4xl mx-auto">
+        {/* Steps */}
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+          {steps.map((step, index) => (
+            <div
+              key={step.title}
+              className={`rounded-xl border bg-white p-6 text-left transition-opacity transition-transform duration-300 ease-out ${
+                hasEnteredView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              }`}
+              style={{
+                transitionDelay: hasEnteredView ? `${index * 100}ms` : "0ms",
+              }}
+            >
+              <div className="mb-3 flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary">
+                {index + 1}
+              </div>
+              <h3 className="text-base font-semibold">{step.title}</h3>
+              <p className="mt-2 text-sm text-muted-foreground">{step.description}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Progress line + dot */}
+        <div className="pointer-events-none absolute left-1/2 top-full mt-4 w-full max-w-md -translate-x-1/2 md:mt-6">
+          <div className="relative h-1 bg-muted rounded-full overflow-hidden">
+            <div
+              className={`absolute inset-y-0 left-0 bg-primary transition-all duration-500 ease-out ${
+                hasEnteredView ? "w-full" : "w-0"
+              }`}
+            />
+            <div
+              className={`absolute -top-1 h-3 w-3 rounded-full bg-primary transition-transform duration-500 ease-out ${
+                hasEnteredView ? "translate-x-full" : "translate-x-0"
+              }`}
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
+The actual implementation can be refined to align with existing patterns, but the core idea should match this.
+
+Do not run e2e tests
+
+For this prompt:
+
+You may update the How It Works section, add a small Intersection Observer hook, and tweak styling.
+
+You may perform manual or component-level checks.
+
+Do NOT run or modify end-to-end (e2e) test suites; I will manually verify the behavior.
