@@ -1,0 +1,148 @@
+Clean Prompt 5 – Real generative backend using OpenAI
+
+You are my AI pair-programmer in Replit.
+We are building a Node.js + Express backend for a React front-end.
+Use JavaScript, not TypeScript. Do not create placeholder “hand-written template” text; you must call the OpenAI API to generate narratives and documents.
+
+We already have:
+
+A unified multi-step form on the frontend that collects:
+
+Background / offenses + release date
+
+Programs & skills
+
+Additional context
+
+Job details and OIL framework (for response letters)
+
+A selection state that indicates whether the user chose:
+
+"narrative"
+
+"responseLetter"
+
+"both"
+
+Business requirement – Generative API endpoint
+
+I want a real backend endpoint that:
+
+Exposes POST /api/generate-documents.
+
+Accepts a JSON body like:
+
+{
+  "selection": "narrative" | "responseLetter" | "both",
+  "formData": {
+    // all fields from the multi-step form
+  }
+}
+
+
+Calls the OpenAI API on the server side only (never from the browser) using my API key stored in an environment variable:
+
+process.env.OPENAI_API_KEY
+
+Uses the official openai Node SDK and a current model, e.g. "gpt-4.1-mini" or "gpt-4o-mini". 
+OpenAI Platform
++1
+
+Returns a JSON payload shaped like:
+
+{
+  "status": "success" | "partial_fail" | "total_fail",
+  "narratives": [
+    {
+      "id": "string",
+      "type": "full_disclosure" | "skills_focused" | "growth_journey" | "minimal_disclosure" | "values_aligned",
+      "title": "string",
+      "content": "string"
+    }
+    // up to 5
+  ],
+  "responseLetter": {
+    "id": "string",
+    "title": "Pre-Adverse Action Response Letter",
+    "content": "string"
+  },
+  "errors": [
+    {
+      "documentType": "narrative" | "responseLetter",
+      "detail": "string"
+    }
+  ]
+}
+
+
+The backend should:
+
+Generate up to 5 different narratives when selection is "narrative" or "both".
+
+Generate a pre-adverse action response letter when selection is "responseLetter" or "both".
+
+Use prompting, not static templates: the model should see the user’s form data and instructions and create original text.
+
+Very important constraints
+
+Do NOT implement your own canned narrative templates or “fill-in-the-blanks” text.
+
+All narrative and letter content should come from an OpenAI model call, not hard-coded paragraphs.
+
+Use the official openai library for Node.js:
+
+Install it with npm install openai if it’s not already installed. 
+OpenAI Platform
++1
+
+Keep the OpenAI API key only in environment variables.
+
+Never expose it in client-side code.
+
+Handle basic errors:
+
+On OpenAI error: respond with status: "total_fail" and an HTTP 500.
+
+If narratives succeed but letter fails, or vice versa: return status: "partial_fail" with appropriate items in errors.
+
+What I want you to output FIRST (before touching files)
+
+Assess the enhancement and explain:
+
+What backend files you plan to create or update (e.g. server.js, routes/generateDocuments.js, etc.).
+
+How you’ll wire Express to handle POST /api/generate-documents.
+
+Describe your understanding of:
+
+The request shape (selection, formData).
+
+The response shape (status, narratives, responseLetter, errors).
+
+How the OpenAI SDK will be called (model, approximate prompt structure).
+
+Key considerations:
+
+Security of OPENAI_API_KEY.
+
+Avoid breaking any existing endpoints or the frontend flow.
+
+Best-practice UX/architecture:
+
+How the frontend should call this endpoint and interpret success, partial_fail, total_fail.
+
+Step-by-step implementation plan for:
+
+Installing and configuring the OpenAI SDK.
+
+Implementing POST /api/generate-documents.
+
+Structuring the prompt for narratives and letters (high level, not full prose templates).
+
+Skeleton framework:
+
+Show a short example of how you will call the OpenAI SDK in Node.js with await and how you will map the AI’s output to the JSON response.
+
+Do not modify any files yet.
+First, output your understanding, considerations, and implementation plan.
+After I confirm it looks correct, then you can implement the changes.
