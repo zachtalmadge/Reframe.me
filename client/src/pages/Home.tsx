@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { FileText, Mail, ArrowRight, Clock, Shield, Heart } from "lucide-react";
+import { FileText, Mail, ArrowRight, Clock, Shield, Heart, ChevronLeft, ChevronRight } from "lucide-react";
 import Layout from "@/components/Layout";
 import { useInView } from "@/hooks/useInView";
 
@@ -24,13 +24,40 @@ const howItWorksSteps = [
   },
 ];
 
+const stories = [
+  {
+    role: "Job seeker, retail",
+    quote:
+      "I used to panic when employers asked about my record. Now I have three honest ways to respond.",
+  },
+  {
+    role: "First-time applicant after reentry",
+    quote:
+      "I turned a terrifying letter into a clear, professional response.",
+  },
+  {
+    role: "Job seeker, tech support",
+    quote:
+      "For the first time, I feel ready to explain my past and my growth.",
+  },
+  {
+    role: "Retail candidate",
+    quote:
+      "Having words prepared made the difference between freezing up and feeling confident.",
+  },
+];
+
 export default function Home() {
   const { ref: howItWorksRef, isInView: howItWorksInView } = useInView({ threshold: 0.2 });
   const [heroMounted, setHeroMounted] = useState(false);
   const [showAfter, setShowAfter] = useState(false);
+  const [storyIndex, setStoryIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
   useEffect(() => {
     const prefersReduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    setPrefersReducedMotion(prefersReduced);
     if (prefersReduced) {
       setHeroMounted(true);
       setShowAfter(true);
@@ -43,6 +70,26 @@ export default function Home() {
       };
     }
   }, []);
+
+  useEffect(() => {
+    if (isPaused) return;
+    const interval = setInterval(() => {
+      setStoryIndex((prev) => (prev + 1) % stories.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [isPaused]);
+
+  const goToStory = (index: number) => {
+    setStoryIndex(index);
+  };
+
+  const prevStory = () => {
+    setStoryIndex((prev) => (prev - 1 + stories.length) % stories.length);
+  };
+
+  const nextStory = () => {
+    setStoryIndex((prev) => (prev + 1) % stories.length);
+  };
 
   return (
     <Layout>
@@ -272,6 +319,98 @@ export default function Home() {
       </section>
 
       <section 
+        className="py-10 md:py-14 px-4 sm:px-6 lg:px-8"
+        aria-labelledby="stories-heading"
+        data-testid="section-stories"
+      >
+        <div className="max-w-3xl mx-auto">
+          <div className="text-center mb-8">
+            <h2 
+              id="stories-heading" 
+              className="text-xl md:text-2xl font-semibold text-foreground"
+            >
+              Stories of change
+            </h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Anonymized snapshots of how people are using Reframe.me.
+            </p>
+          </div>
+
+          <div 
+            className="relative max-w-xl mx-auto"
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+          >
+            <div 
+              className="relative rounded-xl border border-border bg-card p-6 md:p-8 min-h-[140px] flex flex-col justify-center"
+              role="region"
+              aria-roledescription="carousel"
+              aria-label="Stories of change"
+            >
+              <div 
+                key={storyIndex}
+                className={`text-center ${
+                  prefersReducedMotion 
+                    ? "" 
+                    : "animate-fade-in"
+                }`}
+                role="group"
+                aria-roledescription="slide"
+                aria-label={`${storyIndex + 1} of ${stories.length}`}
+              >
+                <p className="text-foreground leading-relaxed italic">
+                  "{stories[storyIndex].quote}"
+                </p>
+                <p className="mt-4 text-sm text-muted-foreground">
+                  {stories[storyIndex].role}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-center gap-4 mt-6">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={prevStory}
+                aria-label="Previous story"
+                data-testid="button-story-prev"
+              >
+                <ChevronLeft className="w-5 h-5" aria-hidden="true" />
+              </Button>
+
+              <div className="flex items-center gap-2" role="tablist" aria-label="Story slides">
+                {stories.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => goToStory(index)}
+                    className={`w-2 h-2 rounded-full transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${
+                      index === storyIndex
+                        ? "bg-primary w-4"
+                        : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
+                    }`}
+                    role="tab"
+                    aria-selected={index === storyIndex}
+                    aria-label={`Go to story ${index + 1}`}
+                    data-testid={`button-story-dot-${index}`}
+                  />
+                ))}
+              </div>
+
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={nextStory}
+                aria-label="Next story"
+                data-testid="button-story-next"
+              >
+                <ChevronRight className="w-5 h-5" aria-hidden="true" />
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section 
         className="py-8 md:py-12 px-4 sm:px-6 lg:px-8"
         aria-labelledby="benefits-heading"
       >
@@ -282,10 +421,6 @@ export default function Home() {
             <div className="flex items-center gap-2">
               <Clock className="w-4 h-4 text-primary" aria-hidden="true" />
               <span>Takes 5-10 minutes</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Shield className="w-4 h-4 text-primary" aria-hidden="true" />
-              <span>No account required</span>
             </div>
             <div className="flex items-center gap-2">
               <Heart className="w-4 h-4 text-primary" aria-hidden="true" />
