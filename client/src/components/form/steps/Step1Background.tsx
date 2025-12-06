@@ -20,10 +20,8 @@ interface Step1BackgroundProps {
 }
 
 const offenseTypes = [
-  { value: "misdemeanor", label: "Misdemeanor" },
   { value: "felony", label: "Felony" },
-  { value: "infraction", label: "Infraction" },
-  { value: "other", label: "Other" },
+  { value: "misdemeanor", label: "Misdemeanor" },
 ];
 
 const months = [
