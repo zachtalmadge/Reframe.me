@@ -67,6 +67,7 @@ export function Step9Qualifications({
                 <p className="text-sm text-muted-foreground">
                   Paste the text content of your resume. This helps us highlight
                   your relevant experience and skills.{" "}
+                  <br/>
                   <span className="font-semibold text-amber-600 dark:text-amber-400">
                     Do not include any personal information.
                   </span>
@@ -100,7 +101,7 @@ export function Step9Qualifications({
                 id="jobPostingText"
                 value={state.jobPostingText}
                 onChange={handleJobPostingChange}
-                maxLength={2000}
+                maxLength={3000}
                 placeholder="Paste the job posting or description here..."
                 rows={5}
                 data-testid="textarea-job-posting"
