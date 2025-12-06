@@ -136,28 +136,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="relative">
-            <div 
-              className="hidden md:block absolute top-5 left-[16.67%] right-[16.67%] h-1 bg-border rounded-full overflow-hidden" 
-              aria-hidden="true"
-            >
-              <div 
-                className={`h-full bg-primary rounded-full transition-all duration-700 ease-out motion-reduce:transition-none ${
-                  howItWorksInView ? "w-full" : "w-0"
-                }`}
-                style={{ transitionDelay: howItWorksInView ? "100ms" : "0ms" }}
-              />
-            </div>
-            
-            <div 
-              className="hidden md:block absolute top-5 h-3 w-3 -mt-1 rounded-full bg-primary shadow-md transition-all duration-700 ease-out motion-reduce:transition-none z-20"
-              style={{ 
-                left: howItWorksInView ? "calc(83.33% - 6px)" : "calc(16.67% - 6px)",
-                transitionDelay: howItWorksInView ? "100ms" : "0ms"
-              }}
-              aria-hidden="true"
-            />
-
+          <div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
               {howItWorksSteps.map((step, index) => (
                 <div
@@ -185,13 +164,18 @@ export default function Home() {
               ))}
             </div>
 
-            <div className="md:hidden flex justify-center mt-6" aria-hidden="true">
-              <div className="relative w-32 h-1 bg-border rounded-full overflow-hidden">
+            <div className="flex justify-center mt-6 md:mt-8" aria-hidden="true">
+              <div className="relative w-48 md:w-64 h-1 bg-border rounded-full overflow-hidden">
                 <div 
-                  className={`h-full bg-primary rounded-full transition-all duration-700 ease-out motion-reduce:transition-none ${
+                  className={`absolute inset-y-0 left-0 bg-primary rounded-full transition-all duration-700 ease-out motion-reduce:transition-none ${
                     howItWorksInView ? "w-full" : "w-0"
                   }`}
-                  style={{ transitionDelay: howItWorksInView ? "300ms" : "0ms" }}
+                  style={{ transitionDelay: howItWorksInView ? "200ms" : "0ms" }}
+                />
+                <div
+                  className={`absolute top-1/2 -translate-y-1/2 h-3 w-3 rounded-full bg-primary shadow-md transition-all duration-700 ease-out motion-reduce:transition-none ${
+                    howItWorksInView ? "left-[calc(100%-6px)]" : "left-0"
+                  }`}
                 />
               </div>
             </div>

@@ -1,0 +1,263 @@
+Continue working in the same JavaScript (NOT TypeScript) + React + Tailwind CSS, mobile-first project.
+I already have a “How It Works” section with 3 step cards and a small animated progress line + dot that moves as the section animates in.
+
+Current issue:
+
+The small animated dot displays incorrectly. It is not visually anchored at the bottom of the step cards and appears misaligned / out of place.
+
+Desired behavior:
+
+The progress line and dot should sit directly beneath the row (or stack) of cards, visually attached to the bottom of the steps.
+
+The dot should move along the line at the bottom of the cards, not float elsewhere in the layout.
+
+Important for this fix:
+For this change, DO NOT perform any end-to-end (e2e) tests or automated full-flow testing.
+You may do local/component-level checks only. I will manually confirm the behavior in the UI.
+
+Business requirement – Correct the dot/line placement under the How It Works cards
+
+Update the How It Works progress indicator so that:
+
+Line + dot are positioned at the bottom of the step cards
+
+The progress line should:
+
+Run horizontally just below the bottom edge of the 3 step cards on desktop.
+
+On mobile (stacked cards), it can still appear as a horizontal line under the last card or under a compact indicator row.
+
+The animated dot should:
+
+Sit on top of this line, centered vertically on it.
+
+Move along the line, but never appear above/overlapping the cards or floating away.
+
+No overlap with cards or outside the section
+
+The line and dot should:
+
+Stay within the How It Works section and the visual bounds of the steps container.
+
+Not overlap the card content area or bleed into adjacent sections (hero, footer, etc.).
+
+The positioning should be consistent and stable across different screen sizes.
+
+Reuse existing animation logic, just fix layout
+
+Keep:
+
+The existing logic that animates the line/dot when the section enters the viewport.
+
+The scroll trigger behavior (Intersection Observer / useInView, etc.).
+
+Only update:
+
+The positioning / layout of the line and dot so they render correctly at the bottom of the cards.
+
+Acceptance criteria (Given / When / Then)
+Scenario: Dot appears directly under the cards
+
+Given the user scrolls to the How It Works section
+
+When the section enters the viewport and the steps animate in
+
+Then:
+
+A horizontal line is visible just below the bottom of the 3 step cards.
+
+The small animated dot is clearly sitting on that line, visually connected to the steps.
+
+Scenario: Dot moves along the bottom line, not elsewhere
+
+Given the progress animation runs
+
+When the line fills and the dot moves
+
+Then:
+
+The dot travels along the bottom line only, from left to right (or step to step).
+
+It never appears over the card content, above the cards, or off to the side.
+
+Scenario: Layout works on mobile and desktop
+
+Given the user is on:
+
+A mobile viewport (narrow) and
+
+A desktop viewport (wide)
+
+When they reach the How It Works section
+
+Then:
+
+The cards align properly (stacked on mobile, row or grid on desktop).
+
+The line + dot are still clearly attached to the bottom of the card group, not floating elsewhere.
+
+No overflow or clipping issues occur.
+
+What I want you (Replit AI) to do
+
+Assess the current How It Works progress indicator layout
+
+Locate the JSX for the progress line + dot in the How It Works section (likely inside the same component as the step cards).
+
+Identify:
+
+The parent container that wraps the cards.
+
+The container that wraps the line + dot (currently something like an absolutely positioned div with top-full, etc.).
+
+Understand how absolute / relative positioning is currently set up.
+
+Describe your understanding of the requirements
+
+Explain in your own words:
+
+That the progress line must be visually anchored immediately under the cards.
+
+That the dot must move along that line, not above/overlapping or off-screen.
+
+That the existing animation logic (on scroll, fill, movement) should be preserved.
+
+Identify key considerations to avoid breaking existing behavior
+
+Ensure:
+
+You maintain relative positioning on the correct parent container (typically the group containing the cards AND the line/dot).
+
+The line/dot placement works both in mobile stacked layout and desktop grid layout.
+
+You avoid absolute placement relative to a container that doesn’t match the cards’ bounding box (which can cause misplacement).
+
+Propose best-practice layout fix
+
+Suggested approach:
+
+Wrap the cards and progress bar in a single relative container:
+
+<div className="relative max-w-4xl mx-auto">
+  {/* cards grid */}
+  {/* progress line + dot anchored under cards */}
+</div>
+
+
+Place the line + dot inside this container but positioned in a way that logically sits at the bottom:
+
+For example, use a div after the cards with mt-4 or mt-6 and manage the dot as a child element with absolute positioning relative to the line, not the entire section.
+
+Avoid overly complex absolute positioning like left-1/2 top-full -translate-x-1/2 if it causes misalignment; instead:
+
+Make the line a normal block element under the cards,
+
+Position the dot absolute within that line container.
+
+Generate a step-by-step implementation plan
+
+At a minimum include:
+
+Step 1: Confirm or adjust the parent container for the How It Works cards and progress indicator to be relative.
+
+Step 2: Move or refactor the progress line/dot markup so it sits directly below the cards in the DOM structure.
+
+Step 3: Implement a line container like:
+
+<div className="mt-4 md:mt-6">
+  <div className="relative h-1 bg-muted rounded-full overflow-hidden">
+    {/* animated fill + dot go here */}
+  </div>
+</div>
+
+
+Step 4: Position the dot inside this line container so it sits on the line:
+
+For example:
+
+<div
+  className={`absolute -top-1 h-3 w-3 rounded-full bg-primary transition-transform duration-500 ease-out ${
+    hasEnteredView ? "translate-x-[calc(100%-0.75rem)]" : "translate-x-0"
+  }`}
+/>
+
+
+Or compute the dot’s transform using percentages so it moves from left to right along the line.
+
+Step 5: Verify that the progress line container uses mt-* spacing rather than top-full from an unrelated parent, so it always sits directly beneath the cards.
+
+Step 6: Manually test on:
+
+Desktop: ensure the dot/line are directly under the card row.
+
+Mobile: ensure they appear under the stacked cards and stay within the section.
+
+Keep the scope limited
+
+Do not:
+
+Change the step titles/descriptions or the number of steps.
+
+Remove or rewrite the animation logic for the line/dot (except adjusting transforms/positions to match the new layout).
+
+Only adjust:
+
+Positioning and layout of the line and dot so they display correctly at the bottom of the cards.
+
+Propose a skeleton framework (refined positioning)
+
+Example (simplified, focusing on the bottom placement):
+
+<section ref={ref} className="py-12 px-4">
+  <div className="max-w-4xl mx-auto text-center mb-8">
+    <h2 className="text-xl font-semibold">How it works</h2>
+  </div>
+
+  <div className="max-w-4xl mx-auto">
+    {/* Steps */}
+    <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+      {steps.map((step, index) => (
+        <div
+          key={step.title}
+          className={`rounded-xl border bg-white p-6 text-left transition-opacity transition-transform duration-300 ease-out ${
+            hasEnteredView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+          }`}
+          style={{
+            transitionDelay: hasEnteredView ? `${index * 100}ms` : "0ms",
+          }}
+        >
+          {/* step content */}
+        </div>
+      ))}
+    </div>
+
+    {/* Progress line + dot anchored directly under cards */}
+    <div className="mt-4 md:mt-6">
+      <div className="relative h-1 bg-muted rounded-full overflow-hidden">
+        <div
+          className={`absolute inset-y-0 left-0 bg-primary transition-all duration-500 ease-out ${
+            hasEnteredView ? "w-full" : "w-0"
+          }`}
+        />
+        <div
+          className={`absolute -top-1 h-3 w-3 rounded-full bg-primary transition-transform duration-500 ease-out ${
+            hasEnteredView ? "translate-x-full" : "translate-x-0"
+          }`}
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+
+Adjust the dot’s translate-x values and widths to align exactly with the line and card positions.
+
+Do not run e2e tests
+
+For this prompt:
+
+You may update the How It Works section’s layout and progress indicator styling/positioning.
+
+You may perform manual or component-level checks.
+
+Do NOT run or modify end-to-end (e2e) test suites; I will manually verify the behavior.
