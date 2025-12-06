@@ -9,9 +9,21 @@ interface NarrativeCarouselProps {
   narratives: NarrativeItem[];
   onCopy: (narrative: NarrativeItem) => Promise<boolean> | boolean;
   onDownload: (narrative: NarrativeItem) => void;
+  onRegenerate?: (narrativeType: NarrativeItem["type"]) => void;
+  regeneratingType?: NarrativeItem["type"] | null;
+  regenCounts?: Record<NarrativeItem["type"], number>;
+  regenErrors?: Record<NarrativeItem["type"], string | null>;
 }
 
-export function NarrativeCarousel({ narratives, onCopy, onDownload }: NarrativeCarouselProps) {
+export function NarrativeCarousel({ 
+  narratives, 
+  onCopy, 
+  onDownload,
+  onRegenerate,
+  regeneratingType = null,
+  regenCounts = {} as Record<NarrativeItem["type"], number>,
+  regenErrors = {} as Record<NarrativeItem["type"], string | null>,
+}: NarrativeCarouselProps) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ 
     align: "start",
     containScroll: "trimSnaps",
@@ -70,6 +82,10 @@ export function NarrativeCarousel({ narratives, onCopy, onDownload }: NarrativeC
                 index={index}
                 onCopy={onCopy}
                 onDownload={onDownload}
+                onRegenerate={onRegenerate}
+                isRegenerating={regeneratingType === narrative.type}
+                regenCount={regenCounts[narrative.type] || 0}
+                regenError={regenErrors[narrative.type] || null}
               />
             </div>
           ))}

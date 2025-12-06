@@ -10,7 +10,7 @@ import {
   getErrorMessage,
   GenerationErrorType,
 } from "@/lib/formState";
-import { loadFormData, clearFormData } from "@/lib/formPersistence";
+import { loadFormData } from "@/lib/formPersistence";
 import { saveResults, GenerationResult } from "@/lib/resultsPersistence";
 import { DisclaimerModal } from "@/components/disclaimer/DisclaimerModal";
 
@@ -90,7 +90,6 @@ export default function Loading() {
         ...prev,
         status: "success",
       }));
-      clearFormData();
       setShowDisclaimer(true);
     } catch (err) {
       let errorType: GenerationErrorType = "unknown";

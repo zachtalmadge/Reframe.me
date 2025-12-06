@@ -5,13 +5,24 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Layout from "@/components/Layout";
 import { ToolType } from "@/lib/formState";
-import { loadResults, NarrativeItem, ResponseLetter, clearResults, GenerationResult } from "@/lib/resultsPersistence";
+import { loadResults, NarrativeItem, ResponseLetter, clearResults, GenerationResult, updateResults } from "@/lib/resultsPersistence";
+import { loadFormData } from "@/lib/formPersistence";
 import { useDocumentActions } from "@/hooks/useDocumentActions";
 import { NarrativeCarousel } from "@/components/results/NarrativeCarousel";
 import { ResponseLetterPanel } from "@/components/results/ResponseLetterPanel";
 import { DocumentSwitcher, DocumentTab } from "@/components/results/DocumentSwitcher";
 import { PartialFailureAlert } from "@/components/results/PartialFailureAlert";
 import { useToast } from "@/hooks/use-toast";
+import { regenerateNarrative, regenerateLetter } from "@/lib/api";
+import {
+  loadRegenerationCounts,
+  saveRegenerationCounts,
+  clearRegenerationCounts,
+  incrementNarrativeCount,
+  incrementLetterCount,
+  RegenerationCounts,
+  NarrativeType,
+} from "@/lib/regenerationPersistence";
 
 export default function Results() {
   const [, navigate] = useLocation();
@@ -26,6 +37,19 @@ export default function Results() {
   const [activeTab, setActiveTab] = useState<DocumentTab>("narratives");
   const [isRetrying, setIsRetrying] = useState(false);
   const { toast } = useToast();
+
+  const [sessionId, setSessionId] = useState<string>("");
+  const [regenCounts, setRegenCounts] = useState<RegenerationCounts | null>(null);
+  const [regeneratingType, setRegeneratingType] = useState<NarrativeType | null>(null);
+  const [isLetterRegenerating, setIsLetterRegenerating] = useState(false);
+  const [narrativeErrors, setNarrativeErrors] = useState<Record<NarrativeType, string | null>>({
+    full_disclosure: null,
+    skills_focused: null,
+    growth_journey: null,
+    minimal_disclosure: null,
+    values_aligned: null,
+  });
+  const [letterError, setLetterError] = useState<string | null>(null);
 
   const {
     handleCopyNarrative,
@@ -46,6 +70,10 @@ export default function Results() {
     setResponseLetter(persisted.result.responseLetter);
     setStatus(persisted.result.status);
     setErrors(persisted.result.errors || []);
+    setSessionId(persisted.sessionId);
+
+    const counts = loadRegenerationCounts(persisted.sessionId);
+    setRegenCounts(counts);
 
     if (persisted.tool === "responseLetter" || 
         (persisted.tool === "both" && persisted.result.narratives.length === 0 && persisted.result.responseLetter)) {
@@ -61,6 +89,7 @@ export default function Results() {
 
   const handleStartOver = () => {
     clearResults();
+    clearRegenerationCounts();
     navigate("/");
   };
 
@@ -75,6 +104,105 @@ export default function Results() {
       description: "Regeneration functionality will be added in a future update. Please start over to generate new documents.",
     });
     setTimeout(() => setIsRetrying(false), 1000);
+  };
+
+  const handleRegenerateNarrative = async (narrativeType: NarrativeType) => {
+    const formData = loadFormData();
+    if (!formData) {
+      toast({
+        title: "Unable to regenerate",
+        description: "Form data is no longer available. Please start over.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setRegeneratingType(narrativeType);
+    setNarrativeErrors(prev => ({ ...prev, [narrativeType]: null }));
+
+    const { currentStep, errors: _errors, ...cleanFormData } = formData.formState;
+    const response = await regenerateNarrative(narrativeType, cleanFormData);
+
+    if (response.error) {
+      setNarrativeErrors(prev => ({ ...prev, [narrativeType]: response.error! }));
+      setRegeneratingType(null);
+      return;
+    }
+
+    if (response.narrative) {
+      const updatedNarratives = narratives.map(n => 
+        n.type === narrativeType ? response.narrative! : n
+      );
+      setNarratives(updatedNarratives);
+
+      const updatedResult: GenerationResult = {
+        status,
+        narratives: updatedNarratives,
+        responseLetter,
+        errors,
+      };
+      updateResults(updatedResult);
+
+      const currentCounts = regenCounts || loadRegenerationCounts(sessionId);
+      const newCounts = incrementNarrativeCount(currentCounts, narrativeType);
+      setRegenCounts(newCounts);
+      saveRegenerationCounts(newCounts);
+
+      toast({
+        title: "Narrative regenerated",
+        description: "Your narrative has been updated with a fresh version.",
+      });
+    }
+
+    setRegeneratingType(null);
+  };
+
+  const handleRegenerateLetter = async () => {
+    const formData = loadFormData();
+    if (!formData) {
+      toast({
+        title: "Unable to regenerate",
+        description: "Form data is no longer available. Please start over.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsLetterRegenerating(true);
+    setLetterError(null);
+
+    const { currentStep, errors: _errors, ...cleanFormData } = formData.formState;
+    const response = await regenerateLetter(cleanFormData);
+
+    if (response.error) {
+      setLetterError(response.error);
+      setIsLetterRegenerating(false);
+      return;
+    }
+
+    if (response.letter) {
+      setResponseLetter(response.letter);
+
+      const updatedResult: GenerationResult = {
+        status,
+        narratives,
+        responseLetter: response.letter,
+        errors,
+      };
+      updateResults(updatedResult);
+
+      const currentCounts = regenCounts || loadRegenerationCounts(sessionId);
+      const newCounts = incrementLetterCount(currentCounts);
+      setRegenCounts(newCounts);
+      saveRegenerationCounts(newCounts);
+
+      toast({
+        title: "Letter regenerated",
+        description: "Your response letter has been updated with a fresh version.",
+      });
+    }
+
+    setIsLetterRegenerating(false);
   };
 
   return (
@@ -144,6 +272,10 @@ export default function Results() {
                   narratives={narratives}
                   onCopy={handleCopyNarrative}
                   onDownload={handleDownloadNarrative}
+                  onRegenerate={handleRegenerateNarrative}
+                  regeneratingType={regeneratingType}
+                  regenCounts={regenCounts?.narratives || {} as Record<NarrativeType, number>}
+                  regenErrors={narrativeErrors}
                 />
               </div>
             )}
@@ -154,6 +286,10 @@ export default function Results() {
                   letter={responseLetter}
                   onCopy={handleCopyLetter}
                   onDownload={handleDownloadLetter}
+                  onRegenerate={handleRegenerateLetter}
+                  isRegenerating={isLetterRegenerating}
+                  regenCount={regenCounts?.letter || 0}
+                  regenError={letterError}
                 />
               </div>
             )}
