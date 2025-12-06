@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { FileText, Mail, ArrowRight, Clock, Shield, Heart, Lock } from "lucide-react";
+import { FileText, Mail, ArrowRight, Clock, Shield, Heart } from "lucide-react";
 import Layout from "@/components/Layout";
 import { useInView } from "@/hooks/useInView";
 
@@ -171,8 +171,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      <SafeZoneSection />
 
       <section 
         ref={howItWorksRef as React.RefObject<HTMLElement>}
