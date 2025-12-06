@@ -23,17 +23,19 @@ const narrativeTypeDescriptions: Record<string, string> = {
 interface NarrativeCardProps {
   narrative: NarrativeItem;
   index: number;
-  onCopy: (narrative: NarrativeItem) => void;
+  onCopy: (narrative: NarrativeItem) => Promise<boolean> | boolean;
   onDownload: (narrative: NarrativeItem) => void;
 }
 
 export function NarrativeCard({ narrative, index, onCopy, onDownload }: NarrativeCardProps) {
   const [copied, setCopied] = useState(false);
 
-  const handleCopy = () => {
-    onCopy(narrative);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  const handleCopy = async () => {
+    const success = await onCopy(narrative);
+    if (success) {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
   };
 
   const label = narrative.title || narrativeTypeLabels[narrative.type] || `Narrative ${index + 1}`;
