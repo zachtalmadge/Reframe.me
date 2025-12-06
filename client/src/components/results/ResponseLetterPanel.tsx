@@ -142,7 +142,11 @@ export function ResponseLetterPanel({
                     {regenerateButton}
                   </span>
                 </TooltipTrigger>
-                <TooltipContent className="max-w-xs text-center">
+                <TooltipContent 
+                  side="top" 
+                  collisionPadding={16}
+                  className="max-w-xs text-center"
+                >
                   <p>You've regenerated this letter several times. For deeper edits, try copying it into an AI tool or working with a trusted advisor.</p>
                 </TooltipContent>
               </Tooltip>

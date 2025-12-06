@@ -163,7 +163,11 @@ export function NarrativeCard({
                     {regenerateButton}
                   </span>
                 </TooltipTrigger>
-                <TooltipContent className="max-w-xs text-center">
+                <TooltipContent 
+                  side="top" 
+                  collisionPadding={16}
+                  className="max-w-xs text-center"
+                >
                   <p>You've regenerated this narrative several times. For deeper edits, try copying it into an AI tool or working with a trusted helper for further refinement.</p>
                 </TooltipContent>
               </Tooltip>
