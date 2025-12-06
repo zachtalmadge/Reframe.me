@@ -24,9 +24,10 @@ export default function Layout({ children, onLogoClick }: LayoutProps) {
               className="flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-md"
               data-testid="link-home"
               onClick={handleLogoClick}
+              aria-label="Reframe.me home"
             >
               <span className="text-xl font-semibold text-primary tracking-tight">
-                Reflect.me
+                Reframe.me
               </span>
             </Link>
           </div>

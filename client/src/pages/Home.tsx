@@ -21,7 +21,7 @@ export default function Home() {
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
               You deserve tools that help you tell your story with confidence. 
-              Reflect.me creates personalized materials to support your job search journey.
+              Reframe.me creates personalized materials to support your job search journey.
             </p>
           </div>
 

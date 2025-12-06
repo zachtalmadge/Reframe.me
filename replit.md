@@ -1,8 +1,8 @@
-# Reflect.me - Replit Agent Guide
+# Reframe.me - Replit Agent Guide
 
 ## Overview
 
-Reflect.me is a mobile-first web application designed to help justice-involved individuals prepare for job opportunities. The application generates two key tools:
+Reframe.me is a mobile-first web application designed to help justice-involved individuals prepare for job opportunities. The application generates two key tools:
 
 1. **Five Disclosure Narratives** - Different ways to discuss background information with potential employers during interviews
 2. **Pre-Adverse Action Response Letter** - A formal response when employers flag background check concerns

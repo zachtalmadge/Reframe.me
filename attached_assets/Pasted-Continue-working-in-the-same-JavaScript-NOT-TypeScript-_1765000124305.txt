@@ -1,0 +1,224 @@
+Continue working in the same JavaScript (NOT TypeScript) + React + Tailwind CSS, mobile-first project.
+The app’s brand is currently “Reflect.me”, and the navbar (via the shared Layout / header component) uses that name and logo.
+
+I want to rename the product from “Reflect.me” to “Reframe.me” and update:
+
+The brand name text in the navbar, and
+
+The logo in the navbar (image/mark), including its alt text and any related aria labels/titles.
+
+Important for this change:
+For this prompt, DO NOT perform any end-to-end (e2e) tests or automated full-flow testing.
+You may do local/component-level checks only. I will manually confirm in the UI.
+
+Business requirement – Navbar branding change Reflect.me → Reframe.me
+
+Update the app’s navbar/header branding so that:
+
+Anywhere in the navbar/header where the brand name “Reflect.me” appears:
+
+It is renamed to “Reframe.me”.
+
+This includes:
+
+Visible text next to the logo (if present).
+
+alt attributes on the logo image.
+
+aria-labels on the logo link or brand link.
+
+Any title attributes or screen-reader only text specific to the brand.
+
+The logo graphic in the navbar should be updated:
+
+Replace the existing Reflect.me logo asset with the new Reframe.me logo asset (or point to the new file if it’s already in the repo).
+
+Ensure:
+
+The import path or src for the logo is updated wherever the navbar uses it.
+
+The logo renders correctly at all breakpoints (mobile and desktop).
+
+Scope is limited to navbar/header branding:
+
+Focus on what appears in the global navigation bar at the top of the app.
+
+Do not rename deeply embedded text elsewhere (like feature descriptions or docs) unless the navbar component is reused there.
+
+Acceptance criteria (Given / When / Then)
+Scenario: Navbar shows “Reframe.me” instead of “Reflect.me”
+
+Given the user loads any page that uses the shared Layout/navbar
+
+When they look at the top navigation bar
+
+Then:
+
+The visible brand name (if present) reads “Reframe.me” (not “Reflect.me”).
+
+The logo’s alt text and any aria-label reference “Reframe.me”.
+
+Scenario: Logo asset is updated
+
+Given the new Reframe.me logo asset is available in the codebase
+
+When the navbar renders
+
+Then:
+
+The logo displayed is the new Reframe.me logo (correct file/source).
+
+It renders properly on mobile and desktop layouts (no broken image, correct sizing, no layout glitches).
+
+Scenario: Logo link semantics are updated
+
+Given the logo area in the navbar is clickable (usually linking to Home)
+
+When the user inspects attributes or uses a screen reader
+
+Then:
+
+Any ARIA labels, alt text, or titles reference “Reframe.me”.
+
+There are no leftover references to “Reflect.me” in the navbar markup.
+
+What I want you (Replit AI) to do
+
+Assess the current navbar/header implementation
+
+Locate the shared layout / navbar component (e.g., Layout.jsx, Navbar.jsx, or similar) that:
+
+Renders the logo.
+
+Renders the brand name text (“Reflect.me”) if present.
+
+Identify:
+
+How the logo is imported (path to the current logo asset).
+
+Where “Reflect.me” is hard-coded (text, alt, aria-label, etc.).
+
+Describe your understanding of the requirements
+
+Explain in your own words:
+
+That the brand name must be changed from Reflect.me → Reframe.me in the navbar.
+
+That the navbar logo asset should be updated to the new Reframe.me logo.
+
+That associated alt/aria labels must be updated for accessibility and consistency.
+
+Identify key considerations to avoid disrupting existing functionality
+
+Ensure:
+
+Navigation behavior (e.g., clicking the logo to go Home) remains unchanged.
+
+Layout and responsiveness are unaffected—logo sizing and spacing should still behave well on mobile/desktop.
+
+There are no lingering references to “Reflect.me” in the navbar code.
+
+Propose best-practice implementation
+
+Suggest:
+
+Keeping the brand name in a single constant or config (e.g., const APP_NAME = "Reframe.me";) to avoid scattered strings.
+
+Using meaningful alt text, such as:
+
+alt="Reframe.me logo"
+
+aria-label="Reframe.me home" on the link wrapping the logo.
+
+Confirm that the logo asset is optimized for web (reasonable size, SVG or compressed image).
+
+Generate a step-by-step implementation plan
+
+At a minimum include:
+
+Step 1: Search the codebase for “Reflect.me” and identify all navbar-related occurrences.
+
+Step 2: Update the navbar brand text to “Reframe.me”.
+
+Step 3: Update the logo import/source in the navbar:
+
+Replace the old logo component/import with the new Reframe.me logo asset.
+
+Ensure the file path and file type are correct.
+
+Step 4: Update alt text, aria-labels, and any title attributes on the logo or brand link to use “Reframe.me”.
+
+Step 5: Manually check the navbar across:
+
+Home page
+
+Form, Loading, Results/Documents pages (anywhere Layout is used)
+
+Confirm the branding is consistent and no old logo/text appears.
+
+Keep the scope limited
+
+Do not:
+
+Change body copy, document text, or deep content references to Reflect.me in other components unless they are part of the navbar.
+
+Modify routing or CTA labels as part of this prompt.
+
+Only adjust:
+
+Navbar logo asset.
+
+Navbar brand name text.
+
+Logo-related alt/aria/title text.
+
+Propose a skeleton framework
+
+Provide a simplified JSX example of what the updated navbar snippet might look like, for example:
+
+// inside Layout or Navbar
+import ReframeLogo from "@/assets/reframe-logo.svg"; // example path
+
+function Navbar() {
+  const [, navigate] = useLocation();
+
+  const handleLogoClick = () => {
+    navigate("/");
+  };
+
+  return (
+    <header className="w-full border-b bg-background">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+        <button
+          type="button"
+          onClick={handleLogoClick}
+          className="flex items-center gap-2"
+          aria-label="Reframe.me home"
+        >
+          <img
+            src={ReframeLogo}
+            alt="Reframe.me logo"
+            className="h-8 w-auto"
+          />
+          <span className="text-base font-semibold">
+            Reframe.me
+          </span>
+        </button>
+        {/* other navbar content */}
+      </div>
+    </header>
+  );
+}
+
+
+Clarify that the actual logo import path and size should match the project’s structure and design system.
+
+Do not run e2e tests
+
+For this prompt:
+
+You may update the Layout/Navbar and logo import paths.
+
+You may perform manual or component-level checks.
+
+Do NOT run or modify any end-to-end (e2e) test suites; I will manually verify the behavior.
