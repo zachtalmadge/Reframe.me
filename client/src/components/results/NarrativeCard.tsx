@@ -69,24 +69,6 @@ export function NarrativeCard({
   const canRegenerate = regenCount < MAX_REGENERATIONS;
   const remainingRegens = MAX_REGENERATIONS - regenCount;
 
-  const regenerateButton = (
-    <Button
-      variant="outline"
-      size="sm"
-      className="flex-1"
-      onClick={handleRegenerate}
-      disabled={!canRegenerate || isRegenerating || !onRegenerate}
-      data-testid={`button-regenerate-narrative-${index + 1}`}
-    >
-      {isRegenerating ? (
-        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-      ) : (
-        <RefreshCw className="w-4 h-4 mr-2" />
-      )}
-      {isRegenerating ? "Regenerating..." : `Regenerate (${remainingRegens} left)`}
-    </Button>
-  );
-
   return (
     <Card 
       className="h-full flex flex-col relative"
@@ -126,7 +108,7 @@ export function NarrativeCard({
         >
           {narrative.content}
         </div>
-        <div className="flex gap-2 mt-4 pt-4 border-t border-border flex-shrink-0 flex-wrap">
+        <div className="flex gap-2 mt-4 pt-4 border-t border-border flex-shrink-0">
           <Button
             variant="outline"
             size="sm"
@@ -153,27 +135,52 @@ export function NarrativeCard({
             <Download className="w-4 h-4 mr-2" />
             Download
           </Button>
-          {onRegenerate && (
-            canRegenerate ? (
-              regenerateButton
+        </div>
+        {onRegenerate && (
+          <div className="mt-2 flex-shrink-0">
+            {canRegenerate ? (
+              <Button
+                variant="outline"
+                size="sm"
+                className="w-full"
+                onClick={handleRegenerate}
+                disabled={isRegenerating || !onRegenerate}
+                data-testid={`button-regenerate-narrative-${index + 1}`}
+              >
+                {isRegenerating ? (
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                ) : (
+                  <RefreshCw className="w-4 h-4 mr-2" />
+                )}
+                {isRegenerating ? "Regenerating..." : `Regenerate (${remainingRegens} left)`}
+              </Button>
             ) : (
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <span className="flex-1 inline-flex" tabIndex={0}>
-                    {regenerateButton}
+                  <span className="w-full inline-flex" tabIndex={0}>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="w-full"
+                      disabled
+                      data-testid={`button-regenerate-narrative-${index + 1}`}
+                    >
+                      <RefreshCw className="w-4 h-4 mr-2" />
+                      Regenerate (0 left)
+                    </Button>
                   </span>
                 </TooltipTrigger>
                 <TooltipContent 
-                  side="top" 
+                  side="bottom" 
                   collisionPadding={16}
                   className="max-w-xs text-center"
                 >
                   <p>You've regenerated this narrative several times. For deeper edits, try copying it into an AI tool or working with a trusted helper for further refinement.</p>
                 </TooltipContent>
               </Tooltip>
-            )
-          )}
-        </div>
+            )}
+          </div>
+        )}
       </CardContent>
     </Card>
   );
