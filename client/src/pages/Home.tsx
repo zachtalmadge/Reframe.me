@@ -173,6 +173,52 @@ export default function Home() {
       </section>
 
       <section 
+        className="py-10 md:py-14 px-4 sm:px-6 lg:px-8"
+        aria-labelledby="safe-space-heading"
+        data-testid="section-safe-space"
+      >
+        <div className="max-w-3xl mx-auto">
+          <div className="relative rounded-xl border border-chart-2/20 bg-chart-2/5 p-6 md:p-8">
+            <div className="flex flex-col md:flex-row gap-6 items-start">
+              <div className="flex-shrink-0">
+                <div className="w-12 h-12 rounded-lg bg-chart-2/10 flex items-center justify-center">
+                  <Shield className="w-6 h-6 text-chart-2" aria-hidden="true" />
+                </div>
+              </div>
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <h2 
+                    id="safe-space-heading" 
+                    className="text-xl md:text-2xl font-semibold text-foreground"
+                  >
+                    A judgement-free space, built for your reality.
+                  </h2>
+                  <p className="text-muted-foreground leading-relaxed">
+                    We don't store what you write in this session. You decide what to share, 
+                    and you can close this tab at any time.
+                  </p>
+                </div>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-chart-2" aria-hidden="true" />
+                    No account required.
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-chart-2" aria-hidden="true" />
+                    No tracking of your answers.
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-chart-2" aria-hidden="true" />
+                    You decide what to keep, copy, or delete.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section 
         ref={howItWorksRef as React.RefObject<HTMLElement>}
         className="py-12 md:py-16 px-4 sm:px-6 lg:px-8 bg-muted/30"
         aria-labelledby="how-it-works-heading"
