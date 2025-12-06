@@ -1,0 +1,289 @@
+Continue from the existing implementation of the Documents Page and swipeable narratives carousel.
+The UI currently supports viewing narratives and the response letter, with Download and Copy actions only (no regeneration yet).
+
+Now implement regeneration for:
+
+A specific narrative (per card in the carousel)
+
+The pre-adverse action response letter document
+
+Constraint for both: Each narrative and the pre-adverse action response letter can only be regenerated a maximum of 3 times per “run” (per generated result set). After that, their Regenerate buttons are disabled and a tooltip explains why.
+
+Business requirement – Fine-grained regeneration (narratives + letter) with 3x limits
+
+Extend the Documents Page so that:
+
+Each narrative card in the carousel has a “Regenerate” button.
+
+This triggers a targeted API call that regenerates only that narrative (by its type or id), using the original form data and selection context.
+
+When regeneration completes, only that card’s content is updated; all other narratives remain unchanged.
+
+Each narrative has a per-narrative regeneration limit of 3:
+
+After the user has regenerated that specific narrative 3 times, the “Regenerate” button becomes disabled.
+
+A tooltip (or similar help text) appears on hover/focus/tap with a gentle message such as:
+
+“You’ve regenerated this narrative several times. For deeper edits, try copying it into an AI tool or working with a trusted helper for further refinement.”
+
+The limit is per narrative, not global across all narratives.
+
+The pre-adverse action response letter card has its own “Regenerate” button.
+
+This triggers a targeted API call that regenerates only the letter, again using original form data and selection context.
+
+When regeneration completes, only the letter content is updated.
+
+The letter has the same 3x regeneration limit:
+
+After the user has regenerated the letter 3 times, the “Regenerate” button is disabled.
+
+A tooltip or help message appears with similar gentle guidance, e.g.:
+
+“You’ve regenerated this letter several times. For further refinement, try copying it into an AI tool or working with a trusted advisor.”
+
+The limit is per run of that letter, not tied to other runs or other users.
+
+Regeneration shows local, per-document loading states (e.g., spinner overlay on that specific card) and graceful error handling.
+
+The application already persists generated documents across page refreshes; regeneration counts must also persist across refreshes, so:
+
+If the user regenerates Narrative A twice and the letter once, refreshes the page, and comes back:
+
+Narrative A should still show 2 regenerations used (with 1 remaining).
+
+The letter should show 1 regeneration used (with 2 remaining).
+
+Once the limit of 3 regenerations is reached for a narrative or the letter, that state must remain even after refresh.
+
+When the user starts over or starts again from scratch (e.g., goes back to the beginning of the flow, completes a new multi-step form, and generates a brand new set of documents):
+
+The regeneration limits are reset for that new run.
+
+The app should treat this as a new “session”/result set and start all per-document regeneration counts back at 0 (for each narrative and the letter).
+
+Acceptance criteria (Given / When / Then)
+Scenario: Regenerate a single narrative (within limit)
+
+Given the Documents Page is visible with generated narratives and the swipeable carousel is working
+
+And the user has regenerated a specific narrative fewer than 3 times
+
+When the user taps “Regenerate” on that narrative card
+
+Then:
+
+Only that card enters a local loading state (spinner overlay, disabled actions).
+
+A targeted API call is made, for example:
+
+POST /api/regenerate-narrative
+
+or POST /api/generate-documents with a parameter indicating a single narrative type/id to regenerate.
+
+The request includes:
+
+The narrative’s identifier (type or id)
+
+The original form data (or a reference/id that the backend can use to recreate context).
+
+On success:
+
+The card’s content is replaced with the newly generated narrative.
+
+The card exits loading state.
+
+The regeneration count for that narrative is incremented by 1 and persisted.
+
+Other narratives and the letter remain unchanged.
+
+Scenario: Regenerate the pre-adverse action response letter (within limit)
+
+Given the user is viewing the pre-adverse action response letter card (either on the Letter-only view or under the “Response Letter” tab)
+
+And the user has regenerated the letter fewer than 3 times
+
+When they click “Regenerate”
+
+Then:
+
+The letter card enters a local loading state.
+
+A targeted API call is made, for example:
+
+POST /api/regenerate-letter
+
+or an appropriate parameter to the existing generation endpoint.
+
+The request includes the original form data (or reference/id).
+
+On success:
+
+The letter content is updated with the new text.
+
+The loading state ends.
+
+The regeneration count for the letter is incremented by 1 and persisted.
+
+All narratives remain unchanged.
+
+Scenario: Regeneration error (narrative or letter)
+
+Given a regeneration request (for a narrative or the letter) fails
+
+When the API returns an error
+
+Then:
+
+The affected card exits loading state.
+
+An inline error message appears in that card (e.g., “We couldn’t refresh this document right now. Please try again.”).
+
+A “Try again” option is presented for that specific card, respecting the 3x limit:
+
+The failure does not increment the regeneration count.
+
+Other documents remain intact and usable.
+
+Scenario: Enforcing the 3x per-document limit (with persistence)
+
+Given the user has already regenerated a particular narrative or the response letter 3 times in the current run
+
+When they view that card again (even after refreshing the page)
+
+Then:
+
+The “Regenerate” button on that card is disabled (or visually inactive).
+
+A tooltip/info message is available (e.g., hover/focus/tap) with a gentle explanation, such as:
+
+For narratives:
+
+“You’ve regenerated this narrative several times. For deeper edits, try copying it into an AI tool or working with a trusted helper for further refinement.”
+
+For the letter:
+
+“You’ve regenerated this letter several times. For deeper edits, try copying it into an AI tool or working with a trusted advisor.”
+
+Clicking/tapping the disabled button should not send additional API requests.
+
+Scenario: Persisting regeneration counts across refresh
+
+Given the user has regenerated one or more narratives and/or the letter
+
+When they refresh the page or close and reopen the tab and the app reloads the same generated documents
+
+Then:
+
+The regeneration count for each narrative and the letter is restored from persistent storage.
+
+Remaining allowed regenerations, button states, and tooltip behavior match the stored counts.
+
+Scenario: Resetting limits on “start over”
+
+Given the user chooses to start over (e.g., goes back to the start of the flow, completes the form, and triggers a new document generation)
+
+When the new set of narratives and/or response letter is generated
+
+Then:
+
+The regeneration counts for all narratives and the letter are reset to 0.
+
+All “Regenerate” buttons are active again (up to 3 regenerations allowed for each document in this fresh run).
+
+Any persisted data for the previous run’s regeneration counts does not affect the new run.
+
+What I want you (Replit AI) to do
+
+Assess the enhancement and outline needed changes on both frontend and backend:
+
+Whether to add new endpoints (/api/regenerate-narrative, /api/regenerate-letter) or extend the existing /api/generate-documents with a mode or target parameter.
+
+How you will represent regeneration counts (e.g., per document id or type) and where this lives on the frontend.
+
+Describe your understanding of how regeneration should behave compared to initial generation:
+
+Only updates a single document at a time (narrative or letter).
+
+Uses the same underlying form data and selection state.
+
+Enforces a 3x maximum per narrative and per letter, with persistent counts across page reloads, but resets when the user starts over.
+
+Identify key considerations:
+
+How to persist regeneration counts:
+
+For example, using localStorage keyed by a “run/session id” plus document id/type so counts survive refresh but are scoped to a single result set.
+
+How to generate or store a run/session identifier whenever documents are initially generated (e.g., timestamp-based or a server-provided id) so you can reset counts cleanly when starting over.
+
+Keeping regeneration isolated so it does not break:
+
+Swipe carousel behavior
+
+Download/Copy functionality
+
+Overall Documents Page flow
+
+Propose best-practice UX for per-document regeneration with limits:
+
+Clear local spinners or skeleton states during regeneration.
+
+Disabled state styling and tooltip behavior after 3 regenerations (for both narratives and letter).
+
+Supportive, non-judgmental tooltip copy.
+
+Maintaining scroll position and carousel index after regeneration.
+
+Assess other best practices:
+
+Debouncing or disabling repeated clicks while loading.
+
+Centralizing API helpers (api/regenerateNarrative, api/regenerateLetter).
+
+Logging or tracking errors for troubleshooting (on the backend).
+
+Accessibility for tooltips and disabled buttons (focusability, ARIA attributes).
+
+Generate a step-by-step implementation plan, including:
+
+Backend:
+
+Endpoints/handlers and how they call the OpenAI API with existing prompts/context.
+
+How responses are shaped so the frontend can update just the target narrative or letter.
+
+Frontend:
+
+Where regeneration handlers live (DocumentsPage, NarrativesCarousel, card components).
+
+How you model document state (documentsById, regenCountsById, sessionId, etc.).
+
+How you read/write regeneration counts from/to persistent storage (e.g., localStorage) when:
+
+Loading the Documents Page
+
+Completing a regeneration
+
+Starting over (resetting counts).
+
+Keep scope limited to regeneration and regeneration-limit logic; do not refactor unrelated parts of the app.
+
+Propose a skeleton framework that shows:
+
+Example React handler signatures:
+
+onRegenerateNarrative(narrativeIdOrType)
+
+onRegenerateLetter()
+
+Example API helper functions and expected response shapes.
+
+How loading/error/regen-count state is represented per card (e.g., isRegenerating, regenCount, regenError).
+
+Do not modify files yet.
+
+First output your understanding, considerations, and implementation plan.
+
+Wait for my confirmation before making any code changes.
