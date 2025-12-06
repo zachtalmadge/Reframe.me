@@ -1,0 +1,284 @@
+Continue working in the same JavaScript (NOT TypeScript) + React + Tailwind CSS, mobile-first project.
+In the unified multi-step form, Step 1 collects Background / Offense information and allows the user to “Add another” background/offense entry.
+
+Current issues:
+
+The user can click “Add another” even when the current/previous background entry is empty (no required fields filled).
+
+The user can click “Add another” endlessly, creating unlimited empty entries.
+
+Desired behavior:
+
+The user must not be able to add another background entry unless the required fields in the previous entry are filled out.
+
+For MVP, the user should be able to add a maximum of 5 background entries. After that, they should not be allowed to add more.
+
+Important for this fix:
+For this change, DO NOT perform any end-to-end (e2e) tests or automated full-flow testing.
+You may do local/component-level checks only. I will manually confirm the behavior in the UI.
+
+Business requirement – Guard “Add another” behavior and limit backgrounds to 5
+
+In Step 1 – Background / Offenses:
+
+Required fields must be complete before adding another entry
+
+Each background/offense “row” (entry) has a set of required fields (e.g., charge type, severity, disposition, year, etc. — whatever is currently required in the implementation).
+
+The “Add another” action must be blocked unless:
+
+All required fields in the last (most recent) entry are valid and non-empty.
+
+The user must not be able to stack multiple empty entries.
+
+Maximum 5 background entries
+
+The user should be allowed to create up to 5 background/offense entries.
+
+Once there are 5 entries:
+
+The “Add another” button should be disabled (or hidden) so the user cannot add a 6th entry.
+
+Optionally display a small note indicating the limit has been reached (e.g., “You can add up to 5 entries.”).
+
+UX feedback
+
+If the user tries to add another entry while the current one has missing required fields:
+
+Either:
+
+Disable the “Add another” button until the required fields are filled, or
+
+If you keep the button enabled, show inline validation errors and do not append a new entry when clicked.
+
+The behavior should be consistent with how validation is handled elsewhere in the form (inline errors, etc.).
+
+Acceptance criteria (Given / When / Then)
+Scenario: Cannot add another when current entry is incomplete
+
+Given the user is on Step 1: Background / Offenses
+
+And the current (last) background entry has one or more required fields empty or invalid
+
+When the user attempts to click “Add another”
+
+Then:
+
+A new background entry is not added.
+
+The user receives clear feedback:
+
+Either the “Add another” button is disabled until the entry is complete, or
+
+Inline validation errors are shown on the missing required fields.
+
+Scenario: Can add another only when current entry is valid
+
+Given the user is on Step 1
+
+And the current background entry’s required fields are all filled and valid
+
+When the user clicks “Add another”
+
+Then:
+
+A new, empty background entry is added to the list.
+
+The user can now fill in the new entry’s fields.
+
+The form still enforces the same rule for the new last entry (must be valid before adding another).
+
+Scenario: Maximum of 5 entries
+
+Given the user has already added 5 background entries (regardless of whether they are all filled)
+
+When they try to add another entry
+
+Then:
+
+The user cannot add a 6th entry:
+
+The “Add another” button is disabled or hidden.
+
+Optionally, the UI may display a small note such as:
+
+“You can add up to 5 background entries.”
+
+Scenario: Existing entries remain editable
+
+Given the user has multiple background entries (up to 5)
+
+When they edit any of the existing entries
+
+Then:
+
+They can still modify values, correct errors, or delete entries as currently supported.
+
+The max 5 entries rule applies only to adding new entries, not editing existing ones.
+
+What I want you (Replit AI) to do
+
+Assess the current Step 1 implementation
+
+Locate the component responsible for Step 1 – Background / Offenses:
+
+Identify how background entries are stored (likely an array in form state).
+
+Find the “Add another” button handler (e.g., something like handleAddBackground()).
+
+Identify:
+
+Which fields within a single background entry are currently marked as required in the validation schema or UI.
+
+Describe your understanding of the requirements
+
+Explain in your own words:
+
+The user must not be able to add another background entry if the last entry’s required fields are not filled/valid.
+
+The number of background entries must be limited to 5.
+
+UX should give clear feedback (disabled button and/or inline errors).
+
+Identify key considerations to avoid disrupting existing functionality
+
+Ensure:
+
+The way changes are validated is consistent with the existing form validation approach (e.g., using Yup/Zod/custom validation).
+
+Removing/deleting entries (if allowed) still works correctly and doesn’t break the “max 5” logic.
+
+The multi-step progress and navigation still function as before.
+
+Propose the UX and validation behavior
+
+Decide the pattern:
+
+Preferred for MVP:
+
+Disable the “Add another” button when:
+
+The last entry has missing required fields, or
+
+The total number of entries is already 5.
+
+Optionally add helper text explaining why.
+
+Or:
+
+Let the user click, but validate and block adding if the last entry is invalid, showing inline errors.
+
+Use Tailwind classes to:
+
+Style the disabled button appropriately (opacity-50, cursor-not-allowed, etc.).
+
+Align error messages with existing form styling.
+
+Generate a step-by-step implementation plan
+
+At a minimum include:
+
+Step 1: Identify the data structure for background entries (e.g., backgrounds: BackgroundEntry[]).
+
+Step 2: Identify which fields of a BackgroundEntry are required (e.g., offenseType, offenseCategory, year, etc., depending on the current implementation).
+
+Step 3: Implement a helper function, e.g. isBackgroundEntryValid(entry), that:
+
+Checks all required fields are present and valid (e.g., non-empty strings, valid dates).
+
+Step 4: Update the “Add another” handler or button:
+
+Before adding a new entry:
+
+Check if backgrounds.length < 5.
+
+Check that the last entry passes isBackgroundEntryValid.
+
+If conditions are not met, do not push a new entry and show appropriate feedback.
+
+If conditions are met, append a new empty entry.
+
+Step 5: Add a limit check in the UI:
+
+Disable or hide the “Add another” button when backgrounds.length >= 5.
+
+Optionally show a hint: “You can add up to 5 background entries.”
+
+Step 6: Manually test:
+
+Start with 1 empty entry → try to click “Add another” → ensure it doesn’t add and any validation/disabled state is correct.
+
+Fill the first entry → click “Add another” → ensure the second entry appears.
+
+Repeat until 5 entries → verify you cannot add a 6th.
+
+Check editing existing entries still behaves correctly.
+
+Keep the scope limited
+
+Do not:
+
+Change other steps’ behavior or input requirements.
+
+Alter any other multi-entry sections (e.g., programs, skills) unless explicitly required.
+
+Only adjust:
+
+The Step 1 Background / Offenses “Add another” behavior.
+
+The limit of maximum entries (5).
+
+Any necessary validation wiring for that step.
+
+Propose a skeleton framework
+
+Provide a simplified example of how this might look in code:
+
+const MAX_BACKGROUNDS = 5;
+
+function isBackgroundEntryValid(entry) {
+  // Replace field names with your actual ones
+  return (
+    entry.offenseType?.trim() &&
+    entry.offenseCategory?.trim() &&
+    entry.year &&
+    // any other required fields...
+    true
+  );
+}
+
+const canAddAnother =
+  backgrounds.length < MAX_BACKGROUNDS &&
+  isBackgroundEntryValid(backgrounds[backgrounds.length - 1]);
+
+// ...
+<div className="mt-4">
+  <Button
+    type="button"
+    onClick={handleAddBackground}
+    disabled={!canAddAnother}
+    className="w-full sm:w-auto"
+  >
+    Add another background
+  </Button>
+  {backgrounds.length >= MAX_BACKGROUNDS && (
+    <p className="mt-1 text-xs text-muted-foreground">
+      You can add up to 5 background entries.
+    </p>
+  )}
+</div>
+
+
+handleAddBackground should:
+
+Check canAddAnother and only push a new entry when allowed.
+
+Do not run e2e tests
+
+For this prompt:
+
+You may update the Step 1 component and any related validation helper.
+
+You may perform manual checks or light component-level tests.
+
+Do NOT run or modify any end-to-end (e2e) test suites; I will manually verify the behavior.

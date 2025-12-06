@@ -13,6 +13,12 @@ import { ChipInput } from "../ChipInput";
 import { FormState, FormAction, Offense } from "@/lib/formState";
 import { calculateTimeSinceRelease } from "@/lib/utils";
 
+const MAX_OFFENSES = 5;
+
+function isOffenseEntryValid(offense: Offense): boolean {
+  return offense.type.trim() !== "" && offense.description.trim() !== "";
+}
+
 interface Step1BackgroundProps {
   state: FormState;
   dispatch: React.Dispatch<FormAction>;
@@ -55,7 +61,14 @@ export function Step1Background({
     state.releaseYear
   );
 
+  const lastOffense = state.offenses[state.offenses.length - 1];
+  const canAddAnother =
+    state.offenses.length < MAX_OFFENSES &&
+    lastOffense &&
+    isOffenseEntryValid(lastOffense);
+
   const handleAddOffense = () => {
+    if (!canAddAnother) return;
     dispatch({ type: "ADD_OFFENSE" });
   };
 
@@ -92,18 +105,26 @@ export function Step1Background({
 
       <div className="space-y-6">
         <div className="space-y-4">
-          <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center justify-between gap-4 flex-wrap">
             <Label className="text-base font-medium">Your Background</Label>
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={handleAddOffense}
-              data-testid="button-add-offense"
-            >
-              <Plus className="w-4 h-4 mr-1" aria-hidden="true" />
-              Add Another
-            </Button>
+            <div className="flex flex-col items-end gap-1">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={handleAddOffense}
+                disabled={!canAddAnother}
+                data-testid="button-add-offense"
+              >
+                <Plus className="w-4 h-4 mr-1" aria-hidden="true" />
+                Add Another
+              </Button>
+              {state.offenses.length >= MAX_OFFENSES && (
+                <p className="text-xs text-muted-foreground" data-testid="text-max-entries-reached">
+                  You can add up to {MAX_OFFENSES} entries.
+                </p>
+              )}
+            </div>
           </div>
 
           <div className="space-y-6">
