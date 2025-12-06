@@ -1,0 +1,318 @@
+Continue working in the same JavaScript (NOT TypeScript) + React + Tailwind CSS, mobile-first project.
+On the Home page, I want to add a new “How It Works” section under the hero + feature cards, to clearly explain the process in 3 simple steps and add some subtle motion/razzle dazzle.
+
+Important for this fix:
+For this change, DO NOT perform any end-to-end (e2e) tests or automated full-flow testing.
+You may do local/component-level checks only. I will manually confirm the behavior in the UI.
+
+Business requirement – 3-step “How It Works” strip with smooth scroll-in animations
+
+Add a new section to the Home page that:
+
+Explains the process in 3 steps
+
+Content (you can refine copy slightly, but keep the meaning):
+
+Step 1 – Share your situation
+
+Answer a few questions about your background and the job you’re applying for.
+
+Step 2 – We help reframe your story
+
+Our tool turns your answers into clear, employer-ready language.
+
+Step 3 – Leave with talking points & documents
+
+You’ll get narratives and a response letter you can reuse and refine.
+
+Visual structure
+
+A horizontally arranged 3-step timeline/strip on desktop:
+
+Numbered steps (1, 2, 3) with small circular or pill indicators.
+
+Short step title + 1–2 lines of explanatory text.
+
+A subtle connecting line or progress bar between steps.
+
+On mobile, this should stack vertically with good spacing:
+
+Each step in its own card/row.
+
+The connecting line can become a vertical line or be removed in favor of simple stacking.
+
+Scroll-in animation / motion
+
+When the section first scrolls into view:
+
+Each step should fade and slide in from left to right, one after another (e.g., slight stagger).
+
+The motion should be:
+
+Gentle (e.g., small translate distance).
+
+Short (~200–300ms per step).
+
+Not distracting or “bouncy.”
+
+Use CSS/Tailwind-friendly approaches (e.g., intersection observer hook + Tailwind classes, or minimal utility logic) rather than heavy animation libraries.
+
+Tone and styling
+
+Design should match existing homepage: clean, calm, rounded corners, soft shadows if you use cards.
+
+This section should:
+
+Feel reassuring and clarifying, not salesy.
+
+Make the process feel manageable (“3 clear steps”).
+
+Accessibility
+
+Steps should be readable with good contrast.
+
+The section should have an accessible heading, e.g. “How it works”.
+
+Animations should not block screen readers; they are visual enhancements only.
+
+Ideally respect prefers-reduced-motion where feasible (reduced or no slide, maybe only fade).
+
+Acceptance criteria (Given / When / Then)
+Scenario: “How It Works” section appears under main hero content
+
+Given the user is on the Home page
+
+When they scroll down past the hero and feature cards
+
+Then:
+
+They see a “How it works” section with three clearly numbered steps.
+
+Each step includes a short title and 1–2 lines of explanatory text.
+
+Scenario: Steps animate in when scrolled into view
+
+Given the user has not yet scrolled to the How It Works section
+
+When the section enters the viewport
+
+Then:
+
+Step 1 fades/slides in.
+
+Step 2 and Step 3 fade/slide in shortly after (staggered).
+
+The animation is smooth and not jarring.
+
+Scenario: Layout works on mobile and desktop
+
+Given the user views the Home page on different screen sizes
+
+When the viewport is:
+
+Mobile (small screens)
+
+Desktop (larger screens)
+
+Then:
+
+On mobile, steps are stacked vertically with adequate spacing and readable text.
+
+On desktop, steps are laid out horizontally in a single strip or responsive grid, with a visual sense of progression (line/connector).
+
+Scenario: Section is informative and non-disruptive
+
+Given the user is scrolling through the Home page
+
+When the How It Works section animates in
+
+Then:
+
+The motion draws attention but does not feel overwhelming or distracting.
+
+Reading the text is easy and comfortable.
+
+The user gets a clear mental model of what will happen if they click “Get Started”.
+
+What I want you (Replit AI) to do
+
+Assess the current Home page structure
+
+Locate the React component(s) for the Home page (where the hero and feature cards are rendered).
+
+Determine:
+
+The best place in the JSX to insert the new How It Works section (likely below the two feature cards and above the Get Started CTA or just before the meta info).
+
+Describe your understanding of the requirements
+
+Explain in your own words:
+
+That you will add a new 3-step How It Works section to the Home page.
+
+That each step has a title + short description.
+
+That steps will fade and slide in when scrolled into view, with a subtle stagger.
+
+That the layout must be responsive (stack on mobile, horizontal on larger screens).
+
+Identify key considerations to avoid disrupting existing functionality
+
+Ensure:
+
+The homepage layout remains clean and does not break existing sections.
+
+The Get Started CTA remains clearly visible and not pushed too far down.
+
+Animations don’t introduce layout shifts or janky scrolling.
+
+You don’t alter existing navigation or selection logic.
+
+Propose best-practice UX and Tailwind implementation
+
+Layout:
+
+Wrap the section in a container like max-w-4xl mx-auto px-4 py-10.
+
+Use a responsive grid or flexbox:
+
+grid grid-cols-1 md:grid-cols-3 gap-6 or similar.
+
+Animation:
+
+Use a small custom hook (e.g., intersection observer) to set hasEnteredView.
+
+Apply Tailwind classes such as:
+
+Base: opacity-0 translate-y-4
+
+Active: opacity-100 translate-y-0 with transition-opacity transition-transform duration-300 ease-out.
+
+Stagger: use inline style with small transitionDelay values or separate classes.
+
+Respect prefers-reduced-motion where possible by conditionally disabling transforms/fades.
+
+Generate a step-by-step implementation plan
+
+At a minimum include:
+
+Step 1: Create a new Home page subsection component (e.g., HowItWorksSection.jsx) or inline section in Home.
+
+Step 2: Define a small array of step objects:
+
+const steps = [
+  {
+    title: "Share your situation",
+    description:
+      "Answer a few questions about your background and the job you’re applying for.",
+  },
+  {
+    title: "We help reframe your story",
+    description:
+      "Our tool turns your answers into clear, employer-ready language.",
+  },
+  {
+    title: "Leave with talking points & documents",
+    description:
+      "You’ll get narratives and a response letter you can reuse and refine.",
+  },
+];
+
+
+Step 3: Implement the layout using Tailwind grid/flex and add step numbers/indicators.
+
+Step 4: Implement a hook or logic to detect when the section enters the viewport and set hasEnteredView to true.
+
+Step 5: Apply fade + slide-in classes to each step with small staggered delays.
+
+Step 6: Manually test on mobile + desktop:
+
+Confirm layout is readable and responsive.
+
+Confirm animation triggers only when scrolled into view and looks smooth.
+
+Keep the scope limited
+
+Do not:
+
+Change hero content, primary CTA, or feature cards beyond adding this section.
+
+Rework routing or form behavior.
+
+Only adjust:
+
+The Home page to include the new How It Works section with animation.
+
+Propose a skeleton framework
+
+Provide a simplified JSX example:
+
+const steps = [
+  {
+    title: "Share your situation",
+    description:
+      "Answer a few questions about your background and the job you’re applying for.",
+  },
+  {
+    title: "We help reframe your story",
+    description:
+      "Our tool turns your answers into clear, employer-ready language.",
+  },
+  {
+    title: "Leave with talking points & documents",
+    description:
+      "You’ll get narratives and a response letter you can reuse and refine.",
+  },
+];
+
+function HowItWorksSection() {
+  const [ref, hasEnteredView] = useInView(/* intersection observer options */);
+
+  return (
+    <section ref={ref} className="py-12 px-4">
+      <div className="max-w-4xl mx-auto text-center mb-8">
+        <h2 className="text-xl font-semibold">How it works</h2>
+        <p className="mt-2 text-sm text-muted-foreground">
+          Three clear steps from feeling stuck to feeling prepared.
+        </p>
+      </div>
+
+      <div className="max-w-4xl mx-auto grid grid-cols-1 gap-6 md:grid-cols-3">
+        {steps.map((step, index) => (
+          <div
+            key={step.title}
+            className={`rounded-xl border bg-white p-6 text-left transition-opacity transition-transform duration-300 ease-out ${
+              hasEnteredView
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-4"
+            }`}
+            style={{
+              transitionDelay: hasEnteredView ? `${index * 80}ms` : "0ms",
+            }}
+          >
+            <div className="flex items-center justify-center h-8 w-8 rounded-full bg-emerald-50 text-sm font-semibold text-emerald-700 mb-3">
+              {index + 1}
+            </div>
+            <h3 className="text-base font-semibold">{step.title}</h3>
+            <p className="mt-2 text-sm text-muted-foreground">
+              {step.description}
+            </p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+
+The actual hook implementation and colors should match your project’s patterns and design system.
+
+Do not run e2e tests
+
+For this prompt:
+
+You may update the Home page and add any small helper hooks/components needed.
+
+You may perform manual or component-level checks.
+
+Do NOT run or modify end-to-end (e2e) test suites; I will manually verify the behavior.

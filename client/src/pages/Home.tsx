@@ -3,8 +3,29 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { FileText, Mail, ArrowRight, Clock, Shield, Heart } from "lucide-react";
 import Layout from "@/components/Layout";
+import { useInView } from "@/hooks/useInView";
+
+const howItWorksSteps = [
+  {
+    title: "Share your situation",
+    description:
+      "Answer a few questions about your background and the job you're applying for.",
+  },
+  {
+    title: "We help reframe your story",
+    description:
+      "Our tool turns your answers into clear, employer-ready language.",
+  },
+  {
+    title: "Leave with talking points & documents",
+    description:
+      "You'll get narratives and a response letter you can reuse and refine.",
+  },
+];
 
 export default function Home() {
+  const { ref: howItWorksRef, isInView: howItWorksInView } = useInView({ threshold: 0.2 });
+
   return (
     <Layout>
       <section 
@@ -92,6 +113,59 @@ export default function Home() {
                 </div>
               </CardContent>
             </Card>
+          </div>
+        </div>
+      </section>
+
+      <section 
+        ref={howItWorksRef as React.RefObject<HTMLElement>}
+        className="py-12 md:py-16 px-4 sm:px-6 lg:px-8 bg-muted/30"
+        aria-labelledby="how-it-works-heading"
+        data-testid="section-how-it-works"
+      >
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-10">
+            <h2 
+              id="how-it-works-heading" 
+              className="text-2xl md:text-3xl font-semibold text-foreground"
+            >
+              How it works
+            </h2>
+            <p className="mt-3 text-muted-foreground max-w-xl mx-auto">
+              Three clear steps from feeling stuck to feeling prepared.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 relative">
+            <div 
+              className="hidden md:block absolute top-8 left-[16.67%] right-[16.67%] h-0.5 bg-border" 
+              aria-hidden="true" 
+            />
+
+            {howItWorksSteps.map((step, index) => (
+              <div
+                key={step.title}
+                className={`relative bg-background rounded-xl border border-border p-6 text-center transition-all duration-300 ease-out motion-reduce:transition-none ${
+                  howItWorksInView
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-4"
+                }`}
+                style={{
+                  transitionDelay: howItWorksInView ? `${index * 100}ms` : "0ms",
+                }}
+                data-testid={`step-${index + 1}`}
+              >
+                <div className="flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 text-primary font-semibold text-lg mx-auto mb-4 relative z-10">
+                  {index + 1}
+                </div>
+                <h3 className="text-base font-semibold text-foreground mb-2">
+                  {step.title}
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {step.description}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
