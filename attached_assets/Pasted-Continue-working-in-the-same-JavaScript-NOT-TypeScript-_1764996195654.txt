@@ -1,0 +1,257 @@
+Continue working in the same JavaScript (NOT TypeScript) + React + Tailwind CSS, mobile-first project.
+The unified multi-step form is already implemented, including:
+
+Step 8: Clarifying Relevance (with a toggle that reveals optional fields)
+
+Step 9: Reinforcing Your Qualifications, with a toggle that reveals Resume and Job Posting fields and passes data into generateResponseLetter().
+
+Current issue:
+When I enable (turn ON) the Reinforce Qualifications toggle on Step 9, an error is thrown. The step does not behave as expected.
+This suggests a bug in:
+
+The Step 9 component state/validation logic, and/or
+
+The form data plumbing into the payload, and/or
+
+The generateResponseLetter() function or related backend wiring.
+
+For this prompt, I want you to thoroughly debug this error and fix it.
+You ARE allowed and encouraged to run end-to-end tests and any existing automated tests until the issue is resolved.
+
+Business requirement – Reinforce Qualifications toggle must work without errors
+
+The Reinforce Qualifications feature in Step 9 should:
+
+Toggle behavior
+
+Default: toggle is OFF (fields hidden, nothing required).
+
+When user turns toggle ON:
+
+Resume and job posting fields are revealed.
+
+Both fields become required for moving on.
+
+When user turns toggle OFF again:
+
+Fields are hidden, and Step 9 imposes no required fields.
+
+Validation & navigation
+
+Toggle OFF → user can go Next with no Step 9 validation errors.
+
+Toggle ON → user must supply non-empty values in both:
+
+Resume text
+
+Job posting text
+or they should see gentle, inline error messages and not advance.
+
+No runtime errors or crashes should occur when toggling on/off or submitting.
+
+Integration with generateResponseLetter()
+
+When toggle is ON and both fields are filled:
+
+resumeText and jobPostingText (and any useResumeAndJobPosting flag) are included in the payload.
+
+generateResponseLetter() handles them without error.
+
+When toggle is OFF (or Step 9 is skipped):
+
+No error should occur due to missing resume/job posting fields.
+
+The response letter generation should still succeed as before.
+
+Acceptance criteria (Given / When / Then)
+Scenario: No runtime error when enabling the toggle
+
+Given the user is on Step 9: Reinforcing Your Qualifications
+
+When they turn the Reinforce Qualifications toggle ON
+
+Then:
+
+The app does not throw any runtime errors (console/browser/dev server logs are clean of new exceptions).
+
+The Resume and Job Posting text areas appear as expected.
+
+Scenario: Required fields enforced when toggle is ON
+
+Given the toggle is ON and the Resume / Job Posting fields are visible
+
+When the user clicks Next with one or both fields empty
+
+Then:
+
+The form does not advance to the next step.
+
+Inline, gentle error messages appear for the missing fields.
+
+No runtime errors occur.
+
+Scenario: Successful next step when toggle is ON and both fields filled
+
+Given the toggle is ON
+
+And the user has filled both Resume text and Job Posting text
+
+When they click Next
+
+Then:
+
+The form advances to the next step or summary without errors.
+
+The values are preserved in form state and included in the payload sent to the backend.
+
+Scenario: Toggle OFF allows skipping Step 9
+
+Given the user leaves the toggle OFF
+
+When they click Next
+
+Then:
+
+The form advances to the next step without any Step 9 validation errors.
+
+No runtime errors occur.
+
+Scenario: End-to-end flow is stable
+
+Given the toggle-related bug has been fixed
+
+When you run the app through end-to-end scenarios (Narrative only, Response Letter only, Both)
+
+Then:
+
+No new errors occur when interacting with Step 9.
+
+The full flow—from Home → Selection → Form → Loading → Disclaimer → Documents Page—works as expected with the toggle both OFF and ON.
+
+What I want you (Replit AI) to do
+
+Assess the bug and identify breaking point(s)
+
+Inspect:
+
+The Step 9 component (UI, state, validation, toggle logic).
+
+Any shared form state or context that Step 9 uses.
+
+The payload assembly code that includes resumeText, jobPostingText, and any toggle flag.
+
+The generateResponseLetter() function and related backend route to see how new fields are consumed.
+
+Look at:
+
+Console errors / stack traces when the toggle is turned ON.
+
+Any TypeScript/ESLint/Type errors if applicable.
+
+Describe your understanding of the error
+
+Explain:
+
+What is causing the error (e.g., undefined access, incorrect field name, schema mismatch, invalid prop type, etc.).
+
+Whether the issue is in the frontend component, validation schema, backend handler, or a combination.
+
+Identify key considerations to avoid breaking other functionality
+
+Ensure:
+
+Fixing this bug does not break Step 8’s toggle behavior.
+
+Other form steps and validations remain intact.
+
+The response letter generation endpoint still works for cases without resume/job posting data.
+
+Regression risk is minimized.
+
+Propose a plan to debug & fix
+
+Outline:
+
+Which files and components you’ll inspect.
+
+How you’ll reproduce the error consistently.
+
+What changes you expect will be needed (e.g., updating state shape, null checks, validation schema, payload mapping, backend field handling).
+
+Run and use tests (including e2e) to validate the fix
+
+You are explicitly allowed and encouraged to run:
+
+Any existing unit tests,
+
+Integration tests, and
+
+End-to-end (e2e) tests for relevant flows.
+
+After applying a fix:
+
+Re-run the relevant e2e tests for:
+
+Response Letter only
+
+Both Documents with Step 9 toggle OFF
+
+Both Documents with Step 9 toggle ON, both fields filled
+
+Generate a step-by-step implementation & debugging plan
+
+At a minimum, include:
+
+Step 1: Reproduce the bug locally by enabling the Step 9 toggle and observing the exact error.
+
+Step 2: Trace the error to its source (component, state mapping, validation, or backend).
+
+Step 3: Apply targeted fixes:
+
+Add any necessary null/undefined guards.
+
+Correct field names or shapes in state and payload.
+
+Align validation schema with the new conditional “required when toggle ON” behavior.
+
+Ensure generateResponseLetter() gracefully handles the presence or absence of resume/job posting fields.
+
+Step 4: Re-run the app manually to confirm the toggle works with no runtime errors.
+
+Step 5: Run relevant unit/integration/e2e tests and ensure they pass.
+
+Step 6: Clean up any leftover debug logs or temporary code.
+
+Keep scope focused on this bug
+
+Do not:
+
+Refactor unrelated parts of the app.
+
+Change UX copy or structure of other steps.
+
+Only adjust:
+
+Step 9 toggle/fields/validation.
+
+Payload mapping for resume/job posting.
+
+generateResponseLetter() handling of those fields if necessary for the bug fix.
+
+Then implement the fix
+
+Unlike some previous prompts, for this one you should proceed to:
+
+Implement the code changes needed to fix the error.
+
+Run the tests you described (including e2e).
+
+After you’re done, summarize:
+
+What was wrong.
+
+Which files were changed.
+
+How the bug was resolved.
+
+Which tests you ran and their results.

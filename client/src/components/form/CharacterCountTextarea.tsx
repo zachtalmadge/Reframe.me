@@ -22,7 +22,9 @@ export function CharacterCountTextarea({
   rows = 4,
   "data-testid": testId,
 }: CharacterCountTextareaProps) {
-  const remainingChars = maxLength - value.length;
+  // Ensure value is always a string to prevent "Cannot read properties of undefined" errors
+  const safeValue = value ?? "";
+  const remainingChars = maxLength - safeValue.length;
   const isNearLimit = remainingChars <= 50;
   const isOverLimit = remainingChars < 0;
 
@@ -34,7 +36,7 @@ export function CharacterCountTextarea({
     <div className={cn("space-y-2", className)}>
       <Textarea
         id={id}
-        value={value}
+        value={safeValue}
         onChange={handleChange}
         placeholder={placeholder}
         rows={rows}
@@ -58,7 +60,7 @@ export function CharacterCountTextarea({
         aria-live="polite"
         data-testid={testId ? `${testId}-counter` : "character-counter"}
       >
-        {value.length}/{maxLength} characters
+        {safeValue.length}/{maxLength} characters
       </div>
     </div>
   );
