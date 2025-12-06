@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -25,6 +26,23 @@ const howItWorksSteps = [
 
 export default function Home() {
   const { ref: howItWorksRef, isInView: howItWorksInView } = useInView({ threshold: 0.2 });
+  const [heroMounted, setHeroMounted] = useState(false);
+  const [showAfter, setShowAfter] = useState(false);
+
+  useEffect(() => {
+    const prefersReduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) {
+      setHeroMounted(true);
+      setShowAfter(true);
+    } else {
+      const mountId = requestAnimationFrame(() => setHeroMounted(true));
+      const afterTimer = setTimeout(() => setShowAfter(true), 800);
+      return () => {
+        cancelAnimationFrame(mountId);
+        clearTimeout(afterTimer);
+      };
+    }
+  }, []);
 
   return (
     <Layout>
@@ -32,21 +50,58 @@ export default function Home() {
         className="py-12 md:py-20 px-4 sm:px-6 lg:px-8"
         aria-labelledby="hero-heading"
       >
-        <div className="max-w-4xl mx-auto text-center space-y-6 md:space-y-8">
-          <div className="space-y-4">
-            <h1 
-              id="hero-heading"
-              className="text-4xl md:text-5xl font-bold leading-tight text-foreground"
-            >
-              Prepare for Your Next Opportunity
-            </h1>
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-              You deserve tools that help you tell your story with confidence. 
-              Reframe.me creates personalized materials to support your job search journey.
-            </p>
-          </div>
+        <div className="max-w-4xl mx-auto">
+          <div className="relative overflow-hidden rounded-2xl p-8 md:p-12">
+            <div
+              className={`absolute inset-0 bg-gradient-to-br from-primary/5 via-primary/10 to-chart-2/5 rounded-2xl transition-all duration-500 ease-out motion-reduce:transition-none ${
+                heroMounted
+                  ? "opacity-100 translate-y-0 rotate-0"
+                  : "opacity-0 translate-y-2 -rotate-1"
+              }`}
+              aria-hidden="true"
+            />
+            
+            <div className="relative text-center space-y-6 md:space-y-8">
+              <div className="space-y-4">
+                <h1 
+                  id="hero-heading"
+                  className="text-4xl md:text-5xl font-bold leading-tight text-foreground"
+                >
+                  Prepare for Your Next Opportunity
+                </h1>
+                <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+                  You deserve tools that help you tell your story with confidence. 
+                  Reframe.me creates personalized materials to support your job search journey.
+                </p>
+              </div>
 
-          <div className="w-16 h-1 bg-primary mx-auto rounded-full" aria-hidden="true" />
+              <div className="w-16 h-1 bg-primary mx-auto rounded-full" aria-hidden="true" />
+
+              <div 
+                className="max-w-md mx-auto text-left space-y-3 pt-4"
+                data-testid="before-after-block"
+              >
+                <div 
+                  className={`text-sm text-muted-foreground/80 italic transition-opacity duration-300 motion-reduce:transition-none ${
+                    heroMounted ? "opacity-100" : "opacity-0"
+                  }`}
+                >
+                  <span className="font-medium text-muted-foreground not-italic">Before:</span>{" "}
+                  "I freeze when employers ask about my record."
+                </div>
+                <div 
+                  className={`text-sm text-foreground font-medium transition-all duration-300 motion-reduce:transition-none ${
+                    showAfter 
+                      ? "opacity-100 translate-y-0" 
+                      : "opacity-0 translate-y-1"
+                  }`}
+                >
+                  <span className="text-primary">After:</span>{" "}
+                  "Now I have language that explains my past and what I've done since."
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
