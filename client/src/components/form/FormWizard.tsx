@@ -104,9 +104,12 @@ function validateStep(
       break;
 
     case 9:
-      if (tool !== "narrative") {
-        if (!state.qualifications.trim()) {
-          errors.qualifications = "Please describe your qualifications";
+      if (tool !== "narrative" && state.useResumeAndJobPosting) {
+        if (!state.resumeText.trim()) {
+          errors.resumeText = "Please paste your resume text to continue.";
+        }
+        if (!state.jobPostingText.trim()) {
+          errors.jobPostingText = "Please paste the job posting text to continue.";
         }
       }
       break;

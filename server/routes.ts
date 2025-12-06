@@ -32,6 +32,9 @@ interface FormData {
   clarifyingRelevanceEnabled: boolean;
   clarifyingRelevance: string;
   qualifications: string;
+  useResumeAndJobPosting: boolean;
+  resumeText: string;
+  jobPostingText: string;
 }
 
 interface GenerateRequest {
@@ -227,7 +230,8 @@ A pre-adverse action response letter is sent when an employer indicates they may
 - Be professional and formal in tone
 - Address the employer's concerns directly
 - Use the OIL framework (Ownership, Impact, Lessons Learned)
-- Highlight qualifications and fit for the role
+- When resume and job posting are provided, specifically connect the candidate's experience to the job requirements to highlight qualifications and fit
+- When resume and job posting are NOT provided, still create a strong letter using the programs, skills, and other context provided
 - Request reconsideration
 
 Return a JSON object with this exact structure:
@@ -263,8 +267,9 @@ ${formData.lessonsLearned || 'Not specified'}
 
 ${formData.clarifyingRelevanceEnabled && formData.clarifyingRelevance ? `Clarifying Relevance to Position:\n${formData.clarifyingRelevance}\n` : ''}
 
-Qualifications & Fit for Role:
-${formData.qualifications || 'Not specified'}
+${formData.useResumeAndJobPosting && formData.resumeText ? `Candidate's Resume (use this to highlight qualifications and fit for role):\n${formData.resumeText}\n` : ''}
+
+${formData.useResumeAndJobPosting && formData.jobPostingText ? `Job Posting (use this to align qualifications to what employer is seeking):\n${formData.jobPostingText}\n` : ''}
 
 Rehabilitation Programs Completed:
 ${formData.programs.length > 0 ? formData.programs.join(', ') : 'Not specified'}

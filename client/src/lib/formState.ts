@@ -23,6 +23,9 @@ export interface FormState {
   clarifyingRelevanceEnabled: boolean;
   clarifyingRelevance: string;
   qualifications: string;
+  useResumeAndJobPosting: boolean;
+  resumeText: string;
+  jobPostingText: string;
   errors: Record<string, string>;
 }
 
@@ -56,6 +59,9 @@ export const initialFormState: FormState = {
   clarifyingRelevanceEnabled: false,
   clarifyingRelevance: "",
   qualifications: "",
+  useResumeAndJobPosting: false,
+  resumeText: "",
+  jobPostingText: "",
   errors: {},
 };
 
