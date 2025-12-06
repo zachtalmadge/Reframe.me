@@ -130,6 +130,96 @@ Generate narratives that are authentic, professional, and help the individual pr
   }));
 }
 
+type NarrativeType = "full_disclosure" | "skills_focused" | "growth_journey" | "minimal_disclosure" | "values_aligned";
+
+const narrativeTypeInfo: Record<NarrativeType, { title: string; description: string }> = {
+  full_disclosure: {
+    title: "Direct & Professional",
+    description: "Honest, straightforward acknowledgment with emphasis on accountability and professional demeanor."
+  },
+  skills_focused: {
+    title: "Skills-First Approach",
+    description: "Leads with qualifications and abilities, briefly acknowledges background, returns focus to value offered."
+  },
+  growth_journey: {
+    title: "Growth-Focused",
+    description: "Emphasizes personal transformation, rehabilitation journey, and lessons learned."
+  },
+  minimal_disclosure: {
+    title: "Brief & Confident",
+    description: "Concise acknowledgment without over-explaining, projects confidence."
+  },
+  values_aligned: {
+    title: "Values-Aligned",
+    description: "Connects personal values and growth to the organization's mission."
+  }
+};
+
+async function generateSingleNarrative(formData: FormData, narrativeType: NarrativeType): Promise<NarrativeItem> {
+  const info = narrativeTypeInfo[narrativeType];
+  
+  const systemPrompt = `You are an expert career counselor specializing in helping individuals with criminal backgrounds prepare for employment conversations. You help create authentic, professional disclosure narratives.
+
+Generate a single disclosure narrative using this specific approach:
+- Type: ${narrativeType}
+- Style: ${info.title}
+- Description: ${info.description}
+
+The narrative should be 2-4 paragraphs, written in first person, ready for the individual to use in interviews or applications. Make it fresh and different from previous versions while maintaining the same approach style.
+
+Return a JSON object with this exact structure:
+{
+  "narrative": {
+    "type": "${narrativeType}",
+    "title": "${info.title}",
+    "content": "..."
+  }
+}`;
+
+  const userPrompt = `Please generate a ${info.title} disclosure narrative based on the following information:
+
+Background Information:
+${formData.offenses.map((o, i) => `- Offense ${i + 1}: ${o.type}${o.description ? ` - ${o.description}` : ''}${o.programs.length > 0 ? ` (Related programs: ${o.programs.join(', ')})` : ''}`).join('\n')}
+
+Release/Completion: ${formData.releaseMonth} ${formData.releaseYear}
+
+Rehabilitation Programs Completed:
+${formData.programs.length > 0 ? formData.programs.join(', ') : 'Not specified'}
+
+Skills Developed:
+${formData.skills.length > 0 ? formData.skills.join(', ') : 'Not specified'}
+
+Additional Context:
+${formData.additionalContext || 'None provided'}
+
+Generate a narrative that is authentic, professional, and helps the individual present their background in the most favorable light while remaining honest. Create a fresh version that differs from any previous iterations.`;
+
+  const response = await openai.chat.completions.create({
+    model: "gpt-4o-mini",
+    messages: [
+      { role: "system", content: systemPrompt },
+      { role: "user", content: userPrompt }
+    ],
+    response_format: { type: "json_object" },
+    temperature: 0.8,
+  });
+
+  const content = response.choices[0].message.content;
+  if (!content) {
+    throw new Error("No content in OpenAI response");
+  }
+
+  const parsed = JSON.parse(content);
+  const typeIndex = Object.keys(narrativeTypeInfo).indexOf(narrativeType) + 1;
+  
+  return {
+    id: `narrative-${typeIndex}`,
+    type: parsed.narrative.type || narrativeType,
+    title: parsed.narrative.title || info.title,
+    content: parsed.narrative.content,
+  };
+}
+
 async function generateResponseLetter(formData: FormData): Promise<ResponseLetter> {
   const systemPrompt = `You are an expert in employment law and Fair Chance hiring practices. You help individuals craft professional pre-adverse action response letters.
 
@@ -285,6 +375,53 @@ export async function registerRoutes(
         narratives: [],
         responseLetter: null,
         errors: [{ documentType: "narrative", detail: error instanceof Error ? error.message : "Unknown server error" }]
+      });
+    }
+  });
+
+  app.post("/api/regenerate-narrative", async (req: Request, res: Response) => {
+    try {
+      const { narrativeType, formData } = req.body as { narrativeType: NarrativeType; formData: FormData };
+
+      if (!narrativeType || !formData) {
+        return res.status(400).json({
+          error: "Missing narrativeType or formData in request"
+        });
+      }
+
+      const validTypes: NarrativeType[] = ["full_disclosure", "skills_focused", "growth_journey", "minimal_disclosure", "values_aligned"];
+      if (!validTypes.includes(narrativeType)) {
+        return res.status(400).json({
+          error: "Invalid narrative type"
+        });
+      }
+
+      const narrative = await generateSingleNarrative(formData, narrativeType);
+      return res.json({ narrative });
+    } catch (error) {
+      console.error("Error in regenerate-narrative:", error);
+      return res.status(500).json({
+        error: error instanceof Error ? error.message : "Failed to regenerate narrative"
+      });
+    }
+  });
+
+  app.post("/api/regenerate-letter", async (req: Request, res: Response) => {
+    try {
+      const { formData } = req.body as { formData: FormData };
+
+      if (!formData) {
+        return res.status(400).json({
+          error: "Missing formData in request"
+        });
+      }
+
+      const letter = await generateResponseLetter(formData);
+      return res.json({ letter });
+    } catch (error) {
+      console.error("Error in regenerate-letter:", error);
+      return res.status(500).json({
+        error: error instanceof Error ? error.message : "Failed to regenerate letter"
       });
     }
   });

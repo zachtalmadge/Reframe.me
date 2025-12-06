@@ -29,16 +29,22 @@ export interface PersistedResults {
   result: GenerationResult;
   tool: ToolType;
   timestamp: number;
+  sessionId: string;
+}
+
+export function generateSessionId(): string {
+  return `session-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
 }
 
 const RESULTS_KEY = "reflectme_results";
 
-export function saveResults(result: GenerationResult, tool: ToolType): void {
+export function saveResults(result: GenerationResult, tool: ToolType, sessionId?: string): void {
   try {
     const data: PersistedResults = {
       result,
       tool,
       timestamp: Date.now(),
+      sessionId: sessionId || generateSessionId(),
     };
     sessionStorage.setItem(RESULTS_KEY, JSON.stringify(data));
   } catch (e) {
@@ -63,6 +69,22 @@ export function loadResults(): PersistedResults | null {
   } catch (e) {
     console.error("Failed to load results:", e);
     return null;
+  }
+}
+
+export function updateResults(result: GenerationResult): void {
+  try {
+    const existing = loadResults();
+    if (!existing) return;
+    
+    const data: PersistedResults = {
+      ...existing,
+      result,
+      timestamp: Date.now(),
+    };
+    sessionStorage.setItem(RESULTS_KEY, JSON.stringify(data));
+  } catch (e) {
+    console.error("Failed to update results:", e);
   }
 }
 
