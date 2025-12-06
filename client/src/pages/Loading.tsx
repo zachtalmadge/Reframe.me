@@ -21,6 +21,16 @@ const loadingMessages = [
   "Almost there...",
 ];
 
+const motivationalQuotes = [
+  { text: "It always seems impossible until it is done.", author: "Nelson Mandela" },
+  { text: "I can be changed by what happens to me. But I refuse to be reduced by it.", author: "Maya Angelou" },
+  { text: "Stumbling is not falling.", author: "Malcolm X" },
+  { text: "Turn your wounds into wisdom.", author: "Oprah Winfrey" },
+  { text: "There is no future without forgiveness.", author: "Desmond Tutu" },
+  { text: "Failure is an important part of your growth and developing resilience.", author: "Michelle Obama" },
+  { text: "If there is no struggle, there is no progress.", author: "Frederick Douglass" },
+];
+
 async function generateDocuments(
   selection: ToolType,
   formData: Record<string, unknown>
@@ -53,16 +63,45 @@ export default function Loading() {
   const [generationState, setGenerationState] = useState<GenerationState>(initialGenerationState);
   const [messageIndex, setMessageIndex] = useState(0);
   const [showDisclaimer, setShowDisclaimer] = useState(false);
+  const [isMessageVisible, setIsMessageVisible] = useState(true);
+  const [showQuotes, setShowQuotes] = useState(false);
+  const [quoteIndex, setQuoteIndex] = useState(0);
+  const [isQuoteVisible, setIsQuoteVisible] = useState(true);
 
   useEffect(() => {
     if (generationState.status !== "loading") return;
 
-    const interval = setInterval(() => {
-      setMessageIndex((prev) => (prev + 1) % loadingMessages.length);
+    if (messageIndex >= loadingMessages.length - 1) {
+      setShowQuotes(true);
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      setIsMessageVisible(false);
+      
+      setTimeout(() => {
+        setMessageIndex((prev) => prev + 1);
+        setIsMessageVisible(true);
+      }, 300);
     }, 2000);
 
-    return () => clearInterval(interval);
-  }, [generationState.status]);
+    return () => clearTimeout(timer);
+  }, [generationState.status, messageIndex]);
+
+  useEffect(() => {
+    if (!showQuotes || generationState.status !== "loading") return;
+
+    const timer = setInterval(() => {
+      setIsQuoteVisible(false);
+      
+      setTimeout(() => {
+        setQuoteIndex((prev) => (prev + 1) % motivationalQuotes.length);
+        setIsQuoteVisible(true);
+      }, 300);
+    }, 3000);
+
+    return () => clearInterval(timer);
+  }, [showQuotes, generationState.status]);
 
   const startGeneration = useCallback(async () => {
     const persistedData = loadFormData();
@@ -121,6 +160,10 @@ export default function Loading() {
 
   const handleRetry = useCallback(() => {
     setMessageIndex(0);
+    setIsMessageVisible(true);
+    setShowQuotes(false);
+    setQuoteIndex(0);
+    setIsQuoteVisible(true);
     startGeneration();
   }, [startGeneration]);
 
@@ -219,12 +262,40 @@ export default function Loading() {
               Generating Your Documents
             </h1>
             <p
-              className="text-lg text-muted-foreground transition-opacity duration-300"
+              className={`text-lg text-muted-foreground transition-opacity duration-300 ${
+                isMessageVisible ? "opacity-100" : "opacity-0"
+              }`}
               data-testid="text-loading-message"
               aria-live="polite"
             >
               {loadingMessages[messageIndex]}
             </p>
+          </div>
+
+          <div
+            className={`transition-all duration-500 ease-in-out overflow-hidden ${
+              showQuotes ? "max-h-40 opacity-100" : "max-h-0 opacity-0"
+            }`}
+            aria-hidden="true"
+          >
+            <div className="pt-2 pb-4">
+              <p
+                className={`text-base italic text-foreground/80 transition-opacity duration-300 ${
+                  isQuoteVisible ? "opacity-100" : "opacity-0"
+                }`}
+                data-testid="text-motivational-quote"
+              >
+                "{motivationalQuotes[quoteIndex].text}"
+              </p>
+              <p
+                className={`text-sm text-muted-foreground mt-2 transition-opacity duration-300 ${
+                  isQuoteVisible ? "opacity-100" : "opacity-0"
+                }`}
+                data-testid="text-quote-author"
+              >
+                — {motivationalQuotes[quoteIndex].author}
+              </p>
+            </div>
           </div>
 
           <div className="pt-4">
