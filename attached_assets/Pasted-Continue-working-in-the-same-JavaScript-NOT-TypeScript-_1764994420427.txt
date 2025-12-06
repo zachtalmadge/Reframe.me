@@ -1,0 +1,311 @@
+Continue working in the same JavaScript (NOT TypeScript) + React + Tailwind CSS, mobile-first project.
+The unified multi-step form is already implemented, including the O.I.L. framework steps:
+
+Ownership
+
+Impact
+
+Lessons Learned
+
+These currently appear as consecutive steps in the wizard (e.g., Steps 5, 6, and 7 of 9 when “Both Documents” are selected).
+
+Current problem:
+
+Each O.I.L. step currently requires the user to type text before moving forward.
+
+The questions are framed as:
+
+“How do you take ownership of your past?”
+
+“How do you understand the impact of your actions?”
+
+“What have you learned from this experience?”
+
+This tone and requirement are too direct and emotionally heavy given our audience (justice-involved individuals).
+
+What we want instead:
+
+The O.I.L. sections must be OPTIONAL — users should be able to move forward without typing anything.
+
+Each step should explain what this part of the framework is, reassure users that we will write this part for them, and then gently offer an optional text area if they’d like to add something in their own words.
+
+Important for this fix:
+For this change, DO NOT perform any end-to-end (e2e) tests or automated full-flow testing.
+I will manually confirm the change myself.
+
+Business requirement – Optional, trauma-informed O.I.L. steps
+
+Update the Ownership, Impact, and Lessons Learned steps so that:
+
+Text inputs are optional
+
+Users should not be forced to answer in their own words.
+
+Validation should allow these fields to be left blank while still proceeding to the next step.
+
+Copy is rewritten to be explanatory and gentle
+
+Each step should:
+
+Clearly explain what the O.I.L. element means (Ownership, Impact, Lessons).
+
+Reassure the user that the app will write this part for them based on everything they’ve already provided.
+
+Offer them an optional space to share anything they’d like us to keep in mind.
+
+Optional text area is clearly marked
+
+Labels and helper text should communicate:
+
+That the field is optional.
+
+That it’s just a place to add extra context if they want to.
+
+Tone must be supportive, non-judgmental, and sensitive.
+
+Backend usage (payload)
+
+If users provide optional text in any O.I.L. step, it should still be passed along in the form payload as additional context, but it must NOT be required for successful submission.
+
+Field names can be something like:
+
+ownershipUserNotes
+
+impactUserNotes
+
+lessonsUserNotes
+
+Existing O.I.L. generation logic should treat these as extra hints, not mandatory inputs.
+
+Use the O.I.L. framework explanation as content basis
+
+Use this as the basis for the step descriptions (paraphrased in a gentle, second-person voice):
+
+Ownership – Taking responsibility:
+Take responsibility for past actions directly and respectfully.
+Example idea:
+
+“In the past, I faced charges related to actions I took in my personal life, and as a result, I served a sentence of approximately three and a half years.”
+
+Impact – Understanding consequences:
+Acknowledge the effects of your actions, showing awareness of consequences.
+Example idea:
+
+“I deeply regret my actions as they go against my values and I caused harm in my community.”
+
+Lessons Learned – Growth and change:
+Share specific actions you’ve taken to change and grow—personal development and professional skills.
+Example idea:
+
+“Since then, I’ve dedicated myself to making positive changes by enrolling in supportive programs and building my skills…”
+
+The UI copy should explain these ideas, not force the user to reproduce them.
+
+Acceptance criteria (Given / When / Then)
+Scenario: Ownership step is optional and explanatory
+
+Given the user reaches the Ownership step of the O.I.L. framework
+
+When the page loads
+
+Then:
+
+The main heading can still be “Ownership” (or similar), but the accompanying text explains what Ownership means in this context, using gentle language such as:
+
+“In this part, we talk about taking responsibility for what happened in a clear and respectful way. Our tool will write this part for you based on what you’ve already shared.”
+
+Below, there is copy like:
+
+“If there’s anything in your own words you’d like us to keep in mind when we write about ownership, you can add it here. This is completely optional.”
+
+A text area is present, labeled clearly as optional, e.g.:
+
+Label: “Optional: Anything you’d like us to know about how you see your past now?”
+
+The user can leave this text area blank and still click Next without errors.
+
+Scenario: Impact step is optional and explanatory
+
+Given the user reaches the Impact step
+
+When the page loads
+
+Then:
+
+The description explains Impact in a supportive way, e.g.:
+
+“Here, we acknowledge how actions may have affected others or your community. Our tool will write this section for you using the information you’ve already shared.”
+
+A gentle optional prompt is provided, such as:
+
+“Optional: If there’s anything you want us to keep in mind about how you think about the impact of your actions, you can share it here.”
+
+The text area is clearly marked optional and may be left empty without blocking progress.
+
+Scenario: Lessons Learned step is optional and explanatory
+
+Given the user reaches the Lessons Learned step
+
+When the page loads
+
+Then:
+
+The description explains Lessons Learned, e.g.:
+
+“In this part, we focus on the growth and changes you’ve made since then. We’ll write this section for you based on your programs, skills, and experiences.”
+
+Optional prompt text may say:
+
+“Optional: If there’s anything in your own words about what you’ve learned or how you’ve changed that you’d like us to highlight, you can add it here.”
+
+The user can continue without entering anything and no validation error appears.
+
+Scenario: Navigation & validation across O.I.L. steps
+
+Given the user chooses to leave some or all O.I.L. text areas empty
+
+When they click Next on Ownership, Impact, and Lessons Learned
+
+Then:
+
+The wizard advances to the next step smoothly.
+
+No “required field” errors are shown for these text areas.
+
+The progress bar continues to function as before.
+
+Scenario: Optional notes are still included when present
+
+Given the user provides text in one or more of the O.I.L. optional fields
+
+When the form is submitted and the payload is prepared for document generation
+
+Then:
+
+The provided text is included in the request payload in clearly named fields (e.g., ownershipUserNotes, impactUserNotes, lessonsUserNotes).
+
+Existing backend logic can treat these as additional context for the AI model.
+
+What I want you (Replit AI) to do
+
+Assess the enhancement and identify relevant code
+
+Find the components that render the Ownership, Impact, and Lessons Learned steps.
+
+Locate:
+
+Current headings and descriptive text.
+
+Labels and helper text for the existing required text areas.
+
+Validation rules that currently mark these fields as required.
+
+Describe your understanding of the requirements
+
+Explain in your own words:
+
+That the three O.I.L. steps must shift from required, direct questions to optional, explanatory sections.
+
+That the tone must be gentle, supportive, and trauma-informed.
+
+That users should always be able to proceed without writing anything in those fields.
+
+Identify key considerations to avoid disrupting existing functionality
+
+Ensure:
+
+Progress through the wizard still works for users generating narratives only, response letter only, or both.
+
+The dynamic progress bar and step count remain correct.
+
+The request payload still includes any optional notes when provided, without breaking backend expectations.
+
+Propose best-practice UX and copy direction
+
+Outline how:
+
+Headings and subheadings will explain each O.I.L. step using the provided framework description.
+
+Optional areas are labeled clearly and gently (avoid interrogative phrasing like “How do you…”).
+
+Character counters (if present) are retained but do not imply obligation.
+
+Assess other best practices
+
+Accessibility:
+
+Clear labels and descriptions.
+
+“Optional” indicated in label or helper text.
+
+Consistent layout and spacing with other steps (so the user doesn’t feel like something changed drastically).
+
+Generate a step-by-step implementation plan
+
+At a minimum include:
+
+Step 1: Update text content for Ownership, Impact, and Lessons Learned headings and descriptions to align with the O.I.L. explanation.
+
+Step 2: Change labels and helper text for the text areas to optional, supportive language.
+
+Step 3: Update validation rules to make these fields optional (remove “required” constraints).
+
+Step 4: Ensure the form data model still includes fields for optional user notes, and they are sent if filled.
+
+Step 5: Manually test:
+
+Flow with all O.I.L. fields left blank.
+
+Flow with some or all filled.
+
+Ensure there are no unexpected errors and that the payload contains optional notes when present.
+
+Keep the scope limited
+
+Do not:
+
+Change earlier steps’ required fields or validations.
+
+Modify the underlying document generation prompts beyond including optional note fields as extra context.
+
+Only adjust:
+
+The O.I.L. step copy and required/optional status.
+
+The handling of optional user notes.
+
+Propose a skeleton framework
+
+Provide a simplified JSX example for one of the O.I.L. steps (e.g., Ownership) showing the new structure, for example:
+
+<section>
+  <h2 className="text-xl font-semibold">Ownership</h2>
+  <p className="mt-2 text-sm text-gray-700">
+    In this part of your letter, we’ll write about how you take responsibility for what
+    happened in a clear and respectful way. We’ll do the wording for you based on
+    everything you’ve already shared.
+  </p>
+  <p className="mt-2 text-sm text-gray-600">
+    <strong>Optional:</strong> If there’s anything in your own words you’d like us to keep
+    in mind when we describe ownership, you can share it here. You can also skip this
+    box if you prefer.
+  </p>
+
+  <Textarea
+    value={ownershipNotes}
+    onChange={handleOwnershipNotesChange}
+    placeholder="(Optional) Add anything you’d like us to know..."
+    // no required validation
+  />
+</section>
+
+
+Clarify that similar patterns should be applied to Impact and Lessons Learned, using appropriate explanations for each part of the framework.
+
+Do not modify any files yet
+
+First, output your understanding of this change and your implementation plan.
+
+Remember: do NOT perform any e2e tests for this fix—I will manually confirm it myself.
+
+Wait for my confirmation that your approach is sound before updating the code.
