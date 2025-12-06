@@ -1,0 +1,283 @@
+Continue working in the same JavaScript (NOT TypeScript) + React + Tailwind CSS, mobile-first project.
+The unified multi-step form is already implemented, including Step 2: Rehabilitative Programs and Skills & Strengths, which use LinkedIn-style chip inputs.
+
+In Step 2, the fields:
+
+“Rehabilitative Programs”
+
+“Skills & Strengths”
+
+currently require the user to press Enter to add their typed text as a chip.
+However:
+
+There is no text telling the user they should press Enter.
+
+There is no visible button in or near the input to signify “Add” behavior.
+
+I want to add both:
+
+Clear text instructions that explain how to add items.
+
+A functional “Add” button in the input area that performs the same action as pressing Enter.
+
+Important for this fix:
+For this change, DO NOT perform any end-to-end (e2e) tests or automated full-flow testing.
+I will manually confirm the change myself.
+
+Business requirement – Clear add behavior for Programs & Skills chips
+
+Update Step 2 so that both Rehabilitative Programs and Skills & Strengths chip inputs:
+
+Show explicit instructions such as:
+
+“Type an item and press Enter or tap ‘Add’ to save it.”
+
+Include a visible, clickable “Add” button integrated with the input (e.g., inside the right side of the input or immediately adjacent).
+
+The Add button:
+
+Performs the same action as pressing Enter:
+
+Takes the current text in the field and converts it into a chip/pill.
+
+Is disabled when the input is empty or only whitespace.
+
+Is enabled when there is valid text to add.
+
+Pressing Enter should still work as before; we are adding affordances, not removing keyboard support.
+
+The existing chip list behavior should remain:
+
+Each added item appears as a pill with its label and an “x” to remove.
+
+Users can add multiple chips in each field.
+
+Removing chips still works as before.
+
+This applies to both input areas independently:
+
+Rehabilitative Programs chip list
+
+Skills & Strengths chip list
+
+Acceptance criteria (Given / When / Then)
+Scenario: Instructions visible for Rehabilitative Programs
+
+Given the user is on Step 2 of the multi-step form
+
+When they view the Rehabilitative Programs field
+
+Then:
+
+They see an input with a placeholder like “Type a program name…”
+
+They see helper text near the field (e.g., below it) such as:
+
+“Type a program and press Enter or tap ‘Add’ to save it.”
+
+They see a visible Add button associated with that input.
+
+Scenario: Add button behavior – Rehabilitative Programs
+
+Given the user has typed text into the Rehabilitative Programs input
+
+When they click/tap the Add button
+
+Then:
+
+The text is converted into a chip/pill in the programs list.
+
+The input field is cleared.
+
+The new chip appears alongside any existing chips.
+
+The behavior is equivalent to pressing Enter.
+
+Given the input is empty or contains only whitespace
+
+When they attempt to click the Add button
+
+Then:
+
+The Add button is disabled or has no effect.
+
+No blank chips are created.
+
+Scenario: Instructions & Add button for Skills & Strengths
+
+Given the user is on Step 2 and viewing Skills & Strengths
+
+When they focus that input
+
+Then:
+
+They see similar helper text:
+
+“Type a skill or strength and press Enter or tap ‘Add’ to save it.”
+
+They see an Add button that behaves exactly like the Rehabilitative Programs Add button:
+
+Adds the current input as a chip
+
+Clears the field
+
+Is disabled when the input is empty/invalid.
+
+Scenario: Enter key behavior still works
+
+Given the user prefers keyboard interaction
+
+When they type a program or skill and press Enter
+
+Then:
+
+The item is added as a chip exactly as before.
+
+The new helper text and Add button do not break or change the Enter key behavior.
+
+Scenario: No regressions in Step 2 behavior
+
+Given Step 2 already supports:
+
+Multiple program/skill chips
+
+Removing chips
+
+Progressing to the next step with valid data
+
+When these instruction texts and Add buttons are added
+
+Then:
+
+All existing behavior continues to work.
+
+Only the UX around adding new chips is enhanced.
+
+What I want you (Replit AI) to do
+
+Assess the enhancement and identify relevant code
+
+Locate the component(s) responsible for Step 2 of the form.
+
+Identify the reusable chip-input logic used for Rehabilitative Programs and Skills & Strengths:
+
+Where the Enter key is currently handled to add a chip.
+
+How the chips array is stored in state.
+
+Describe your understanding of the requirements
+
+Explain in your own words:
+
+That each chip input must now show helper text explaining “press Enter or tap ‘Add’”.
+
+That a visible Add button must be added and wired to the same logic as pressing Enter.
+
+That the Enter key behavior remains fully supported.
+
+Identify key considerations to avoid disrupting existing functionality
+
+Ensure:
+
+The design stays mobile-first; the input + Add button should remain easy to tap on small screens.
+
+Tailwind layout doesn’t cause wrapping or misalignment of the input and Add button.
+
+The Add button is clearly associated with the correct input field (programs vs skills) and doesn’t mix state between them.
+
+Propose best-practice UX for the updated inputs
+
+Placement of helper text (e.g., below the input, small font, muted color).
+
+Design of the Add button (e.g., icon plus text or just text like “Add”, with clear focus states).
+
+Button enabled/disabled feedback (e.g., opacity or cursor changes when disabled).
+
+Assess other best practices
+
+Reuse a common ChipInput component if it already exists (props for label, placeholder, helperText).
+
+Keep accessibility in mind:
+
+Inputs labeled clearly.
+
+Add button reachable via keyboard (Tab order).
+
+Screen reader instructions reflect both Enter and Add button behavior.
+
+Generate a step-by-step implementation plan
+
+At a minimum include:
+
+Step 1: Locate Step 2’s chip inputs (programs and skills).
+
+Step 2: Add helper/instruction text for each input, using simple text components and Tailwind classes.
+
+Step 3: Add a visible Add button adjacent to or inside each input:
+
+Hook it into the same function that runs when Enter is pressed.
+
+Ensure it respects empty/whitespace validation.
+
+Step 4: Manually test in the running app:
+
+Type and press Enter to add items.
+
+Type and click Add to add items.
+
+Verify chips appear and can be removed as before.
+
+Verify Add is disabled when the input is empty.
+
+Keep the scope limited
+
+Do not:
+
+Change other fields in Step 2 or other steps of the form.
+
+Modify validation rules beyond what’s necessary to prevent blank chips.
+
+Only enhance the Programs and Skills & Strengths chip inputs with helper text and an Add button.
+
+Propose a skeleton framework
+
+Show a simplified example of how a chip input might look after the change, for example:
+
+<div className="space-y-1">
+  <label className="block text-sm font-medium">
+    Rehabilitative Programs
+  </label>
+  <div className="flex gap-2">
+    <input
+      type="text"
+      value={programInput}
+      onChange={handleProgramChange}
+      onKeyDown={handleProgramKeyDown} // Enter adds chip
+      placeholder="Type a program name..."
+      className="flex-1 border rounded-md px-3 py-2 text-sm"
+    />
+    <button
+      type="button"
+      onClick={handleAddProgram}
+      disabled={!programInput.trim()}
+      className="px-3 py-2 text-sm font-medium rounded-md"
+    >
+      Add
+    </button>
+  </div>
+  <p className="text-xs text-gray-500">
+    Type a program and press Enter or tap “Add” to save it.
+  </p>
+  {/* chips render below */}
+</div>
+
+
+Clarify that a similar pattern should be applied to Skills & Strengths.
+
+Do not modify any files yet
+
+First, output your understanding of this change and your implementation plan.
+
+Remember: do NOT perform any e2e tests for this fix—I will manually confirm it myself.
+
+Wait for my confirmation that your approach is sound before updating the code.
