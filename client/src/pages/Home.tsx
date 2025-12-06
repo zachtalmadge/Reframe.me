@@ -113,7 +113,7 @@ export default function Home() {
               className="w-full sm:w-auto min-h-[48px] px-8 text-lg font-medium shadow-md"
               data-testid="button-get-started"
             >
-              Let's Get Started
+              Get Started
               <ArrowRight className="w-5 h-5 ml-2" aria-hidden="true" />
             </Button>
           </Link>
