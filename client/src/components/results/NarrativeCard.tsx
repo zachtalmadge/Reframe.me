@@ -171,7 +171,7 @@ export function NarrativeCard({
                   </span>
                 </TooltipTrigger>
                 <TooltipContent 
-                  side="bottom" 
+                  side="top" 
                   collisionPadding={16}
                   className="max-w-xs text-center"
                 >
