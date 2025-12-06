@@ -37,9 +37,13 @@ export default function Home() {
           <h2 id="tools-heading" className="sr-only">Available Tools</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card className="border-border shadow-sm">
+            <Card 
+              className="group border-border shadow-sm cursor-default transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-lg focus-within:-translate-y-1 focus-within:shadow-lg motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+              tabIndex={0}
+              data-testid="card-disclosure-narratives"
+            >
               <CardContent className="p-6 md:p-8 space-y-4">
-                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
+                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center transition-transform duration-200 ease-out group-hover:scale-110 group-focus-within:scale-110 motion-reduce:group-hover:scale-100">
                   <FileText className="w-6 h-6 text-primary" aria-hidden="true" />
                 </div>
                 <div className="space-y-2">
@@ -51,13 +55,23 @@ export default function Home() {
                     potential employers. Each narrative is tailored to help you 
                     communicate your story professionally and confidently.
                   </p>
+                  <p 
+                    className="text-sm font-medium text-primary opacity-0 translate-y-1 transition-all duration-200 ease-out group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:opacity-100 group-focus-within:translate-y-0 motion-reduce:transition-none"
+                    aria-hidden="true"
+                  >
+                    Show up prepared, not panicked.
+                  </p>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="border-border shadow-sm">
+            <Card 
+              className="group border-border shadow-sm cursor-default transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-lg focus-within:-translate-y-1 focus-within:shadow-lg motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+              tabIndex={0}
+              data-testid="card-pre-adverse-response"
+            >
               <CardContent className="p-6 md:p-8 space-y-4">
-                <div className="w-12 h-12 rounded-lg bg-chart-2/10 flex items-center justify-center">
+                <div className="w-12 h-12 rounded-lg bg-chart-2/10 flex items-center justify-center transition-transform duration-200 ease-out group-hover:scale-110 group-focus-within:scale-110 motion-reduce:group-hover:scale-100">
                   <Mail className="w-6 h-6 text-chart-2" aria-hidden="true" />
                 </div>
                 <div className="space-y-2">
@@ -68,6 +82,12 @@ export default function Home() {
                     You can create a professional response letter if you receive 
                     a pre-adverse action notice. This letter helps you present 
                     additional context about your circumstances.
+                  </p>
+                  <p 
+                    className="text-sm font-medium text-chart-2 opacity-0 translate-y-1 transition-all duration-200 ease-out group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:opacity-100 group-focus-within:translate-y-0 motion-reduce:transition-none"
+                    aria-hidden="true"
+                  >
+                    Turn a scary letter into a grounded response.
                   </p>
                 </div>
               </CardContent>
