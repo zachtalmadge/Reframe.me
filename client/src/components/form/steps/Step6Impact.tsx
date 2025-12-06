@@ -8,7 +8,7 @@ interface Step6ImpactProps {
   errors: Record<string, string>;
 }
 
-export function Step6Impact({ state, dispatch, errors }: Step6ImpactProps) {
+export function Step6Impact({ state, dispatch }: Step6ImpactProps) {
   const handleChange = (value: string) => {
     dispatch({ type: "SET_FIELD", field: "impact", value });
   };
@@ -18,12 +18,21 @@ export function Step6Impact({ state, dispatch, errors }: Step6ImpactProps) {
       <div className="space-y-2">
         <h2 className="text-xl font-semibold text-foreground">Impact</h2>
         <p className="text-muted-foreground">
-          Showing you understand the impact demonstrates empathy and maturity.
-          This is the second part of the O.I.L. framework.
+          This is the second part of the O.I.L. framework. Here, we acknowledge 
+          how actions may have affected others or your community.
         </p>
       </div>
 
       <div className="space-y-6">
+        <div className="p-4 rounded-lg bg-primary/5 border border-primary/20">
+          <p className="text-sm text-foreground leading-relaxed">
+            <span className="font-medium">We'll write this for you.</span>{" "}
+            Using the information you've already shared, our tool will craft 
+            language that shows awareness and understanding of consequences 
+            in a thoughtful way.
+          </p>
+        </div>
+
         <div className="p-4 rounded-lg bg-muted/50 border border-border space-y-2">
           <p className="text-sm font-medium text-foreground">
             O.I.L. Framework
@@ -47,10 +56,12 @@ export function Step6Impact({ state, dispatch, errors }: Step6ImpactProps) {
         <div className="space-y-3">
           <div className="space-y-1">
             <Label htmlFor="impact" className="text-base font-medium">
-              How do you understand the impact of your actions?
+              Optional: Anything you'd like us to keep in mind?
             </Label>
             <p className="text-sm text-muted-foreground">
-              Reflect on how your actions affected others and the community.
+              If there's something about how you think about the impact of your 
+              actions that you'd like us to include, you can share it here. This 
+              is completely optional — feel free to skip this if you prefer.
             </p>
           </div>
           <CharacterCountTextarea
@@ -58,21 +69,10 @@ export function Step6Impact({ state, dispatch, errors }: Step6ImpactProps) {
             value={state.impact}
             onChange={handleChange}
             maxLength={500}
-            placeholder="For example: I understand that my actions affected my family, my community, and the victims involved. I recognize the trust that was broken..."
-            rows={5}
+            placeholder="(Optional) Share anything you'd like us to know..."
+            rows={4}
             data-testid="textarea-impact"
           />
-          {errors.impact && (
-            <p className="text-sm text-destructive">{errors.impact}</p>
-          )}
-        </div>
-
-        <div className="p-4 rounded-lg bg-primary/5 border border-primary/20">
-          <p className="text-sm text-foreground leading-relaxed">
-            <span className="font-medium">Tip:</span> Focus on genuine
-            understanding, not just acknowledging what happened. Show that
-            you've reflected on the real consequences.
-          </p>
         </div>
       </div>
     </div>

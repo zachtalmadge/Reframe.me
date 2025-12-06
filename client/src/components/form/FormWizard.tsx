@@ -83,27 +83,15 @@ function validateStep(
       break;
 
     case 5:
-      if (tool !== "narrative") {
-        if (!state.ownership.trim()) {
-          errors.ownership = "Please describe how you take ownership";
-        }
-      }
+      // O.I.L. Ownership step is optional - no validation required
       break;
 
     case 6:
-      if (tool !== "narrative") {
-        if (!state.impact.trim()) {
-          errors.impact = "Please describe your understanding of the impact";
-        }
-      }
+      // O.I.L. Impact step is optional - no validation required
       break;
 
     case 7:
-      if (tool !== "narrative") {
-        if (!state.lessonsLearned.trim()) {
-          errors.lessonsLearned = "Please describe what you've learned";
-        }
-      }
+      // O.I.L. Lessons Learned step is optional - no validation required
       break;
 
     case 8:

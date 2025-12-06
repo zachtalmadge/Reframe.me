@@ -11,7 +11,6 @@ interface Step7LessonsLearnedProps {
 export function Step7LessonsLearned({
   state,
   dispatch,
-  errors,
 }: Step7LessonsLearnedProps) {
   const handleChange = (value: string) => {
     dispatch({ type: "SET_FIELD", field: "lessonsLearned", value });
@@ -24,12 +23,21 @@ export function Step7LessonsLearned({
           Lessons Learned
         </h2>
         <p className="text-muted-foreground">
-          Sharing what you've learned shows growth and forward progress. This is
-          the final part of the O.I.L. framework.
+          This is the final part of the O.I.L. framework. In this section, we 
+          focus on the growth and positive changes you've made since then.
         </p>
       </div>
 
       <div className="space-y-6">
+        <div className="p-4 rounded-lg bg-primary/5 border border-primary/20">
+          <p className="text-sm text-foreground leading-relaxed">
+            <span className="font-medium">We'll highlight your growth.</span>{" "}
+            Based on the programs, skills, and experiences you've shared, our 
+            tool will write about your personal development and the positive 
+            steps you've taken.
+          </p>
+        </div>
+
         <div className="p-4 rounded-lg bg-muted/50 border border-border space-y-2">
           <p className="text-sm font-medium text-foreground">
             O.I.L. Framework
@@ -53,10 +61,12 @@ export function Step7LessonsLearned({
         <div className="space-y-3">
           <div className="space-y-1">
             <Label htmlFor="lessons-learned" className="text-base font-medium">
-              What have you learned from this experience?
+              Optional: Anything you'd like us to keep in mind?
             </Label>
             <p className="text-sm text-muted-foreground">
-              Describe the personal growth and insights you've gained.
+              If there's something specific about what you've learned or how 
+              you've changed that you'd like us to highlight, you can share it 
+              here. This is completely optional — you can skip this if you prefer.
             </p>
           </div>
           <CharacterCountTextarea
@@ -64,21 +74,10 @@ export function Step7LessonsLearned({
             value={state.lessonsLearned}
             onChange={handleChange}
             maxLength={500}
-            placeholder="For example: I've learned the importance of making better choices and considering consequences before acting. I've developed better coping mechanisms..."
-            rows={5}
+            placeholder="(Optional) Share anything you'd like us to know..."
+            rows={4}
             data-testid="textarea-lessons-learned"
           />
-          {errors.lessonsLearned && (
-            <p className="text-sm text-destructive">{errors.lessonsLearned}</p>
-          )}
-        </div>
-
-        <div className="p-4 rounded-lg bg-primary/5 border border-primary/20">
-          <p className="text-sm text-foreground leading-relaxed">
-            <span className="font-medium">Tip:</span> Be specific about what
-            you've learned and how you've changed. Vague statements are less
-            convincing than concrete examples of growth.
-          </p>
         </div>
       </div>
     </div>

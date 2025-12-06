@@ -11,7 +11,6 @@ interface Step5OwnershipProps {
 export function Step5Ownership({
   state,
   dispatch,
-  errors,
 }: Step5OwnershipProps) {
   const handleChange = (value: string) => {
     dispatch({ type: "SET_FIELD", field: "ownership", value });
@@ -22,12 +21,22 @@ export function Step5Ownership({
       <div className="space-y-2">
         <h2 className="text-xl font-semibold text-foreground">Ownership</h2>
         <p className="text-muted-foreground">
-          Taking ownership shows employers you accept responsibility for your
-          past. This is the first part of the O.I.L. framework.
+          This is the first part of the O.I.L. framework. In this section, we'll 
+          write about taking responsibility for what happened in a clear and 
+          respectful way.
         </p>
       </div>
 
       <div className="space-y-6">
+        <div className="p-4 rounded-lg bg-primary/5 border border-primary/20">
+          <p className="text-sm text-foreground leading-relaxed">
+            <span className="font-medium">We've got this covered.</span>{" "}
+            Based on everything you've already shared, our tool will write this 
+            part for you. The language will be honest, direct, and show that you 
+            accept responsibility without making excuses.
+          </p>
+        </div>
+
         <div className="p-4 rounded-lg bg-muted/50 border border-border space-y-2">
           <p className="text-sm font-medium text-foreground">
             O.I.L. Framework
@@ -51,10 +60,12 @@ export function Step5Ownership({
         <div className="space-y-3">
           <div className="space-y-1">
             <Label htmlFor="ownership" className="text-base font-medium">
-              How do you take ownership of your past?
+              Optional: Anything you'd like us to keep in mind?
             </Label>
             <p className="text-sm text-muted-foreground">
-              Describe how you accept responsibility without making excuses.
+              If there's something specific about how you see your past that you'd 
+              like us to include, you can share it here. This is completely optional 
+              — you can also skip this and move on.
             </p>
           </div>
           <CharacterCountTextarea
@@ -62,21 +73,10 @@ export function Step5Ownership({
             value={state.ownership}
             onChange={handleChange}
             maxLength={500}
-            placeholder="For example: I take full responsibility for my actions. I understand that my choices led to consequences that affected others..."
-            rows={5}
+            placeholder="(Optional) Share anything you'd like us to know..."
+            rows={4}
             data-testid="textarea-ownership"
           />
-          {errors.ownership && (
-            <p className="text-sm text-destructive">{errors.ownership}</p>
-          )}
-        </div>
-
-        <div className="p-4 rounded-lg bg-primary/5 border border-primary/20">
-          <p className="text-sm text-foreground leading-relaxed">
-            <span className="font-medium">Tip:</span> Be honest and direct.
-            Avoid blaming circumstances or others. Employers appreciate
-            authenticity and accountability.
-          </p>
         </div>
       </div>
     </div>
