@@ -1,11 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Link, useSearch, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, FileText, Mail, Files } from "lucide-react";
 import Layout from "@/components/Layout";
 import { FormWizard } from "@/components/form";
 import { FormState, ToolType } from "@/lib/formState";
-import { saveFormData, loadFormData } from "@/lib/formPersistence";
+import { saveFormData, loadFormData, clearFormData } from "@/lib/formPersistence";
+import { LeaveConfirmationModal } from "@/components/LeaveConfirmationModal";
 
 const toolInfo: Record<
   ToolType,
@@ -36,9 +37,23 @@ export default function Form() {
   
   const [restoredState, setRestoredState] = useState<FormState | undefined>(undefined);
   const [isRestoring, setIsRestoring] = useState(true);
+  const [showLeaveAlert, setShowLeaveAlert] = useState(false);
 
   const tool = toolParam && toolInfo[toolParam] ? toolParam : "narrative";
   const { title, description, icon: Icon } = toolInfo[tool];
+
+  const handleLogoClick = useCallback(() => {
+    setShowLeaveAlert(true);
+  }, []);
+
+  const handleConfirmLeave = useCallback(() => {
+    clearFormData();
+    navigate("/");
+  }, [navigate]);
+
+  const handleCancelLeave = useCallback(() => {
+    setShowLeaveAlert(false);
+  }, []);
 
   useEffect(() => {
     const persisted = loadFormData();
@@ -58,7 +73,7 @@ export default function Form() {
   };
 
   return (
-    <Layout>
+    <Layout onLogoClick={handleLogoClick}>
       <section
         className="py-8 md:py-12 px-4 sm:px-6 lg:px-8"
         aria-labelledby="form-heading"
@@ -109,6 +124,12 @@ export default function Form() {
           )}
         </div>
       </section>
+
+      <LeaveConfirmationModal
+        open={showLeaveAlert}
+        onConfirm={handleConfirmLeave}
+        onCancel={handleCancelLeave}
+      />
     </Layout>
   );
 }

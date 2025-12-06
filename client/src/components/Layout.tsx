@@ -3,9 +3,17 @@ import { Link } from "wouter";
 
 interface LayoutProps {
   children: ReactNode;
+  onLogoClick?: () => void;
 }
 
-export default function Layout({ children }: LayoutProps) {
+export default function Layout({ children, onLogoClick }: LayoutProps) {
+  const handleLogoClick = (e: React.MouseEvent) => {
+    if (onLogoClick) {
+      e.preventDefault();
+      onLogoClick();
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -15,6 +23,7 @@ export default function Layout({ children }: LayoutProps) {
               href="/" 
               className="flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-md"
               data-testid="link-home"
+              onClick={handleLogoClick}
             >
               <span className="text-xl font-semibold text-primary tracking-tight">
                 Reflect.me

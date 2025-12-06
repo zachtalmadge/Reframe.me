@@ -10,9 +10,10 @@ import {
   getErrorMessage,
   GenerationErrorType,
 } from "@/lib/formState";
-import { loadFormData } from "@/lib/formPersistence";
+import { loadFormData, clearFormData } from "@/lib/formPersistence";
 import { saveResults, GenerationResult } from "@/lib/resultsPersistence";
 import { DisclaimerModal } from "@/components/disclaimer/DisclaimerModal";
+import { LeaveConfirmationModal } from "@/components/LeaveConfirmationModal";
 
 const loadingMessages = [
   "Analyzing your information...",
@@ -67,6 +68,7 @@ export default function Loading() {
   const [showQuotes, setShowQuotes] = useState(false);
   const [quoteIndex, setQuoteIndex] = useState(0);
   const [isQuoteVisible, setIsQuoteVisible] = useState(true);
+  const [showLeaveAlert, setShowLeaveAlert] = useState(false);
 
   useEffect(() => {
     if (generationState.status !== "loading") return;
@@ -124,6 +126,7 @@ export default function Loading() {
       }
 
       saveResults(result, tool);
+      clearFormData();
       
       setGenerationState((prev) => ({
         ...prev,
@@ -175,9 +178,22 @@ export default function Loading() {
     navigate(`/results?tool=${tool}`);
   }, [navigate, tool]);
 
+  const handleLogoClick = useCallback(() => {
+    setShowLeaveAlert(true);
+  }, []);
+
+  const handleConfirmLeave = useCallback(() => {
+    clearFormData();
+    navigate("/");
+  }, [navigate]);
+
+  const handleCancelLeave = useCallback(() => {
+    setShowLeaveAlert(false);
+  }, []);
+
   if (generationState.status === "error") {
     return (
-      <Layout>
+      <Layout onLogoClick={handleLogoClick}>
         <section
           className="py-16 md:py-24 px-4 sm:px-6 lg:px-8"
           aria-labelledby="error-heading"
@@ -236,12 +252,17 @@ export default function Loading() {
             )}
           </div>
         </section>
+        <LeaveConfirmationModal
+          open={showLeaveAlert}
+          onConfirm={handleConfirmLeave}
+          onCancel={handleCancelLeave}
+        />
       </Layout>
     );
   }
 
   return (
-    <Layout>
+    <Layout onLogoClick={handleLogoClick}>
       <section
         className="py-16 md:py-24 px-4 sm:px-6 lg:px-8"
         aria-labelledby="loading-heading"
@@ -309,6 +330,12 @@ export default function Loading() {
       <DisclaimerModal
         open={showDisclaimer}
         onContinue={handleDisclaimerContinue}
+      />
+
+      <LeaveConfirmationModal
+        open={showLeaveAlert}
+        onConfirm={handleConfirmLeave}
+        onCancel={handleCancelLeave}
       />
     </Layout>
   );

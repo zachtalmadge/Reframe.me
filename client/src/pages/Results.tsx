@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import Layout from "@/components/Layout";
 import { ToolType } from "@/lib/formState";
 import { loadResults, NarrativeItem, ResponseLetter, clearResults, GenerationResult, updateResults } from "@/lib/resultsPersistence";
-import { loadFormData } from "@/lib/formPersistence";
+import { loadFormData, clearFormData } from "@/lib/formPersistence";
 import { useDocumentActions } from "@/hooks/useDocumentActions";
 import { NarrativeCarousel } from "@/components/results/NarrativeCarousel";
 import { ResponseLetterPanel } from "@/components/results/ResponseLetterPanel";
@@ -88,6 +88,14 @@ export default function Results() {
   const hasBoth = hasNarratives && hasLetter;
 
   const handleStartOver = () => {
+    clearFormData();
+    clearResults();
+    clearRegenerationCounts();
+    navigate("/");
+  };
+
+  const handleLogoClick = () => {
+    clearFormData();
     clearResults();
     clearRegenerationCounts();
     navigate("/");
@@ -206,7 +214,7 @@ export default function Results() {
   };
 
   return (
-    <Layout>
+    <Layout onLogoClick={handleLogoClick}>
       <section
         className="py-8 md:py-12 px-4 sm:px-6 lg:px-8"
         aria-labelledby="results-heading"
