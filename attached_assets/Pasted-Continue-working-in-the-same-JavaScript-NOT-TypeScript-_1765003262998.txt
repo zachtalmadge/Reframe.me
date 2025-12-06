@@ -1,0 +1,225 @@
+Continue working in the same JavaScript (NOT TypeScript) + React + Tailwind CSS, mobile-first project.
+On the Home page, there is a primary “Get Started” CTA button that currently appears higher up in the layout (near the hero / feature cards).
+
+I want to reposition this primary CTA so that it appears:
+
+Below the “How It Works” section, and
+
+Above the “Stories of change” carousel section.
+
+The CTA should remain visually prominent and still function exactly as it does now (same click behavior, same routing).
+
+Important for this fix:
+For this change, DO NOT perform any end-to-end (e2e) tests or automated full-flow testing.
+You may do local/component-level checks only. I will manually confirm the behavior in the UI.
+
+Business requirement – Reorder Home page sections (CTA between How It Works and Stories)
+
+Adjust the Home page layout so that:
+
+The primary “Get Started” CTA (the main call-to-action button) is rendered after the How It Works section.
+
+The same CTA is rendered before the Stories of change carousel.
+
+The CTA’s styling and behavior:
+
+Remain consistent with its current design (size, color, microinteractions we already added).
+
+Continue to route the user to the same next step (Selection/Form/etc.).
+
+We’re changing layout order only, not copy or routing.
+
+Acceptance criteria (Given / When / Then)
+Scenario: CTA appears between How It Works and Stories of change
+
+Given the user is on the Home page
+
+When they scroll down the page
+
+Then:
+
+They first see:
+
+Hero + feature cards
+
+(Any Safe Zone/Privacy block, if present)
+
+How It Works section
+
+Immediately after How It Works, they see the primary Get Started CTA in its own clear area.
+
+Below that CTA, they see the Stories of change carousel.
+
+Scenario: CTA retains styling and behavior
+
+Given the CTA has been moved in the DOM
+
+When the user clicks the Get Started button in its new location
+
+Then:
+
+It triggers the same navigation / flow as before (e.g., to Selection or Form).
+
+The button retains the same styling, hover/pressed microinteractions, and responsiveness.
+
+Scenario: Layout remains mobile-first and responsive
+
+Given the user views the Home page on both mobile and desktop
+
+When they scroll past How It Works and toward Stories of change
+
+Then:
+
+The CTA sits comfortably between these two sections on all screen sizes.
+
+Spacing (margins/padding) around the CTA looks intentional (no awkward gaps or collisions).
+
+What I want you (Replit AI) to do
+
+Assess the current Home page structure
+
+Locate the Home page component where the following sections are rendered:
+
+Hero + feature cards
+
+Safe zone / privacy block (if present)
+
+How It Works section
+
+Stories of change carousel
+
+Primary Get Started CTA button (wherever it is currently placed).
+
+Identify:
+
+The JSX block that renders the Get Started CTA.
+
+Describe your understanding of the requirements
+
+Explain in your own words:
+
+That you must move (not duplicate) the primary Get Started CTA so it appears after How It Works and before Stories of change in the JSX structure.
+
+That the CTA’s styling and click behavior must remain unchanged.
+
+That this is a layout reordering task only.
+
+Identify key considerations to avoid disrupting existing functionality
+
+Ensure:
+
+You do not accidentally create two primary CTAs on the page (no duplication).
+
+You do not alter the CTA’s onClick handler or routing behavior.
+
+Spacing is adjusted so the CTA feels visually intentional between the two sections.
+
+Propose your layout changes (React + Tailwind)
+
+Suggest:
+
+Adding a dedicated CTA wrapper section between How It Works and Stories of change, e.g.:
+
+<section className="px-4 py-8">
+  <div className="max-w-3xl mx-auto text-center">
+    <Button
+      onClick={handleGetStarted}
+      className="group inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold"
+    >
+      Get Started
+      {/* optional icon span */}
+    </Button>
+  </div>
+</section>
+
+
+Ensuring the handleGetStarted function is the same as before (or reusing the same prop/handler).
+
+Generate a step-by-step implementation plan
+
+At a minimum include:
+
+Step 1: Find the current location in the Home component where the primary Get Started CTA is rendered.
+
+Step 2: Extract that CTA JSX into:
+
+Either a small reusable component (e.g., <PrimaryCTA />), or
+
+A self-contained <section> block.
+
+Step 3: Remove the CTA from its current position near the hero/feature cards.
+
+Step 4: Insert the same CTA block after the How It Works section JSX and before the Stories of change carousel JSX.
+
+Step 5: Ensure the CTA uses the same props/handlers (onClick / navigate) as before.
+
+Step 6: Manually test:
+
+Confirm there is exactly one primary Get Started button on the page.
+
+Confirm its new vertical order: Hero/Features → (Safe zone) → How It Works → Get Started CTA → Stories of change.
+
+Confirm clicking it still starts the same flow as before.
+
+Keep the scope limited
+
+Do not:
+
+Change CTA copy or add new CTAs.
+
+Modify the logic of the navigation or any form flow.
+
+Alter the contents of How It Works or Stories of change sections.
+
+Only adjust:
+
+The vertical placement of the primary Get Started CTA relative to these sections.
+
+Propose a skeleton framework
+
+Example skeleton of the Home layout after change (simplified):
+
+export default function Home() {
+  return (
+    <Layout>
+      {/* Hero + feature cards */}
+      <HeroSection />
+      <FeatureCards />
+
+      {/* Safe zone / privacy block (if present) */}
+      <SafeZoneSection />
+
+      {/* How It Works */}
+      <HowItWorksSection />
+
+      {/* Moved primary CTA */}
+      <section className="px-4 py-8">
+        <div className="max-w-3xl mx-auto text-center">
+          <Button
+            onClick={handleGetStarted}
+            className="group inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold"
+          >
+            Get Started
+            {/* optional icon */}
+          </Button>
+        </div>
+      </section>
+
+      {/* Stories of change carousel */}
+      <StoriesCarousel />
+    </Layout>
+  );
+}
+
+
+handleGetStarted should contain the existing navigation logic (e.g., navigate("/selection") or similar).
+
+Do not run e2e tests
+
+For this prompt:
+
+You may update the Home page layout and any small helper components needed.
+
+You may perform manual or small component-level checks only.
+
+Do NOT run or modify end-to-end (e2e) test suites; I will manually verify the behavior.

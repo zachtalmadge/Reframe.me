@@ -334,6 +334,32 @@ export default function Home() {
 
       <section 
         className="py-10 md:py-14 px-4 sm:px-6 lg:px-8"
+        aria-labelledby="cta-heading"
+      >
+        <div className="max-w-4xl mx-auto text-center space-y-6">
+          <h2 id="cta-heading" className="sr-only">Get Started</h2>
+          
+          <Link href="/selection">
+            <Button 
+              size="lg"
+              className="group w-full sm:w-auto min-h-[48px] px-8 text-lg font-medium shadow-md"
+              data-testid="button-get-started"
+            >
+              Get Started
+              <span className="inline-flex transition-transform duration-150 ease-out group-hover:translate-x-1 group-focus-visible:translate-x-1 motion-reduce:transform-none">
+                <ArrowRight className="w-5 h-5" aria-hidden="true" />
+              </span>
+            </Button>
+          </Link>
+          
+          <p className="text-sm text-muted-foreground">
+            Your information stays private and is not stored after your session.
+          </p>
+        </div>
+      </section>
+
+      <section 
+        className="py-10 md:py-14 px-4 sm:px-6 lg:px-8"
         aria-labelledby="stories-heading"
         data-testid="section-stories"
       >
@@ -441,32 +467,6 @@ export default function Home() {
               <span>Completely free</span>
             </div>
           </div>
-        </div>
-      </section>
-
-      <section 
-        className="py-12 md:py-16 px-4 sm:px-6 lg:px-8"
-        aria-labelledby="cta-heading"
-      >
-        <div className="max-w-4xl mx-auto text-center space-y-6">
-          <h2 id="cta-heading" className="sr-only">Get Started</h2>
-          
-          <Link href="/selection">
-            <Button 
-              size="lg"
-              className="group w-full sm:w-auto min-h-[48px] px-8 text-lg font-medium shadow-md"
-              data-testid="button-get-started"
-            >
-              Get Started
-              <span className="inline-flex transition-transform duration-150 ease-out group-hover:translate-x-1 group-focus-visible:translate-x-1 motion-reduce:transform-none">
-                <ArrowRight className="w-5 h-5" aria-hidden="true" />
-              </span>
-            </Button>
-          </Link>
-          
-          <p className="text-sm text-muted-foreground">
-            Your information stays private and is not stored after your session.
-          </p>
         </div>
       </section>
     </Layout>
