@@ -1,0 +1,277 @@
+Continue working in the same JavaScript (NOT TypeScript) + React + Tailwind CSS, mobile-first project.
+The unified multi-step form is already implemented, including Step 2: Rehabilitative Programs and Skills & Strengths, which now have:
+
+LinkedIn-style chip inputs
+
+Helper text telling users to press Enter or tap Add
+
+A functional Add button placed next to the input
+
+I want a small UI refinement:
+Instead of the Add button being outside and next to the input, I want a “+ Add” button positioned inside the text input at the right end, similar to an input with an embedded action.
+Clicking + Add should behave exactly the same as before—adding the current text as a chip.
+
+Important for this fix:
+For this change, DO NOT perform any end-to-end (e2e) tests or automated full-flow testing.
+I will manually confirm the change myself.
+
+Business requirement – Embedded “+ Add” button inside input
+
+Update Step 2 for both Rehabilitative Programs and Skills & Strengths inputs so that:
+
+Each text input has a “+ Add” button embedded inside the input on the right side, using CSS positioning (e.g., relative wrapper + absolute button).
+
+The input and button should visually appear as a single control:
+
+The text field occupies most of the width.
+
+The + Add button sits inside the right edge with appropriate padding and contrast.
+
+The behavior remains:
+
+Typing and pressing Enter still adds a chip.
+
+Clicking + Add still adds a chip.
+
+The + Add button is disabled when the input is empty or only whitespace.
+
+Existing helper text (e.g., “Type a program and press Enter or tap ‘Add’ to save it.”) remains visible and accurate.
+
+The chip list UI (pills with “x” remove icon) remains unchanged.
+
+This applies independently to:
+
+Rehabilitative Programs chip input
+
+Skills & Strengths chip input
+
+Acceptance criteria (Given / When / Then)
+Scenario: Rehabilitative Programs input with embedded + Add
+
+Given the user is on Step 2 of the form
+
+When they look at the Rehabilitative Programs field
+
+Then:
+
+They see a single input field with placeholder text (e.g., “Type a program name…”).
+
+Inside the right side of the input, they see a “+ Add” button (or “Add” label with a + icon) visually embedded in the field.
+
+Beneath the field, they still see the helper text:
+
+“Type a program and press Enter or tap ‘Add’ to save it.”
+
+Given the user has typed text into the input
+
+When they click/tap the embedded “+ Add” button
+
+Then:
+
+The text is converted into a chip in the Rehabilitative Programs list.
+
+The input is cleared.
+
+The behavior matches pressing Enter.
+
+Scenario: Skills & Strengths input with embedded + Add
+
+Given the user is on Step 2 and viewing Skills & Strengths
+
+When they look at that field
+
+Then:
+
+They see a similar input with an embedded “+ Add” button at the right end.
+
+They see helper text instructing them to press Enter or tap Add.
+
+Given they type a skill or strength
+
+When they click the embedded “+ Add” button
+
+Then:
+
+The skill/strength becomes a chip.
+
+The input clears.
+
+The behavior matches pressing Enter.
+
+Scenario: Disabled and empty behavior
+
+Given the input is empty or contains only spaces
+
+When the user attempts to tap the embedded “+ Add” button
+
+Then:
+
+The button appears visually disabled (e.g., reduced opacity, no hover state).
+
+No chip is added.
+
+No blank/empty chip is created.
+
+Scenario: Enter key still works
+
+Given the user prefers keyboard input
+
+When they type a program or skill and press Enter
+
+Then:
+
+The item is added as a chip, just as before.
+
+The presence of the embedded “+ Add” button does not interfere with the Enter behavior.
+
+Scenario: Mobile-first layout remains usable
+
+Given the app is being used on a small screen
+
+When the user interacts with these inputs
+
+Then:
+
+The input + embedded button remain readable and tappable.
+
+The button does not overlap the text so much that the user cannot see what they are typing.
+
+Layout stays responsive and consistent with the rest of the form.
+
+What I want you (Replit AI) to do
+
+Assess the enhancement and locate relevant code
+
+Identify the components for Step 2 chip inputs (Rehabilitative Programs and Skills & Strengths).
+
+Find where the current input and standalone Add button are rendered.
+
+Confirm the shared logic that handles typing, Enter key, and adding chips.
+
+Describe your understanding of the requirements
+
+Explain in your own words:
+
+That the existing external Add button should be converted into an embedded button inside the input, on the right side.
+
+That Enter and Add must still both add chips.
+
+That helper text and chip behavior must remain unchanged.
+
+Identify key considerations to avoid disrupting existing functionality
+
+Ensure:
+
+The container for the input is set to relative, and the embedded button uses absolute positioning inside it (Tailwind-friendly).
+
+There is sufficient right padding (pr-...) on the input so text doesn’t run underneath the button.
+
+The button remains keyboard-focusable and accessible (Tab order correct).
+
+Propose best-practice UX for embedded input action
+
+Styling and spacing of the embedded button (e.g., small pill with + Add, high-contrast text).
+
+Adequate right padding & spacing so user text and button don’t overlap.
+
+Clear hover/focus states for the button, while preserving the input’s appearance.
+
+Assess other best practices
+
+Reuse a common ChipInput component (if present) so both Programs and Skills share the same UI pattern.
+
+Use Tailwind classes for:
+
+relative wrapper
+
+absolute inset-y-0 right-0 flex items-center for the button container
+
+Additional pr- on the <input> to make space for the button
+
+Maintain accessibility:
+
+Clear labels, helper text, and readable contrast for the button.
+
+Generate a step-by-step implementation plan
+
+At a minimum include:
+
+Step 1: Locate Step 2 JSX for Programs and Skills chip inputs.
+
+Step 2: Wrap each input in a div with relative positioning.
+
+Step 3: Place the input inside with extra right padding (e.g., pr-16) to make room for the embedded button.
+
+Step 4: Add an absolutely positioned button inside the wrapper at the right end and vertically centered:
+
+Hook its onClick to the same function used when Enter is pressed.
+
+Disable it when the trimmed input is empty.
+
+Step 5: Remove or refactor the previous external Add button so there’s only the embedded one.
+
+Step 6: Manually test:
+
+Typing and pressing Enter to add chips.
+
+Typing and clicking the embedded + Add to add chips.
+
+Empty input behavior.
+
+Mobile and desktop layouts.
+
+Keep the scope limited
+
+Do not:
+
+Change chip rendering, removal behavior, or validation logic beyond the Add button placement.
+
+Modify other steps or unrelated inputs.
+
+Only adjust the layout and positioning of the Add button for the Step 2 chip inputs.
+
+Propose a skeleton framework
+
+Provide a simplified example of what the updated input might look like:
+
+<div className="space-y-1">
+  <label className="block text-sm font-medium">
+    Rehabilitative Programs
+  </label>
+
+  <div className="relative">
+    <input
+      type="text"
+      value={programInput}
+      onChange={handleProgramChange}
+      onKeyDown={handleProgramKeyDown} // Enter adds chip
+      placeholder="Type a program name..."
+      className="w-full border rounded-md px-3 py-2 pr-16 text-sm" // extra right padding
+    />
+    <button
+      type="button"
+      onClick={handleAddProgram}
+      disabled={!programInput.trim()}
+      className="absolute inset-y-0 right-1 my-auto px-3 text-xs font-medium rounded-md"
+    >
+      + Add
+    </button>
+  </div>
+
+  <p className="text-xs text-gray-500">
+    Type a program and press Enter or tap “Add” to save it.
+  </p>
+
+  {/* chips render below */}
+</div>
+
+
+Note that a similar pattern should be applied to Skills & Strengths.
+
+Do not modify any files yet
+
+First, output your understanding of this change and your implementation plan.
+
+Remember: do NOT perform any e2e tests for this fix—I will manually confirm it myself.
+
+Wait for my confirmation that your approach is sound before updating the code.
