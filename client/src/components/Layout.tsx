@@ -1,5 +1,5 @@
-import { ReactNode, MouseEvent } from "react";
-import { Link } from "wouter";
+import { ReactNode, MouseEvent, useEffect, useState } from "react";
+import { Link, useLocation } from "wouter";
 
 interface LayoutProps {
   children: ReactNode;
@@ -7,6 +7,19 @@ interface LayoutProps {
 }
 
 export default function Layout({ children, onLogoClick }: LayoutProps) {
+  const [location] = useLocation();
+  const [showSweep, setShowSweep] = useState(false);
+  const isHome = location === "/";
+
+  useEffect(() => {
+    if (isHome) {
+      const timer = setTimeout(() => setShowSweep(true), 100);
+      return () => clearTimeout(timer);
+    } else {
+      setShowSweep(false);
+    }
+  }, [isHome]);
+
   const handleLogoClick = (e: MouseEvent) => {
     if (onLogoClick) {
       e.preventDefault();
@@ -26,8 +39,16 @@ export default function Layout({ children, onLogoClick }: LayoutProps) {
               onClick={handleLogoClick}
               aria-label="Reframe.me home"
             >
-              <span className="text-xl font-semibold text-primary tracking-tight">
+              <span className="relative text-xl font-semibold text-primary tracking-tight overflow-hidden">
                 Reframe.me
+                {isHome && (
+                  <span 
+                    className={`absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full motion-reduce:hidden ${
+                      showSweep ? "animate-logo-sweep" : ""
+                    }`}
+                    aria-hidden="true"
+                  />
+                )}
               </span>
             </Link>
           </div>

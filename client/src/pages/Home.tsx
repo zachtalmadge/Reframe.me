@@ -204,11 +204,13 @@ export default function Home() {
           <Link href="/selection">
             <Button 
               size="lg"
-              className="w-full sm:w-auto min-h-[48px] px-8 text-lg font-medium shadow-md"
+              className="group w-full sm:w-auto min-h-[48px] px-8 text-lg font-medium shadow-md"
               data-testid="button-get-started"
             >
               Get Started
-              <ArrowRight className="w-5 h-5 ml-2" aria-hidden="true" />
+              <span className="inline-flex transition-transform duration-150 ease-out group-hover:translate-x-1 group-focus-visible:translate-x-1 motion-reduce:transform-none">
+                <ArrowRight className="w-5 h-5" aria-hidden="true" />
+              </span>
             </Button>
           </Link>
           
