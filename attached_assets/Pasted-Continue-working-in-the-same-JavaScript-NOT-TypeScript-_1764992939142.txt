@@ -1,0 +1,199 @@
+Continue working in the same JavaScript (NOT TypeScript) + React + Tailwind CSS, mobile-first project.
+The unified multi-step form is already implemented, including Step 2: Rehabilitative Programs and Skills & Strengths with:
+
+LinkedIn-style chip inputs
+
+Helper text instructing users to press Enter or tap + Add
+
+A “+ Add” button embedded inside the right side of each input (positioned correctly)
+
+Currently, the embedded “+ Add” button is too transparent / low contrast.
+I want the button to use our existing orange secondary color so that it looks like a proper, clickable secondary action.
+
+Important for this fix:
+For this change, DO NOT perform any end-to-end (e2e) tests or automated full-flow testing.
+I will manually confirm the change myself.
+
+Business requirement – Use secondary orange color for “+ Add” button
+
+Update the embedded “+ Add” button in Step 2 so that:
+
+The button uses the app’s secondary orange color for its default (enabled) state, consistent with how we style other secondary actions in the project.
+
+This should reuse existing design tokens / Tailwind utility classes used elsewhere for the secondary orange color (e.g., a shared button style, bg-..., or a custom Tailwind color from tailwind.config.js).
+
+The button has sufficient contrast and does not appear overly transparent or “faded”.
+
+Hover/focus styles should be consistent with our secondary color pattern (e.g., slightly darker/or lighter orange, or shadow).
+
+The disabled state should still be visually distinct (e.g., reduced opacity or neutral background), but:
+
+It must still be readable.
+
+It must clearly indicate that it is disabled.
+
+This change applies to both:
+
+Rehabilitative Programs “+ Add” button
+
+Skills & Strengths “+ Add” button
+
+All existing behavior (adding chips, clearing input, Enter key support, helper text) must remain unchanged.
+
+Acceptance criteria (Given / When / Then)
+Scenario: Enabled “+ Add” button uses secondary orange
+
+Given the user is on Step 2 and has typed valid text into either the Rehabilitative Programs or Skills & Strengths input
+
+When the “+ Add” button is enabled
+
+Then:
+
+The button appears with our secondary orange styling (background and text/foreground color consistent with the project’s secondary color usage).
+
+It no longer appears washed-out or overly transparent.
+
+Hover/focus styles follow the same pattern used by other secondary orange buttons in the app.
+
+Scenario: Disabled state still clearly disabled
+
+Given the input is empty or only whitespace
+
+When the “+ Add” button is disabled
+
+Then:
+
+The button appears visibly disabled, using whatever pattern we use elsewhere (e.g., reduced opacity, neutral background, no hover state).
+
+It is still legible but clearly not interactive.
+
+Clicking/tapping it does nothing.
+
+Scenario: Behavior unchanged
+
+Given the color/styling has been updated
+
+When the user types and:
+
+presses Enter, or
+
+clicks the “+ Add” button
+
+Then:
+
+Chips are added exactly as before.
+
+Inputs clear as before.
+
+Helper text remains unchanged.
+
+No regressions are introduced in Step 2.
+
+What I want you (Replit AI) to do
+
+Assess the enhancement and locate relevant code
+
+Identify the JSX for the embedded “+ Add” button in both Rehabilitative Programs and Skills & Strengths inputs.
+
+Determine how the secondary orange color is currently defined in the project:
+
+Tailwind config custom color (e.g., bg-secondary, bg-orange-500, etc.), or
+
+A shared button component or CSS class.
+
+Describe your understanding of the requirements
+
+Explain in your own words:
+
+That the same orange secondary color used elsewhere must be applied to the enabled “+ Add” button.
+
+That only visual styling is changing; behavior and layout must remain the same.
+
+That disabled state should remain distinct but readable.
+
+Identify key considerations to avoid disrupting existing functionality
+
+Ensure:
+
+The new color classes don’t conflict with existing Tailwind classes.
+
+The button still fits visually inside the input (no overflow/clip issues).
+
+The disabled variant uses an appropriate style (e.g., opacity-50, cursor-not-allowed) without breaking positioning.
+
+Propose best-practice UX for secondary orange styling
+
+Describe:
+
+Background and text color choices for enabled state (e.g., orange background, white text).
+
+Hover/focus styling (slightly darker/lighter orange, focus ring).
+
+Disabled state styling (lower opacity, muted background, no hover).
+
+Assess other best practices
+
+Reuse existing CSS/Tailwind tokens for the secondary orange to keep the design consistent.
+
+Maintain good color contrast for accessibility (orange vs white text, etc.).
+
+Ensure the button is still clearly visible on light/dark backgrounds.
+
+Generate a step-by-step implementation plan
+
+At a minimum include:
+
+Step 1: Locate the “+ Add” button JSX and existing Tailwind classes.
+
+Step 2: Replace or augment its classes to use the project’s secondary orange color for the enabled state (e.g., bg-secondary-orange, bg-orange-500, text-white, etc.).
+
+Step 3: Ensure the disabled state uses appropriate styles (opacity-50, cursor-not-allowed) without overriding the orange color logic incorrectly.
+
+Step 4: Manually test in the running app:
+
+With valid input (enabled state, hover/focus).
+
+With empty input (disabled state).
+
+On both Rehabilitative Programs and Skills & Strengths inputs.
+
+On mobile and desktop layouts to confirm visibility.
+
+Keep the scope limited
+
+Do not:
+
+Change button placement or input layout.
+
+Alter chip logic, validation, or any other fields.
+
+Only adjust the color/style of the “+ Add” button to use the secondary orange.
+
+Propose a skeleton framework
+
+Provide a simplified example of updated classes, for example (using placeholder names—you should replace with the actual secondary orange classes used in this project):
+
+<button
+  type="button"
+  onClick={handleAddProgram}
+  disabled={!programInput.trim()}
+  className={clsx(
+    "absolute inset-y-0 right-1 my-auto px-3 text-xs font-medium rounded-md transition-colors",
+    programInput.trim()
+      ? "bg-secondary-orange text-white hover:bg-secondary-orange-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1"
+      : "bg-secondary-orange/60 text-white opacity-50 cursor-not-allowed"
+  )}
+>
+  + Add
+</button>
+
+
+Clarify that you will replace bg-secondary-orange / bg-secondary-orange-dark with whatever classes or tokens are already defined for the project’s orange secondary color.
+
+Do not modify any files yet
+
+First, output your understanding of this change and your implementation plan.
+
+Remember: do NOT perform any e2e tests for this fix—I will manually confirm it myself.
+
+Wait for my confirmation that your approach is sound before updating the code.
