@@ -136,49 +136,36 @@ export default function Home() {
             </p>
           </div>
 
-          <div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-              {howItWorksSteps.map((step, index) => (
-                <div
-                  key={step.title}
-                  className={`relative bg-background rounded-xl border border-border p-6 text-center transition-all duration-300 ease-out motion-reduce:transition-none ${
-                    howItWorksInView
-                      ? "opacity-100 translate-y-0"
-                      : "opacity-0 translate-y-4"
-                  }`}
-                  style={{
-                    transitionDelay: howItWorksInView ? `${index * 100}ms` : "0ms",
-                  }}
-                  data-testid={`step-${index + 1}`}
-                >
-                  <div className="flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 text-primary font-semibold text-lg mx-auto mb-4 relative z-10">
-                    {index + 1}
-                  </div>
-                  <h3 className="text-base font-semibold text-foreground mb-2">
-                    {step.title}
-                  </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {step.description}
-                  </p>
-                </div>
-              ))}
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 relative">
+            <div 
+              className="hidden md:block absolute top-8 left-[16.67%] right-[16.67%] h-0.5 bg-border" 
+              aria-hidden="true" 
+            />
 
-            <div className="flex justify-center mt-6 md:mt-8" aria-hidden="true">
-              <div className="relative w-48 md:w-64 h-1 bg-border rounded-full overflow-hidden">
-                <div 
-                  className={`absolute inset-y-0 left-0 bg-primary rounded-full transition-all duration-700 ease-out motion-reduce:transition-none ${
-                    howItWorksInView ? "w-full" : "w-0"
-                  }`}
-                  style={{ transitionDelay: howItWorksInView ? "200ms" : "0ms" }}
-                />
-                <div
-                  className={`absolute top-1/2 -translate-y-1/2 h-3 w-3 rounded-full bg-primary shadow-md transition-all duration-700 ease-out motion-reduce:transition-none ${
-                    howItWorksInView ? "left-[calc(100%-6px)]" : "left-0"
-                  }`}
-                />
+            {howItWorksSteps.map((step, index) => (
+              <div
+                key={step.title}
+                className={`relative bg-background rounded-xl border border-border p-6 text-center transition-all duration-300 ease-out motion-reduce:transition-none ${
+                  howItWorksInView
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-4"
+                }`}
+                style={{
+                  transitionDelay: howItWorksInView ? `${index * 100}ms` : "0ms",
+                }}
+                data-testid={`step-${index + 1}`}
+              >
+                <div className="flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 text-primary font-semibold text-lg mx-auto mb-4 relative z-10">
+                  {index + 1}
+                </div>
+                <h3 className="text-base font-semibold text-foreground mb-2">
+                  {step.title}
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {step.description}
+                </p>
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
