@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, MouseEvent } from "react";
 import { Link } from "wouter";
 
 interface LayoutProps {
@@ -7,7 +7,7 @@ interface LayoutProps {
 }
 
 export default function Layout({ children, onLogoClick }: LayoutProps) {
-  const handleLogoClick = (e: React.MouseEvent) => {
+  const handleLogoClick = (e: MouseEvent) => {
     if (onLogoClick) {
       e.preventDefault();
       onLogoClick();
