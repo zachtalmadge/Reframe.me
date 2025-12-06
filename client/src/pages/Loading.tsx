@@ -12,6 +12,9 @@ import {
 } from "@/lib/formState";
 import { loadFormData, clearFormData } from "@/lib/formPersistence";
 import { DisclaimerModal } from "@/components/disclaimer/DisclaimerModal";
+import { generateDocuments } from "@/lib/api";
+import { saveResults } from "@/lib/resultsPersistence";
+import { formDataSchema } from "@shared/schema";
 
 const loadingMessages = [
   "Analyzing your information...",
@@ -19,10 +22,6 @@ const loadingMessages = [
   "Preparing your documents...",
   "Almost there...",
 ];
-
-async function generateDocuments(): Promise<void> {
-  await new Promise((resolve) => setTimeout(resolve, 3000));
-}
 
 export default function Loading() {
   const [, navigate] = useLocation();
@@ -45,8 +44,33 @@ export default function Loading() {
   }, [generationState.status]);
 
   const startGeneration = useCallback(async () => {
-    const formData = loadFormData();
-    if (!formData) {
+    const persistedData = loadFormData();
+    if (!persistedData) {
+      navigate(`/form?tool=${tool}`);
+      return;
+    }
+
+    const { formState } = persistedData;
+    
+    const apiFormData = {
+      offenses: formState.offenses,
+      releaseMonth: formState.releaseMonth,
+      releaseYear: formState.releaseYear,
+      programs: formState.programs,
+      skills: formState.skills,
+      additionalContext: formState.additionalContext,
+      jobTitle: formState.jobTitle || undefined,
+      employerName: formState.employerName || undefined,
+      ownership: formState.ownership || undefined,
+      impact: formState.impact || undefined,
+      lessonsLearned: formState.lessonsLearned || undefined,
+      clarifyingRelevance: formState.clarifyingRelevance || undefined,
+      qualifications: formState.qualifications || undefined,
+    };
+
+    const parseResult = formDataSchema.safeParse(apiFormData);
+    if (!parseResult.success) {
+      console.error("Form data validation failed:", parseResult.error.flatten());
       navigate(`/form?tool=${tool}`);
       return;
     }
@@ -58,7 +82,16 @@ export default function Loading() {
     }));
 
     try {
-      await generateDocuments();
+      const response = await generateDocuments({
+        tool,
+        formData: parseResult.data,
+      });
+      
+      if (response.status === "total_fail") {
+        throw new Error("server");
+      }
+      
+      saveResults(response);
       setGenerationState((prev) => ({
         ...prev,
         status: "success",
@@ -69,7 +102,7 @@ export default function Loading() {
       let errorType: GenerationErrorType = "unknown";
       
       if (err instanceof Error) {
-        if (err.message.includes("network") || err.message.includes("fetch")) {
+        if (err.message.includes("network") || err.message.includes("fetch") || err.message.includes("Failed to fetch")) {
           errorType = "network";
         } else if (err.message.includes("timeout")) {
           errorType = "timeout";
