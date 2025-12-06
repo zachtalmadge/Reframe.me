@@ -1,0 +1,383 @@
+Continue working in the same JavaScript (NOT TypeScript) + React + Tailwind CSS, mobile-first project.
+The unified multi-step form is already implemented, including Step 9: Reinforcing Your Qualifications (or similarly named), which is currently required.
+
+Step 8 already has a toggle that, when enabled, reveals additional optional text areas. I want Step 9 to follow a similar interaction pattern, with one key difference:
+If the user turns the Step 9 toggle ON, both fields (resume and job posting) must be filled in to proceed.
+
+I want to change Step 9 so that:
+
+It becomes optional overall: the user can leave the toggle off and move on without doing anything.
+
+Step 9 shows a toggle (similar to Step 8) that, when switched on, reveals:
+
+A text area for resume content (text only).
+
+A text area for job posting content.
+
+If the toggle is ON, both text areas become required and must be non-empty (after trimming) for the user to proceed.
+
+The response letter generation logic uses these fields (when present) to better align the letter with the user’s qualifications and the specific job posting.
+
+Important for this fix:
+For this change, DO NOT perform any end-to-end (e2e) tests or automated full-flow testing.
+I will manually confirm the change myself.
+
+Business requirement – Optional step with toggle + REQUIRED Resume & Job Posting when enabled
+
+Update Step 9 – Reinforcing Your Qualifications so that:
+
+Step is optional overall (toggle OFF = user can skip)
+
+By default, the toggle is off and the text areas are hidden.
+
+In this state, the user can click Next and proceed without entering anything, and no validation errors related to Step 9 should appear.
+
+Toggle controls visibility and requirement of fields
+
+Add a toggle at the top of Step 9 (patterned after Step 8’s toggle), with a gentle label such as:
+
+“Use my resume and the job posting to strengthen this letter.”
+
+Behavior:
+
+Toggle OFF → Resume and job posting fields are hidden; Step 9 contributes no required fields.
+
+Toggle ON → Resume and job posting text areas are shown and both become required:
+
+If either is empty or only whitespace, the user cannot proceed and should see a clear, gentle validation message near each missing field.
+
+Collect resume and job posting text when toggle is on
+
+When the toggle is on, show two clearly labeled text areas:
+
+Resume (text only, required when toggle is ON)
+
+Helper text: “Paste the text from your resume here. No formatting needed.”
+
+Job Posting (required when toggle is ON)
+
+Helper text: “Paste the job description or posting text here so we can better connect your experience to this role.”
+
+Both fields are required only when the toggle is ON:
+
+Validation: if useResumeAndJobPosting === true, then resumeText.trim().length > 0 and jobPostingText.trim().length > 0 must hold.
+
+Show inline error messages if the user tries to go to the next step without filling both.
+
+Integrate with response letter generation
+
+Update the form data model and payload so that, when the toggle is on and fields are filled, the following fields are sent to the backend / AI generation:
+
+resumeText (string)
+
+jobPostingText (string)
+
+Optionally a flag like useResumeAndJobPosting: true
+
+Ensure generateResponseLetter() (or equivalent backend function) is updated to:
+
+Accept resumeText, jobPostingText, and (optionally) useResumeAndJobPosting.
+
+Incorporate them into the prompt given to the AI, asking it to:
+
+Highlight qualifications from the resume that match the job posting’s requirements.
+
+Make concrete, grounded connections between the candidate’s experience and the role.
+
+Handle the case where the toggle is off (or fields are not provided) by behaving as it does currently.
+
+No changes to narratives logic
+
+Narrative generation logic should not be altered, except that it may receive the additional fields in the payload (which it can safely ignore if not needed).
+
+Acceptance criteria (Given / When / Then)
+Scenario: Step 9 is optional when toggle is off
+
+Given the user reaches Step 9: Reinforcing Your Qualifications
+
+When the toggle is left off
+
+Then:
+
+The resume and job posting text areas are not visible.
+
+The user can click Next and advance without any Step 9-related validation errors.
+
+Scenario: Toggle ON reveals and requires both fields
+
+Given the user is on Step 9 with the toggle initially off
+
+When they switch the toggle on
+
+Then:
+
+Two text areas appear:
+
+“Resume (text only)”
+
+“Job Posting”
+
+Both are now required to proceed.
+
+Given the toggle is on, but the user has only filled one of the two fields or left both empty
+
+When they click Next
+
+Then:
+
+The form does not advance.
+
+Inline, gentle error messages appear near each missing field, e.g.:
+
+“Please paste your resume text to continue.”
+
+“Please paste the job posting text to continue.”
+
+Given the toggle is on and the user has pasted text into both fields
+
+When they click Next
+
+Then:
+
+The form advances to the next step without errors.
+
+The values are saved in form state (resumeText, jobPostingText, and useResumeAndJobPosting).
+
+Scenario: Toggling off after entries
+
+Given the user has turned the toggle on and pasted content into both fields
+
+When they toggle it off
+
+Then:
+
+The text areas are hidden.
+
+Step 9 no longer enforces required fields.
+
+(Implementation detail) Text can either:
+
+be preserved in state and reappear if they toggle back on within the same session, or
+
+be cleared; if you clear, make sure this is implemented carefully so users aren’t surprised.
+
+Scenario: Response letter uses resume & job posting when available
+
+Given the user has left the toggle on and filled both fields
+
+When the form is submitted and generateResponseLetter() is called
+
+Then:
+
+resumeText, jobPostingText, and useResumeAndJobPosting (if used) are passed to generateResponseLetter().
+
+The AI prompt includes sections for:
+
+“User Resume (raw text): …”
+
+“Job Posting (raw text): …”
+
+Instruction to explicitly highlight relevant skills/experience that align with the posting.
+
+The resulting letter makes reasonable connections between the candidate’s experience and the job where appropriate.
+
+Scenario: Response letter generation works when toggle is off
+
+Given the user leaves the toggle off
+
+When the form is submitted and generateResponseLetter() is called
+
+Then:
+
+The function behaves as it currently does (no expectation of resumeText or jobPostingText).
+
+The letter generates successfully if all other required data is present.
+
+What I want you (Replit AI) to do
+
+Assess the enhancement and identify relevant code
+
+Locate the Step 9 component in the multi-step form.
+
+Identify:
+
+Current input(s) and validation for Reinforcing Your Qualifications.
+
+Review the Step 8 toggle implementation to mirror its UX pattern (state, styling, show/hide).
+
+Find where Step 9’s values are stored in form state and what’s sent to the backend.
+
+Locate generateResponseLetter() (or equivalent) and how it constructs the AI prompt.
+
+Describe your understanding of the requirements
+
+Explain in your own words:
+
+Step 9 as a whole is optional, but if the toggle is ON, both fields become required.
+
+The toggle controls visibility and validation of the Resume and Job Posting fields.
+
+generateResponseLetter() should use resumeText and jobPostingText to instruct the AI to draw job-relevant connections.
+
+Identify key considerations to avoid disrupting existing functionality
+
+Ensure:
+
+Overall multi-step flow still works for Narrative only, Response Letter only, and Both.
+
+Progress bar and step numbering stay correct.
+
+Any validation schema (Yup, Zod, custom) is updated to:
+
+Conditionally require resumeText and jobPostingText only when useResumeAndJobPosting === true.
+
+The backend handles both cases cleanly (toggle off vs on).
+
+Propose best-practice UX and copy direction
+
+Clear, gentle copy for:
+
+The heading and description for Step 9.
+
+The toggle label (emphasizing it’s optional).
+
+Error messages when fields are required because the toggle is on.
+
+Sensitive tone for justice-involved job seekers, emphasizing support and choice.
+
+Assess other best practices
+
+Accessibility:
+
+Toggle is keyboard- and screen-reader-friendly.
+
+Text areas have clear labels and optional/required semantics explained via text.
+
+Prompt design:
+
+Use the resume/posting context without over-claiming (e.g., “Highlight 2–3 key ways their experience fits the role based on the resume and job posting.”).
+
+Generate a step-by-step implementation plan
+
+At a minimum include:
+
+Step 1: Add useResumeAndJobPosting boolean state for Step 9 (and wiring through global form state, if needed).
+
+Step 2: Update Step 9 UI:
+
+Show heading, description, and the toggle.
+
+Conditionally render the two text areas when toggle is on.
+
+Step 3: Extend form state model:
+
+Include resumeText and jobPostingText fields.
+
+Step 4: Update validation logic:
+
+When useResumeAndJobPosting === false → no required fields for Step 9.
+
+When true → resumeText and jobPostingText must be non-empty (after trimming), with inline error messages if not.
+
+Step 5: Update payload construction:
+
+Include useResumeAndJobPosting, resumeText, and jobPostingText (when present).
+
+Step 6: Modify generateResponseLetter():
+
+Accept the new fields.
+
+When useResumeAndJobPosting is true and both fields present, include them in the AI prompt with explicit instructions to align the letter with the role.
+
+Otherwise, keep existing behavior.
+
+Step 7: Manually test:
+
+Toggle off → no extra fields, no extra validation.
+
+Toggle on + missing fields → blocked with clear errors.
+
+Toggle on + both fields filled → proceeds and payload includes the new data.
+
+Keep the scope limited
+
+Do not alter earlier steps’ logic or narrative generation beyond passing through optional fields.
+
+Restrict changes to:
+
+Step 9’s UI, state, and validation.
+
+Payload fields added.
+
+generateResponseLetter() prompt integration.
+
+Propose a skeleton framework
+
+JSX example:
+
+<section>
+  <h2 className="text-xl font-semibold">
+    Reinforcing Your Qualifications (Optional)
+  </h2>
+  <p className="mt-2 text-sm text-gray-700">
+    If you’d like, you can turn on the toggle below and paste your resume and the job
+    posting. We’ll use them to help your response letter highlight how your experience
+    fits this role. This step is completely optional, but if you turn it on, both fields
+    need to be filled in.
+  </p>
+
+  <Toggle
+    checked={useResumeAndJobPosting}
+    onChange={setUseResumeAndJobPosting}
+    label="Use my resume and job posting to strengthen this letter"
+  />
+
+  {useResumeAndJobPosting && (
+    <div className="mt-4 space-y-4">
+      <div>
+        <label className="block text-sm font-medium">
+          Resume (text only)
+        </label>
+        <textarea
+          value={resumeText}
+          onChange={e => setResumeText(e.target.value)}
+          className="mt-1 w-full border rounded-md px-3 py-2 text-sm min-h-[120px]"
+          placeholder="Paste the text of your resume here..."
+        />
+        {errors.resumeText && (
+          <p className="mt-1 text-xs text-red-600">
+            {errors.resumeText}
+          </p>
+        )}
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium">
+          Job Posting
+        </label>
+        <textarea
+          value={jobPostingText}
+          onChange={e => setJobPostingText(e.target.value)}
+          className="mt-1 w-full border rounded-md px-3 py-2 text-sm min-h-[120px]"
+          placeholder="Paste the job description or posting text here..."
+        />
+        {errors.jobPostingText && (
+          <p className="mt-1 text-xs text-red-600">
+            {errors.jobPostingText}
+          </p>
+        )}
+      </div>
+    </div>
+  )}
+</section>
+
+
+And a sketch of the updated generateResponseLetter() signature & usage.
+
+Do not modify any files yet
+
+First, output your understanding of this change and your implementation plan.
+
+Remember: do NOT perform any e2e tests for this fix—I will manually confirm it myself.
+
+Wait for my confirmation that your approach is sound before updating the code
