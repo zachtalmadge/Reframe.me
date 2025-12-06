@@ -331,6 +331,25 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <section 
+        className="py-8 md:py-12 px-4 sm:px-6 lg:px-8"
+        aria-labelledby="benefits-heading"
+      >
+        <div className="max-w-4xl mx-auto">
+          <h2 id="benefits-heading" className="sr-only">Benefits</h2>
+
+          <div className="flex flex-wrap justify-center gap-4 md:gap-8 text-sm text-muted-foreground">
+            <div className="flex items-center gap-2">
+              <Clock className="w-4 h-4 text-primary" aria-hidden="true" />
+              <span>Takes 5-10 minutes</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Heart className="w-4 h-4 text-primary" aria-hidden="true" />
+              <span>Completely free</span>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <section 
         className="py-10 md:py-14 px-4 sm:px-6 lg:px-8"
@@ -450,25 +469,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section 
-        className="py-8 md:py-12 px-4 sm:px-6 lg:px-8"
-        aria-labelledby="benefits-heading"
-      >
-        <div className="max-w-4xl mx-auto">
-          <h2 id="benefits-heading" className="sr-only">Benefits</h2>
-          
-          <div className="flex flex-wrap justify-center gap-4 md:gap-8 text-sm text-muted-foreground">
-            <div className="flex items-center gap-2">
-              <Clock className="w-4 h-4 text-primary" aria-hidden="true" />
-              <span>Takes 5-10 minutes</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Heart className="w-4 h-4 text-primary" aria-hidden="true" />
-              <span>Completely free</span>
-            </div>
-          </div>
-        </div>
-      </section>
+
     </Layout>
   );
 }
