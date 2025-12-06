@@ -1,0 +1,210 @@
+Continue working in the same JavaScript (NOT TypeScript) + React + Tailwind CSS, mobile-first project.
+The Documents Page, swipeable narratives, response letter, regeneration logic, 3x-per-document limits, and the updated button layout (Copy/Download on top row, Regenerate on its own row below) are already implemented and working.
+
+Right now, when the Regenerate button is disabled (after 3 regenerations), the tooltip appears centered but below the button, which causes it to be cut off by the container it is in.
+
+I want to change this so that the tooltip always appears above the Regenerate button, not below.
+
+Important for this fix:
+For this change, DO NOT perform any end-to-end (e2e) tests or automated full-flow testing.
+I will manually confirm the change myself.
+
+Business requirement – Tooltip must appear above the Regenerate button
+
+Update the tooltip behavior for the Regenerate button so that:
+
+The tooltip is anchored to the same Regenerate button as before.
+
+The tooltip appears above the button (top direction), not below it.
+
+The tooltip remains horizontally centered relative to the button (or close enough that the association is clear).
+
+The tooltip text is fully visible and not cut off by parent containers, in both:
+
+Mobile/small-screen view
+
+Full-size / desktop view
+
+The existing behavior for:
+
+When the tooltip shows (after 3 successful regenerations, on hover/focus/tap of the disabled button), and
+
+What message it shows (gentle suggestion to copy into another AI tool or work with a trusted advisor)
+must not change, only the direction/position of the tooltip.
+
+This change applies to:
+
+Each narrative card with a disabled Regenerate button (after 3 regenerations).
+
+The pre-adverse action response letter card with a disabled Regenerate button (after 3 regenerations).
+
+Acceptance criteria (Given / When / Then)
+Scenario: Tooltip above Regenerate button (narratives)
+
+Given the user has regenerated a specific narrative 3 times, hitting the limit
+
+When they hover/focus/tap the disabled Regenerate button on that narrative card
+
+Then:
+
+The tooltip appears above the button (top direction), not below.
+
+The tooltip text is fully visible and not cut off by the narrative card or its container.
+
+The tooltip remains clearly associated with the Regenerate button (e.g., centered horizontally).
+
+Scenario: Tooltip above Regenerate button (response letter)
+
+Given the user has regenerated the pre-adverse action response letter 3 times, hitting the limit
+
+When they hover/focus/tap the disabled Regenerate button on the letter card
+
+Then:
+
+The tooltip appears above the button.
+
+The tooltip text is fully visible and not cut off.
+
+The message remains the same gentle suggestion as before.
+
+Scenario: Behavior on mobile vs desktop
+
+Given the user is on a mobile/small-screen device or on a full-size/desktop screen
+
+When they trigger the disabled Regenerate button’s tooltip
+
+Then:
+
+On both screen sizes, the tooltip appears above the button and is fully readable.
+
+The tooltip does not render off-screen or underneath other UI elements.
+
+Scenario: No functional regressions
+
+Given the regeneration and 3x limit logic were already working correctly
+
+When the tooltip direction is changed to appear above the button
+
+Then:
+
+3x regeneration limits per narrative and per letter remain enforced.
+
+Regeneration counts, disabled states, and tooltip triggers still persist across refreshes as before.
+
+The button layout (Copy/Download row + Regenerate row) stays as implemented.
+
+Swipe carousel, Download, Copy, and all other features continue to work as before.
+
+What I want you (Replit AI) to do
+
+Assess the enhancement and current tooltip implementation
+
+Identify the tooltip component / logic used for the disabled Regenerate button (for narratives and letter).
+
+Determine how the tooltip’s position/direction is currently controlled:
+
+Is there a placement prop?
+
+Are we using a custom popover/tooltip with Tailwind + absolute positioning?
+
+Are we using a UI library that supports top, bottom, left, right placements?
+
+Describe your understanding of the requirements
+
+Explain in your own words:
+
+That the tooltip position must be changed from below the button to above the button.
+
+That the activation behavior, message content, and 3x-limit logic remain exactly the same.
+
+That the purpose is to prevent clipping by the container by changing direction, not by adding complex layout changes.
+
+Identify key considerations to avoid disrupting existing functionality
+
+Ensure that:
+
+The tooltip remains anchored to the Regenerate button.
+
+Changing the direction to “top” does not cause overlap with other UI elements (e.g., card titles).
+
+The tooltip remains accessible (hover/focus/tap still work; ARIA attributes stay valid if present).
+
+Propose best-practice UX for an “above” tooltip
+
+How the tooltip should behave on:
+
+Desktop (hover/focus)
+
+Mobile (tap/long-press or first tap to show, second to dismiss)
+
+How to keep the tooltip within viewport bounds when rendered above the button (e.g., slightly adjusting top offset, using translate-y in Tailwind, etc.).
+
+Assess other best practices
+
+Tailwind usage for positioning (e.g., using absolute, bottom-full, mb-2, translate-x-1/2, left-1/2, etc., if it’s custom).
+
+Consistent styling and behavior for tooltips across narrative and letter cards.
+
+Optional ARIA attributes for accessible tooltip behavior (e.g., aria-describedby).
+
+Generate a step-by-step plan to implement this fix
+
+At a minimum include:
+
+Step 1: Locate the tooltip logic for the Regenerate button (narratives + letter).
+
+Step 2: Change the tooltip placement / positioning:
+
+If using a library: update the placement (e.g., from bottom to top).
+
+If using custom Tailwind-based CSS: adjust classes to position the tooltip above the button (bottom-full or similar) and center it horizontally.
+
+Step 3: Ensure the tooltip’s z-index is sufficient to appear above surrounding elements without being hidden.
+
+Step 4: Manually test in the UI:
+
+Narrative card after 3 regenerations
+
+Letter card after 3 regenerations
+
+Mobile and desktop views
+
+Step 5: Confirm that only the direction/position has changed; the logic, limit, and message are unchanged.
+
+Keep the scope limited
+
+Do not:
+
+Change the 3x regeneration logic.
+
+Change the tooltip’s text/message.
+
+Change the button layout (Copy/Download on top row, Regenerate on its own row).
+
+Only adjust tooltip placement and any necessary positioning classes.
+
+Propose a skeleton framework
+
+Show a simplified example of how the tooltip will be positioned above the button, for example (if custom):
+
+<div className="relative inline-block">
+  <button disabled className="...">
+    Regenerate
+  </button>
+  {isAtLimit && isTooltipVisible && (
+    <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 z-50 ...">
+      {/* Tooltip content */}
+    </div>
+  )}
+</div>
+
+
+Or, if using a component library, show how you will set its placement or equivalent prop to top / top-center.
+
+Do not modify any files yet
+
+First, output your understanding of this tooltip-direction change and your implementation plan.
+
+Remember: do NOT perform any e2e tests for this fix—I will manually confirm it myself.
+
+Wait for my confirmation that your approach is sound before updating the code.
