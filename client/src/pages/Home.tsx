@@ -94,10 +94,24 @@ export default function Home() {
   return (
     <Layout>
       <section 
-        className="py-12 md:py-20 px-4 sm:px-6 lg:px-8"
+        className="relative py-12 md:py-20 px-4 sm:px-6 lg:px-8 overflow-hidden"
         aria-labelledby="hero-heading"
       >
-        <div className="max-w-4xl mx-auto">
+        <div 
+          className="pointer-events-none absolute -left-20 -top-10 h-72 w-72 rounded-full bg-primary/10 blur-3xl animate-float-slow motion-reduce:animate-none"
+          aria-hidden="true"
+        />
+        <div 
+          className="pointer-events-none absolute -right-16 top-1/3 h-80 w-80 rounded-full bg-chart-2/10 blur-3xl animate-float-slow-reverse motion-reduce:animate-none"
+          aria-hidden="true"
+        />
+        <div 
+          className="pointer-events-none absolute left-1/4 -bottom-20 h-56 w-56 rounded-full bg-primary/5 blur-2xl animate-float-slow motion-reduce:animate-none"
+          style={{ animationDelay: "-8s" }}
+          aria-hidden="true"
+        />
+
+        <div className="max-w-4xl mx-auto relative">
           <div className="relative overflow-hidden rounded-2xl p-8 md:p-12">
             <div
               className={`absolute inset-0 bg-gradient-to-br from-primary/5 via-primary/10 to-chart-2/5 rounded-2xl transition-all duration-500 ease-out motion-reduce:transition-none ${
