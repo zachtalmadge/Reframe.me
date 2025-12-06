@@ -1,0 +1,209 @@
+Continue working in the same JavaScript (NOT TypeScript) + React + Tailwind CSS, mobile-first project.
+The unified multi-step form, including Step 1: Background / Offenses, is already implemented and working.
+
+In Step 1 (Background information / Offenses) there is a dropdown for offense type.
+The current options are:
+
+Felony
+
+Misdemeanor
+
+Infraction
+
+This is incorrect.
+The offense type dropdown should only allow:
+
+Felony
+
+Misdemeanor
+
+The Infraction option must be removed from the dropdown so that users can no longer select it.
+
+Important for this fix:
+For this change, DO NOT perform any end-to-end (e2e) tests or automated full-flow testing.
+I will manually confirm the change myself.
+
+Business requirement – Correct offense type options
+
+Update Step 1 (Background / Offenses) so that:
+
+The offense type dropdown includes only:
+
+Felony
+
+Misdemeanor
+
+The Infraction option is completely removed from:
+
+The rendered dropdown UI.
+
+Any static list/enum used to populate that dropdown.
+
+The rest of the Step 1 behavior must remain unchanged:
+
+Users can still add multiple offenses (dynamic “Add another offense” UI).
+
+Other fields such as offense description, month/year of release, and any associated programs remain as they are now.
+
+If any existing form validation or schema code expects "infraction" as a possible value, update it so that it no longer expects or accepts "infraction" and treats only "felony" or "misdemeanor" as valid offense types.
+
+Acceptance criteria (Given / When / Then)
+Scenario: Offense type dropdown no longer shows “Infraction”
+
+Given the user is on Step 1: Background / Offenses of the multi-step form
+
+When they open the offense type dropdown for any offense entry
+
+Then:
+
+The dropdown shows only:
+
+Felony
+
+Misdemeanor
+
+The Infraction option is not visible anywhere in the dropdown.
+
+Scenario: New offenses can only be created as Felony or Misdemeanor
+
+Given the user adds a new offense using the “Add another offense” functionality
+
+When they select an offense type for this new offense
+
+Then:
+
+They can only choose Felony or Misdemeanor.
+
+It is not possible to select or store Infraction via the UI.
+
+Scenario: Validation and data handling remain consistent
+
+Given the user completes Step 1 with one or more offenses
+
+When the form validation runs and the user moves to the next step
+
+Then:
+
+Existing validation/required field logic still works correctly.
+
+Any validation that previously referenced "infraction" is updated to only consider "felony" and "misdemeanor" as valid offense types.
+
+No new validation errors are introduced solely by removing "infraction".
+
+Scenario: No regressions in Step 1 behavior
+
+Given Step 1 already supported:
+
+Dynamic “Add another offense”
+
+Month/year of release
+
+Time-since-release calculation
+
+LinkedIn-style chips for related programs (if present)
+
+When this dropdown fix is implemented
+
+Then:
+
+All of the above behaviors continue to function correctly.
+
+Only the set of offense type options has changed.
+
+What I want you (Replit AI) to do
+
+Assess the enhancement and identify the relevant code
+
+Locate the component(s) responsible for rendering Step 1 (Background / Offenses).
+
+Find where the offense type dropdown options are defined:
+
+This might be a hard-coded array, a constant/enum, or values pulled from a config file.
+
+Describe your understanding of the requirements
+
+Explain in your own words:
+
+That the offense type dropdown must only include Felony and Misdemeanor.
+
+That "Infraction" must be removed from both the UI and any internal option list.
+
+That no other Step 1 behavior should be changed.
+
+Identify key considerations to avoid disrupting existing functionality
+
+Ensure:
+
+The dropdown still renders correctly and remains accessible on mobile and desktop.
+
+Removing "Infraction" does not break any validation schemas, type checks, or form submission logic.
+
+If there is any code that transforms or normalizes offense type values (e.g., lowercase storage), make sure it is still valid with only the remaining two values.
+
+Propose best-practice UX for the updated dropdown
+
+Confirm the labels remain user-friendly and clear:
+
+Felony
+
+Misdemeanor
+
+Confirm that mobile users can still easily tap and select these options without layout issues.
+
+Assess other best practices
+
+Tailwind usage for the dropdown’s styling remains consistent.
+
+If using a shared list of offense types, ensure that shared list is updated in one central place to avoid inconsistent options elsewhere in the app.
+
+Generate a step-by-step implementation plan
+
+At a minimum, include:
+
+Step 1: Locate the offense type options definition (array/enum/config).
+
+Step 2: Remove "Infraction" from that source of truth.
+
+Step 3: Confirm the dropdown now renders only Felony and Misdemeanor.
+
+Step 4: Check any validation logic or schema that references "infraction" and update it to only allow the remaining types.
+
+Step 5: Manually test in the running app:
+
+Open Step 1 and inspect the dropdown options.
+
+Add multiple offenses and ensure each offense only allows Felony/Misdemeanor.
+
+Advance to the next step to verify no new validation issues.
+
+Keep the scope limited
+
+Do not:
+
+Change the names or labels of Felony and Misdemeanor.
+
+Add any new offense types.
+
+Modify other form fields or steps.
+
+Only remove "Infraction" and update any related validation or configuration.
+
+Propose a skeleton framework
+
+Show a simplified example of what the updated options list might look like, for example:
+
+const OFFENSE_TYPES = [
+  { value: "felony", label: "Felony" },
+  { value: "misdemeanor", label: "Misdemeanor" },
+];
+
+
+And how it’s used in the dropdown in JSX.
+
+Do not modify any files yet
+
+First, output your understanding of this change and your implementation plan.
+
+Remember: do NOT perform any e2e tests for this fix—I will manually confirm it myself.
+
+Wait for my confirmation that your approach is sound before updating the code.
