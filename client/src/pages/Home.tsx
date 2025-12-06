@@ -178,21 +178,6 @@ export default function Home() {
                   language that explains my past and what I've done since."
                 </div>
               </div>
-
-              <div className="pt-4">
-                <Link href="/selection">
-                  <Button 
-                    size="lg"
-                    className="group w-full sm:w-auto min-h-[48px] px-8 text-lg font-medium shadow-md"
-                    data-testid="button-get-started-hero"
-                  >
-                    Get Started
-                    <span className="inline-flex transition-transform duration-150 ease-out group-hover:translate-x-1 group-focus-visible:translate-x-1 motion-reduce:transform-none">
-                      <ArrowRight className="w-5 h-5" aria-hidden="true" />
-                    </span>
-                  </Button>
-                </Link>
-              </div>
             </div>
           </div>
         </div>
@@ -208,7 +193,7 @@ export default function Home() {
             Available Tools
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Card
               className="group border-border shadow-sm cursor-default transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-lg focus-within:-translate-y-1 focus-within:shadow-lg motion-reduce:transition-none motion-reduce:hover:translate-y-0"
               tabIndex={0}
