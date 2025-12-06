@@ -2,7 +2,6 @@ import { useState, KeyboardEvent } from "react";
 import { X, Plus } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 interface ChipInputProps {
@@ -95,19 +94,23 @@ export function ChipInput({
           aria-describedby={`${id}-helper`}
         />
         <div className="absolute inset-y-0 right-1 flex items-center">
-          <Button
+          <button
             type="button"
-            variant="ghost"
-            size="sm"
             onClick={handleAdd}
             disabled={!canAdd}
-            className="h-7 px-2 text-xs font-medium"
+            className={cn(
+              "h-7 px-2 text-xs font-medium rounded-md transition-colors flex items-center",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-1",
+              canAdd
+                ? "bg-orange-500 text-white hover:bg-orange-600"
+                : "bg-orange-500/40 text-white/70 cursor-not-allowed"
+            )}
             aria-label="Add item"
             data-testid={testId ? `${testId}-add-button` : "chip-add-button"}
           >
             <Plus className="w-3 h-3 mr-1" aria-hidden="true" />
             Add
-          </Button>
+          </button>
         </div>
       </div>
       
