@@ -1,0 +1,160 @@
+Continue working in the same JavaScript (NOT TypeScript) + React + Tailwind CSS, mobile-first project.
+I want to add a dedicated “Safe space / Privacy & Safety” block on the Home page that clearly communicates:
+
+This is a judgement-free tool
+
+How we treat privacy and data
+
+That they’re in control
+
+It should feel warm, reassuring, and serious about privacy.
+
+Important:
+DO NOT perform any e2e tests for this. Manual/component-level checks only.
+
+Business requirement – Dedicated safe-zone section
+
+Add a new section on the Home page that:
+
+Communicates safety, privacy, and control
+
+Suggested content (you can polish but keep meaning):
+
+Heading: “A judgement-free space, built for your reality.”
+
+Subtext:
+
+“We don’t store what you write in this session. You decide what to share, and you can close this tab at any time.”
+
+Bullets or short list:
+
+“No account required.”
+
+“No tracking of your answers.”
+
+“You control what you keep, copy, or delete.”
+
+Uses a warm, reassuring visual style
+
+A rounded, card-like block with:
+
+Soft background (e.g., a tinted neutral or orange-secondary with low opacity).
+
+A simple icon (lock, shield, or heart-lock) that feels protective, not scary.
+
+Optional micro-motion:
+
+A very subtle pulse or glow on the icon when the section scrolls into view (once, not looping forever).
+
+Placement
+
+Place this section:
+
+Below the hero/feature cards but above any heavy content (like How It Works or carousels), OR
+
+Just under the main CTA to catch users early.
+
+It should be clearly visible without feeling like a “legal disclaimer.”
+
+Acceptance criteria
+Scenario: Safe-zone block is visible and clearly about privacy
+
+Given the user is on the Home page
+
+When they scroll a little past the hero or CTA
+
+Then:
+
+They see a clearly labeled safe-zone block explaining:
+
+Judgement-free nature.
+
+Privacy behavior.
+
+User control.
+
+Scenario: Visual style feels warm and reassuring
+
+Given the user views the section
+
+When they look at the icon and colors
+
+Then:
+
+Colors are soft, readable, and consistent with the brand (e.g., orange secondary or warm neutral).
+
+Icon feels protective (lock/heart/shield), not punitive.
+
+Scenario: Optional micro-motion is subtle
+
+Given the user scrolls the section into view
+
+When any icon or background motion occurs
+
+Then:
+
+It is gentle (e.g., a small pulse or fade) and runs once.
+
+It does not distract from reading the text.
+
+What I want you (Replit AI) to do
+
+Assess Home layout
+
+Find the right place in the Home component to insert this block (likely after hero/feature cards).
+
+Describe your understanding
+
+Confirm you’ll create a single, dedicated section about privacy/safety, with warm styling and optional subtle icon motion.
+
+Key considerations
+
+Keep:
+
+Copy empathetic and trauma-informed.
+
+Layout mobile-first with good padding and line-height.
+
+High contrast and accessible font sizes.
+
+Implementation plan
+
+Step 1: Add a new <section> with max-w-* container, padding, and rounded background.
+
+Step 2: Add an icon + heading + subcopy + 2–3 bullet points.
+
+Step 3: Optionally add a small animation on icon when section enters view (using useInView or a simple useEffect).
+
+Step 4: Verify spacing with adjacent sections on mobile and desktop.
+
+Skeleton
+
+function SafeZoneSection() {
+  return (
+    <section className="px-4 py-8">
+      <div className="max-w-3xl mx-auto rounded-2xl bg-orange-50 border border-orange-100 p-6 flex flex-col sm:flex-row gap-4">
+        <div className="flex-shrink-0 flex items-start">
+          <div className="h-10 w-10 rounded-full bg-orange-100 flex items-center justify-center">
+            {/* lock/heart icon */}
+          </div>
+        </div>
+        <div>
+          <h2 className="text-base font-semibold text-slate-900">
+            A judgement-free space, built for your reality.
+          </h2>
+          <p className="mt-2 text-sm text-slate-700">
+            We don’t store what you write in this session. You decide what to share, and you can close this tab at any time.
+          </p>
+          <ul className="mt-3 space-y-1 text-sm text-slate-700">
+            <li>• No account required.</li>
+            <li>• No tracking of your answers.</li>
+            <li>• You decide what to keep, copy, or delete.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
+Do not run e2e tests
