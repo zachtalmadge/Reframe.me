@@ -218,27 +218,29 @@ export default function Home() {
               />
 
               <div
-                className="max-w-md mx-auto text-left space-y-3 pt-4"
+                className="max-w-md mx-auto text-left pt-4"
                 data-testid="before-after-block"
               >
-                <div
-                  className={`text-sm text-muted-foreground/80 italic transition-opacity duration-300 motion-reduce:transition-none ${
-                    showBefore ? "opacity-100" : "opacity-0"
-                  }`}
-                >
-                  <span className="font-medium text-muted-foreground not-italic">
-                    Before:
-                  </span>{" "}
-                  "{beforeAfterPairs[currentPairIndex].before}"
-                </div>
-                <div
-                  className={`text-sm text-foreground font-medium transition-all duration-300 motion-reduce:transition-none ${
-                    showAfter
-                      ? "opacity-100 translate-y-0"
-                      : "opacity-0 translate-y-1"
-                  }`}
-                >
-                  <span className="text-primary">After:</span> "{beforeAfterPairs[currentPairIndex].after}"
+                <div className="min-h-[5.5rem] sm:min-h-[4rem] flex flex-col justify-start gap-3">
+                  <div
+                    className={`text-sm text-muted-foreground/80 italic transition-opacity duration-300 motion-reduce:transition-none ${
+                      showBefore ? "opacity-100" : "opacity-0"
+                    }`}
+                  >
+                    <span className="font-medium text-muted-foreground not-italic">
+                      Before:
+                    </span>{" "}
+                    "{beforeAfterPairs[currentPairIndex].before}"
+                  </div>
+                  <div
+                    className={`text-sm text-foreground font-medium transition-all duration-300 motion-reduce:transition-none ${
+                      showAfter
+                        ? "opacity-100 translate-y-0"
+                        : "opacity-0 translate-y-1"
+                    }`}
+                  >
+                    <span className="text-primary">After:</span> "{beforeAfterPairs[currentPairIndex].after}"
+                  </div>
                 </div>
               </div>
 
