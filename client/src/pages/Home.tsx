@@ -492,6 +492,9 @@ export default function Home() {
                     <li>You've received (or are worried about) a pre-adverse action notice and don't know how to respond.</li>
                   </ul>
                 </div>
+                <p className="text-sm text-muted-foreground">
+                  Even if you came home recently or it’s been years, it’s okay to still be finding the words for your story.
+                </p>
 
                 <div className="pt-4 border-t border-orange-400/20">
                   <p className="font-medium text-orange-600 dark:text-orange-400">
