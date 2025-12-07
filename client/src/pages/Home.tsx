@@ -205,15 +205,15 @@ export default function Home() {
       >
         <div
           aria-hidden="true"
-          className={`pointer-events-none absolute inset-0 transition-opacity duration-300 motion-reduce:hidden ${
+          className={`pointer-events-none absolute inset-0 z-10 transition-opacity duration-300 motion-reduce:hidden ${
             isSpotlightVisible ? "opacity-100" : "opacity-0"
           }`}
           style={{
             background: `radial-gradient(
-              circle 280px at ${spotlightPosition.x}px ${spotlightPosition.y}px,
-              rgba(255, 255, 255, 0.12),
-              rgba(255, 255, 255, 0.04) 40%,
-              transparent 70%
+              circle 300px at ${spotlightPosition.x}px ${spotlightPosition.y}px,
+              rgba(255, 255, 255, 0.25),
+              rgba(255, 255, 255, 0.1) 50%,
+              transparent 80%
             )`,
           }}
         />
