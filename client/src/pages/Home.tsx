@@ -73,7 +73,10 @@ const beforeAfterPairs = [
   },
 ];
 
-const ROTATION_INTERVAL_MS = 4000;
+const BEFORE_DELAY = 200;
+const AFTER_DELAY = 800;
+const VISIBLE_DURATION = 4000;
+const GAP_DURATION = 1000;
 
 export default function Home() {
   const { ref: howItWorksRef, isInView: howItWorksInView } = useInView({
@@ -99,9 +102,8 @@ export default function Home() {
       setShowBefore(true);
       setShowAfter(true);
     } else {
-      const mountId = requestAnimationFrame(() => setHeroMounted(true));
+      requestAnimationFrame(() => setHeroMounted(true));
     }
-    return () => {};
   }, []);
 
   useEffect(() => {
@@ -110,22 +112,38 @@ export default function Home() {
       setShowAfter(true);
       return;
     }
-    setShowBefore(false);
-    setShowAfter(false);
-    const beforeTimer = setTimeout(() => setShowBefore(true), 200);
-    const afterTimer = setTimeout(() => setShowAfter(true), 800);
-    return () => {
-      clearTimeout(beforeTimer);
-      clearTimeout(afterTimer);
-    };
-  }, [currentPairIndex, prefersReducedMotion]);
 
-  useEffect(() => {
-    if (prefersReducedMotion) return;
-    const interval = setInterval(() => {
-      setCurrentPairIndex((prev) => (prev + 1) % beforeAfterPairs.length);
-    }, ROTATION_INTERVAL_MS);
-    return () => clearInterval(interval);
+    const timeouts: NodeJS.Timeout[] = [];
+
+    function runCycle(index: number) {
+      setCurrentPairIndex(index);
+      setShowBefore(false);
+      setShowAfter(false);
+
+      timeouts.push(setTimeout(() => setShowBefore(true), BEFORE_DELAY));
+      timeouts.push(setTimeout(() => setShowAfter(true), AFTER_DELAY));
+
+      const fadeOutTime = AFTER_DELAY + VISIBLE_DURATION;
+      timeouts.push(
+        setTimeout(() => {
+          setShowBefore(false);
+          setShowAfter(false);
+        }, fadeOutTime)
+      );
+
+      const nextStartTime = fadeOutTime + GAP_DURATION;
+      timeouts.push(
+        setTimeout(() => {
+          runCycle((index + 1) % beforeAfterPairs.length);
+        }, nextStartTime)
+      );
+    }
+
+    runCycle(0);
+
+    return () => {
+      timeouts.forEach(clearTimeout);
+    };
   }, [prefersReducedMotion]);
 
   useEffect(() => {
