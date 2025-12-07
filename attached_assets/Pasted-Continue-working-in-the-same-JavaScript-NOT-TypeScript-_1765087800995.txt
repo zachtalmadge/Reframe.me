@@ -1,0 +1,367 @@
+Continue working in the same JavaScript (NOT TypeScript) + React + Tailwind CSS, mobile-first project.
+The Results / Documents page already shows:
+
+Generated disclosure narratives (stack/swipe UI, copy/download/regenerate).
+
+Generated pre-adverse action response letter (card with copy/download/regenerate).
+
+A switch-style toggle at the top (when both are selected) that flips between “Narratives” and “Letter”.
+
+I now want to add a new “How to use your results” section:
+
+This section should appear below all of the main results content (narrative/letter cards, toggles, buttons) but above the site footer.
+
+It should have a large, bold heading and then practical, step-based guidance for:
+
+How to use narratives in real-life situations.
+
+How to use the pre-adverse letter in real-life situations.
+
+The content should conditionally render based on what the user generated:
+
+Only narratives selected → only the narratives guidance appears.
+
+Only letter selected → only the letter guidance appears.
+
+Both selected → a pill-style navigation within this section lets the user switch between:
+
+“Using your narratives”
+
+“Using your letter”
+
+Important for this change:
+For this change, DO NOT perform any end-to-end (e2e) tests or automated full-flow testing.
+You may perform local/component-level checks only. I will manually confirm behavior in the UI.
+
+Business requirement – “How to use your results” guidance section (conditional & pill-nav)
+
+Add a new “How to use your results” section on the Results page so that:
+
+Placement & layout:
+
+It appears as its own distinct section under the existing results content (narrative/letter cards, toggles, regenerate buttons, etc.), and above the footer.
+
+It uses a clear, large heading (e.g., text-xl–text-2xl, bold) like:
+
+“How to use what you just got” or similar (you can use placeholder text; I will refine copy later).
+
+The section follows the app’s existing layout conventions (max-w-*, centered content, responsive padding).
+
+Conditional content behavior:
+
+If the user generated only narratives:
+
+Show only the “How to use your narratives” guidance (no mention of the letter).
+
+If the user generated only the pre-adverse letter:
+
+Show only the “How to use your letter” guidance.
+
+If the user generated both:
+
+Show a pill-style navigation within this section (separate from the top switch that controls which results are visible).
+
+Pills might be labeled:
+
+“Using your narratives”
+
+“Using your letter”
+
+Clicking a pill only toggles which guidance content is visible in this bottom section, not the main results cards above.
+
+Guidance content (high level intent, you can use placeholder copy):
+
+Narratives guidance (examples of what it should cover):
+
+Practice saying one version out loud a few times.
+
+Pick 1–2 sentences to memorize.
+
+Edit wording so it sounds natural in their own voice.
+
+Letter guidance (examples of what it should cover):
+
+Re-read carefully for accuracy (dates, charges, employers).
+
+Make sure it feels honest and comfortable to send.
+
+If possible, review it with a trusted person or legal aid before sending.
+
+Tone:
+
+Gentle, non-judgmental, trauma-aware.
+
+Emphasize that it’s okay to take time, revise, and ask for help.
+
+Important:
+
+Do not change the existing regeneration logic, result cards, or the top-level “Narratives / Letter” switch.
+
+This new section is read-only guidance, not an interactive tool or new form.
+
+Acceptance criteria (Given / When / Then)
+Scenario: Only narratives were generated
+
+Given the user selected only narratives and completed generation
+
+When they are on the Results page
+
+Then:
+
+A “How to use your results” section appears under the narrative stack/cards and above the footer.
+
+The section displays only guidance about using narratives.
+
+There is no pill navigation, since there is only one type of result.
+
+Scenario: Only letter was generated
+
+Given the user selected only the pre-adverse letter and completed generation
+
+When they are on the Results page
+
+Then:
+
+The “How to use your results” section appears under the letter card and above the footer.
+
+The section displays only guidance about using the letter.
+
+There is no pill navigation, since there is only one type of result.
+
+Scenario: Both narratives and letter were generated
+
+Given the user selected both narratives and letter and completed generation
+
+When they scroll to the bottom of the Results page
+
+Then:
+
+They see the “How to use your results” section with a pill-style navigation at the top of that section.
+
+There are at least two pills, e.g., “Using your narratives” and “Using your letter”.
+
+Clicking each pill toggles which guidance block is currently visible under the heading.
+
+The main results view (above) remains controlled by the existing switch-style toggle and is unaffected.
+
+Scenario: Heading and layout
+
+Given the Results page is rendered on mobile or desktop
+
+When the user scrolls down to the new section
+
+Then:
+
+The heading is clearly prominent (larger font, bold).
+
+The section follows responsive layout (no horizontal scrolling, comfortable spacing).
+
+The content reads as supportive guidance, not instructions to disclose early or guarantees of outcomes.
+
+Scenario: No regressions to existing logic
+
+Given the existing Results page logic for displaying narratives, letter, and regenerate controls
+
+When this new section is added
+
+Then:
+
+Narrative/letter cards, copy/download, regenerate behavior, and regeneration limits still function exactly as before.
+
+The existing “Narratives / Letter” top switch still works as designed.
+
+No new errors/warnings are introduced.
+
+What I want you (Replit AI) to do
+
+Assess the current Results page structure
+
+Identify the main Results page component and how it receives:
+
+User selection (narratives / letter / both).
+
+Generated documents.
+
+Find where the main results content ends (cards, toggles, buttons) and where the footer begins.
+
+Describe your understanding of the requirements
+
+In your own words, explain:
+
+That you will add a new bottom section on the Results page for “How to use your results”.
+
+That this section is conditionally rendered:
+
+Narratives-only guidance
+
+Letter-only guidance
+
+Or pill-nav between them when both exist.
+
+That the purpose is to give practical, supportive next-step guidance, not to change document content or logic.
+
+Identify key considerations to avoid disrupting existing functionality
+
+Ensure that:
+
+The new section does not interfere with existing state for narratives/letter display.
+
+Pill navigation in the new section is local to that section and does not change the main results toggle or any API calls.
+
+The layout remains mobile-first and accessible (e.g., pill buttons are keyboard-focusable with clear states).
+
+Propose best-practice implementation details
+
+Describe:
+
+A new React subcomponent (e.g., ResultsGuidanceSection) or inline JSX block for this section.
+
+Using props or existing selection state (e.g., selection.tool / hasNarratives / hasLetter) to decide:
+
+Which blocks to show.
+
+Whether to display pill navigation.
+
+For the pill nav (both case), suggest:
+
+A small piece of local state (e.g., activeGuidanceTab: "narratives" | "letter").
+
+Tailwind classes for pills (rounded, border, background on active, focus ring, etc.).
+
+Assess other best practices
+
+Content:
+
+Placeholder copy should be gentle, trauma-aware, and non-judgmental.
+
+Accessibility:
+
+Pill nav should use <button> elements with aria-pressed or appropriate aria labelling if needed.
+
+Design:
+
+Align typography/spacing with other sections for a cohesive look.
+
+Generate a step-by-step plan to implement this enhancement
+
+At a minimum include:
+
+Step 1: Determine how to detect which outputs the user has (narratives, letter, or both) from existing props/state.
+
+Step 2: Create a ResultsGuidanceSection component (or equivalent) that:
+
+Receives booleans like hasNarratives / hasLetter.
+
+Conditionally renders:
+
+Narratives-only guidance
+
+Letter-only guidance
+
+Or pill nav + both guidance blocks.
+
+Step 3: Implement the section layout:
+
+Large, bold heading.
+
+Guidance content in text blocks (with bullets or short paragraphs), using placeholder text that fits the intent.
+
+Pill nav styling (for both case) with clear active state.
+
+Step 4: Insert this section into the Results page below the main cards/results, above the footer.
+
+Step 5: Manually verify:
+
+Narratives-only run → only narratives guidance appears.
+
+Letter-only run → only letter guidance appears.
+
+Both → pill nav switches between guidance blocks.
+
+Step 6: Confirm no impact on regenerate, copy/download, or the main toggle.
+
+Keep the scope limited
+
+Do not:
+
+Change document generation logic or API calls.
+
+Modify the main “Narratives / Letter” toggle or regeneration limits.
+
+Only:
+
+Add the new “How to use your results” section and local pill navigation within it.
+
+Propose a skeleton framework
+
+function ResultsGuidanceSection({ hasNarratives, hasLetter }) {
+  if (!hasNarratives && !hasLetter) return null;
+
+  const [activeTab, setActiveTab] = useState(
+    hasNarratives ? "narratives" : "letter"
+  );
+
+  const showPills = hasNarratives && hasLetter;
+
+  return (
+    <section className="mt-10 border-t border-slate-800 pt-8">
+      <div className="max-w-3xl mx-auto space-y-4">
+        <h2 className="text-xl sm:text-2xl font-semibold text-foreground">
+          How to use what you just got
+        </h2>
+
+        {showPills && (
+          <div className="inline-flex rounded-full bg-slate-900 p-1 text-sm">
+            <button
+              type="button"
+              onClick={() => setActiveTab("narratives")}
+              className={`px-4 py-1.5 rounded-full transition ${
+                activeTab === "narratives"
+                  ? "bg-slate-100 text-slate-900"
+                  : "text-slate-200"
+              }`}
+            >
+              Using your narratives
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab("letter")}
+              className={`px-4 py-1.5 rounded-full transition ${
+                activeTab === "letter"
+                  ? "bg-slate-100 text-slate-900"
+                  : "text-slate-200"
+              }`}
+            >
+              Using your letter
+            </button>
+          </div>
+        )}
+
+        {/* Narratives guidance */}
+        {hasNarratives && (!showPills || activeTab === "narratives") && (
+          <div className="space-y-2 text-sm text-muted-foreground">
+            {/* Placeholder guidance copy to be refined later */}
+            <p>Practice reading one narrative out loud...</p>
+          </div>
+        )}
+
+        {/* Letter guidance */}
+        {hasLetter && (!showPills || activeTab === "letter") && (
+          <div className="space-y-2 text-sm text-muted-foreground">
+            {/* Placeholder guidance copy to be refined later */}
+            <p>Read your letter carefully for accuracy...</p>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
+
+Do not modify any files yet
+
+First, output your understanding of this new Results guidance section and your implementation plan.
+
+Remember: do NOT perform any e2e tests for this change—I will manually confirm behavior.
+
+Wait for my confirmation that your approach is sound before updating the code.
