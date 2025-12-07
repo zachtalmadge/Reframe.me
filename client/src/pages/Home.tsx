@@ -280,13 +280,13 @@ export default function Home() {
       >
         <div className="max-w-3xl mx-auto">
           <div 
-            className="group relative rounded-xl border border-slate-700/50 bg-slate-900/80 p-6 md:p-8 cursor-default transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-lg hover:border-slate-600 hover:bg-slate-900 focus-within:-translate-y-1 focus-within:shadow-lg motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+            className="group relative rounded-xl border border-slate-200 bg-slate-100 p-6 md:p-8 cursor-default transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-lg hover:border-slate-300 hover:bg-slate-50 focus-within:-translate-y-1 focus-within:shadow-lg motion-reduce:transition-none motion-reduce:hover:translate-y-0 dark:border-slate-700 dark:bg-slate-800/50 dark:hover:border-slate-600 dark:hover:bg-slate-800"
             tabIndex={0}
           >
             <div className="flex flex-col md:flex-row gap-6 items-start">
               <div className="flex-shrink-0">
-                <div className="w-12 h-12 rounded-lg bg-slate-800 flex items-center justify-center transition-transform duration-200 ease-out group-hover:scale-110 group-focus-within:scale-110 motion-reduce:group-hover:scale-100">
-                  <Shield className="w-6 h-6 text-slate-200" aria-hidden="true" />
+                <div className="w-12 h-12 rounded-lg bg-slate-200 dark:bg-slate-700 flex items-center justify-center transition-transform duration-200 ease-out group-hover:scale-110 group-focus-within:scale-110 motion-reduce:group-hover:scale-100">
+                  <Shield className="w-6 h-6 text-slate-600 dark:text-slate-300" aria-hidden="true" />
                 </div>
               </div>
               <div className="space-y-4">
@@ -294,7 +294,7 @@ export default function Home() {
                   <div className="text-glossy-wrapper">
                     <h2
                       id="safe-space-heading"
-                      className="text-xl md:text-2xl font-semibold text-slate-50"
+                      className="text-xl md:text-2xl font-semibold text-slate-800 dark:text-slate-100"
                     >
                       A privacy-first space, built for your reality.
                     </h2>
@@ -303,29 +303,29 @@ export default function Home() {
                       className="text-glossy-overlay group-hover:text-glossy-active group-focus-within:text-glossy-active motion-reduce:hidden"
                     />
                   </div>
-                  <p className="text-slate-300 leading-relaxed">
+                  <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
                     We don't store what you write in this session. You decide
                     what to share, and you can close this tab at any time.
                   </p>
                 </div>
-                <ul className="space-y-2 text-sm text-slate-300">
+                <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-300">
                   <li className="flex items-center gap-2">
                     <span
-                      className="w-1.5 h-1.5 rounded-full bg-slate-400"
+                      className="w-1.5 h-1.5 rounded-full bg-slate-500 dark:bg-slate-400"
                       aria-hidden="true"
                     />
                     No account required.
                   </li>
                   <li className="flex items-center gap-2">
                     <span
-                      className="w-1.5 h-1.5 rounded-full bg-slate-400"
+                      className="w-1.5 h-1.5 rounded-full bg-slate-500 dark:bg-slate-400"
                       aria-hidden="true"
                     />
                     No tracking of your answers.
                   </li>
                   <li className="flex items-center gap-2">
                     <span
-                      className="w-1.5 h-1.5 rounded-full bg-slate-400"
+                      className="w-1.5 h-1.5 rounded-full bg-slate-500 dark:bg-slate-400"
                       aria-hidden="true"
                     />
                     You decide what to keep, copy, or delete.
