@@ -594,6 +594,58 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <section
+        className="py-10 md:py-14 px-4 sm:px-6 lg:px-8"
+        aria-labelledby="is-this-for-me-heading"
+        data-testid="section-is-this-for-me"
+      >
+        <div className="max-w-3xl mx-auto">
+          <div className="rounded-xl border border-orange-400/30 bg-orange-500/5 p-6 md:p-8">
+            <div className="space-y-5">
+              <div className="inline-flex items-center rounded-full bg-orange-500/10 px-3 py-1 text-xs font-medium uppercase tracking-wide text-orange-600 dark:text-orange-400">
+                Who this is for
+              </div>
+
+              <div className="space-y-2">
+                <h2
+                  id="is-this-for-me-heading"
+                  className="text-xl md:text-2xl font-semibold text-foreground"
+                >
+                  Is this for me?
+                </h2>
+                <p className="text-sm text-muted-foreground">
+                  Reframe.me is designed for people navigating job searches with a past record or justice involvement.
+                </p>
+              </div>
+
+              <div className="space-y-4 text-sm text-muted-foreground">
+                <div>
+                  <p className="font-medium text-orange-600 dark:text-orange-400">
+                    Reframe.me might help if:
+                  </p>
+                  <ul className="mt-2 space-y-1.5 list-disc list-inside marker:text-orange-500/60">
+                    <li>You're applying for jobs after a conviction or justice involvement.</li>
+                    <li>You're worried about what to say when your background comes up in the hiring process.</li>
+                    <li>You've received (or are worried about) a pre-adverse action notice and don't know how to respond.</li>
+                  </ul>
+                </div>
+
+                <div className="pt-4 border-t border-orange-400/20">
+                  <p className="font-medium text-orange-600 dark:text-orange-400">
+                    This is not:
+                  </p>
+                  <ul className="mt-2 space-y-1.5 list-disc list-inside marker:text-orange-500/60">
+                    <li>Legal advice or a substitute for speaking with a lawyer or legal aid.</li>
+                    <li>A guarantee that you will be hired or keep a job.</li>
+                    <li>A replacement for your own judgment or support from trusted people in your life.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </Layout>
   );
 }

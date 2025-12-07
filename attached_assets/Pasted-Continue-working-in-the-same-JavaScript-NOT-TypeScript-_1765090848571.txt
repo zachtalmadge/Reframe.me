@@ -1,0 +1,303 @@
+Continue working in the same JavaScript (NOT TypeScript) + React + Tailwind CSS, mobile-first project.
+On the Home page, we already have:
+
+Hero section
+
+Feature cards (Narratives + Pre-Adverse letter)
+
+How It Works
+
+Safe-space / privacy block
+
+Stories of Change carousel
+
+I want to add a new, short “Is this for me?” strip:
+
+Placed directly below the Stories of Change section on the Home page.
+
+Styled with an orange-accented look (using our existing orange/secondary tokens), but still gentle and non-alarming.
+
+Contains two sub-sections:
+
+“Reframe.me might help if…” (who this is for)
+
+“This is not…” (clear boundaries: not legal advice, no hiring guarantees, not a replacement for professional help).
+
+Important for this change:
+For this change, DO NOT perform any end-to-end (e2e) tests or automated full-flow testing.
+You may do local/component-level checks only. I will manually confirm behavior in the UI.
+
+Business requirement – “Is this for me?” informational strip (orange, with “This is not”)
+
+Add a new section on the Home page that:
+
+Placement:
+
+Appears after the Stories of Change section / carousel.
+
+Appears before the footer and any final content.
+
+Uses the same horizontal padding and max-w-* conventions as other Home sections.
+
+Content:
+
+Main heading, for example:
+
+“Is this for me?” (use exactly this heading text).
+
+A short “This might help if…” subsection, e.g. bullets such as (you can drop in copy like this or close to it):
+
+You’re applying for jobs after a conviction or justice involvement.
+
+You’re worried about what to say when your background comes up in the hiring process.
+
+You’ve received (or are worried about) a pre-adverse action notice and don’t know how to respond.
+
+A clear “This is not…” subheading and bullet list, including points like:
+
+This is not legal advice.
+
+This does not guarantee you will be hired or keep a job.
+
+This is not a replacement for talking with a lawyer, legal aid, or a trusted advisor.
+
+Styling (orange but not alarming):
+
+The section should have a light, warm orange accent that matches your brand (e.g., using your secondary/orange tokens such as border-orange-400/30, bg-orange-500/5, text-orange-400, etc.).
+
+It should feel:
+
+Supportive and warm, not like an error/warning box.
+
+Similar visual weight to Safe-space / FAQ sections, but with orange highlights instead of grey-only.
+
+Suggested ideas (you can adapt to your design system):
+
+A rounded card with a soft orange-tinted background (bg-orange-500/5) and orange border.
+
+An orange label/pill above the heading (e.g., small “Who this is for” tag).
+
+Orange bullet markers or left border line.
+
+Tone:
+
+Gentle, trauma-aware, non-judgmental.
+
+Clear about limits (no legal advice / no guarantees) without scaring the user away.
+
+Acceptance criteria (Given / When / Then)
+Scenario: Section placement under Stories of Change
+
+Given the user scrolls through the Home page
+
+When they pass the Stories of Change section
+
+Then:
+
+They see a new section with the heading “Is this for me?” directly below Stories of Change.
+
+The footer remains below this new section.
+
+Scenario: “Reframe.me might help if…” bullets are present
+
+Given the new section is visible
+
+When the user reads the top content of the section
+
+Then:
+
+They see brief bullets describing situations where Reframe.me might help (e.g., applying after a conviction, worrying about how to talk about a record, responding to pre-adverse action).
+
+The bullets clearly target justice-involved job seekers without shaming.
+
+Scenario: “This is not…” bullets clearly set expectations
+
+Given the user continues reading the section
+
+When they reach the “This is not…” part
+
+Then:
+
+They see a subheading like “This is not:” followed by bullets that state:
+
+This is not legal advice.
+
+This does not guarantee hiring outcomes.
+
+This does not replace talking with a lawyer/legal aid/trusted advisor.
+
+The language is clear and easy to understand.
+
+Scenario: Orange styling is present and not alarming
+
+Given the new section is rendered
+
+When the user visually scans it
+
+Then:
+
+They can see clear orange accents (border, heading, or bullet markers) that match the app’s orange brand color.
+
+The section does not look like an error or urgent warning; it feels like a warm informational callout.
+
+Scenario: No regressions to Stories of Change or other sections
+
+Given the Stories of Change carousel and other Home sections were previously working
+
+When the “Is this for me?” strip is added
+
+Then:
+
+Stories of Change behavior and layout remain unchanged.
+
+Safe-space, How It Works, hero, and footer all still function and layout correctly.
+
+There are no new console errors.
+
+What I want you (Replit AI) to do
+
+Assess the current Home page structure
+
+Identify:
+
+The component/section that renders Stories of Change.
+
+Where the Home page currently transitions from Stories of Change to the footer or next sections.
+
+Describe your understanding of the requirements
+
+In your own words, explain that:
+
+You will insert a new, orange-accented “Is this for me?” section between Stories of Change and the footer.
+
+The section will have:
+
+A main heading “Is this for me?”
+
+A short “Reframe.me might help if…” list.
+
+A “This is not:” list clarifying that it’s not legal advice, doesn’t guarantee hiring outcomes, and doesn’t replace professional help.
+
+The styling will use orange accents consistent with existing brand tokens while remaining gentle.
+
+Identify key considerations to avoid disrupting existing functionality
+
+Ensure:
+
+You keep Home page spacing and responsive layout consistent (same max-w-*, px-*).
+
+The new section doesn’t introduce duplicate content already present in FAQ, but complements it.
+
+The orange styling doesn’t conflict with existing error/alert components (no red/orange confusion).
+
+Propose best-practice implementation details
+
+Suggest a structure like:
+
+<section
+  className="px-4 sm:px-6 lg:px-8 py-10"
+  aria-labelledby="is-this-for-me-heading"
+  data-testid="section-is-this-for-me"
+>
+  <div className="max-w-3xl mx-auto">
+    <div className="rounded-xl border border-orange-400/30 bg-orange-500/5 p-6 md:p-7">
+      <div className="space-y-4">
+        <div className="inline-flex items-center rounded-full bg-orange-500/10 px-3 py-1 text-xs font-medium uppercase tracking-wide text-orange-400">
+          Who this is for
+        </div>
+
+        <div className="space-y-2">
+          <h2
+            id="is-this-for-me-heading"
+            className="text-xl sm:text-2xl font-semibold text-foreground"
+          >
+            Is this for me?
+          </h2>
+          <p className="text-sm text-muted-foreground">
+            Reframe.me is designed for people navigating job searches with a past record
+            or justice involvement.
+          </p>
+        </div>
+
+        <div className="space-y-3 text-sm text-muted-foreground">
+          <div>
+            <p className="font-medium text-orange-400">
+              Reframe.me might help if:
+            </p>
+            <ul className="mt-1 space-y-1 list-disc list-inside">
+              <li>You’re applying for jobs after a conviction or justice involvement.</li>
+              <li>You’re worried about what to say when your background comes up in the hiring process.</li>
+              <li>You’ve received (or are worried about) a pre-adverse action notice and don’t know how to respond.</li>
+            </ul>
+          </div>
+
+          <div className="pt-2 border-t border-orange-400/20">
+            <p className="font-medium text-orange-400">
+              This is not:
+            </p>
+            <ul className="mt-1 space-y-1 list-disc list-inside">
+              <li>Legal advice or a substitute for speaking with a lawyer or legal aid.</li>
+              <li>A guarantee that you will be hired or keep a job.</li>
+              <li>A replacement for your own judgment or support from trusted people in your life.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+You can adapt exact copy and colors to match your design tokens and tone, but keep:
+
+The two subsections (“might help if” and “This is not”).
+
+The orange accent treatments.
+
+Generate a step-by-step plan to implement this enhancement
+
+At a minimum include:
+
+Identify where the Stories of Change section is rendered in the Home page component.
+
+Right after that section, insert the new section for “Is this for me?” using the shared layout patterns (same px, max-w, etc.).
+
+Implement the content structure:
+
+Heading: “Is this for me?”
+
+“Reframe.me might help if…” bullets.
+
+“This is not:” bullets.
+
+Style the container with:
+
+Rounded card, orange-tinted border/background.
+
+Orange text accents for labels/headings.
+
+Muted text for body copy.
+
+Verify on mobile and desktop:
+
+Section appears directly below Stories of Change.
+
+Text wraps nicely and remains readable.
+
+No layout conflicts with surrounding sections.
+
+Keep the scope limited
+
+Do not:
+
+Change Stories of Change content or logic.
+
+Alter the FAQ / Learn More page in this prompt.
+
+Modify hero or How It Works sections.
+
+Only:
+
+Add the new “Is this for me?” section and style it appropriately with orange accents.
+
+For this prompt, remember: no e2e tests. You may perform local/component-level checks only; I’ll verify the UI and copy myself.
