@@ -4,9 +4,10 @@ import { Link, useLocation } from "wouter";
 interface LayoutProps {
   children: ReactNode;
   onLogoClick?: () => void;
+  onFaqClick?: () => void;
 }
 
-export default function Layout({ children, onLogoClick }: LayoutProps) {
+export default function Layout({ children, onLogoClick, onFaqClick }: LayoutProps) {
   const [location] = useLocation();
   const [showSweep, setShowSweep] = useState(false);
   const isHome = location === "/";
@@ -27,11 +28,18 @@ export default function Layout({ children, onLogoClick }: LayoutProps) {
     }
   };
 
+  const handleFaqClick = (e: MouseEvent) => {
+    if (onFaqClick) {
+      e.preventDefault();
+      onFaqClick();
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center">
+          <div className="flex h-16 items-center justify-between gap-4">
             <Link 
               href="/" 
               className="flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-md"
@@ -50,6 +58,14 @@ export default function Layout({ children, onLogoClick }: LayoutProps) {
                   />
                 )}
               </span>
+            </Link>
+            <Link
+              href="/faq"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-md px-2 py-1"
+              data-testid="link-faq"
+              onClick={handleFaqClick}
+            >
+              Learn more
             </Link>
           </div>
         </div>

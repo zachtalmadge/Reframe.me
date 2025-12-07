@@ -11,6 +11,7 @@ import Selection from "@/pages/Selection";
 import Form from "@/pages/Form";
 import Loading from "@/pages/Loading";
 import Results from "@/pages/Results";
+import Faq from "@/pages/Faq";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -21,6 +22,7 @@ function Router() {
       <Route path="/form" component={Form} />
       <Route path="/loading" component={Loading} />
       <Route path="/results" component={Results} />
+      <Route path="/faq" component={Faq} />
       <Route component={NotFound} />
     </Switch>
   );
