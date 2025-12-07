@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSearch, useLocation } from "wouter";
-import { Download, Home, AlertTriangle, BookOpen } from "lucide-react";
+import { Download, Home, AlertTriangle, BookOpen, MessageCircle, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -33,6 +33,155 @@ import {
   RegenerationCounts,
   NarrativeType,
 } from "@/lib/regenerationPersistence";
+
+type GuidanceTab = "narratives" | "letter";
+
+function ResultsGuidanceSection({ hasNarratives, hasLetter }: { hasNarratives: boolean; hasLetter: boolean }) {
+  const [activeTab, setActiveTab] = useState<GuidanceTab>(
+    hasNarratives ? "narratives" : "letter"
+  );
+
+  if (!hasNarratives && !hasLetter) return null;
+
+  const showPills = hasNarratives && hasLetter;
+
+  return (
+    <section 
+      className="mt-8 pt-8 border-t border-border"
+      aria-labelledby="guidance-heading"
+      data-testid="section-guidance"
+    >
+      <div className="space-y-6">
+        <div className="text-center space-y-2">
+          <h2 
+            id="guidance-heading"
+            className="text-xl sm:text-2xl font-bold text-foreground"
+          >
+            How to use what you just created
+          </h2>
+          <p className="text-sm text-muted-foreground">
+            A few ideas to help you put these materials to work.
+          </p>
+        </div>
+
+        {showPills && (
+          <div className="flex justify-center">
+            <div 
+              className="inline-flex rounded-full bg-muted p-1 text-sm"
+              role="tablist"
+              aria-label="Guidance type"
+            >
+              <button
+                type="button"
+                role="tab"
+                aria-selected={activeTab === "narratives"}
+                onClick={() => setActiveTab("narratives")}
+                className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${
+                  activeTab === "narratives"
+                    ? "bg-background text-foreground shadow-sm"
+                    : "text-muted-foreground"
+                }`}
+                data-testid="pill-narratives-guidance"
+              >
+                <MessageCircle className="w-4 h-4" aria-hidden="true" />
+                Using your narratives
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={activeTab === "letter"}
+                onClick={() => setActiveTab("letter")}
+                className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${
+                  activeTab === "letter"
+                    ? "bg-background text-foreground shadow-sm"
+                    : "text-muted-foreground"
+                }`}
+                data-testid="pill-letter-guidance"
+              >
+                <FileText className="w-4 h-4" aria-hidden="true" />
+                Using your letter
+              </button>
+            </div>
+          </div>
+        )}
+
+        {hasNarratives && (!showPills || activeTab === "narratives") && (
+          <div 
+            className="space-y-4"
+            role="tabpanel"
+            aria-labelledby="guidance-heading"
+            data-testid="guidance-narratives"
+          >
+            <div className="bg-muted/30 rounded-lg p-5 space-y-4">
+              <h3 className="font-semibold text-foreground flex items-center gap-2">
+                <MessageCircle className="w-5 h-5 text-primary" aria-hidden="true" />
+                Getting comfortable with your narratives
+              </h3>
+              <ul className="space-y-3 text-sm text-muted-foreground">
+                <li className="flex gap-3">
+                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary text-xs font-medium flex items-center justify-center">1</span>
+                  <span><strong className="text-foreground">Practice out loud.</strong> Reading silently is different from speaking. Try saying one version a few times until it feels natural.</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary text-xs font-medium flex items-center justify-center">2</span>
+                  <span><strong className="text-foreground">Pick your anchor sentences.</strong> You don't need to memorize everything. Choose 1-2 sentences that feel most true to you.</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary text-xs font-medium flex items-center justify-center">3</span>
+                  <span><strong className="text-foreground">Make it your own.</strong> Edit the wording so it sounds like you. These are starting points, not scripts.</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary text-xs font-medium flex items-center justify-center">4</span>
+                  <span><strong className="text-foreground">Share with someone you trust.</strong> If it helps, practice with a friend, mentor, or counselor who can give you honest feedback.</span>
+                </li>
+              </ul>
+              <p className="text-sm text-muted-foreground italic border-l-2 border-primary/30 pl-3">
+                Take your time. There's no rush to use these right away. When you're ready, you'll have words that feel prepared, not panicked.
+              </p>
+            </div>
+          </div>
+        )}
+
+        {hasLetter && (!showPills || activeTab === "letter") && (
+          <div 
+            className="space-y-4"
+            role="tabpanel"
+            aria-labelledby="guidance-heading"
+            data-testid="guidance-letter"
+          >
+            <div className="bg-muted/30 rounded-lg p-5 space-y-4">
+              <h3 className="font-semibold text-foreground flex items-center gap-2">
+                <FileText className="w-5 h-5 text-chart-2" aria-hidden="true" />
+                Before you send your letter
+              </h3>
+              <ul className="space-y-3 text-sm text-muted-foreground">
+                <li className="flex gap-3">
+                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-chart-2/10 text-chart-2 text-xs font-medium flex items-center justify-center">1</span>
+                  <span><strong className="text-foreground">Check for accuracy.</strong> Review dates, names, charges, and employer details. Small errors can undermine your message.</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-chart-2/10 text-chart-2 text-xs font-medium flex items-center justify-center">2</span>
+                  <span><strong className="text-foreground">Make sure it feels honest.</strong> If anything doesn't sit right with you, edit it. You should feel comfortable with every word.</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-chart-2/10 text-chart-2 text-xs font-medium flex items-center justify-center">3</span>
+                  <span><strong className="text-foreground">Get a second opinion if you can.</strong> Consider sharing it with a trusted friend, reentry counselor, or legal aid organization before sending.</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-chart-2/10 text-chart-2 text-xs font-medium flex items-center justify-center">4</span>
+                  <span><strong className="text-foreground">Know your timeline.</strong> Pre-adverse action notices usually give you a window to respond. Check the deadline on your notice.</span>
+                </li>
+              </ul>
+              <p className="text-sm text-muted-foreground italic border-l-2 border-chart-2/30 pl-3">
+                This letter is a tool to help you respond thoughtfully. You deserve to be heard, and taking time to get it right is a sign of strength.
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
 
 export default function Results() {
   const [, navigate] = useLocation();
@@ -397,6 +546,11 @@ export default function Results() {
               </div>
             </div>
           </div>
+
+          <ResultsGuidanceSection 
+            hasNarratives={hasNarratives} 
+            hasLetter={hasLetter} 
+          />
         </div>
       </section>
 
