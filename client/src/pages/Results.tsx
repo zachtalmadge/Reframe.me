@@ -1,8 +1,18 @@
 import { useEffect, useState } from "react";
 import { useSearch, useLocation } from "wouter";
-import { Download, Home, AlertTriangle } from "lucide-react";
+import { Download, Home, AlertTriangle, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import Layout from "@/components/Layout";
 import { ToolType } from "@/lib/formState";
 import { loadResults, NarrativeItem, ResponseLetter, clearResults, GenerationResult, updateResults } from "@/lib/resultsPersistence";
@@ -51,6 +61,9 @@ export default function Results() {
   });
   const [letterError, setLetterError] = useState<string | null>(null);
 
+  const [exitModalOpen, setExitModalOpen] = useState(false);
+  const [exitDestination, setExitDestination] = useState<"home" | "faq" | null>(null);
+
   const {
     handleCopyNarrative,
     handleCopyLetter,
@@ -95,10 +108,35 @@ export default function Results() {
   };
 
   const handleLogoClick = () => {
+    setExitDestination("home");
+    setExitModalOpen(true);
+  };
+
+  const handleFaqClick = () => {
+    setExitDestination("faq");
+    setExitModalOpen(true);
+  };
+
+  const handleLearnMoreClick = () => {
+    setExitDestination("faq");
+    setExitModalOpen(true);
+  };
+
+  const handleConfirmExit = () => {
+    setExitModalOpen(false);
     clearFormData();
     clearResults();
     clearRegenerationCounts();
-    navigate("/");
+    if (exitDestination === "home") {
+      navigate("/");
+    } else if (exitDestination === "faq") {
+      navigate("/faq");
+    }
+  };
+
+  const handleCancelExit = () => {
+    setExitModalOpen(false);
+    setExitDestination(null);
   };
 
   const handleDownloadAllDocuments = () => {
@@ -214,7 +252,7 @@ export default function Results() {
   };
 
   return (
-    <Layout onLogoClick={handleLogoClick}>
+    <Layout onLogoClick={handleLogoClick} onFaqClick={handleFaqClick}>
       <section
         className="py-8 md:py-12 px-4 sm:px-6 lg:px-8"
         aria-labelledby="results-heading"
@@ -339,18 +377,58 @@ export default function Results() {
               <p className="text-sm text-muted-foreground text-center sm:text-left">
                 Need to make changes? You can start over anytime.
               </p>
-              <Button
-                variant="outline"
-                onClick={handleStartOver}
-                data-testid="button-start-over"
-              >
-                <Home className="w-4 h-4 mr-2" aria-hidden="true" />
-                Start Over
-              </Button>
+              <div className="flex flex-wrap gap-3">
+                <Button
+                  variant="outline"
+                  onClick={handleStartOver}
+                  data-testid="button-start-over"
+                >
+                  <Home className="w-4 h-4 mr-2" aria-hidden="true" />
+                  Start Over
+                </Button>
+                <Button
+                  className="bg-chart-2 hover:bg-chart-2/90 text-white"
+                  onClick={handleLearnMoreClick}
+                  data-testid="button-learn-more-results"
+                >
+                  <BookOpen className="w-4 h-4 mr-2" aria-hidden="true" />
+                  Learn More
+                </Button>
+              </div>
             </div>
           </div>
         </div>
       </section>
+
+      <AlertDialog open={exitModalOpen} onOpenChange={setExitModalOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Before you leave this page</AlertDialogTitle>
+            <AlertDialogDescription className="space-y-3">
+              <p>
+                Don't forget to copy or download your results before you leave. We don't want you to lose something important by accident.
+              </p>
+              <p>
+                Once you leave this page, you'll need to start over to generate new narratives or letters.
+              </p>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel 
+              onClick={handleCancelExit}
+              data-testid="button-cancel-exit"
+            >
+              Stay on this page
+            </AlertDialogCancel>
+            <AlertDialogAction 
+              onClick={handleConfirmExit}
+              data-testid="button-confirm-exit"
+            >
+              Leave anyway
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </Layout>
   );
 }
