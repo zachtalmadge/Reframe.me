@@ -1,0 +1,335 @@
+Continue working in the same JavaScript (NOT TypeScript) + React + Tailwind CSS, mobile-first project.
+The Home page currently includes a “Safe space / privacy” section with a Shield icon and the heading:
+
+“A judgement-free space, built for your reality.”
+
+Right now, this safe-space card uses an orange-leaning accent theme (or warmer accent colors) that feels more like a “call-to-action” color. For this particular block, I want a calmer, neutral theme:
+
+Backgrounds and accents should shift to grey / black / neutral tones.
+
+The overall feeling should be steady, grounded, and low-key, not “alert” or “warning.”
+
+Important for this change:
+For this change, DO NOT perform any end-to-end (e2e) tests or automated full-flow testing.
+You may perform local/component-level checks only. I will manually confirm the change myself.
+
+A simplified version of the current section looks like this (for reference):
+
+<section
+  className="py-10 md:py-14 px-4 sm:px-6 lg:px-8"
+  aria-labelledby="safe-space-heading"
+  data-testid="section-safe-space"
+>
+  <div className="max-w-3xl mx-auto">
+    <div className="relative rounded-xl border border-chart-2/20 bg-chart-2/5 p-6 md:p-8">
+      <div className="flex flex-col md:flex-row gap-6 items-start">
+        <div className="flex-shrink-0">
+          <div className="w-12 h-12 rounded-lg bg-chart-2/10 flex items-center justify-center">
+            <Shield className="w-6 h-6 text-chart-2" aria-hidden="true" />
+          </div>
+        </div>
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <h2
+              id="safe-space-heading"
+              className="text-xl md:text-2xl font-semibold text-foreground"
+            >
+              A judgement-free space, built for your reality.
+            </h2>
+            <p className="text-muted-foreground leading-relaxed">
+              We don't store what you write in this session. You decide
+              what to share, and you can close this tab at any time.
+            </p>
+          </div>
+          <ul className="space-y-2 text-sm text-muted-foreground">
+            <li className="flex items-center gap-2">
+              <span
+                className="w-1.5 h-1.5 rounded-full bg-chart-2"
+                aria-hidden="true"
+              />
+              No account required.
+            </li>
+            <li className="flex items-center gap-2">
+              <span
+                className="w-1.5 h-1.5 rounded-full bg-chart-2"
+                aria-hidden="true"
+              />
+              No tracking of your answers.
+            </li>
+            <li className="flex items-center gap-2">
+              <span
+                className="w-1.5 h-1.5 rounded-full bg-chart-2"
+                aria-hidden="true"
+              />
+              You decide what to keep, copy, or delete.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+Business requirement – Safe-space section uses neutral grey / black palette
+
+Update the Safe-space / privacy section so that:
+
+The overall color theme is neutral grey / black, not orange or bright accent:
+
+The card background should feel like a soft, dark or mid-grey surface (e.g., slate/stone tones), not a warm/orange-tinted block.
+
+The border and hover states should use cool grey / near-black tones, not orange.
+
+The icon container and small dots (bullets) should also shift to grey-based accents, not orange.
+
+The text remains:
+
+Highly readable, with good contrast against the new background (likely white / off-white text on darker grey).
+
+Calm and supportive; no color choices that feel like an error or warning state.
+
+The section still visually communicates:
+
+Safety, privacy, and stability (think: charcoal, slate, muted neutrals).
+
+Fits with the rest of the brand but clearly stands apart from orange CTAs, so it feels like a comfort zone, not a “click me” button.
+
+This change should only affect the safe-space section’s color palette and related hover styling, not the content or structure.
+
+Acceptance criteria (Given / When / Then)
+Scenario: Safe-space card background is neutral grey/black
+
+Given the user is on the Home page
+
+When they scroll to the Safe-space / privacy section
+
+Then:
+
+The card background appears as a neutral grey/black tone (e.g., slate/charcoal), not orange or warm.
+
+The border color is a grey variant, not orange.
+
+Scenario: Icon and bullets use neutral accents
+
+Given the user is viewing the Safe-space card
+
+When they look at the Shield icon and the small circular bullet markers
+
+Then:
+
+The icon’s background and stroke use grey-based hues (or a neutral accent consistent with the new theme), not orange.
+
+The small dots in the bullet list use a neutral grey that still stands out but does not look like a warning color.
+
+Scenario: Text is readable and fits the new palette
+
+Given the Safe-space card’s background is darker/more neutral
+
+When the user reads the heading, paragraph, and bullet text
+
+Then:
+
+The text has sufficient contrast (e.g., white/off-white on dark grey, or near-black on very light grey).
+
+Nothing is washed out or hard to read due to low contrast.
+
+The color combination feels calm and safe, not alarming.
+
+Scenario: Hover state remains consistent and neutral
+
+Given the Safe-space card has hover behavior and potential glossy shine from previous changes
+
+When the user hovers over the card
+
+Then:
+
+Any hover lift, shadow, or highlight stays in the neutral grey/white family (no orange used).
+
+The hover state looks slightly more polished but still fits the dark/neutral theme.
+
+Scenario: No regression to layout or text content
+
+Given the previous version of the Safe-space section
+
+When the color theme is updated
+
+Then:
+
+The copy stays exactly the same.
+
+The layout (icon on left, text on right, stacked on mobile) is unchanged.
+
+Only colors and related hover styles are altered.
+
+What I want you (Replit AI) to do
+
+Assess the current Safe-space color usage
+
+Find the Safe-space / privacy section component and identify:
+
+Which Tailwind classes and design tokens (bg-*, border-*, text-*, etc.) are currently applied.
+
+Where orange or warm accent colors are used (e.g., custom tokens or Tailwind’s orange-* classes, or chart-* that map to warm tones).
+
+Identify what global design tokens exist for neutral greys and near-black (e.g., bg-slate-900, bg-zinc-900, border-slate-700, text-slate-100, etc., or your project’s own bg-surface, bg-subtle, etc.).
+
+Describe your understanding of the requirements
+
+In your own words, explain:
+
+That you will replace orange/warm accent colors in the Safe-space section with neutral grey/black tones.
+
+That this includes card background, border, icon container, and bullet dots.
+
+That you will maintain strong text contrast and a calm, grounded aesthetic.
+
+That the goal is for this block to feel like a stable, safe, neutral zone, not like an urgent CTA.
+
+Identify key considerations to avoid disrupting existing functionality
+
+Ensure that:
+
+Only the Safe-space section colors are changed, not the entire site or unrelated components.
+
+You don’t accidentally alter shared tokens used in multiple places unless you intend to update them everywhere.
+
+The safe-space card still visually fits the overall design system (same border radius, spacing, typography).
+
+Hover and shine effects still work and look good with the new palette.
+
+Propose best-practice neutral palette implementation
+
+Describe which Tailwind (or design system) classes you will use, conceptually, such as:
+
+Card background: bg-slate-900/80, bg-slate-900, or a similar neutral.
+
+Border: border-slate-700/60.
+
+Icon background: bg-slate-800 with icon color text-slate-100 or similar.
+
+Bullet dots: bg-slate-300 or bg-slate-200 depending on the background.
+
+Explain how you will ensure:
+
+Heading text uses text-foreground or a suitable neutral that remains readable on the new background.
+
+Body text uses muted but readable text color (e.g., text-slate-300 on dark backgrounds).
+
+Assess other best practices
+
+Accessibility:
+
+Check contrast ratios roughly (e.g., light text on dark background).
+
+Tone:
+
+Ensure colors feel reassuring and not like an error state.
+
+Consistency:
+
+Align with any existing grey/black usage elsewhere in the app (e.g., hero background, footer, etc.).
+
+Generate a step-by-step plan to implement this theme change
+
+At a minimum include:
+
+Step 1: Identify the Safe-space section component and its main card div.
+
+Step 2: Replace existing background and border classes with neutral grey/black equivalents (e.g., from orange-ish or chart-* to slate/zinc/neutral classes or project-specific neutral tokens).
+
+Step 3: Update the Shield icon container and bullet dots to use grey-based color classes.
+
+Step 4: Adjust text classes if necessary to maintain strong contrast (e.g., text-slate-50 or text-slate-100 on a dark background).
+
+Step 5: Confirm that any hover/shine effects previously implemented look good with the new palette and remain neutral.
+
+Step 6: Manually verify on mobile and desktop that:
+
+The card clearly reads as a neutral, safe zone.
+
+Text is legible.
+
+The section still fits visually into the surrounding Home page.
+
+Keep the scope limited
+
+Do not:
+
+Change the text content of the Safe-space section.
+
+Alter global color tokens that might break other parts of the site, unless clearly intended.
+
+Modify any other sections’ palettes (hero, CTAs, feature cards) as part of this prompt.
+
+Only:
+
+Update the Safe-space section’s color theme (background, borders, icon, bullets, and text as needed for contrast).
+
+Propose a skeleton framework
+
+Provide a simplified example of what the updated classes might look like, for example:
+
+<section
+  className="py-10 md:py-14 px-4 sm:px-6 lg:px-8"
+  aria-labelledby="safe-space-heading"
+  data-testid="section-safe-space"
+>
+  <div className="max-w-3xl mx-auto">
+    <div className="relative group rounded-xl border border-slate-700/60 bg-slate-950/80 p-6 md:p-8 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-xl hover:bg-slate-950">
+      <div className="flex flex-col md:flex-row gap-6 items-start">
+        <div className="flex-shrink-0">
+          <div className="w-12 h-12 rounded-lg bg-slate-900 flex items-center justify-center">
+            <Shield className="w-6 h-6 text-slate-100" aria-hidden="true" />
+          </div>
+        </div>
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <h2
+              id="safe-space-heading"
+              className="text-xl md:text-2xl font-semibold text-slate-50"
+            >
+              A judgement-free space, built for your reality.
+            </h2>
+            <p className="text-sm text-slate-200/90 leading-relaxed">
+              We don't store what you write in this session. You decide what to share, and you can close this tab at any time.
+            </p>
+          </div>
+          <ul className="space-y-2 text-sm text-slate-300">
+            <li className="flex items-center gap-2">
+              <span
+                className="w-1.5 h-1.5 rounded-full bg-slate-200"
+                aria-hidden="true"
+              />
+              No account required.
+            </li>
+            <li className="flex items-center gap-2">
+              <span
+                className="w-1.5 h-1.5 rounded-full bg-slate-200"
+                aria-hidden="true"
+              />
+              No tracking of your answers.
+            </li>
+            <li className="flex items-center gap-2">
+              <span
+                className="w-1.5 h-1.5 rounded-full bg-slate-200"
+                aria-hidden="true"
+              />
+              You decide what to keep, copy, or delete.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+Adjust the specific grey/black classes to match your project’s tokens and design system.
+
+Do not modify any files yet
+
+First, output your understanding of this Safe-space theme change and your implementation plan.
+
+Remember: do NOT perform any e2e tests for this change—I will manually confirm behavior.
+
+Wait for my confirmation that your approach is sound before updating the code.
