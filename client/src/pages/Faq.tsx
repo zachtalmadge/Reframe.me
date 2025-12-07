@@ -11,6 +11,51 @@ import {
 
 const faqs = [
   {
+    id: "why-different-versions",
+    question: "Why might I want different ways to talk about my record?",
+    answer: (
+      <div className="space-y-3 text-muted-foreground">
+        <p>
+          Different situations often call for different versions of your story. A quick form might only need a sentence, while a longer interview might give you space to share more context. The job, the person you're talking to, and what feels safe for you can all shape how much detail makes sense.
+        </p>
+        <p>
+          Having a few prepared versions can help you feel less caught off guard and more in control. You're not changing the facts—you're choosing how much to share and what to focus on for each moment.
+        </p>
+        <p>
+          It's completely normal to feel unsure about how to talk about your record. Many people find that practicing a few different versions helps build confidence over time.
+        </p>
+        <p>
+          This is general guidance, not legal advice. If you have questions about what you're required to disclose, consider talking with a legal aid organization or employment counselor in your area.
+        </p>
+      </div>
+    ),
+  },
+  {
+    id: "what-is-pre-adverse-letter",
+    question: "What is a pre-adverse action response letter, and when would I use one?",
+    answer: (
+      <div className="space-y-3 text-muted-foreground">
+        <p>
+          In some hiring processes, if something on your background check might lead an employer to change an offer or decide not to hire you, they may send you a "pre-adverse action" notice first. This gives you a chance to respond before a final decision is made.
+        </p>
+        <p>
+          A pre-adverse action response letter is your opportunity to:
+        </p>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>Correct any mistakes in the background report</li>
+          <li>Share context about your record and circumstances</li>
+          <li>Highlight the steps you've taken to grow and why you're still a strong fit for the job</li>
+        </ul>
+        <p>
+          Laws and procedures vary by location and situation. This page cannot tell you exactly what your rights are or guarantee any outcome. This is not legal advice.
+        </p>
+        <p>
+          If you receive a pre-adverse action notice, consider reaching out to a lawyer, legal aid organization, or local employment rights group to understand your specific options and rights.
+        </p>
+      </div>
+    ),
+  },
+  {
     id: "when-disclose",
     question: "When should I disclose my record?",
     answer: (
