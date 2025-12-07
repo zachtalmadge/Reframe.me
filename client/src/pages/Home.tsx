@@ -279,21 +279,30 @@ export default function Home() {
         data-testid="section-safe-space"
       >
         <div className="max-w-3xl mx-auto">
-          <div className="relative rounded-xl border border-chart-2/20 bg-chart-2/5 p-6 md:p-8">
+          <div 
+            className="group relative rounded-xl border border-chart-2/20 bg-chart-2/5 p-6 md:p-8 cursor-default transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-lg hover:border-chart-2/40 focus-within:-translate-y-1 focus-within:shadow-lg motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+            tabIndex={0}
+          >
             <div className="flex flex-col md:flex-row gap-6 items-start">
               <div className="flex-shrink-0">
-                <div className="w-12 h-12 rounded-lg bg-chart-2/10 flex items-center justify-center">
+                <div className="w-12 h-12 rounded-lg bg-chart-2/10 flex items-center justify-center transition-transform duration-200 ease-out group-hover:scale-110 group-focus-within:scale-110 motion-reduce:group-hover:scale-100">
                   <Shield className="w-6 h-6 text-chart-2" aria-hidden="true" />
                 </div>
               </div>
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <h2
-                    id="safe-space-heading"
-                    className="text-xl md:text-2xl font-semibold text-foreground"
-                  >
-                    A judgement-free space, built for your reality.
-                  </h2>
+                  <div className="relative overflow-hidden">
+                    <h2
+                      id="safe-space-heading"
+                      className="text-xl md:text-2xl font-semibold text-foreground"
+                    >
+                      A judgement-free space, built for your reality.
+                    </h2>
+                    <span
+                      aria-hidden="true"
+                      className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-1000 ease-in-out group-hover:translate-x-full group-focus-within:translate-x-full motion-reduce:hidden"
+                    />
+                  </div>
                   <p className="text-muted-foreground leading-relaxed">
                     We don't store what you write in this session. You decide
                     what to share, and you can close this tab at any time.
