@@ -197,7 +197,7 @@ export default function Home() {
               aria-hidden="true"
             />
 
-            <div className="relative text-center space-y-6 md:space-y-8">
+            <div className="relative text-center space-y-6">
               <div className="space-y-4">
                 <h1
                   id="hero-heading"
@@ -218,7 +218,7 @@ export default function Home() {
               />
 
               <div
-                className="max-w-md mx-auto text-left pt-4"
+                className="max-w-md mx-auto text-left"
                 data-testid="before-after-block"
               >
                 <div className="grid" style={{ gridTemplateRows: '1fr', gridTemplateColumns: '1fr' }}>
@@ -256,7 +256,18 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="pt-4">
+              <div className="flex flex-wrap justify-center gap-4 md:gap-6 text-sm text-muted-foreground">
+                <div className="flex items-center gap-2">
+                  <Clock className="w-4 h-4 text-primary" aria-hidden="true" />
+                  <span>Takes 5-10 minutes</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Heart className="w-4 h-4 text-primary" aria-hidden="true" />
+                  <span>Completely free</span>
+                </div>
+              </div>
+
+              <div>
                 <Link href="/selection">
                   <Button 
                     size="lg"
@@ -464,55 +475,21 @@ export default function Home() {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-      <section
-        className="py-8 md:py-12 px-4 sm:px-6 lg:px-8"
-        aria-labelledby="benefits-heading"
-      >
-        <div className="max-w-4xl mx-auto">
-          <h2 id="benefits-heading" className="sr-only">
-            Benefits
-          </h2>
 
-          <div className="flex flex-wrap justify-center gap-4 md:gap-8 text-sm text-muted-foreground">
-            <div className="flex items-center gap-2">
-              <Clock className="w-4 h-4 text-primary" aria-hidden="true" />
-              <span>Takes 5-10 minutes</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Heart className="w-4 h-4 text-primary" aria-hidden="true" />
-              <span>Completely free</span>
-            </div>
+          <div className="mt-8">
+            <Link href="/selection">
+              <Button
+                size="lg"
+                className="group w-full min-h-[48px] px-8 text-lg font-medium shadow-md"
+                data-testid="button-get-started"
+              >
+                Get Started
+                <span className="inline-flex transition-transform duration-150 ease-out group-hover:translate-x-1 group-focus-visible:translate-x-1 motion-reduce:transform-none">
+                  <ArrowRight className="w-5 h-5" aria-hidden="true" />
+                </span>
+              </Button>
+            </Link>
           </div>
-        </div>
-      </section>
-
-      <section
-        className="py-10 md:py-14 px-4 sm:px-6 lg:px-8"
-        aria-labelledby="cta-heading"
-      >
-        <div className="max-w-4xl mx-auto text-center space-y-6">
-          <h2 id="cta-heading" className="sr-only">
-            Get Started
-          </h2>
-
-          <Link href="/selection">
-            <Button
-              size="lg"
-              className="group w-full sm:w-auto min-h-[48px] px-8 text-lg font-medium shadow-md"
-              data-testid="button-get-started"
-            >
-              Get Started
-              <span className="inline-flex transition-transform duration-150 ease-out group-hover:translate-x-1 group-focus-visible:translate-x-1 motion-reduce:transform-none">
-                <ArrowRight className="w-5 h-5" aria-hidden="true" />
-              </span>
-            </Button>
-          </Link>
-
-          <p className="text-sm text-muted-foreground">
-            Your information stays private and is not stored after your session.
-          </p>
         </div>
       </section>
 
