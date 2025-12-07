@@ -54,6 +54,27 @@ const stories = [
   },
 ];
 
+const beforeAfterPairs = [
+  {
+    before: "I freeze when employers ask about my record.",
+    after: "Now I have language that explains my past and what I've done since.",
+  },
+  {
+    before: "I avoid applying because of my past.",
+    after: "I can explain my growth and the skills I've built.",
+  },
+  {
+    before: "I'm not sure how to respond to a pre-adverse letter.",
+    after: "I have a structured response ready in my own voice.",
+  },
+  {
+    before: "I feel alone figuring this out.",
+    after: "I have talking points I can share with someone I trust.",
+  },
+];
+
+const ROTATION_INTERVAL_MS = 4000;
+
 export default function Home() {
   const { ref: howItWorksRef, isInView: howItWorksInView } = useInView({
     threshold: 0.5,
@@ -61,7 +82,9 @@ export default function Home() {
     triggerOnce: false,
   });
   const [heroMounted, setHeroMounted] = useState(false);
+  const [showBefore, setShowBefore] = useState(false);
   const [showAfter, setShowAfter] = useState(false);
+  const [currentPairIndex, setCurrentPairIndex] = useState(0);
   const [storyIndex, setStoryIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
@@ -73,16 +96,37 @@ export default function Home() {
     setPrefersReducedMotion(prefersReduced);
     if (prefersReduced) {
       setHeroMounted(true);
+      setShowBefore(true);
       setShowAfter(true);
     } else {
       const mountId = requestAnimationFrame(() => setHeroMounted(true));
-      const afterTimer = setTimeout(() => setShowAfter(true), 800);
-      return () => {
-        cancelAnimationFrame(mountId);
-        clearTimeout(afterTimer);
-      };
     }
+    return () => {};
   }, []);
+
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      setShowBefore(true);
+      setShowAfter(true);
+      return;
+    }
+    setShowBefore(false);
+    setShowAfter(false);
+    const beforeTimer = setTimeout(() => setShowBefore(true), 200);
+    const afterTimer = setTimeout(() => setShowAfter(true), 800);
+    return () => {
+      clearTimeout(beforeTimer);
+      clearTimeout(afterTimer);
+    };
+  }, [currentPairIndex, prefersReducedMotion]);
+
+  useEffect(() => {
+    if (prefersReducedMotion) return;
+    const interval = setInterval(() => {
+      setCurrentPairIndex((prev) => (prev + 1) % beforeAfterPairs.length);
+    }, ROTATION_INTERVAL_MS);
+    return () => clearInterval(interval);
+  }, [prefersReducedMotion]);
 
   useEffect(() => {
     if (isPaused) return;
@@ -161,13 +205,13 @@ export default function Home() {
               >
                 <div
                   className={`text-sm text-muted-foreground/80 italic transition-opacity duration-300 motion-reduce:transition-none ${
-                    heroMounted ? "opacity-100" : "opacity-0"
+                    showBefore ? "opacity-100" : "opacity-0"
                   }`}
                 >
                   <span className="font-medium text-muted-foreground not-italic">
                     Before:
                   </span>{" "}
-                  "I freeze when employers ask about my record."
+                  "{beforeAfterPairs[currentPairIndex].before}"
                 </div>
                 <div
                   className={`text-sm text-foreground font-medium transition-all duration-300 motion-reduce:transition-none ${
@@ -176,8 +220,7 @@ export default function Home() {
                       : "opacity-0 translate-y-1"
                   }`}
                 >
-                  <span className="text-primary">After:</span> "Now I have
-                  language that explains my past and what I've done since."
+                  <span className="text-primary">After:</span> "{beforeAfterPairs[currentPairIndex].after}"
                 </div>
               </div>
 
