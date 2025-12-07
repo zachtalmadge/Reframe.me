@@ -34,16 +34,19 @@ import {
   NarrativeType,
 } from "@/lib/regenerationPersistence";
 
-type GuidanceTab = "narratives" | "letter";
-
-function ResultsGuidanceSection({ hasNarratives, hasLetter }: { hasNarratives: boolean; hasLetter: boolean }) {
-  const [activeTab, setActiveTab] = useState<GuidanceTab>(
-    hasNarratives ? "narratives" : "letter"
-  );
-
+function ResultsGuidanceSection({ 
+  hasNarratives, 
+  hasLetter, 
+  activeResultType 
+}: { 
+  hasNarratives: boolean; 
+  hasLetter: boolean;
+  activeResultType: "narratives" | "letter";
+}) {
   if (!hasNarratives && !hasLetter) return null;
 
-  const showPills = hasNarratives && hasLetter;
+  const showNarrativesGuidance = hasNarratives && (!hasLetter || activeResultType === "narratives");
+  const showLetterGuidance = hasLetter && (!hasNarratives || activeResultType === "letter");
 
   return (
     <section 
@@ -64,48 +67,7 @@ function ResultsGuidanceSection({ hasNarratives, hasLetter }: { hasNarratives: b
           </p>
         </div>
 
-        {showPills && (
-          <div className="flex justify-center">
-            <div 
-              className="inline-flex rounded-full bg-muted p-1 text-sm"
-              role="tablist"
-              aria-label="Guidance type"
-            >
-              <button
-                type="button"
-                role="tab"
-                aria-selected={activeTab === "narratives"}
-                onClick={() => setActiveTab("narratives")}
-                className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${
-                  activeTab === "narratives"
-                    ? "bg-background text-foreground shadow-sm"
-                    : "text-muted-foreground"
-                }`}
-                data-testid="pill-narratives-guidance"
-              >
-                <MessageCircle className="w-4 h-4" aria-hidden="true" />
-                Using your narratives
-              </button>
-              <button
-                type="button"
-                role="tab"
-                aria-selected={activeTab === "letter"}
-                onClick={() => setActiveTab("letter")}
-                className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${
-                  activeTab === "letter"
-                    ? "bg-background text-foreground shadow-sm"
-                    : "text-muted-foreground"
-                }`}
-                data-testid="pill-letter-guidance"
-              >
-                <FileText className="w-4 h-4" aria-hidden="true" />
-                Using your letter
-              </button>
-            </div>
-          </div>
-        )}
-
-        {hasNarratives && (!showPills || activeTab === "narratives") && (
+        {showNarrativesGuidance && (
           <div 
             className="space-y-4"
             role="tabpanel"
@@ -142,7 +104,7 @@ function ResultsGuidanceSection({ hasNarratives, hasLetter }: { hasNarratives: b
           </div>
         )}
 
-        {hasLetter && (!showPills || activeTab === "letter") && (
+        {showLetterGuidance && (
           <div 
             className="space-y-4"
             role="tabpanel"
@@ -549,7 +511,8 @@ export default function Results() {
 
           <ResultsGuidanceSection 
             hasNarratives={hasNarratives} 
-            hasLetter={hasLetter} 
+            hasLetter={hasLetter}
+            activeResultType={activeTab}
           />
         </div>
       </section>
