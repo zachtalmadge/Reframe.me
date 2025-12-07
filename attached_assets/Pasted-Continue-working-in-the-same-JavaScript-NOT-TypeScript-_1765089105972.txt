@@ -1,0 +1,334 @@
+Continue working in the same JavaScript (NOT TypeScript) + React + Tailwind CSS, mobile-first project.
+The Home page hero currently includes:
+
+A main headline and subheading.
+
+A primary “Get Started” CTA button.
+
+A “Benefits” heading/label (e.g., a short line explaining what users get).
+
+The rotating before/after text block below.
+
+Further down the Home page, there is also a second “Get Started” CTA section (mid-page CTA) that:
+
+Lives around or below the How It Works section.
+
+Has its own Get Started button.
+
+Shows a short privacy line under the button:
+
+“Your information stays private and is not stored after your session.”
+
+I want to:
+
+Reposition the hero “Benefits” heading so it appears above the main CTA button, and ensure spacing between the heading, the button, and the rotating before/after text remains tight and not excessive.
+
+Move the second Get Started button so it is inline under the How It Works steps, spanning the container width, and remove the privacy line under that button.
+
+Important for this change:
+For this change, DO NOT perform any end-to-end (e2e) tests or automated full-flow testing.
+You may perform local/component-level checks only. I will manually confirm behavior in the UI.
+
+Business requirement – Hero layout tweak + How It Works CTA repositioning
+
+Make the following layout changes:
+
+Hero – move “Benefits” heading above CTA, clean up spacing
+
+The short “Benefits” heading/label in the hero (e.g., “What Reframe.me helps with” / “Benefits” / similar) should:
+
+Appear above the main Get Started button.
+
+Still remain visually connected to the hero content (not far away from the headline/subheading).
+
+Spacing requirements:
+
+There should not be large or awkward gaps between:
+
+The hero subheading → Benefits heading.
+
+Benefits heading → main CTA button.
+
+CTA button → rotating before/after block.
+
+The hero should feel tight and cohesive, especially on mobile:
+
+Think of a clean vertical stack:
+Heading → Subheading → Benefits heading → CTA → before/after.
+
+Use Tailwind margins/padding to keep everything visually grouped (no double mt-10 style gaps).
+
+The hero’s existing rotating before/after behavior must remain unchanged.
+
+How It Works – move the secondary CTA button inline and remove privacy line
+
+The second “Get Started” button (mid-page CTA) should:
+
+Be moved inside the How It Works section, directly below the three How It Works steps/cards.
+
+Live within the same container as the steps (same max-w-* and horizontal padding).
+
+Span the entire width of the container on mobile (full-width button) and feel naturally integrated with the section.
+
+The current separate CTA block (if it’s its own section) should be refactored so the button is part of the How It Works section, not floating somewhere else or duplicating layouts.
+
+Remove the privacy line:
+
+Delete the line:
+
+“Your information stays private and is not stored after your session.”
+
+Do not render any replacement disclaimer under that specific CTA button in this section.
+
+Acceptance criteria (Given / When / Then)
+Scenario: Hero “Benefits” heading above CTA with clean spacing
+
+Given the user is on the Home page hero
+
+When they view the hero section on mobile or desktop
+
+Then:
+
+The visual order reads as:
+
+Main headline
+
+Subheading
+
+Benefits heading (short label/phrase)
+
+Main Get Started button
+
+Rotating before/after text block
+
+There are no excessive vertical gaps between these elements; spacing is balanced and cohesive.
+
+The rotating before/after text still sits immediately below the CTA area and behaves as before.
+
+Scenario: How It Works has an integrated full-width CTA button
+
+Given the user scrolls down to the How It Works section
+
+When they view the steps and the CTA
+
+Then:
+
+Directly under the steps/cards, inside the same container, there is a Get Started button.
+
+The button spans the full width of the content container on mobile (and remains responsive on larger screens).
+
+There is no separate mid-page CTA block floating elsewhere.
+
+Scenario: Privacy line removed under the mid-page CTA
+
+Given the previous version of the mid-page CTA had a privacy line under the button
+
+When the updated design is in place
+
+Then:
+
+The text:
+
+“Your information stays private and is not stored after your session.”
+no longer appears under the How It Works CTA button.
+
+No new disclaimer text appears there; the area under the button is clean.
+
+Scenario: No regressions to hero behavior or How It Works animations
+
+Given the hero and How It Works sections previously had working behaviors and animations
+
+When these layout changes are applied
+
+Then:
+
+The hero’s rotating before/after behavior remains unchanged.
+
+The How It Works animations (fade/slide, line/dot, etc.) still work as before.
+
+No new console errors or layout breakages are introduced.
+
+What I want you (Replit AI) to do
+
+Assess the current hero layout
+
+Locate the Home page hero component and identify:
+
+The main headline and subheading.
+
+The Benefits heading/label (whatever text is currently used for “benefits”).
+
+The primary Get Started button.
+
+The rotating before/after text block.
+
+Identify the current vertical order and Tailwind spacing classes between these elements.
+
+Describe your understanding of the requirements
+
+In your own words, explain:
+
+That you will move the Benefits heading so it renders above the main CTA button.
+
+That you will adjust margins so there is no large gap between the benefits label, CTA, and rotating before/after content.
+
+That you will move the second CTA button into the How It Works section, directly under the steps, and remove the privacy line under it.
+
+Identify key considerations to avoid disrupting existing functionality
+
+Ensure:
+
+You don’t change the hero’s existing animation logic (rotating before/after).
+
+The hero still behaves responsively with good spacing on mobile and desktop.
+
+The How It Works layout and animations remain intact; you are only changing where the CTA button is placed inside the section.
+
+The removed privacy line isn’t referenced elsewhere (e.g., tests, aria descriptions, etc.).
+
+Propose best-practice implementation details
+
+Hero adjustment:
+
+Reorder JSX so the Benefits heading appears between the subheading and the CTA button.
+
+Tune the spacing, for example:
+
+Subheading with mt-3.
+
+Benefits heading with a modest margin (e.g., mt-4).
+
+CTA button with mt-3 or similar.
+
+Rotating before/after container spaced just below (e.g., mt-4), avoiding stacked mt-8 or larger unless necessary.
+
+How It Works CTA:
+
+Inside the How It Works section’s main container (e.g., max-w-4xl mx-auto):
+
+Render the steps/cards.
+
+Immediately below, render a full-width CTA button, e.g.:
+
+<button className="mt-6 w-full inline-flex items-center justify-center rounded-full px-4 py-3 text-sm font-semibold bg-primary text-primary-foreground shadow-sm hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary">
+  Get started
+</button>
+
+
+Make sure it uses the same route (/selection) as other Get Started buttons.
+
+Remove the old mid-page CTA section (if it exists separately) or strip it down so only the integrated button in How It Works remains.
+
+Privacy text removal:
+
+Completely remove the privacy sentence under that specific CTA and any surrounding markup dedicated solely to that line.
+
+Assess other best practices
+
+Check that:
+
+There is a clear visual hierarchy in the hero after reordering.
+
+The integrated CTA under How It Works feels naturally connected to the steps and is easy to find.
+
+The removal of the privacy line does not leave awkward blank space; adjust margins accordingly.
+
+Generate a step-by-step plan to implement this enhancement
+
+At a minimum include:
+
+Step 1: Open the Home hero component and reorder the JSX so the Benefits heading comes before the CTA button.
+
+Step 2: Adjust Tailwind spacing classes around the Benefits heading, CTA, and rotating before/after block to avoid excessive vertical gaps.
+
+Step 3: Open the How It Works section component and:
+
+Move or create the second “Get Started” button directly under the steps/cards inside the main container.
+
+Ensure the button spans full width on small screens and looks appropriate at larger breakpoints.
+
+Step 4: Remove the old mid-page CTA container or any extra wrapper that is no longer needed.
+
+Step 5: Remove the privacy line (“Your information stays private and is not stored after your session.”) and its markup under that mid-page CTA.
+
+Step 6: Manually verify:
+
+Hero order: headline → subheading → benefits heading → CTA → rotating before/after, with tidy spacing.
+
+How It Works: steps followed immediately by a clear, integrated Get Started button with no extra CTA section and no privacy line.
+
+Behaviors and animations still work correctly.
+
+Keep the scope limited
+
+Do not:
+
+Change the text/copy of the hero, Benefits heading, or CTA labels (beyond what’s necessary for layout).
+
+Alter any backend logic, API calls, or form flows.
+
+Modify other sections such as Safe-space, Stories of Change, FAQ, etc.
+
+Only:
+
+Reorder and adjust layout in the hero.
+
+Move and restyle the mid-page CTA within How It Works.
+
+Remove the single privacy line under that CTA.
+
+Propose a skeleton framework
+
+// Hero (simplified)
+<section className="...">
+  <div className="max-w-3xl mx-auto">
+    <h1 className="...">Hero headline</h1>
+    <p className="mt-3 text-base text-muted-foreground">
+      Hero subheading...
+    </p>
+
+    {/* Benefits heading now above CTA */}
+    <p className="mt-4 text-sm font-medium text-muted-foreground">
+      {/* Existing benefits label text */}
+      What Reframe.me can help with
+    </p>
+
+    <div className="mt-3">
+      <Button /* Get Started CTA */>Get started</Button>
+    </div>
+
+    <div className="mt-4">
+      {/* Rotating before/after block */}
+    </div>
+  </div>
+</section>
+
+// How It Works (simplified)
+<section className="...">
+  <div className="max-w-4xl mx-auto">
+    {/* How It Works heading, description */}
+    <div className="grid ...">
+      {/* Step cards */}
+    </div>
+
+    {/* Integrated full-width CTA below steps */}
+    <div className="mt-8">
+      <Button className="w-full">
+        Get started
+      </Button>
+    </div>
+
+    {/* Removed: old mid-page CTA wrapper + privacy line */}
+  </div>
+</section>
+
+
+Adjust component names, Button usage, and classes to match the existing codebase.
+
+Do not modify any files yet
+
+First, output your understanding of these layout changes and your implementation plan.
+
+Remember: do NOT perform any e2e tests for this change—I will manually confirm behavior.
+
+Wait for my confirmation that your approach is sound before updating the code.
