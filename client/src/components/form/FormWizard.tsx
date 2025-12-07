@@ -1,4 +1,4 @@
-import { useReducer, useCallback } from "react";
+import { useReducer, useCallback, useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { ArrowLeft, ArrowRight, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -125,6 +125,26 @@ export function FormWizard({ tool, onComplete, initialState }: FormWizardProps) 
   const [, navigate] = useLocation();
   const [state, dispatch] = useReducer(formReducer, initialState || initialFormState);
 
+  const [hasSeenEmotionalMessage, setHasSeenEmotionalMessage] = useState(false);
+  const [showEmotionalMessage, setShowEmotionalMessage] = useState(false);
+
+  useEffect(() => {
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
+
+    if (state.currentStep === 1 && !hasSeenEmotionalMessage) {
+      timeoutId = setTimeout(() => {
+        setShowEmotionalMessage(true);
+        setHasSeenEmotionalMessage(true);
+      }, 5000);
+    } else if (hasSeenEmotionalMessage) {
+      setShowEmotionalMessage(true);
+    }
+
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+    };
+  }, [state.currentStep, hasSeenEmotionalMessage]);
+
   const totalSteps = getTotalSteps(tool);
   const stepTitle = getStepTitle(state.currentStep, tool);
 
@@ -216,6 +236,15 @@ export function FormWizard({ tool, onComplete, initialState }: FormWizardProps) 
           )}
         </Button>
       </div>
+
+      <p
+        className={`mt-4 text-xs text-center transition-opacity duration-500 text-chart-2 ${
+          showEmotionalMessage ? "opacity-100" : "opacity-0"
+        }`}
+        data-testid="text-emotional-checkin"
+      >
+        Talking about your past and your record can feel heavy. It's okay to pause, take a break, or talk this through with someone you trust.
+      </p>
     </div>
   );
 }

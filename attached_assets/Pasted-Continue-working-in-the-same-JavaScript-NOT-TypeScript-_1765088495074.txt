@@ -1,0 +1,387 @@
+Continue working in the same JavaScript (NOT TypeScript) + React + Tailwind CSS, mobile-first project.
+The Unified Multi-Step Form already:
+
+Shows multiple steps (Offenses, Programs & Skills, Additional Context, OIL, etc.).
+
+Has Back and Continue/Next buttons at the bottom of each step.
+
+Handles validation and error messages above or near the inputs.
+
+We previously planned a small, consistent emotional check-in line below the buttons on every step.
+I want to refine that behavior and styling:
+
+The message should fade in smoothly after 5 seconds only the first time the user lands on Step 1 from the Selection page.
+
+After it has appeared once, it should persist (immediately visible) on all subsequent steps (including Step 1) for the rest of that run.
+
+If the user navigates back to Step 1 later, the message should already be visible (no delay or fade).
+
+The fade-in effect should only happen when the user goes to Step 1 from the Selection page at the start of a run.
+
+The message should be styled in a soft orange tone, consistent with our brand (e.g., using our orange/secondary color in Tailwind), so it stands out as a gentle, supportive note—not as an error.
+
+Important for this change:
+For this change, DO NOT perform any end-to-end (e2e) tests or automated full-flow testing.
+You may perform local/component-level checks only. I will manually confirm behavior in the UI.
+
+Business requirement – Emotional check-in line with first-time fade-in on Step 1 (orange styling)
+
+Update the Unified Multi-Step Form so that:
+
+Placement & style:
+
+On every step, at the very bottom of the form, below the Back/Continue button row, show an emotional check-in line.
+
+Example placeholder copy (you can use this or similar; I may adjust later):
+
+“Talking about your past and your record can feel heavy. It’s okay to pause, take a break, or talk this through with someone you trust.”
+
+The text should be:
+
+Subtle in size (e.g., text-xs or text-sm) but visually distinct in color, using our orange brand styling (for example: text-orange-400 / text-orange-300 / a text-secondary class mapped to orange).
+
+Placed with a small top margin, aligned with the rest of the form (e.g., centered or left-aligned consistent with existing design).
+
+It should not look like an error message:
+
+No red color.
+
+No icons like warning triangles.
+
+Just a small line of supportive text in a warm orange tone.
+
+Fade-in + persistence behavior:
+
+When the user first enters Step 1 from the Selection page (starting the form for a new run):
+
+The message should initially be hidden (e.g., opacity-0).
+
+After 5 seconds, it should smoothly fade in (e.g., using transition-opacity, duration-300–500).
+
+Once it has faded in, it should be considered “shown” for the rest of this run.
+
+After the message has appeared once:
+
+On all subsequent steps, including later visits to Step 1, the message should be immediately visible (no delay, no fade).
+
+If the user navigates backward or forward within the form, the message is already there.
+
+The fade-in effect only happens once, for that user’s current form run:
+
+Specifically: only on Step 1 when arriving from Selection.
+
+If the user returns to Step 1 later via the form navigation, the message does not fade in again; it is already shown.
+
+Scope:
+
+This behavior is per form run. When the user starts a new run via the normal flow (Selection → Form), the logic can treat it as a fresh session and apply the fade-in again on Step 1.
+
+Refreshing currently sends the user to Home and clears data, so each new entry to Step 1 via Selection can be treated as a fresh run.
+
+Acceptance criteria (Given / When / Then)
+Scenario: First arrival at Step 1 from Selection – delayed fade-in
+
+Given the user has just completed the Selection page and clicks Continue to go to the form
+
+When they first arrive on Step 1 of the Unified Multi-Step Form for this run
+
+Then:
+
+The emotional check-in line is initially hidden (not visible).
+
+After approximately 5 seconds, the line fades in smoothly.
+
+The text appears in a soft orange style (using the brand orange Tailwind class).
+
+Once it appears, it remains visible on Step 1.
+
+Scenario: Subsequent steps after first fade-in
+
+Given the emotional check-in line has already appeared (on Step 1) during this run
+
+When the user navigates to Step 2, Step 3, etc.
+
+Then:
+
+The emotional check-in line is already visible at the bottom of each step (no delay or fade).
+
+It is styled in the same orange text color on every step.
+
+It appears in the same position (below Back/Continue) on each step.
+
+Scenario: Navigating back to Step 1 after it has shown
+
+Given the user has already triggered the fade-in and seen the emotional check-in line at least once
+
+When they navigate backward from a later step to Step 1
+
+Then:
+
+The message is immediately visible on Step 1 (no 5-second delay, no re-fade).
+
+It retains the same orange styling.
+
+Scenario: Fade-in only on first arrival from Selection
+
+Given the user is in the middle of the form (e.g., Step 3) and navigates back and forth across steps
+
+When they return to Step 1
+
+Then:
+
+The message is visible with no new fade-in delay.
+
+The only time the 5-second fade-in occurs is the very first transition from Selection → Step 1 for that run.
+
+Scenario: No impact on validation or navigation
+
+Given the form already has working validation and Back/Continue behavior
+
+When the emotional check-in line with fade logic is added
+
+Then:
+
+Validation errors still appear in their usual place and behavior.
+
+Back/Continue buttons still navigate steps as before.
+
+The new message does not block, overlap, or interfere with button clicks or error messages.
+
+The orange styling does not make the message look like an error; it is visually distinct from error styles.
+
+What I want you (Replit AI) to do
+
+Assess the current multi-step form layout and step tracking
+
+Identify:
+
+The shared layout or container component that renders the step content, Back, and Continue buttons.
+
+How the form currently tracks the current step (e.g., currentStepIndex, route query, context).
+
+How the “Selection → Form” transition is implemented (e.g., routing from /selection to /form?step=1 or similar).
+
+Describe your understanding of the requirements
+
+In your own words, explain:
+
+That you will render the emotional check-in line below the Back/Continue buttons on every step.
+
+That you will add logic so the message:
+
+Fades in after 5 seconds only when arriving on Step 1 from Selection the first time in that run.
+
+Then remains visible on all subsequent steps with no delay and no repeat fade.
+
+Remains visible when navigating backward to Step 1 later.
+
+That the message should be styled in a soft orange color that fits our brand, and not look like an error state.
+
+Identify key considerations to avoid disrupting existing functionality
+
+Ensure:
+
+You do not break the shared layout or spacing of the button row.
+
+Any timer (setTimeout) used is properly cleared to avoid memory leaks.
+
+The fade-in logic is tied specifically to:
+
+Being on Step 1, and
+
+A “hasSeenMessage” flag / equivalent so it only runs once per run.
+
+You do not accidentally replay the animation on every re-render of Step 1.
+
+The orange styling is consistent with other orange elements (e.g., use the same Tailwind color token used for secondary/alert) and clearly distinct from error styling.
+
+Propose best-practice implementation details
+
+Suggest using a form-level state flag, such as hasSeenEmotionalMessage, stored in:
+
+The top-level form container component, or
+
+A React Context that persists across steps for that run.
+
+Additionally, use a local visibility flag for the current render:
+
+e.g., showEmotionalMessage.
+
+A likely pattern:
+
+On first mount of Step 1 and when hasSeenEmotionalMessage === false:
+
+Start a setTimeout for 5 seconds.
+
+When it fires, set showEmotionalMessage = true and hasSeenEmotionalMessage = true.
+
+On later renders / steps:
+
+If hasSeenEmotionalMessage === true, set showEmotionalMessage = true immediately (no delay).
+
+Use Tailwind opacity + transition classes to implement the fade:
+
+e.g., transition-opacity duration-300 plus conditional opacity-0 / opacity-100.
+
+Use an orange text class for the line, e.g.:
+
+text-orange-400 / text-orange-300, or a brand-specific class like text-secondary if mapped to orange.
+
+Assess other best practices
+
+Keep the message:
+
+Trauma-aware, gentle, and not overly long.
+
+Clearly separate from error messages (no red, no icons, no bold “Error” text).
+
+Make sure the component is:
+
+Responsive (wraps nicely on small screens).
+
+Accessible (no ARIA needed; it’s plain text).
+
+Generate a step-by-step plan to implement this enhancement
+
+At a minimum include:
+
+Step 1: Locate the top-level multi-step form component and determine where step index/metadata and navigation are handled.
+
+Step 2: Introduce a hasSeenEmotionalMessage boolean in the shared form state (e.g., useState in the parent or form context), initialized to false at the start of a run.
+
+Step 3: In the shared form layout / footer area (where Back/Continue are rendered), add:
+
+Local state showEmotionalMessage that can be derived from hasSeenEmotionalMessage and step index.
+
+Step 4: Use a useEffect that:
+
+Watches the current step.
+
+If currentStep is Step 1 and hasSeenEmotionalMessage is false, sets up a setTimeout of 5000 ms to:
+
+Set showEmotionalMessage(true) and hasSeenEmotionalMessage(true).
+
+If hasSeenEmotionalMessage is true (regardless of step), ensures showEmotionalMessage(true) without delay.
+
+Cleans up the timeout on unmount or when dependencies change.
+
+Step 5: Render the message below the button row using Tailwind classes, for example:
+
+<p
+  className={clsx(
+    "mt-3 text-xs text-center transition-opacity duration-300",
+    "text-orange-400", // or your brand's orange text class
+    showEmotionalMessage ? "opacity-100" : "opacity-0"
+  )}
+>
+  Talking about your past and your record can feel heavy. It’s okay to pause, take a break,
+  or talk this through with someone you trust.
+</p>
+
+
+Step 6: Manually verify:
+
+First time from Selection → Step 1: message fades in after ~5s in orange styling.
+
+Step 2, 3, etc.: message is already visible in orange.
+
+Navigating back to Step 1: message is already visible (no delay, no re-fade).
+
+Validation and buttons still function normally.
+
+Keep the scope limited
+
+Do not:
+
+Change any questions, validation logic, or API calls.
+
+Modify the progress bar or rerouting behavior.
+
+Only:
+
+Add the emotional check-in line and the first-time fade-in logic tied to Step 1, styled using the orange brand color.
+
+Propose a skeleton framework
+
+function MultiStepForm() {
+  const [currentStepIndex, setCurrentStepIndex] = useState(0); // Step 0 = Step 1, etc.
+  const [hasSeenEmotionalMessage, setHasSeenEmotionalMessage] = useState(false);
+
+  return (
+    <FormStepLayout
+      currentStepIndex={currentStepIndex}
+      hasSeenEmotionalMessage={hasSeenEmotionalMessage}
+      setHasSeenEmotionalMessage={setHasSeenEmotionalMessage}
+      // ...other props
+    >
+      {/* step content */}
+    </FormStepLayout>
+  );
+}
+
+function FormStepLayout({
+  children,
+  onBack,
+  onNext,
+  isNextDisabled,
+  currentStepIndex,
+  hasSeenEmotionalMessage,
+  setHasSeenEmotionalMessage,
+}) {
+  const [showEmotionalMessage, setShowEmotionalMessage] = useState(
+    hasSeenEmotionalMessage
+  );
+
+  useEffect(() => {
+    let timeoutId;
+
+    // Treat stepIndex 0 as "Step 1"
+    if (currentStepIndex === 0 && !hasSeenEmotionalMessage) {
+      timeoutId = setTimeout(() => {
+        setShowEmotionalMessage(true);
+        setHasSeenEmotionalMessage(true);
+      }, 5000);
+    } else if (hasSeenEmotionalMessage) {
+      setShowEmotionalMessage(true);
+    }
+
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+    };
+  }, [currentStepIndex, hasSeenEmotionalMessage, setHasSeenEmotionalMessage]);
+
+  return (
+    <form className="space-y-6">
+      <div>{children}</div>
+
+      <div className="flex items-center justify-between pt-4 border-t border-border">
+        <button type="button" onClick={onBack} className="...">
+          Back
+        </button>
+        <button type="submit" disabled={isNextDisabled} className="...">
+          Continue
+        </button>
+      </div>
+
+      <p
+        className={`mt-3 text-xs text-center transition-opacity duration-300 text-orange-400 ${
+          showEmotionalMessage ? "opacity-100" : "opacity-0"
+        }`}
+      >
+        Talking about your past and your record can feel heavy. It’s okay to pause, take a
+        break, or talk this through with someone you trust.
+      </p>
+    </form>
+  );
+}
+
+
+Replace text-orange-400 with the exact Tailwind/brand orange class you use elsewhere (e.g., text-secondary, text-amber-300, etc.), and adapt step indexing and classNames to your existing implementation.
+
+Do not modify any files yet
+
+First, output your understanding of this refined emotional check-in behavior and your implementation plan.
+
+Remember: do NOT perform any e2e tests for this change—I will manually confirm behavior.
+
+Wait for my confirmation that your approach is sound before updating the code.
