@@ -1,0 +1,384 @@
+Continue working in the same JavaScript (NOT TypeScript) + React + Tailwind CSS, mobile-first project.
+Assume the FAQ / Learn more page has already been scaffolded (route created, accordion UI in place, navigation/warning behavior implemented) from the previous prompt.
+
+Right now, the FAQ page has placeholder FAQ items and empty answers or generic text.
+I want you to populate the FAQ page with specific questions and trauma-aware answers we’ve identified, and add prominent disclaimers that make it clear:
+
+This site provides general information only.
+
+Nothing here is legal advice.
+
+We are not responsible for hiring decisions, and there are no guarantees.
+
+Important for this change:
+For this change, DO NOT perform any end-to-end (e2e) tests or automated full-flow testing.
+You may perform local/component-level checks only. I will manually confirm the change myself.
+
+Business requirement – Fill FAQ with trauma-aware content and strong disclaimers
+
+Update the FAQ page content so that:
+
+The accordion includes all of the following questions (at minimum), each with a clear, trauma-aware answer:
+
+“When should I disclose my record?”
+
+“What are my rights during a pre-adverse action notice?”
+
+“Does this letter actually work?”
+
+“Is my information stored or shared?”
+
+“Can this guarantee I get a job or keep a job?”
+
+“Is this legal advice? Are you my lawyer?”
+
+“Who is Reframe.me for (and not for)?”
+
+“Can I use this letter in court or for legal proceedings?”
+
+“Can I reuse a narrative or letter for different jobs?”
+
+The answers should:
+
+Use plain language (no heavy legal jargon).
+
+Be non-judgmental and supportive, recognizing that users may feel anxious or ashamed.
+
+Explain things in terms like “many people choose to…” or “in general…” rather than absolute rules.
+
+Repeatedly remind users that:
+
+Laws vary by location and situation.
+
+This site does not tell them exactly what their legal rights are.
+
+They should talk to a trusted person and, when possible, a lawyer or legal aid organization.
+
+Strong disclaimers:
+
+A prominent introductory disclaimer block near the top of the page clearly stating:
+
+This site is not legal advice.
+
+We are not lawyers and not responsible for hiring decisions.
+
+We cannot guarantee any outcome.
+
+A second, reinforcing disclaimer area near the bottom of the page with similar messaging, so users see it again after reading FAQs.
+
+Specific content intent for some questions:
+
+“When should I disclose my record?”
+
+Emphasize that timing can depend on the employer, the role, and local laws.
+
+Acknowledge that many people prefer to wait until later in the process (e.g., when a background check is raised or after an offer), except maybe with explicitly justice-focused organizations where earlier disclosure may feel safer.
+
+Make it clear this is not a rule and not legal advice.
+
+“What are my rights during a pre-adverse action notice?”
+
+Explain at a high level that in many places, there are laws about:
+
+Being able to see the background report.
+
+Having a chance to correct mistakes or respond.
+
+Immediately follow with: laws vary by location and can change; this site does not tell them exactly what their rights are.
+
+Encourage them to contact legal aid, a lawyer, or local employment rights organizations.
+
+“Does this letter actually work?”
+
+Be honest: no letter can guarantee a hiring decision.
+
+Explain that the letter is meant to help them:
+
+Share context.
+
+Highlight rehabilitation, programs, and skills.
+
+Communicate calmly and clearly.
+
+Reiterate: no guarantees, no responsibility for employer decisions.
+
+“Is my information stored or shared?”
+
+Reflect the app’s behavior:
+
+No long-term storage; refreshing clears data.
+
+Sessions are temporary.
+
+If there are any known constraints or logging behaviors, keep the explanation high-level, privacy-first, and honest.
+
+“Can this guarantee I get a job or keep a job?”
+
+Clear, short answer: no.
+
+Frame Reframe.me as a tool to support communication, not a promise of any specific outcome.
+
+“Is this legal advice? Are you my lawyer?”
+
+Explicitly say:
+
+“No, this is not legal advice.”
+
+“We are not your lawyer or legal representative.”
+
+Encourage seeking licensed legal help for legal questions.
+
+“Who is Reframe.me for (and not for)?”
+
+For:
+
+People with justice involvement / a record who are applying for jobs and facing background checks or pre-adverse notices.
+
+Not for:
+
+Court filings, legal motions, or legal pleadings.
+
+Employers screening candidates.
+
+Replacing professional legal or mental health support.
+
+“Can I use this letter in court or for legal proceedings?”
+
+Short, clear: No, this tool is not designed for court use.
+
+Suggest working with a lawyer or legal aid for anything related to court or official legal processes.
+
+“Can I reuse a narrative or letter for different jobs?”
+
+Explain that people can reuse and adapt what they generate.
+
+Suggest tweaking details to better fit different roles/employers.
+
+Remind them that they can edit what the tool generates to sound like their own voice.
+
+Acceptance criteria (Given / When / Then)
+Scenario: All FAQ questions are present
+
+Given the user opens the FAQ page
+
+When they scroll through the accordion list
+
+Then they see all of the listed questions:
+
+“When should I disclose my record?”
+
+“What are my rights during a pre-adverse action notice?”
+
+“Does this letter actually work?”
+
+“Is my information stored or shared?”
+
+“Can this guarantee I get a job or keep a job?”
+
+“Is this legal advice? Are you my lawyer?”
+
+“Who is Reframe.me for (and not for)?”
+
+“Can I use this letter in court or for legal proceedings?”
+
+“Can I reuse a narrative or letter for different jobs?”
+
+Scenario: Answers are trauma-aware and non-judgmental
+
+Given the user expands any FAQ question
+
+When they read the answer text
+
+Then:
+
+The tone is gentle, non-judgmental, and supportive.
+
+The wording avoids shaming or blaming the user for their past.
+
+The answer encourages them to consider their options and, where relevant, to speak with a trusted person or legal professional.
+
+Scenario: Disclaimers clearly state limitations
+
+Given the user is on the FAQ page
+
+When they read the content near the top of the page
+
+Then they see a prominent disclaimer that states:
+
+This is not legal advice.
+
+Reframe.me is not responsible for hiring decisions.
+
+There are no guarantees of any specific job outcome.
+
+Given the user scrolls to the bottom of the FAQ page
+
+When they reach the end of the content
+
+Then they see a reinforcing disclaimer with similar messages repeated.
+
+Scenario: No legal advice given, clear encouragement to seek professional help
+
+Given any FAQ looks like it could be legal advice (e.g., rights during pre-adverse action)
+
+When the user reads the answer
+
+Then:
+
+The answer stays general and does not give specific legal instructions.
+
+It clearly states that laws vary by place and situation.
+
+It explicitly encourages contacting lawyers, legal aid organizations, or employment rights groups for legal questions.
+
+Scenario: No changes to behavior outside FAQ content
+
+Given the FAQ scaffold, routes, and navigation logic are already working from the previous prompt
+
+When the textual content of FAQ questions and answers is added or updated
+
+Then:
+
+Routing and navigation behavior do not change.
+
+Data-clearing behavior when navigating to FAQ remains as implemented.
+
+No new errors are introduced on other pages.
+
+What I want you (Replit AI) to do
+
+Assess the current FAQ scaffold
+
+Identify the existing FAQ page component, accordion structure, and any placeholder FAQ items/questions.
+
+Confirm where the intro text and disclaimer blocks are intended to live (e.g., top of the page, bottom section).
+
+Note how FAQ items are currently defined (hardcoded array, JSON, etc.) and where to insert or update the question/answer content.
+
+Describe your understanding of the requirements
+
+In your own words, explain:
+
+That you will replace placeholder FAQ items with the full list of questions and their answers described above.
+
+That you will add or refine two prominent disclaimers (top and bottom).
+
+That all content must be plain-language, trauma-aware, non-judgmental, and repeatedly clarify that this is not legal advice, there are no guarantees, and the site is not responsible for hiring decisions.
+
+That you will not change routing or navigation logic, only the text content rendered on the FAQ page.
+
+Identify key considerations to avoid disrupting existing functionality
+
+Ensure that:
+
+You only modify the FAQ content (questions, answers, and disclaimers) and not the routing or data-clearing logic.
+
+You keep text lengths reasonable so the page remains readable and not overwhelming, especially on mobile.
+
+The content does not inadvertently contradict existing privacy explanations or other app copy.
+
+You do not add any language that sounds like guarantees, promises, or legal instructions.
+
+Propose best-practice content structure
+
+Explain how you will:
+
+Define the FAQ items (e.g., array of objects with id, question, and answer).
+
+Break up longer answers into short paragraphs or bullet points to improve readability.
+
+Highlight key phrases (e.g., “not legal advice”, “no guarantees”) in a subtle but visible way (e.g., short emphasized sentences).
+
+Describe how you will implement:
+
+A clear introductory disclaimer block at the top (possibly a styled <div> with background and border).
+
+A closing disclaimer block at the bottom.
+
+Ensure you keep the copy aligned with Reframe.me’s tone: honest, hopeful, realistic, and gentle.
+
+Assess other best practices
+
+Tone and trauma-awareness:
+
+Avoid harsh or directive language.
+
+Use “many people find it helpful to…” instead of “you must…”.
+
+Legal boundary:
+
+Reinforce that the site is not a substitute for an attorney or legal aid.
+
+Clarity:
+
+Organize information so users can skim questions and expand only what they need.
+
+Generate a step-by-step plan to implement this content update
+
+At a minimum include:
+
+Step 1: Update the FAQ data structure to include all the required questions.
+
+Step 2: Write and insert answers for each question following the guidelines:
+
+General, non-legal, and supportive.
+
+Reiterating that laws differ and they should seek professional help for legal questions.
+
+Step 3: Implement or refine the top disclaimer block with clear and concise language.
+
+Step 4: Implement or refine the bottom disclaimer block reinforcing the same key points.
+
+Step 5: Manually verify the FAQ page:
+
+All questions appear and can be expanded.
+
+Answers read clearly on mobile and desktop.
+
+Disclaimers are easy to notice at both top and bottom.
+
+Step 6: Spot-check other pages to ensure nothing else has been unintentionally changed.
+
+Keep the scope limited
+
+Do not:
+
+Change routing, navigation links, or data-clearing behavior.
+
+Introduce new interactive elements beyond what already exists in the FAQ scaffold.
+
+Only:
+
+Update text content (questions, answers, disclaimers) and any associated data structures used to render them.
+
+Propose a skeleton framework
+
+Show a simplified example of how the FAQ data might look after adding the questions and answers, for example:
+
+const faqs = [
+  {
+    id: "when-disclose",
+    question: "When should I disclose my record?",
+    answer: `
+
+
+Many people choose to wait until later in the hiring process to talk about their record, such as when an employer mentions a background check or after a conditional offer. In some justice-focused organizations, you may feel more comfortable sharing earlier.
+
+There is no single “right” time for everyone. Laws and hiring practices vary by place and situation, and this page cannot tell you exactly what to do. This is not legal advice.
+
+If you can, talk about timing with a trusted person, case manager, or legal aid organization that understands your local laws and your specific situation.
+`,
+},
+// ...other FAQ items with similarly structured answers
+];
+```
+
+You can choose a slightly different format (e.g., JSX elements instead of strings) as long as it remains maintainable and readable.
+
+Do not modify any files yet
+
+First, output your understanding of this FAQ content update and your implementation plan.
+
+Remember: do NOT perform any e2e tests for this change—I will manually confirm in the UI.
+
+Wait for my confirmation that your approach is sound before updating the code.
