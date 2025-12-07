@@ -291,16 +291,16 @@ export default function Home() {
               </div>
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <div className="relative overflow-hidden">
+                  <div className="text-glossy-wrapper">
                     <h2
                       id="safe-space-heading"
                       className="text-xl md:text-2xl font-semibold text-foreground"
                     >
-                      A judgement-free space, built for your reality.
+                      A privacy-first space, built for your reality.
                     </h2>
                     <span
                       aria-hidden="true"
-                      className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-1000 ease-in-out group-hover:translate-x-full group-focus-within:translate-x-full motion-reduce:hidden"
+                      className="text-glossy-overlay group-hover:text-glossy-active group-focus-within:text-glossy-active motion-reduce:hidden"
                     />
                   </div>
                   <p className="text-muted-foreground leading-relaxed">

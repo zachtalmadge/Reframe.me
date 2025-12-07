@@ -1,0 +1,408 @@
+Continue working in the same JavaScript (NOT TypeScript) + React + Tailwind CSS, mobile-first project.
+The Home page currently includes a “Safe space / privacy” section with a Shield icon and the heading:
+“A judgement-free space, built for your reality.”
+
+The card already has some hover behavior and a simple shine, but:
+
+The shine does not yet feel like a realistic “light on gloss” effect.
+
+The effect should be refined to feel more like a specular light sweep across high-gloss text.
+
+The theme of the shine and card accents for this block should be neutral grey/white, not orange.
+
+I want you to:
+
+Make the shine look more like a narrow, bright light streak moving across the text, with soft edges and a subtle specular feel.
+
+Keep the overall effect calm and trauma-aware (no harsh flashing), and keep the color theme for this effect grey/white, not orange.
+
+Important for this change:
+For this change, DO NOT perform any end-to-end (e2e) tests or automated full-flow testing.
+You may perform local/component-level checks only. I will manually confirm the behavior in the UI.
+
+The current safe-space section looks roughly like this:
+
+<section
+  className="py-10 md:py-14 px-4 sm:px-6 lg:px-8"
+  aria-labelledby="safe-space-heading"
+  data-testid="section-safe-space"
+>
+  <div className="max-w-3xl mx-auto">
+    <div className="relative rounded-xl border border-chart-2/20 bg-chart-2/5 p-6 md:p-8">
+      <div className="flex flex-col md:flex-row gap-6 items-start">
+        <div className="flex-shrink-0">
+          <div className="w-12 h-12 rounded-lg bg-chart-2/10 flex items-center justify-center">
+            <Shield className="w-6 h-6 text-chart-2" aria-hidden="true" />
+          </div>
+        </div>
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <h2
+              id="safe-space-heading"
+              className="text-xl md:text-2xl font-semibold text-foreground"
+            >
+              A judgement-free space, built for your reality.
+            </h2>
+            <p className="text-muted-foreground leading-relaxed">
+              We don't store what you write in this session. You decide
+              what to share, and you can close this tab at any time.
+            </p>
+          </div>
+          <ul className="space-y-2 text-sm text-muted-foreground">
+            <li className="flex items-center gap-2">
+              <span
+                className="w-1.5 h-1.5 rounded-full bg-chart-2"
+                aria-hidden="true"
+              />
+              No account required.
+            </li>
+            <li className="flex items-center gap-2">
+              <span
+                className="w-1.5 h-1.5 rounded-full bg-chart-2"
+                aria-hidden="true"
+              />
+              No tracking of your answers.
+            </li>
+            <li className="flex items-center gap-2">
+              <span
+                className="w-1.5 h-1.5 rounded-full bg-chart-2"
+                aria-hidden="true"
+              />
+              You decide what to keep, copy, or delete.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+Business requirement – Glossy, grey-tone shine effect on safe-space text
+
+Update the safe-space / privacy section so that:
+
+The card keeps the same structure and content, but:
+
+Uses an improved, “high-gloss” light sweep on hover, primarily across the heading text:
+
+A narrow, bright, soft-edged streak moves from left to right over the heading when the user hovers/focuses the card.
+
+The streak feels like a spotlight on glossy text, not just a generic overlay.
+
+The shine uses neutral grey/white tones, not orange:
+
+Use white and light-grey alpha gradients (e.g., white / white-80% / transparent) combined with blend modes.
+
+No orange in the shine gradient or card highlight for this section.
+
+The card itself can be slightly refined to feel more “glossy”:
+
+A subtle top inner highlight (light grey/white gradient) when hovered.
+
+A gentle lift + shadow similar to other interactive cards, but with a neutral (grey-ish) feel.
+
+The animation must be:
+
+Short and smooth (around 0.7–1s for the sweep).
+
+Triggered on hover/focus (e.g., group-hover, focus-within).
+
+Non-looping by default (one sweep per hover is enough).
+
+The effect must remain trauma-aware and accessible:
+
+No rapid strobing or intense flashes.
+
+Text remains readable at all times.
+
+Respect prefers-reduced-motion if the app already uses motion-safe / motion-reduce patterns.
+
+Acceptance criteria (Given / When / Then)
+Scenario: Glossy shine appears on heading with neutral grey/white
+
+Given the user is on the page with the safe-space section
+
+When they hover over or focus the safe-space card
+
+Then:
+
+A single, smooth sweep of light moves from left to right across the heading text.
+
+The streak is bright and narrow, with soft edges, and feels like light reflecting off a glossy surface.
+
+The shine uses white/grey tones, not orange, and blends naturally with the existing text color.
+
+Scenario: Card feels subtly more “glossy” on hover
+
+Given the user moves the pointer over the safe-space card
+
+When the hover state is active
+
+Then:
+
+The card shows a slight lift and shadow consistent with other interactive cards.
+
+An optional, subtle top highlight appears (e.g., a faint white/grey gradient band along the top edge).
+
+The overall look is more “polished” but still calm and not over-the-top.
+
+Scenario: Shine effect is comfortable and motion-safe
+
+Given the user repeatedly hovers in and out of the card
+
+When the shine plays
+
+Then:
+
+Each sweep is smooth, around 0.7–1 second in duration.
+
+There is no rapid flashing or aggressive looping.
+
+If the user’s system is set to reduce motion (and the app uses motion-safe / motion-reduce), the effect is appropriately toned down or disabled in a way consistent with the rest of the app.
+
+Scenario: No changes to content or semantics
+
+Given the existing safe-space section content and semantics
+
+When the glossy shine and hover refinements are added
+
+Then:
+
+The heading text, paragraph text, and bullet list remain exactly the same.
+
+The section still uses <section> with aria-labelledby="safe-space-heading" and <h2> for the heading.
+
+Layout and responsiveness (stacked on mobile, row layout on larger screens) are preserved.
+
+What I want you (Replit AI) to do
+
+Assess the current hover + shine implementation
+
+Locate the safe-space / privacy section component on the Home page.
+
+Identify any existing hover classes (group, hover:shadow, transition, etc.) and any previous shine-related markup or styles that were already added.
+
+Identify how other interactive cards above this section are implementing:
+
+Hover lift/scale/shadow.
+
+Any subtle highlights or overlays.
+
+Describe your understanding of the requirements
+
+In your own words, explain:
+
+That you will upgrade the shine to feel like a “high-gloss light sweep” across the heading.
+
+That the color palette for the shine should be neutral (grey/white) and avoid orange.
+
+That the card’s hover state can include a subtle top highlight and refined shadow, but the content and structure stay the same.
+
+That the effect must be smooth, short, and non-looping, and respect motion preferences.
+
+Identify key considerations to avoid disrupting existing functionality
+
+Ensure that:
+
+Any new CSS or Tailwind utilities are scoped and do not accidentally affect other components.
+
+The card’s readability is maintained:
+
+Shine uses mix-blend-mode or low-opacity gradients without making the text illegible.
+
+If you add custom utilities (e.g., in globals.css or Tailwind @layer utilities), they use neutral naming and won’t conflict with existing classes.
+
+The safe-space card continues to feel consistent with other components on the page (no wildly different animation style).
+
+Propose best-practice implementation details
+
+Describe how you will implement a reusable “glossy shine” utility:
+
+Add a @keyframes animation (e.g., glossy-shine) that moves a streak from left to right.
+
+Add Tailwind utility classes such as:
+
+.text-glossy-wrapper – relative inline-block overflow-hidden.
+
+.text-glossy-overlay – absolute inset-0 with:
+
+background-image: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0) 30%, rgba(255,255,255,0.85) 50%, rgba(255,255,255,0) 70%, transparent 100%);
+
+mix-blend-mode: screen;
+
+opacity: 0; transform: translateX(-130%); pointer-events: none;
+
+.text-glossy-active – sets opacity: 1 and applies the glossy-shine animation over ~0.9s.
+
+Explain how you will tie this to hover/focus:
+
+Wrap the <h2> in a container with className="text-glossy-wrapper".
+
+Add a span with className="text-glossy-overlay group-hover:motion-safe:text-glossy-active" so the shine plays on hover.
+
+Explain how you’ll keep the theme grey/white:
+
+The gradient and top highlight overlays use white/grey with transparency and no orange.
+
+The card’s border/background may still use chart-2 variables as defined, but the shine itself is neutral.
+
+Assess other best practices
+
+Tailwind:
+
+Implement the shine via @layer utilities in your Tailwind/global CSS, with predictable class names and minimal custom CSS.
+
+Accessibility:
+
+Keep animations smooth and low-intensity; no jittery or abrupt transitions.
+
+Use motion-safe: prefixes where appropriate to respect reduced-motion settings.
+
+UX:
+
+Ensure the card feels inviting and safe, not “flashy.” The user should perceive it as a gently highlighted area of reassurance.
+
+Generate a step-by-step plan to implement this enhancement
+
+At a minimum include:
+
+Step 1: Open the file where global styles / Tailwind @layer utilities are defined (e.g., globals.css or similar).
+
+Step 2: Add a @keyframes glossy-shine animation and new utility classes:
+
+.text-glossy-wrapper
+
+.text-glossy-overlay
+
+.text-glossy-active
+
+(Optionally) a utility for the top highlight overlay on the card.
+
+Step 3: Update the safe-space card:
+
+Ensure the outer card div has group and hover classes for lift/shadow (reusing patterns from cards above it).
+
+Wrap the <h2> in a div with text-glossy-wrapper.
+
+Add a span inside that wrapper with text-glossy-overlay and a group-hover:motion-safe:text-glossy-active activation class.
+
+Step 4: Optionally, add a neutral top highlight inside the card (using an absolutely positioned div at the top with a white/grey gradient and group-hover fade-in), ensuring the color is grey/white, not orange.
+
+Step 5: Manually verify:
+
+On hover/focus, the heading shows a smooth, glossy sweep from left to right.
+
+The effect looks neutral and polished (no orange in the shine), and text remains readable.
+
+On mobile and desktop, the layout is preserved and the card still looks good.
+
+Step 6: Confirm that no other components unexpectedly pick up these styles.
+
+Keep the scope limited
+
+Do not:
+
+Change or rewrite the safe-space text copy.
+
+Alter unrelated components or global color tokens.
+
+Introduce orange accents into this shine effect.
+
+Only:
+
+Add the glossy shine utilities and apply them to the safe-space card + heading, keeping the theme grey/white.
+
+Propose a skeleton framework
+
+Provide a simplified example of the CSS utilities and JSX wiring, for example:
+
+/* In globals.css or Tailwind CSS file */
+@keyframes glossy-shine {
+  0% {
+    transform: translateX(-130%);
+  }
+  100% {
+    transform: translateX(130%);
+  }
+}
+
+@layer utilities {
+  .text-glossy-wrapper {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+  }
+
+  .text-glossy-overlay {
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(
+      120deg,
+      transparent 0%,
+      rgba(255,255,255,0) 30%,
+      rgba(255,255,255,0.85) 50%,
+      rgba(255,255,255,0) 70%,
+      transparent 100%
+    );
+    mix-blend-mode: screen;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-130%);
+  }
+
+  .text-glossy-active {
+    opacity: 1;
+    animation: glossy-shine 0.9s ease-out forwards;
+  }
+}
+
+<section
+  className="py-10 md:py-14 px-4 sm:px-6 lg:px-8"
+  aria-labelledby="safe-space-heading"
+  data-testid="section-safe-space"
+>
+  <div className="max-w-3xl mx-auto">
+    <div className="relative group rounded-xl border border-chart-2/20 bg-chart-2/5 p-6 md:p-8 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-xl hover:bg-chart-2/10">
+      <div className="pointer-events-none absolute inset-x-4 top-0 h-8 rounded-t-xl bg-gradient-to-b from-white/15 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+      <div className="flex flex-col md:flex-row gap-6 items-start relative">
+        <div className="flex-shrink-0">
+          <div className="w-12 h-12 rounded-lg bg-chart-2/10 flex items-center justify-center">
+            <Shield className="w-6 h-6 text-chart-2" aria-hidden="true" />
+          </div>
+        </div>
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <div className="text-glossy-wrapper">
+              <h2
+                id="safe-space-heading"
+                className="text-xl md:text-2xl font-semibold text-foreground"
+              >
+                A judgement-free space, built for your reality.
+              </h2>
+              <span
+                aria-hidden="true"
+                className="text-glossy-overlay group-hover:motion-safe:text-glossy-active"
+              />
+            </div>
+            <p className="text-muted-foreground leading-relaxed">
+              We don't store what you write in this session. You decide
+              what to share, and you can close this tab at any time.
+            </p>
+          </div>
+          {/* bullets unchanged */}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+The final implementation should align class names and patterns with your actual Tailwind setup and animation conventions.
+
+Do not modify any files yet
+
+First, output your understanding of this glossy shine enhancement and your implementation plan.
+
+Remember: do NOT perform any e2e tests for this change—I will manually confirm behavior.
+
+Wait for my confirmation that your approach is sound before updating the code.

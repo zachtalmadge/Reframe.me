@@ -285,4 +285,42 @@
   .border.hover-elevate:not(.no-hover-interaction-elevate)::after {
     inset: -1px;
   }
+
+  /* Glossy shine animation for text highlights */
+  .text-glossy-wrapper {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+  }
+  
+  .text-glossy-overlay {
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(
+      120deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0) 35%,
+      rgba(255, 255, 255, 0.9) 50%,
+      rgba(255, 255, 255, 0) 65%,
+      transparent 100%
+    );
+    mix-blend-mode: overlay;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-130%);
+  }
+  
+  .text-glossy-active {
+    opacity: 1;
+    animation: glossy-shine 0.9s ease-out forwards;
+  }
+}
+
+@keyframes glossy-shine {
+  0% {
+    transform: translateX(-130%);
+  }
+  100% {
+    transform: translateX(130%);
+  }
 }
