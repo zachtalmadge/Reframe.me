@@ -206,9 +206,9 @@ export default function Home() {
                   Prepare for Your Next Opportunity
                 </h1>
                 <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-                  You deserve tools that help you tell your story with
-                  confidence. Reframe.me creates personalized materials to
-                  support your job search journey.
+                  Your past is part of your story, <em>not the whole story</em>. Reframe.me helps
+                  you share that story in a way that centers your growth and{" "}
+                  <em>what you offer today</em>.
                 </p>
               </div>
 
@@ -292,9 +292,17 @@ export default function Home() {
         aria-labelledby="tools-heading"
       >
         <div className="max-w-4xl mx-auto">
-          <h2 id="tools-heading" className="sr-only">
-            Available Tools
-          </h2>
+          <div className="text-center mb-8">
+            <h2
+              id="tools-heading"
+              className="text-2xl md:text-3xl font-semibold text-foreground"
+            >
+              What we offer
+            </h2>
+            <p className="mt-3 text-muted-foreground max-w-xl mx-auto">
+              Two free tools to help you prepare for employment conversations.
+            </p>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <Card
