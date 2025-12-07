@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -84,6 +84,7 @@ export default function Home() {
     rootMargin: "0px 0px -20% 0px",
     triggerOnce: false,
   });
+  const heroRef = useRef<HTMLElement>(null);
   const [heroMounted, setHeroMounted] = useState(false);
   const [showBefore, setShowBefore] = useState(false);
   const [showAfter, setShowAfter] = useState(false);
@@ -91,6 +92,9 @@ export default function Home() {
   const [storyIndex, setStoryIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [spotlightPosition, setSpotlightPosition] = useState({ x: 0, y: 0 });
+  const [isSpotlightVisible, setIsSpotlightVisible] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   useEffect(() => {
     const prefersReduced = window.matchMedia?.(
@@ -154,6 +158,29 @@ export default function Home() {
     return () => clearInterval(interval);
   }, [isPaused]);
 
+  useEffect(() => {
+    const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    setIsTouchDevice(hasTouch);
+  }, []);
+
+  const handleMouseMove = (event: React.MouseEvent<HTMLElement>) => {
+    if (isTouchDevice || prefersReducedMotion) return;
+    const rect = heroRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    setSpotlightPosition({ x, y });
+  };
+
+  const handleMouseEnter = () => {
+    if (isTouchDevice || prefersReducedMotion) return;
+    setIsSpotlightVisible(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsSpotlightVisible(false);
+  };
+
   const goToStory = (index: number) => {
     setStoryIndex(index);
   };
@@ -169,9 +196,27 @@ export default function Home() {
   return (
     <Layout>
       <section
+        ref={heroRef}
         className="relative py-12 md:py-20 px-4 sm:px-6 lg:px-8 overflow-hidden"
         aria-labelledby="hero-heading"
+        onMouseMove={handleMouseMove}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
       >
+        <div
+          aria-hidden="true"
+          className={`pointer-events-none absolute inset-0 transition-opacity duration-300 motion-reduce:hidden ${
+            isSpotlightVisible ? "opacity-100" : "opacity-0"
+          }`}
+          style={{
+            background: `radial-gradient(
+              circle 280px at ${spotlightPosition.x}px ${spotlightPosition.y}px,
+              rgba(255, 255, 255, 0.12),
+              rgba(255, 255, 255, 0.04) 40%,
+              transparent 70%
+            )`,
+          }}
+        />
         <div
           className="pointer-events-none absolute -left-20 -top-10 h-72 w-72 rounded-full bg-primary/10 blur-3xl animate-float-slow motion-reduce:animate-none"
           aria-hidden="true"
