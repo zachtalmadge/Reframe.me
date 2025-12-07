@@ -206,9 +206,9 @@ export default function Home() {
                   Prepare for Your Next Opportunity
                 </h1>
                 <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-                  You deserve tools that help you tell your story with
-                  confidence. Reframe.me creates personalized materials to
-                  support your job search journey.
+                  Your past is part of your story, <em>not the whole story</em>. Reframe.me helps
+                  you share that story in a way that centers your growth and{" "}
+                  <em>what you offer today</em>.
                 </p>
               </div>
 
