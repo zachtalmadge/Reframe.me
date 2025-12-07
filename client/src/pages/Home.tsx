@@ -56,7 +56,8 @@ const stories = [
 
 export default function Home() {
   const { ref: howItWorksRef, isInView: howItWorksInView } = useInView({
-    threshold: 0.2,
+    threshold: 0.3,
+    rootMargin: "0px 0px -30% 0px",
   });
   const [heroMounted, setHeroMounted] = useState(false);
   const [showAfter, setShowAfter] = useState(false);
@@ -354,14 +355,14 @@ export default function Home() {
             {howItWorksSteps.map((step, index) => (
               <div
                 key={step.title}
-                className={`relative bg-background rounded-xl border border-border p-6 text-center transition-all duration-300 ease-out motion-reduce:transition-none ${
+                className={`relative bg-background rounded-xl border border-border p-6 text-center transition-all duration-500 ease-out motion-reduce:transition-none ${
                   howItWorksInView
                     ? "opacity-100 translate-y-0"
                     : "opacity-0 translate-y-4"
                 }`}
                 style={{
                   transitionDelay: howItWorksInView
-                    ? `${index * 100}ms`
+                    ? `${index * 150}ms`
                     : "0ms",
                 }}
                 data-testid={`step-${index + 1}`}
