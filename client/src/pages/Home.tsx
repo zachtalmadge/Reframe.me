@@ -221,26 +221,38 @@ export default function Home() {
                 className="max-w-md mx-auto text-left pt-4"
                 data-testid="before-after-block"
               >
-                <div className="min-h-[5.5rem] sm:min-h-[4rem] flex flex-col justify-start gap-3">
-                  <div
-                    className={`text-sm text-muted-foreground/80 italic transition-opacity duration-300 motion-reduce:transition-none ${
-                      showBefore ? "opacity-100" : "opacity-0"
-                    }`}
-                  >
-                    <span className="font-medium text-muted-foreground not-italic">
-                      Before:
-                    </span>{" "}
-                    "{beforeAfterPairs[currentPairIndex].before}"
-                  </div>
-                  <div
-                    className={`text-sm text-foreground font-medium transition-all duration-300 motion-reduce:transition-none ${
-                      showAfter
-                        ? "opacity-100 translate-y-0"
-                        : "opacity-0 translate-y-1"
-                    }`}
-                  >
-                    <span className="text-primary">After:</span> "{beforeAfterPairs[currentPairIndex].after}"
-                  </div>
+                <div className="grid" style={{ gridTemplateRows: '1fr', gridTemplateColumns: '1fr' }}>
+                  {beforeAfterPairs.map((pair, index) => {
+                    const isActive = index === currentPairIndex;
+                    return (
+                      <div
+                        key={index}
+                        className="flex flex-col gap-3"
+                        style={{ gridRow: 1, gridColumn: 1 }}
+                        aria-hidden={!isActive}
+                      >
+                        <div
+                          className={`text-sm text-muted-foreground/80 italic transition-opacity duration-300 motion-reduce:transition-none ${
+                            isActive && showBefore ? "opacity-100" : "opacity-0"
+                          }`}
+                        >
+                          <span className="font-medium text-muted-foreground not-italic">
+                            Before:
+                          </span>{" "}
+                          "{pair.before}"
+                        </div>
+                        <div
+                          className={`text-sm text-foreground font-medium transition-all duration-300 motion-reduce:transition-none ${
+                            isActive && showAfter
+                              ? "opacity-100 translate-y-0"
+                              : "opacity-0 translate-y-1"
+                          }`}
+                        >
+                          <span className="text-primary">After:</span> "{pair.after}"
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
 
