@@ -13,32 +13,155 @@ const faqs = [
   {
     id: "when-disclose",
     question: "When should I disclose my record?",
-    answer: "",
+    answer: (
+      <div className="space-y-3 text-muted-foreground">
+        <p>
+          There is no single right answer. Many people choose to wait until after an initial interview or job offer, while others prefer to share earlier in the process. Laws vary by state and industry, so what works in one situation may not apply to another.
+        </p>
+        <p>
+          Some states have "Ban the Box" laws that limit when employers can ask about criminal history. In those places, you may not be required to disclose until later in the hiring process.
+        </p>
+        <p>
+          Consider speaking with a legal professional or employment counselor who understands your local laws and can help you decide what feels right for your situation.
+        </p>
+      </div>
+    ),
   },
   {
     id: "pre-adverse-rights",
     question: "What are my rights during a pre-adverse action notice?",
-    answer: "",
+    answer: (
+      <div className="space-y-3 text-muted-foreground">
+        <p>
+          Under the Fair Credit Reporting Act (FCRA), if an employer is considering not hiring you based on your background check, they must first send you a "pre-adverse action" notice. This gives you a chance to review the report and respond before a final decision is made.
+        </p>
+        <p>
+          You typically have at least five business days to dispute any errors or provide context. This is often where a thoughtful response letter can make a difference.
+        </p>
+        <p>
+          Keep in mind that laws vary by state, and some employers may have different timelines or processes. This is general information, not legal advice. If you believe your rights have been violated, consider consulting with an attorney who specializes in employment law.
+        </p>
+      </div>
+    ),
   },
   {
-    id: "what-employers-see",
-    question: "What do employers typically see on a background check?",
-    answer: "",
+    id: "letter-effectiveness",
+    question: "Does this letter actually work?",
+    answer: (
+      <div className="space-y-3 text-muted-foreground">
+        <p>
+          We cannot guarantee any specific outcome. Every employer, situation, and background is different. What we can say is that a well-written, professional response that acknowledges your past and highlights your growth can help employers see beyond a background check.
+        </p>
+        <p>
+          Many people have found that taking the time to craft a thoughtful response shows responsibility and self-awareness, qualities that employers value.
+        </p>
+        <p>
+          This tool is meant to help you put your best foot forward, but hiring decisions ultimately rest with each employer. Laws and employer practices vary by location and industry. This is not legal advice. If you have questions about your rights, consider consulting with an attorney or legal aid organization.
+        </p>
+      </div>
+    ),
   },
   {
-    id: "ban-the-box",
-    question: "What is 'Ban the Box' and does it apply to me?",
-    answer: "",
+    id: "privacy-data",
+    question: "Is my information stored or shared?",
+    answer: (
+      <div className="space-y-3 text-muted-foreground">
+        <p>
+          We take your privacy seriously. The information you enter is used only to generate your documents and is not stored on our servers after your session ends. We do not sell or share your personal information with third parties.
+        </p>
+        <p>
+          However, once you download or copy your documents, you are responsible for how that information is used or shared. We recommend saving your documents in a secure location.
+        </p>
+        <p>
+          For complete details, please review our privacy policy. If you have specific concerns about data security, consider consulting with a privacy professional.
+        </p>
+      </div>
+    ),
   },
   {
-    id: "how-to-explain",
-    question: "How do I explain gaps in my employment history?",
-    answer: "",
+    id: "job-guarantee",
+    question: "Can this guarantee I get a job or keep a job?",
+    answer: (
+      <div className="space-y-3 text-muted-foreground">
+        <p>
+          No. We cannot guarantee any employment outcome. Hiring decisions depend on many factors beyond a background check, including qualifications, interview performance, references, and employer preferences.
+        </p>
+        <p>
+          What we offer is a tool to help you communicate your story professionally and confidently. Many people find that being prepared helps reduce anxiety and allows them to focus on showing their strengths.
+        </p>
+        <p>
+          Employment laws and protections vary by state and industry. This is general information, not legal advice. We encourage you to continue building your skills, seeking support from employment programs, and consulting with a legal professional if you have questions about your rights.
+        </p>
+      </div>
+    ),
   },
   {
-    id: "after-interview",
-    question: "What should I do after the interview if I disclosed?",
-    answer: "",
+    id: "legal-advice",
+    question: "Is this legal advice? Are you my lawyer?",
+    answer: (
+      <div className="space-y-3 text-muted-foreground">
+        <p>
+          <span className="font-medium text-foreground">No.</span> Reframe.me is not a law firm, and we are not your attorney. The information and documents provided here are for educational and informational purposes only and do not constitute legal advice.
+        </p>
+        <p>
+          Every situation is unique, and laws vary significantly by state, county, and industry. What applies in one place may not apply in another.
+        </p>
+        <p>
+          If you have legal questions or believe your rights have been violated, we strongly encourage you to consult with a qualified attorney or legal aid organization in your area. Many communities offer free or low-cost legal assistance for employment matters.
+        </p>
+      </div>
+    ),
+  },
+  {
+    id: "who-is-this-for",
+    question: "Who is Reframe.me for (and not for)?",
+    answer: (
+      <div className="space-y-3 text-muted-foreground">
+        <p>
+          Reframe.me is designed to help people with criminal records prepare for employment conversations. This includes those who are job searching, responding to a pre-adverse action notice, or simply want to practice talking about their background.
+        </p>
+        <p>
+          This tool may not be the right fit if you need legal representation, are facing active criminal charges, or have questions about court proceedings. In those cases, please seek help from a qualified attorney.
+        </p>
+        <p>
+          We believe in second chances and want to support your journey, but we also want to be honest about what this tool can and cannot do. Laws vary by location, and this information is not legal advice. A legal professional can help you understand your specific rights and options.
+        </p>
+      </div>
+    ),
+  },
+  {
+    id: "legal-proceedings",
+    question: "Can I use this letter in court or for legal proceedings?",
+    answer: (
+      <div className="space-y-3 text-muted-foreground">
+        <p>
+          The documents generated here are intended for employment purposes, such as responding to a pre-adverse action notice or preparing for job interviews. They are not designed for use in court, legal filings, or other formal legal proceedings.
+        </p>
+        <p>
+          If you need documents for legal purposes, please work with an attorney who can prepare materials appropriate for your specific case and jurisdiction.
+        </p>
+        <p>
+          Using these materials in a legal context without professional guidance could have unintended consequences. We want to help, but we also want you to be protected.
+        </p>
+      </div>
+    ),
+  },
+  {
+    id: "reuse-materials",
+    question: "Can I reuse a narrative or letter for different jobs?",
+    answer: (
+      <div className="space-y-3 text-muted-foreground">
+        <p>
+          Many people choose to adapt their narratives for different opportunities. The core of your story—your growth, what you've learned, and where you're headed—often stays the same, but you may want to adjust details to match the specific job or company.
+        </p>
+        <p>
+          For pre-adverse action response letters, it's important to make sure the details match the specific employer and situation. A generic letter may not be as effective as one tailored to the circumstances.
+        </p>
+        <p>
+          We encourage you to use these tools as a starting point and refine your materials as you learn what resonates with employers in your field. Remember that laws and employer requirements vary by location and industry. This is general guidance, not legal advice—consult with a legal professional if you have specific questions.
+        </p>
+      </div>
+    ),
   },
 ];
 
@@ -64,14 +187,17 @@ export default function Faq() {
           </div>
 
           <div className="rounded-xl border border-chart-2/20 bg-chart-2/5 p-4 md:p-6 mb-8">
-            <p className="text-sm text-muted-foreground leading-relaxed">
+            <p className="text-sm text-muted-foreground leading-relaxed mb-3">
               <span className="font-medium text-foreground">
-                Important note:
+                Important:
               </span>{" "}
-              This page provides general information only. It is not legal
-              advice, and we cannot guarantee any hiring outcome. Every
-              situation is different. When possible, consult with a legal
-              professional or trusted advisor about your specific circumstances.
+              Reframe.me is not a law firm and does not provide legal advice. The information on this page is for general educational purposes only.
+            </p>
+            <p className="text-sm text-muted-foreground leading-relaxed mb-3">
+              We cannot guarantee any hiring outcome. Every situation is different, and employment laws vary significantly by location and industry.
+            </p>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              When possible, consult with a qualified attorney or legal aid organization about your specific circumstances.
             </p>
           </div>
 
@@ -93,15 +219,20 @@ export default function Faq() {
                     {faq.question}
                   </AccordionTrigger>
                   <AccordionContent data-testid={`faq-content-${faq.id}`}>
-                    {faq.answer || (
-                      <span className="text-muted-foreground italic">
-                        Answer coming soon.
-                      </span>
-                    )}
+                    {faq.answer}
                   </AccordionContent>
                 </AccordionItem>
               ))}
             </Accordion>
+          </div>
+
+          <div className="rounded-xl border border-muted/40 bg-muted/10 p-4 md:p-6 mb-8">
+            <p className="text-xs text-muted-foreground leading-relaxed mb-2">
+              <span className="font-medium">Reminder:</span> Nothing on this site constitutes legal advice. We are not responsible for hiring decisions made by employers. Results vary, and we make no guarantees about employment outcomes.
+            </p>
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              If you have legal questions, please seek help from a qualified attorney in your jurisdiction.
+            </p>
           </div>
 
           <div className="text-center space-y-4 pt-6 border-t border-border">
