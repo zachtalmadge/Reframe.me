@@ -394,7 +394,7 @@ export default function Home() {
                       id="safe-space-heading"
                       className="text-xl md:text-2xl font-semibold text-slate-800 dark:text-slate-100"
                     >
-                      A privacy-first space, built for your reality.
+                      A judgement-free space, built for your privacy.
                     </h2>
                     <span
                       aria-hidden="true"
