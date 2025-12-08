@@ -1,0 +1,564 @@
+Continue working in the same JavaScript (NOT TypeScript) + React + Tailwind CSS, mobile-first project.
+The unified multi-step form currently includes an OIL (Ownership, Impact, Lessons Learned) step, with optional inputs that feed into the narratives and pre-adverse action letter. Steps 5–9 contain OIL-related fields and surrounding context, but there is not yet a reusable, always-available explanation of the OIL framework in a modal. I want to add a “What is the OIL Framework?” section to Steps 5–9 that, when clicked, opens a modal explaining the OIL framework using language based on the uploaded Adverse Action / OIL guide. I also want each of these steps to gently highlight that OIL is “the most effective framework” for this kind of letter or disclosure narrative.
+
+Important for this change:
+For this change, DO NOT perform any end-to-end (e2e) tests or automated full-flow testing.
+You may do local/component-level checks only. I will manually confirm behavior in the UI.
+
+Do not make any code changes yet. First, assess the current implementation, describe your understanding, identify key considerations, and propose a step-by-step plan. Wait for my explicit approval before editing any files.
+
+Business requirement – Add OIL info modal on Steps 5–9 and emphasize it as the most effective framework
+
+Current behavior
+
+The unified multi-step form has 9 steps (or similar), with Steps 5–9 covering OIL-related inputs and follow-on context (e.g., Ownership, Impact, Lessons Learned, clarifying relevance, reinforcing qualifications).
+
+The OIL inputs are optional, and the copy explains what each part does and that “we write this out for you; add your own words if you want.”
+
+There is no shared modal that:
+
+Can be opened on any of Steps 5–9.
+
+Gives a full, guided explanation of the OIL framework and how it builds a strong letter/narrative.
+
+There is no persistent, explicit statement in these steps saying that OIL is “the most effective framework” (even if the content already implicitly suggests it is very helpful).
+
+The app already uses at least one modal pattern (e.g., for leaving the form/results, disclaimer) that should be respected for consistency and accessibility.
+
+Desired behavior
+
+For Steps 5–9 of the unified form:
+
+Add a small, consistent info section (e.g., near the OIL-related content, or in a sidebar/inline block) that includes:
+
+A clickable text or button labeled something like:
+“What is the OIL Framework?”
+
+A short, reinforcing line such as:
+“We use this because it’s one of the most effective ways to explain your story clearly and honestly.”
+
+Clicking “What is the OIL Framework?” opens a modal that:
+
+Works on all these steps (same component, reused).
+
+Explains OIL in clear, trauma-aware language based on the uploaded guide:
+
+Ownership – briefly: taking responsibility for your actions in a straightforward, respectful way.
+
+Impact – acknowledging who or what was affected and showing awareness of consequences.
+
+Lessons Learned – specific ways you’ve changed, including programs, growth, and skills that show you’re moving forward.
+
+Emphasizes that this framework:
+
+Helps organize your story.
+
+Shows growth and accountability.
+
+Is a highly effective structure for adverse-action letters and disclosure narratives.
+
+Includes short, non-sensational examples or example phrases inspired by the guide (paraphrased, not copied verbatim).
+
+Uses a trauma-aware tone and reminds users they can share only what feels safe and honest.
+
+The modal:
+
+Can be opened and closed on any of Steps 5–9 without disrupting form state.
+
+Uses existing modal styling patterns (overlay, centered card, close icon/button).
+
+Is mobile-friendly (scrollable body if content is long, with actions always reachable).
+
+On each of Steps 5–9, there should also be a visible note (short line or badge) reinforcing that OIL is “one of the most effective frameworks” for this kind of communication, without pressuring the user to answer any optional fields.
+
+Constraints
+
+Do not change the optional nature of OIL inputs (they must remain optional).
+
+Do not change step order, validation logic, or how the form submits.
+
+Do not add any new persistent storage; modal state should be in-memory only.
+
+Maintain existing modal accessibility patterns (focus trapping, Escape key, ARIA attributes) if they already exist.
+
+Keep all language non-legal, non-judgmental, and trauma-aware.
+
+Acceptance criteria (Given / When / Then)
+Scenario: “What is the OIL Framework?” section appears on Steps 5–9
+
+Given the user is on any of Steps 5–9 in the unified multi-step form
+
+When the step renders
+
+Then there should be a clearly visible section or inline element containing:
+
+A label/button/link titled “What is the OIL Framework?”
+
+A short sentence emphasizing that this framework is one of the most effective ways to explain their story (e.g., “We use this because it’s one of the most effective ways to explain your story clearly and honestly.”).
+
+Scenario: Clicking “What is the OIL Framework?” opens the OIL info modal
+
+Given the user is on any of Steps 5–9
+
+When the user clicks the “What is the OIL Framework?” trigger
+
+Then an OIL info modal should open over the current step
+
+And the underlying step content should remain intact (no navigation occurs)
+
+And keyboard focus should move into the modal (per existing modal patterns).
+
+Scenario: OIL info modal content explains Ownership, Impact, Lessons Learned
+
+Given the OIL info modal is open on any of Steps 5–9
+
+When the user reads the content
+
+Then they should see:
+
+A brief explanation of the OIL framework as a way to organize a letter of accountability or narrative.
+
+A short, plain-language explanation of Ownership, Impact, and Lessons Learned, aligned with the uploaded guide but paraphrased.
+
+One or more short example phrases that show how someone might describe each part, written in trauma-aware, non-sensational language.
+
+A gentle note that they should only share what feels safe and honest and that this framework is meant to support them, not judge them.
+
+Scenario: OIL info modal can be closed safely and accessibly
+
+Given the OIL info modal is open
+
+When the user:
+
+Clicks the close button/icon, or
+
+Clicks the primary “Got it”/“Close” action, or
+
+Presses the Escape key (if this is the pattern used by other modals),
+
+Then the modal should close
+
+And focus should return to a sensible element on the underlying step (e.g., the OIL trigger or first field)
+
+And the step’s form data should remain unchanged.
+
+Scenario: “Most effective framework” emphasis present on all Steps 5–9
+
+Given the user is on any of Steps 5–9
+
+When they view the OIL-related area
+
+Then there should be a short line or badge indicating that the OIL framework is one of the most effective ways to explain their story or build this kind of letter
+
+And the wording should feel supportive, not pressuring (e.g., not “You must use this” but “We use this because it’s one of the most effective…”).
+
+Scenario: No regression in form behavior or modal system
+
+Given the user navigates through Steps 1–9 and interacts with other modals (e.g., leaving the form, disclaimers)
+
+When they open and close the OIL info modal on Steps 5–9
+
+Then step navigation, validation, emotional check-in behavior, and existing modals should all continue to work as before
+
+And no extra page refreshes or data loss should occur due to the OIL info modal.
+
+What I want you (Replit AI) to do
+1. Assess the current implementation
+
+Identify the component(s) that render Steps 5–9 in the unified multi-step form:
+
+Look for step components (e.g., OwnershipStep, ImpactStep, LessonsLearnedStep, or generically named Step5, Step6, etc.).
+
+Confirm which of these steps explicitly reference OIL and where in the JSX the explanatory copy currently lives.
+
+Locate the OIL-related copy:
+
+The text that explains Ownership, Impact, Lessons Learned inside the step(s).
+
+Any existing inline explanation of the framework.
+
+Identify the existing modal implementation used elsewhere:
+
+For warnings when leaving the form or results.
+
+For the post-generation disclaimer modal.
+
+Determine:
+
+Which modal component is used (e.g., Modal, Dialog, etc.).
+
+How open/close state is managed (props, context, hooks).
+
+How accessibility (focus trapping, ARIA) is handled.
+
+Confirm how Step 5–9 layout is structured:
+
+Is there a shared wrapper for each step (e.g., FormStepLayout)?
+
+Where is the best place to attach a reusable “OIL info” section so it renders consistently on each of these steps?
+
+2. Describe your understanding of the requirements
+
+Restate that you will:
+
+Introduce a single, reusable OIL info modal component (or reuse the existing modal with OIL-specific content) that can be triggered from Steps 5–9.
+
+Add a “What is the OIL Framework?” trigger + “most effective framework” line in each of Steps 5–9, using a shared component if possible.
+
+Ensure OIL inputs remain optional and unaffected by the modal’s presence.
+
+Keep modal behavior aligned with existing modal patterns (styling, accessibility).
+
+Base the OIL explanation content on the uploaded guide, paraphrased into the app’s trauma-aware tone.
+
+3. Identify key considerations / risks
+
+Accessibility
+
+Ensure the OIL trigger is keyboard-accessible (Tab + Enter/Space).
+
+Ensure the modal:
+
+Traps focus while open (if that’s the existing pattern).
+
+Provides ARIA roles/labels, e.g., role="dialog", aria-modal="true", aria-labelledby.
+
+Mobile usability
+
+The modal content may be long; its body should be scrollable on smaller screens while keeping close buttons reachable (similar to the disclaimer-modal guidance).
+
+State management
+
+Decide whether:
+
+Each step locally manages isOilModalOpen, or
+
+There is a shared hook/context that can open the same OIL modal from any step.
+
+Avoid duplicating content or state in multiple components.
+
+Tone & content
+
+Ensure that “most effective framework” wording:
+
+Encourages but does not pressure.
+
+Does not overpromise legal outcomes or guarantees.
+
+Ensure OIL examples are anonymized, gentle, and not graphic.
+
+Non-regression
+
+Confirm that adding a modal doesn’t break:
+
+Step transitions (Next/Back).
+
+Emotional check-in line behavior.
+
+Other modals (navigation warnings, disclaimers).
+
+4. Propose best-practice implementation details
+
+Recommend creating a reusable component, e.g. OilFrameworkInfo, that:
+
+Renders:
+
+A small subheading or inline block with:
+
+“What is the OIL Framework?” clickable element.
+
+A short “most effective framework” line.
+
+Manages a local isOpen state for the modal, or accepts isOpen/onOpenChange props if integrated with a shared modal system.
+
+Renders a Modal (using the existing modal component) with:
+
+Title: “What is the OIL Framework?”.
+
+Body content:
+
+Overview paragraph: OIL as a structure for letters/narratives.
+
+Short subsections:
+
+Ownership
+
+Impact
+
+Lessons Learned
+
+1–2 short example phrases per section, paraphrased.
+
+A closing reassurance note about sharing only what feels safe and honest.
+
+Footer with a primary “Got it” / “Close” button.
+
+Suggest placing OilFrameworkInfo in each of Steps 5–9:
+
+Ideally in a shared layout wrapper if one exists (e.g., <FormStepLayout>).
+
+Otherwise, import and render the same component in each step to ensure consistent copy and behavior.
+
+Keep styling consistent with the app’s design:
+
+Use Tailwind classes matching other info blocks and modals (rounded corners, soft shadow, etc.).
+
+For the trigger, consider a subtle link-style button with an info icon.
+
+Recommend paraphrased OIL content derived from the guide, for example:
+
+Ownership:
+
+“Briefly name what happened and take responsibility for your part, in a straightforward way.”
+
+Impact:
+
+“Acknowledge who or what was harmed and show that you understand the consequences of your actions.”
+
+Lessons Learned:
+
+“Describe the concrete steps you’ve taken to change—programs you’ve completed, skills you’ve built, and how you show up differently now.”
+
+Short example (paraphrased):
+
+“In the past I made choices that led to a conviction and time in custody. I regret the impact of those choices and how they affected people around me. Since then, I’ve focused on building new skills, completing programs, and showing up in ways that reflect my values today.”
+
+5. Generate a step-by-step implementation plan
+
+Provide a detailed plan, e.g.:
+
+Locate step components for Steps 5–9
+
+In the unified form folder, identify which components map to Steps 5–9 (e.g., StepFiveOwnership.jsx, StepSixImpact.jsx, StepSevenLessons.jsx, etc., or a configuration-driven system).
+
+Confirm where within each step we can insert a small info section (e.g., directly under the step title or above the OIL inputs).
+
+Review existing modal implementation
+
+Open the file(s) for the navigation warning modal and disclaimer modal.
+
+Note the modal component name, props (isOpen, onClose, etc.), and Tailwind structure.
+
+Plan to reuse this modal component (or a thin wrapper) to ensure consistency.
+
+Create the OilFrameworkInfo component
+
+In src/components (or similar), create a new file, e.g., OilFrameworkInfo.jsx.
+
+Implement:
+
+Internal isOpen state using useState (or accept props if integrating with shared modal state).
+
+A visible trigger area with:
+
+A clickable text/button: “What is the OIL Framework?”
+
+A small supporting line: “We use this because it’s one of the most effective ways to explain your story clearly and honestly.”
+
+A modal that:
+
+Uses the shared modal component.
+
+Contains the paraphrased OIL explanation content, structured as title + body + close button.
+
+Is scrollable on smaller screens if content is long.
+
+Closes on overlay click/close button/Escape (matching existing behavior).
+
+Integrate OilFrameworkInfo into Steps 5–9
+
+Import OilFrameworkInfo into each step component.
+
+Place it in a consistent location in each step, for example:
+
+Directly below the main step heading and description, or
+
+In a right-hand info column, if such layout exists.
+
+Ensure it appears on all Steps 5–9 and nowhere else.
+
+Ensure “most effective framework” emphasis is visible
+
+Confirm that the “most effective framework” language inside OilFrameworkInfo is clearly visible in each step without requiring a click.
+
+If needed, add a small badge or emphasized text inside the component that highlights this, while keeping the tone gentle.
+
+Check accessibility and mobile behavior
+
+Manually test:
+
+Tab navigation to the OIL trigger.
+
+Opening and closing the modal via keyboard.
+
+Focus returning to the trigger after closing.
+
+Content scroll behavior on a narrow viewport (mobile).
+
+Confirm the modal does not interfere with step navigation or emotional check-in behavior.
+
+Run local/component-level checks only
+
+Run the dev server or a local build.
+
+Navigate through the form to Steps 5–9 for at least one selection (Narratives only, Letter only, Both).
+
+Open/close the OIL modal from each of these steps.
+
+Verify that form data remains intact and no unexpected side effects occur.
+
+Keep the scope limited
+
+For this prompt, you must NOT:
+
+Change the optional nature of OIL inputs.
+
+Modify step count, order, or navigation (Next/Back/validation behavior).
+
+Change any backend behavior or how OIL content is used in generation prompts.
+
+Alter other modals’ content or logic (navigation warning modal, disclaimer modal).
+
+Change the emotional check-in line copy or behavior.
+
+Modify unrelated components such as the hero section, results page, or Start Over behavior.
+
+Skeleton framework / code snippet (required – example only)
+
+Note: This is an illustrative example only. You must align it with the actual component and modal patterns in the codebase before editing any files.
+
+// src/components/OilFrameworkInfo.jsx
+import React, { useState } from "react";
+// import Modal from "./Modal"; // Example – replace with your actual modal component
+
+function OilFrameworkInfo() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openModal = () => setIsOpen(true);
+  const closeModal = () => setIsOpen(false);
+
+  return (
+    <div className="mt-6 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700">
+      <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+        <p className="font-medium">
+          We use the OIL Framework because it&apos;s one of the most effective
+          ways to explain your story clearly and honestly.
+        </p>
+        <button
+          type="button"
+          onClick={openModal}
+          className="mt-2 inline-flex items-center text-sm font-semibold underline underline-offset-2 sm:mt-0"
+        >
+          What is the OIL Framework?
+        </button>
+      </div>
+
+      {/* Example modal usage – replace `Modal` with your actual component */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-40 flex items-center justify-center bg-black/40"
+          aria-modal="true"
+          role="dialog"
+          aria-labelledby="oil-framework-title"
+        >
+          <div className="max-h-[80vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-white p-6 shadow-lg">
+            <div className="flex items-start justify-between gap-4">
+              <h2
+                id="oil-framework-title"
+                className="text-lg font-semibold text-slate-900"
+              >
+                What is the OIL Framework?
+              </h2>
+              <button
+                type="button"
+                onClick={closeModal}
+                className="text-sm text-slate-500"
+                aria-label="Close OIL explanation"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="mt-4 space-y-3 text-sm text-slate-700">
+              <p>
+                The OIL Framework is a simple way to organize a letter of
+                accountability or an interview answer. It helps you take
+                responsibility, acknowledge the impact, and show how you have
+                changed.
+              </p>
+
+              <div>
+                <h3 className="font-semibold">Ownership</h3>
+                <p>
+                  Briefly name what happened and take responsibility for your
+                  part in a straightforward, respectful way.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="font-semibold">Impact</h3>
+                <p>
+                  Acknowledge who or what was affected and show that you
+                  understand the consequences of your actions.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="font-semibold">Lessons Learned</h3>
+                <p>
+                  Describe the concrete steps you&apos;ve taken to change&mdash;
+                  programs you&apos;ve completed, skills you&apos;ve built, and
+                  how you show up differently now.
+                </p>
+              </div>
+
+              <p className="mt-2 text-xs text-slate-500">
+                You are always in control of what you share. Use this framework
+                in a way that feels honest and safe for you.
+              </p>
+            </div>
+
+            <div className="mt-6 flex justify-end">
+              <button
+                type="button"
+                onClick={closeModal}
+                className="rounded-full px-4 py-2 text-sm font-medium shadow-sm"
+              >
+                Got it
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default OilFrameworkInfo;
+
+// Example of integrating into a step component – e.g., Step 5
+import OilFrameworkInfo from "../components/OilFrameworkInfo";
+
+function StepFiveOwnership() {
+  return (
+    <div className="space-y-6">
+      {/* existing step heading, description, and fields */}
+
+      <OilFrameworkInfo />
+
+      {/* existing OIL input fields for Ownership, etc. */}
+    </div>
+  );
+}
+
+export default StepFiveOwnership;
+
+Do not modify any files yet
+
+Do not modify any files yet
+
+First, output your understanding of the current implementation and the requirements, along with your detailed implementation plan as described above.
+
+Remember: do NOT perform any e2e tests for this change—I will manually confirm it in the UI.
+
+Wait for my explicit approval before editing code.
