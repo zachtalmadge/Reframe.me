@@ -1,0 +1,368 @@
+Continue working in the same JavaScript (NOT TypeScript) + React + Tailwind CSS, mobile-first project.
+The unified multi-step form’s Step 2 – Programs & Skills currently asks users to list “Rehabilitation Programs” and “Skills & Strengths,” with a tip about including hard and soft skills. I want to update the wording in this step so that it explicitly invites users to think about transferable skills and provides examples inside the step, without changing the number or type of fields.
+
+Important for this change:
+For this change, DO NOT perform any end-to-end (e2e) tests or automated full-flow testing.
+You may do local/component-level checks only. I will manually confirm behavior in the UI.
+
+Do not make any code changes yet. First, assess the current implementation, describe your understanding, identify key considerations, and propose a step-by-step plan. Wait for my explicit approval before editing any files.
+
+Business requirement – Emphasize transferable skills in Step 2 (Programs & Skills) with concrete examples
+
+Current behavior
+
+Step 2 of the unified form is titled something like “Programs & Skills” and has a short description like “Share the programs you’ve completed and skills you’ve developed.”
+
+It contains two pill/chip-style inputs:
+
+Rehabilitation Programs
+
+Description: asks users to list programs/courses/certifications.
+
+Input: text field with Enter / “+ Add” behavior.
+
+Skills & Strengths
+
+Description: asks what skills they’ve developed / what they’re good at.
+
+Input: text field with Enter / “+ Add” behavior and a placeholder like “e.g., Communication, Leadership, Problem-solving.”
+
+There is a tip box at the bottom that talks about “hard skills” vs “soft skills” and encourages the user to include both.
+
+Validation, pill behavior, and layout already work and should not change.
+
+Desired behavior (copy and examples only)
+
+Keep the structure of Step 2 (two fields + tip box) but update the wording so users are clearly prompted to think about transferable skills—skills they can bring to a job—even if they learned them inside, in programs, or in everyday life.
+
+Specifically:
+
+Step title + description
+
+Change the section heading from “Programs & Skills” to “Programs & Transferable Skills”.
+
+Update the short description under the title to something like:
+
+“Share the programs you’ve completed and the skills and strengths you’ve built—especially the ones you can bring to a job.”
+
+Rehabilitation Programs block
+
+Keep the “Rehabilitation Programs” label and its description essentially the same (list programs/courses/certifications). No structural change, just ensure wording stays consistent and trauma-aware.
+
+Skills & Strengths block
+
+Update the label to “Skills & Transferable Strengths.”
+
+Update the helper text under the label to emphasize transferable skills, e.g.:
+
+“What skills or strengths did you build that you can bring to a job, even if you learned them in a program, inside, or in everyday life?”
+
+Update the input placeholder to reflect the coach’s examples but in plain, user-friendly language, e.g.:
+
+“e.g., staying focused, working well with different kinds of people”
+
+Update the small helper text under the input (where it explains Enter / Add behavior) to also include concrete transferable-skill examples, e.g.:
+
+“Type a skill or strength and press Enter or tap ‘Add’ to save it. Transferable skills can include things like staying committed, working on a diverse team, resolving conflict, or keeping calm under pressure.”
+
+Tip box
+
+Update the tip box so it explicitly mentions transferable skills and gives examples, while still mentioning hard skills. For example:
+
+“Tip: Include both hard skills (like computer skills, trades, certifications) and transferable skills—things you can use in many jobs. Examples: staying focused and committed, working with people from different backgrounds, showing up on time, solving problems with others, or keeping calm under pressure.”
+
+Tone must stay non-judgmental, hopeful, and practical, aligned with feedback from a re-entry coach.
+
+Constraints
+
+Do not add or remove fields; this is a copy-only change inside the existing UI.
+
+Do not change any validation logic, max chips, or Enter / “+ Add” behavior.
+
+Do not change the emotional check-in line at the bottom of the step.
+
+Do not introduce any new storage or tracking of user input.
+
+Keep language accessible, non-legal, and trauma-aware.
+
+Acceptance criteria (Given / When / Then)
+Scenario: Step 2 header and description emphasize transferable skills
+
+Given the user is on Step 2 of the unified form (Programs & Skills) for any selection (Narratives only, Letter only, or Both)
+
+When the step renders
+
+Then the main section heading should read “Programs & Transferable Skills”
+
+And the description beneath it should tell users they’re sharing programs and the skills/strengths they can bring to a job (using the new copy).
+
+Scenario: Rehabilitation Programs label and behavior remain functionally unchanged
+
+Given the user is on Step 2
+
+When they view the Rehabilitation Programs section
+
+Then the label should still be “Rehabilitation Programs”
+
+And the description should still guide them to list programs, courses, or certifications they’ve completed
+
+And the input should continue to behave exactly as before (pill/chip input, Enter / “+ Add” behavior).
+
+Scenario: Skills field explicitly mentions transferable strengths
+
+Given the user is on Step 2
+
+When they view the second field currently titled “Skills & Strengths”
+
+Then the label should now be “Skills & Transferable Strengths”
+
+And the helper text should invite them to think about skills/strengths they can bring to a job, even if learned in programs, inside, or in everyday life
+
+And the placeholder should include example transferable skills like staying focused and working with different types of people
+
+And the helper text under the input should both describe the Enter / “Add” behavior and give concrete examples of transferable skills.
+
+Scenario: Tip box clearly explains transferable skills with examples
+
+Given the user is on Step 2
+
+When they scroll to the bottom of the section
+
+Then the tip box should mention both hard skills and transferable skills
+
+And it should contain 3–5 example transferable skills written in clear, non-judgmental language
+
+And it should still be visually consistent with the existing tip styling (same component, Tailwind classes, etc.).
+
+Scenario: No regression to form behavior or emotional check-in line
+
+Given the user is on Step 2
+
+When they interact with the inputs (adding/removing pills, pressing Enter, validation)
+
+Then all behavior should remain unchanged except for text copy
+
+And the emotional check-in line at the bottom of the step should still appear and behave exactly as before (including the per-run timing/fade behavior).
+
+What I want you (Replit AI) to do
+1. Assess the current implementation
+
+Locate the React component that renders Step 2 – Programs & Skills in the unified multi-step form (e.g., something like ProgramsAndSkillsStep.jsx or similar).
+
+Identify:
+
+Where the step title and description for Step 2 are defined (this could be inline JSX in the step component or pulled from a configuration object).
+
+The JSX for the Rehabilitation Programs pill input:
+
+Label text.
+
+Helper text under the label.
+
+Placeholder and helper text for the input (if any).
+
+The JSX for the Skills & Strengths pill input:
+
+Label text.
+
+Helper text.
+
+Placeholder text.
+
+Helper text under the field that explains “press Enter or tap Add.”
+
+The JSX for the tip box at the bottom of the step:
+
+Existing copy about hard vs soft skills.
+
+Confirm how these texts are structured:
+
+Are they hard-coded strings inside the component?
+
+Are they loaded from a config or constants file?
+
+2. Describe your understanding of the requirements
+
+In your own words, restate that:
+
+You will keep the structure and behavior of Step 2 the same (two pill inputs plus a tip box).
+
+You will update the copy only to:
+
+Rename the section to “Programs & Transferable Skills” and emphasize skills that can be brought to a job.
+
+Leave the “Rehabilitation Programs” block functionally the same, still focused on programs/courses/certifications.
+
+Rename the second field to “Skills & Transferable Strengths” and update its description, placeholder, and helper text to explicitly reference transferable skills with concrete examples.
+
+Update the tip box to explicitly explain transferable skills and provide examples like staying focused, working with diverse teams, showing up on time, solving problems, and staying calm under pressure.
+
+You will not touch validation, state management, or the emotional check-in logic.
+
+3. Identify key considerations / risks
+
+UX & clarity
+
+Ensure the wording is clear for users who may not know the phrase “transferable skills,” by briefly explaining what it means (“things you can bring to many jobs”).
+
+Tone & trauma-awareness
+
+Maintain gentle, non-judgmental language; avoid implying that the user “should have” done something different.
+
+Consistency
+
+Keep capitalization and styling consistent with other step titles and field labels.
+
+Ensure the tip box still aligns visually with the rest of the form.
+
+Localization / future-proofing
+
+If the app might be localized later, keep the new strings grouped similarly to existing ones so they can be translated.
+
+No behavioral changes
+
+Avoid changes that might alter how the pill input works or interacts with validation.
+
+Ensure the emotional check-in line remains untouched.
+
+4. Propose best-practice implementation details
+
+Suggest the exact locations where the copy changes should be made:
+
+Direct string replacements in JSX or updates in a configuration object.
+
+Propose the new copy variants, for example:
+
+Step heading:
+
+"Programs & Transferable Skills"
+
+Step description:
+
+"Share the programs you’ve completed and the skills and strengths you’ve built—especially the ones you can bring to a job."
+
+Skills field label:
+
+"Skills & Transferable Strengths"
+
+Skills field helper text:
+
+"What skills or strengths did you build that you can bring to a job, even if you learned them in a program, inside, or in everyday life?"
+
+Skills field placeholder:
+
+"e.g., staying focused, working well with different kinds of people"
+
+Skills field helper (below input):
+
+"Type a skill or strength and press Enter or tap 'Add' to save it. Transferable skills can include things like staying committed, working on a diverse team, resolving conflict, or keeping calm under pressure."
+
+Tip box text:
+
+"Tip: Include both hard skills (like computer skills, trades, certifications) and transferable skills—things you can use in many jobs. Examples: staying focused and committed, working with people from different backgrounds, showing up on time, solving problems with others, or keeping calm under pressure."
+
+Confirm that any Tailwind classes used for typography and layout remain unchanged.
+
+5. Generate a step-by-step implementation plan
+
+Provide a concrete plan, for example:
+
+Open the Step 2 component file for the unified form (e.g., ProgramsAndSkillsStep.jsx).
+
+Update the step title and description:
+
+Replace the existing “Programs & Skills” text with “Programs & Transferable Skills.”
+
+Replace the current description with the new phrasing emphasizing skills that can be brought to a job.
+
+Confirm the Rehabilitation Programs block:
+
+Verify that label/helper text still correctly describes listing programs, courses, or certifications.
+
+Make only minimal copy edits if needed for consistency (e.g., punctuation), without changing the meaning.
+
+Update the Skills field block:
+
+Replace the label “Skills & Strengths” with “Skills & Transferable Strengths.”
+
+Update the helper text under the label to the new transferable-skills-focused copy.
+
+Update the input placeholder text to use examples like staying focused and working with different kinds of people.
+
+Update the helper text under the input to include both the Enter/“Add” behavior and example transferable skills.
+
+Update the tip box copy:
+
+Replace the current hard/soft skills message with the new copy that mentions both hard skills and transferable skills, plus concrete examples.
+
+Ensure the component styling (Tailwind classes, icon, background color, etc.) remains unchanged.
+
+Run local/component-level checks:
+
+Build the project or run the dev server.
+
+Navigate through the form to Step 2 for at least one selection (Narratives only, Letter only, Both).
+
+Verify:
+
+The new title and descriptions render as expected.
+
+Input behavior (chips, Enter / “+ Add”) still works.
+
+The emotional check-in line appears and behaves as before.
+
+No layout issues appear on mobile or desktop widths.
+
+Do not run any e2e or full-flow tests.
+
+Keep the scope limited
+
+For this prompt, you must NOT:
+
+Change any form behavior (validation rules, pill limit, step navigation, progress bar).
+
+Modify the emotional check-in line (its text, timing, or behavior).
+
+Add new fields, toggles, or steps.
+
+Modify any backend logic or how these values are used in generation prompts.
+
+Change the content or behavior of other steps, the hero section, or other pages.
+
+(Optional) Skeleton framework / example snippet
+
+You may include a simplified JSX example of the new copy (for illustration only), such as:
+
+// Example only – align with the actual component structure before editing
+<section>
+  <h2 className="text-xl font-semibold">
+    Programs & Transferable Skills
+  </h2>
+  <p className="mt-2 text-sm text-slate-600">
+    Share the programs you’ve completed and the skills and strengths you’ve built—especially the ones you can bring to a job.
+  </p>
+
+  {/* Rehabilitation Programs – label and behavior unchanged */}
+
+  <div className="mt-6">
+    <label className="block text-sm font-medium text-slate-700">
+      Skills & Transferable Strengths
+    </label>
+    <p className="mt-1 text-sm text-slate-600">
+      What skills or strengths did you build that you can bring to a job, even if you learned them in a program, inside, or in everyday life?
+    </p>
+    {/* chip input with updated placeholder + helper text */}
+  </div>
+
+  {/* Updated tip box with hard + transferable skills examples */}
+</section>
+
+Do not modify any files yet
+
+Do not modify any files yet
+
+First, output your understanding of the current implementation and the requirements, along with your detailed implementation plan as described above.
+
+Remember: do NOT perform any e2e tests for this change—I will manually confirm it in the UI.
+
+Wait for my explicit approval before editing code.
