@@ -2,6 +2,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { ErrorMessage } from "@/components/ui/error-message";
 import { CharacterCountTextarea } from "../CharacterCountTextarea";
+import { OilFrameworkInfo } from "../OilFrameworkInfo";
 import { FormState, FormAction } from "@/lib/formState";
 
 interface Step9QualificationsProps {
@@ -117,6 +118,8 @@ export function Step9Qualifications({
             directly to the employer's needs.
           </p>
         </div>
+
+        <OilFrameworkInfo />
 
         <div className="p-4 rounded-lg bg-muted/50 border border-border">
           <p className="text-sm text-muted-foreground leading-relaxed">

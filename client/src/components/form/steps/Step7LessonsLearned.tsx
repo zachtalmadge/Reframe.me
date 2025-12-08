@@ -1,5 +1,6 @@
 import { Label } from "@/components/ui/label";
 import { CharacterCountTextarea } from "../CharacterCountTextarea";
+import { OilFrameworkInfo } from "../OilFrameworkInfo";
 import { FormState, FormAction } from "@/lib/formState";
 
 interface Step7LessonsLearnedProps {
@@ -38,25 +39,7 @@ export function Step7LessonsLearned({
           </p>
         </div>
 
-        <div className="p-4 rounded-lg bg-muted/50 border border-border space-y-2">
-          <p className="text-sm font-medium text-foreground">
-            O.I.L. Framework
-          </p>
-          <ul className="text-sm text-muted-foreground space-y-1">
-            <li>
-              <span className="font-medium text-muted-foreground">O</span>
-              wnership - Taking responsibility
-            </li>
-            <li>
-              <span className="font-medium text-muted-foreground">I</span>mpact
-              - Understanding consequences
-            </li>
-            <li>
-              <span className="font-medium text-foreground">L</span>essons -
-              What you've learned
-            </li>
-          </ul>
-        </div>
+        <OilFrameworkInfo />
 
         <div className="space-y-3">
           <div className="space-y-1">

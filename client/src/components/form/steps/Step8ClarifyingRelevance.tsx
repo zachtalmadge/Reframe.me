@@ -2,6 +2,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { ErrorMessage } from "@/components/ui/error-message";
 import { CharacterCountTextarea } from "../CharacterCountTextarea";
+import { OilFrameworkInfo } from "../OilFrameworkInfo";
 import { FormState, FormAction } from "@/lib/formState";
 
 interface Step8ClarifyingRelevanceProps {
@@ -96,6 +97,8 @@ export function Step8ClarifyingRelevance({
             you've completed rehabilitation programs.
           </p>
         </div>
+
+        <OilFrameworkInfo />
       </div>
     </div>
   );
