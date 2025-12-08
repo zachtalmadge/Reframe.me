@@ -102,6 +102,66 @@ export function OilFrameworkInfo() {
               </div>
             </div>
 
+            <div className="space-y-1 pt-2">
+              <h3 className="text-base font-semibold text-foreground">
+                Additional Considerations
+              </h3>
+              <p className="text-sm text-muted-foreground">
+                These optional elements can strengthen your letter even further.
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <h4 className="text-sm font-semibold text-foreground">
+                  Clarifying Charge Relevance
+                </h4>
+                <p className="text-sm text-muted-foreground">
+                  If appropriate, address how the charges are unrelated to the
+                  position you're applying for and do not impact your
+                  professional capabilities.
+                </p>
+                <p className="text-sm text-foreground/80 italic pl-4 border-l-2 border-primary/30">
+                  "It is important to note that these charges are not connected
+                  to my professional life in any way, nor do they impact my
+                  ability to perform this job."
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <h4 className="text-sm font-semibold text-foreground">
+                  Reinforcing Qualifications & Interest
+                </h4>
+                <p className="text-sm text-muted-foreground">
+                  Highlight your professional experience, relevant skills, and
+                  genuine interest in the company and the role.
+                </p>
+                <p className="text-sm text-foreground/80 italic pl-4 border-l-2 border-primary/30">
+                  "My professional background includes extensive experience in
+                  this field. I was drawn to this position because of your
+                  company's values and reputation. Given the chance, I'm
+                  confident I can demonstrate my value and commitment."
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <h4 className="text-sm font-semibold text-foreground">
+                  Providing Context (Optional)
+                </h4>
+                <p className="text-sm text-muted-foreground">
+                  If you're comfortable, you may provide context for your
+                  charges to offer more understanding as to why the incident
+                  occurred and why it won't happen again. This is entirely up
+                  to your discretion and comfort.
+                </p>
+                <p className="text-sm text-foreground/80 italic pl-4 border-l-2 border-primary/30">
+                  "Sharing context can sometimes provide deeper insight into
+                  your story and motivations, reinforcing your growth and
+                  future dedication."
+                </p>
+              </div>
+            </div>
+
             <div className="p-3 rounded-lg bg-primary/5 border border-primary/20">
               <p className="text-sm text-foreground">
                 <span className="font-medium">Remember:</span> You only need to
