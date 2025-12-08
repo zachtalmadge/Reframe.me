@@ -7,7 +7,6 @@ import {
   AlertDialogFooter,
   AlertDialogAction,
 } from "@/components/ui/alert-dialog";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Checkbox } from "@/components/ui/checkbox";
 import { disclaimerContent } from "@/lib/disclaimerContent";
 
@@ -42,8 +41,8 @@ export function DisclaimerModal({ open, onContinue }: DisclaimerModalProps) {
           </AlertDialogTitle>
         </AlertDialogHeader>
 
-        <ScrollArea
-          className="flex-1 min-h-0 px-6"
+        <div
+          className="flex-1 min-h-0 overflow-y-auto px-6"
           aria-label="Disclaimer content"
           data-testid="scroll-disclaimer-content"
         >
@@ -58,7 +57,7 @@ export function DisclaimerModal({ open, onContinue }: DisclaimerModalProps) {
                     {section.content}
                   </p>
                 )}
-                {"points" in section && (
+                {"points" in section && section.points && (
                   <ul className="space-y-2 text-sm text-muted-foreground">
                     {section.points.map((point, pointIndex) => (
                       <li
@@ -79,7 +78,7 @@ export function DisclaimerModal({ open, onContinue }: DisclaimerModalProps) {
               </div>
             ))}
           </div>
-        </ScrollArea>
+        </div>
 
         <div className="border-t px-6 py-4 space-y-4">
           <div className="flex items-start gap-3">
