@@ -3,6 +3,7 @@ import { Switch } from "@/components/ui/switch";
 import { ErrorMessage } from "@/components/ui/error-message";
 import { CharacterCountTextarea } from "../CharacterCountTextarea";
 import { OilFrameworkInfo } from "../OilFrameworkInfo";
+import { StepImportanceAlert } from "../StepImportanceAlert";
 import { FormState, FormAction } from "@/lib/formState";
 
 interface Step9QualificationsProps {
@@ -39,6 +40,10 @@ export function Step9Qualifications({
           This helps us highlight why you're the right fit.
         </p>
       </div>
+
+      <StepImportanceAlert>
+        Including your resume and job posting helps us create a more personalized letter that speaks directly to the employer's needs.
+      </StepImportanceAlert>
 
       <div className="space-y-6">
         <div className="flex items-center justify-between gap-4 p-4 rounded-lg bg-muted/50 border border-border">
@@ -110,14 +115,6 @@ export function Step9Qualifications({
             </div>
           </div>
         )}
-
-        <div className="p-4 rounded-lg bg-primary/5 border border-primary/20">
-          <p className="text-sm text-foreground leading-relaxed">
-            <span className="font-medium">Tip:</span> Including your resume and
-            job posting helps us create a more personalized letter that speaks
-            directly to the employer's needs.
-          </p>
-        </div>
 
         <OilFrameworkInfo />
 

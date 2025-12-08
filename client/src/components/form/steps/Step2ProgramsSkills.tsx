@@ -1,6 +1,7 @@
 import { Label } from "@/components/ui/label";
 import { ErrorMessage } from "@/components/ui/error-message";
 import { ChipInput } from "../ChipInput";
+import { StepImportanceAlert } from "../StepImportanceAlert";
 import { FormState, FormAction } from "@/lib/formState";
 
 interface Step2ProgramsSkillsProps {
@@ -41,6 +42,10 @@ export function Step2ProgramsSkills({
         </p>
       </div>
 
+      <StepImportanceAlert>
+        Think about both technical skills (like computer skills, trades, certifications) and transferable skills (like staying calm under pressure, being dependable, or helping others). These are strengths employers value!
+      </StepImportanceAlert>
+
       <div className="space-y-6">
         <div className="space-y-3">
           <div className="space-y-1">
@@ -80,14 +85,6 @@ export function Step2ProgramsSkills({
             helperText="Type a skill and press Enter or tap 'Add'. Think about things like patience, staying organized, or being dependable."
             data-testid="chip-input-skills"
           />
-        </div>
-
-        <div className="p-4 rounded-lg bg-primary/5 border border-primary/20">
-          <p className="text-sm text-foreground leading-relaxed">
-            <span className="font-medium">Tip:</span> Think about both technical skills
-            (like computer skills, trades, certifications) and transferable skills (like
-            staying calm under pressure, being dependable, or helping others). These are strengths employers value!
-          </p>
         </div>
 
         <ErrorMessage message={errors.programsSkills} data-testid="error-programs-skills" />

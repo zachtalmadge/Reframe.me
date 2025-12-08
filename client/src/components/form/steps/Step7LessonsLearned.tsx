@@ -1,6 +1,7 @@
 import { Label } from "@/components/ui/label";
 import { CharacterCountTextarea } from "../CharacterCountTextarea";
 import { OilFrameworkInfo } from "../OilFrameworkInfo";
+import { StepImportanceAlert } from "../StepImportanceAlert";
 import { FormState, FormAction } from "@/lib/formState";
 
 interface Step7LessonsLearnedProps {
@@ -29,16 +30,11 @@ export function Step7LessonsLearned({
         </p>
       </div>
 
-      <div className="space-y-6">
-        <div className="p-4 rounded-lg bg-primary/5 border border-primary/20">
-          <p className="text-sm text-foreground leading-relaxed">
-            <span className="font-medium">We'll highlight your growth.</span>{" "}
-            Based on the programs, skills, and experiences you've shared, our 
-            tool will write about your personal development and the positive 
-            steps you've taken.
-          </p>
-        </div>
+      <StepImportanceAlert>
+        Based on the programs, skills, and experiences you've shared, our tool will write about your personal development and the positive steps you've taken.
+      </StepImportanceAlert>
 
+      <div className="space-y-6">
         <OilFrameworkInfo />
 
         <div className="space-y-3">
