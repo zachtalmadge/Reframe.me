@@ -1,0 +1,376 @@
+Continue working in the same JavaScript (NOT TypeScript) + React + Tailwind CSS, mobile-first project.
+The app has a Unified Multi-Step Form that sends data to POST /api/generate-documents to generate:
+
+Disclosure narratives
+
+Pre-adverse action response letter
+
+After a successful generation:
+
+The app navigates to /results to show narratives and/or the letter.
+
+The form data is cleared (so if the user went “back” to the form, it would be empty).
+
+On the Results page, the user can:
+
+Regenerate a specific narrative (up to 3 times).
+
+Regenerate the pre-adverse letter (up to 3 times).
+
+Bug:
+When the user clicks to regenerate narratives or the response letter, they get an error along the lines of:
+
+“The form data is no longer available”
+
+This suggests the regeneration logic is still trying to rely on the original form data, which has been cleared after the first successful run.
+
+Important for this fix:
+For this change, DO NOT perform any end-to-end (e2e) tests or automated full-flow testing.
+You may do local/component-level checks only (e.g., unit tests or manual clicking).
+I will manually verify behavior in the UI.
+
+Business requirement – Regeneration must work even after form data is cleared
+
+Update the regeneration flow so that:
+
+Regeneration works from the Results page even though the original form state has been cleared after the first successful generation.
+
+Both:
+
+Narrative regeneration, and
+
+Pre-adverse letter regeneration
+work without throwing a “form data is no longer available” error.
+
+Regeneration calls should reuse the same underlying generation inputs that were used for the first run, but:
+
+Those inputs should be stored in a way that is scoped to the current result set/session only (respecting the privacy-first, no-long-term-storage constraints).
+
+They must be cleared when the user starts over or leaves the results flow (e.g., via “Start Over”).
+
+Existing limits and behavior must remain:
+
+Max 3 regenerations per narrative.
+
+Max 3 regenerations for the pre-adverse letter.
+
+Once a limit is hit, the Regenerate button is disabled and shows the tooltip about copying to another tool / working with a trusted advisor.
+
+The error “form data is no longer available” should:
+
+Not appear during normal use on the /results page after a successful generation.
+
+Be reserved only for truly invalid situations (e.g., if someone somehow lands on /results with no result context at all).
+
+Acceptance criteria (Given / When / Then)
+Scenario: Regenerate narratives successfully after initial run
+
+Given the user has:
+
+Completed the multi-step form,
+
+Successfully generated narratives (with or without the letter), and
+
+Is now on the /results page viewing a narrative.
+
+When the user clicks Regenerate on a specific narrative (before hitting the 3x limit)
+
+Then:
+
+A regeneration request is sent successfully using the same underlying generation inputs as the original run (plus any necessary selection info).
+
+No “form data is no longer available” error is shown.
+
+The regenerated narrative replaces or updates the relevant narrative card as designed.
+
+The regeneration count increases for that narrative, respecting the 3x limit.
+
+Scenario: Regenerate pre-adverse letter successfully after initial run
+
+Given the user has:
+
+Completed the form including the letter-related steps (OIL, optional resume/job posting, etc.),
+
+Successfully generated the pre-adverse action letter, and
+
+Is on the /results page viewing the letter.
+
+When the user clicks Regenerate on the letter (before hitting the 3x limit)
+
+Then:
+
+A regeneration request is sent successfully using the same underlying generation inputs as the original run (including any resume/job posting text if provided).
+
+No “form data is no longer available” error is shown.
+
+The regenerated letter appears as expected, and the regeneration count for the letter is updated.
+
+Scenario: Regeneration still respects 3x limits
+
+Given the user regenerates a specific narrative or letter up to 3 times
+
+When they attempt a 4th regeneration for that same document
+
+Then:
+
+The Regenerate button is disabled for that item.
+
+The tooltip about copying into another tool / working with a trusted advisor still appears.
+
+No extra errors related to missing form data are shown.
+
+Scenario: Start Over clears regeneration context
+
+Given the user is on /results with narratives/letter and has a regeneration context stored
+
+When they click Start Over
+
+Then:
+
+The app behaves as before (returns them to the beginning of the flow).
+
+Any stored generation input context for that result set is cleared.
+
+If they later regenerate in a new run, it uses the new inputs, not the old ones.
+
+Scenario: True missing data case (edge)
+
+Given an edge case (e.g., the user somehow hits /results without going through a valid generation, or the stored context was cleared)
+
+When they try to use Regenerate
+
+Then:
+
+Either:
+
+They are gently redirected to start over, or
+
+A clear, user-facing message explains that they need to go through the questions again.
+
+Any internal “form data is no longer available” error is not thrown at them as a raw, confusing error string.
+
+What I want you (Replit AI) to do
+
+Assess the current regeneration implementation
+
+Locate the components and functions that handle Regenerate for:
+
+Narratives (likely a handler per narrative card).
+
+Pre-adverse letter.
+
+Identify:
+
+How regeneration currently constructs the payload for POST /api/generate-documents (or any other regeneration endpoint).
+
+Where it is pulling the input data from (likely from a form context, React state, or something like formData that is now cleared).
+
+Where the “form data is no longer available” error is thrown or surfaced.
+
+Describe your understanding of the requirements
+
+In your own words, explain that you need to:
+
+Make regeneration independent from the multi-step form’s live state once the user is on /results.
+
+Ensure that the same structured generation inputs used in the initial run are available to the regeneration logic on the Results page, even though the form has been cleared.
+
+Keep those inputs scoped to the current result set and clear them when the user starts over, to respect privacy and avoid long-term storage.
+
+Identify key considerations to avoid disrupting existing functionality
+
+Ensure that:
+
+You do not break initial generation behavior (Loading screen, /api/generate-documents call, error handling, disclaimer modal, navigation to /results).
+
+The regeneration limit logic (3x per narrative, 3x per letter) still works and persists the counts as before.
+
+You respect the existing privacy constraints:
+
+No unexpected long-term storage beyond what is already allowed for results/regeneration in this session.
+
+Any stored “generation context” is removed when the user clicks Start Over or otherwise leaves the run.
+
+Propose best-practice implementation details
+
+Introduce a clear concept of a “generation context” or “generation payload” that is derived from the form data before you clear the form state after the initial run. For example:
+
+// Pseudocode idea
+const generationPayload = {
+  selection,      // narratives / letter / both
+  offenses,
+  programs,
+  skills,
+  additionalContext,
+  oilInputs,
+  clarifyingRelevance,
+  resumeText,     // if provided
+  jobPostingText, // if provided
+  // ...whatever else the prompt builder uses
+};
+
+
+When initial generation succeeds:
+
+Store this generationPayload in a Results-level state or context that is:
+
+Accessible to the Results page and regeneration handlers.
+
+Cleared when the user starts over.
+
+You might:
+
+Pass it via router state, or
+
+Store it in a dedicated ResultsContext, or
+
+Store it in a separate piece of state in whatever provider already holds the results & regeneration counts.
+
+Update the regeneration handlers to:
+
+Use this generationPayload instead of live formData / form context.
+
+Attach any additional parameters needed (e.g., which narrative index to tweak, or that it’s a letter regeneration).
+
+If a regeneration handler cannot find a valid generationPayload (e.g., undefined or null):
+
+Handle it gracefully:
+
+Either show a user-friendly message and prompt to start over, or
+
+Redirect them back to Home/Selection.
+
+Do not surface raw “form data is no longer available” errors.
+
+Assess other best practices
+
+Data modeling:
+
+Keep the “generationPayload” as a minimal but complete object: just what the backend prompt builder needs.
+
+Avoid storing unnecessary or sensitive extras (e.g., don’t stash entire internal form states if not needed).
+
+Error handling:
+
+Make sure that if /api/generate-documents fails during regeneration, the existing inline error handling still works (e.g., showing a message near the Regenerate button).
+
+Maintainability:
+
+Consider centralizing the logic that builds the payload for /api/generate-documents so both initial generation and regeneration use the same builder function, reducing drift.
+
+Generate a step-by-step implementation plan
+
+At a minimum include:
+
+Find where the initial POST /api/generate-documents payload is built from formData on the Loading screen / form submit.
+
+Extract that payload-building logic into a reusable function (e.g., buildGenerationPayload(formData, selection)), if it isn’t already.
+
+Before clearing the form data after a successful initial generation:
+
+Construct a generationPayload.
+
+Store it in a location accessible to the Results page and regeneration handlers (e.g., context, state passed via navigate, or a dedicated results store).
+
+Update the Results page regeneration handlers for:
+
+Narrative regeneration.
+
+Letter regeneration.
+So that they:
+
+Read the stored generationPayload.
+
+Call the same /api/generate-documents (or specific regeneration endpoint) using that payload plus any “target” flags (e.g., narrative index vs letter).
+
+Ensure that when Start Over is clicked:
+
+Any stored generationPayload and regeneration counts are cleared.
+
+Any routes or contexts are reset as currently designed.
+
+Remove or update the code path that throws “form data is no longer available” so it:
+
+Is not triggered in normal regeneration use.
+
+Only appears (if at all) in a controlled, user-friendly way in true edge cases.
+
+Keep the scope limited
+
+Do not:
+
+Change the questions, OIL copy, or form structure.
+
+Change the overall /api/generate-documents prompt logic, tone, or structure.
+
+Alter the 3x regeneration limit behavior.
+
+Only:
+
+Fix the regeneration bug by ensuring the generation inputs are available on the Results page without depending on live form state.
+
+Improve the error handling around missing generation context.
+
+Propose a skeleton framework
+
+You don’t need to match names exactly, but something like:
+
+// Example: top-level generation context shape
+const GenerationContext = createContext(null);
+
+function GenerationProvider({ children }) {
+  const [generationPayload, setGenerationPayload] = useState(null);
+  const [results, setResults] = useState(null);
+  const [regenCounts, setRegenCounts] = useState(/* existing logic */);
+
+  const value = {
+    generationPayload,
+    setGenerationPayload,
+    results,
+    setResults,
+    regenCounts,
+    setRegenCounts,
+  };
+
+  return (
+    <GenerationContext.Provider value={value}>
+      {children}
+    </GenerationContext.Provider>
+  );
+}
+
+// Initial generation (e.g., after form submit on /loading)
+const payload = buildGenerationPayload(formData, selection);
+setGenerationPayload(payload);
+const result = await generateDocuments(payload);
+setResults(result);
+// clear form data here
+
+// On Results page, regenerate narrative
+const { generationPayload } = useContext(GenerationContext);
+
+async function handleRegenerateNarrative(index) {
+  if (!generationPayload) {
+    // graceful fallback: show message / redirect
+    return;
+  }
+
+  await regenerateDocuments({
+    ...generationPayload,
+    target: "narrative",
+    narrativeIndex: index,
+  });
+}
+
+
+Adapt this idea to your actual state management and components; the key is: regeneration uses a stored, sanitized payload, not the now-cleared form state.
+
+Do not run e2e tests
+
+For this prompt:
+
+You may update the Loading / Results / shared context code and any helper functions.
+
+You may perform manual or component-level checks only.
+
+Do NOT run or modify end-to-end (e2e) test suites; I will manually verify the fix in the UI.

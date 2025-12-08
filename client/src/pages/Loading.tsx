@@ -127,7 +127,6 @@ export default function Loading() {
       }
 
       saveResults(result, tool);
-      clearFormData();
       
       setGenerationState((prev) => ({
         ...prev,
