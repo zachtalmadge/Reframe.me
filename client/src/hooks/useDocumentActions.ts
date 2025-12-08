@@ -5,6 +5,7 @@ import {
   buildSingleNarrativePdf,
   buildAllNarrativesPdf,
   buildLetterPdf,
+  buildAllDocumentsPdf,
   downloadPdf,
 } from "@/lib/pdfUtils";
 
@@ -102,11 +103,11 @@ export function useDocumentActions() {
 
   const handleDownloadAll = useCallback((narratives: NarrativeItem[], letter: ResponseLetter | null) => {
     try {
-      const doc = buildAllNarrativesPdf(narratives);
-      downloadPdf(doc, "reflectme-documents.pdf");
+      const doc = buildAllDocumentsPdf(narratives, letter);
+      downloadPdf(doc, "reframe-all-documents.pdf");
       toast({
         title: "Download started",
-        description: "reflectme-documents.pdf is being downloaded.",
+        description: "reframe-all-documents.pdf is being downloaded.",
       });
     } catch (err) {
       toast({

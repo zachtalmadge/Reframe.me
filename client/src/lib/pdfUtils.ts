@@ -132,6 +132,87 @@ export function buildLetterPdf(letter: ResponseLetter): jsPDF {
   return doc;
 }
 
+export function buildAllDocumentsPdf(
+  narratives: NarrativeItem[],
+  letter: ResponseLetter | null
+): jsPDF {
+  const doc = new jsPDF();
+  let y = MARGIN;
+
+  // Narratives section
+  if (narratives.length > 0) {
+    doc.setFontSize(HEADING_SIZE + 2);
+    doc.setFont("helvetica", "bold");
+    y = addWrappedText(
+      doc,
+      "Disclosure Narratives",
+      MARGIN,
+      y,
+      CONTENT_WIDTH,
+      LINE_HEIGHT + 2
+    );
+    y += 10;
+
+    narratives.forEach((narrative, index) => {
+      const label =
+        narrative.title ||
+        narrativeTypeLabels[narrative.type] ||
+        `Narrative ${index + 1}`;
+
+      if (y > PAGE_HEIGHT - 60) {
+        doc.addPage();
+        y = MARGIN;
+      }
+
+      doc.setFontSize(HEADING_SIZE - 2);
+      doc.setFont("helvetica", "bold");
+      y = addWrappedText(
+        doc,
+        `${index + 1}. ${label}`,
+        MARGIN,
+        y,
+        CONTENT_WIDTH,
+        LINE_HEIGHT + 1
+      );
+      y += 3;
+
+      doc.setFontSize(BODY_SIZE);
+      doc.setFont("helvetica", "normal");
+      y = addWrappedText(
+        doc,
+        narrative.content,
+        MARGIN,
+        y,
+        CONTENT_WIDTH,
+        LINE_HEIGHT
+      );
+      y += 15;
+    });
+  }
+
+  // Letter section
+  if (letter) {
+    // Add page break before letter if there are narratives
+    if (narratives.length > 0) {
+      doc.addPage();
+      y = MARGIN;
+    }
+
+    const title = letter.title || "Pre-Adverse Action Response Letter";
+
+    doc.setFontSize(HEADING_SIZE + 2);
+    doc.setFont("helvetica", "bold");
+    y = addWrappedText(doc, title, MARGIN, y, CONTENT_WIDTH, LINE_HEIGHT + 2);
+    y += 10;
+
+    doc.setFontSize(BODY_SIZE);
+    doc.setFont("helvetica", "normal");
+    addWrappedText(doc, letter.content, MARGIN, y, CONTENT_WIDTH, LINE_HEIGHT);
+  }
+
+  return doc;
+}
+
 export function downloadPdf(doc: jsPDF, filename: string): void {
   doc.save(filename);
 }
