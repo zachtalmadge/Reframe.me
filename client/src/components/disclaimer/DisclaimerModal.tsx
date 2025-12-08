@@ -28,7 +28,7 @@ export function DisclaimerModal({ open, onContinue }: DisclaimerModalProps) {
   return (
     <AlertDialog open={open}>
       <AlertDialogContent
-        className="max-w-lg max-h-[85vh] flex flex-col gap-0 p-0"
+        className="max-w-lg max-h-[85vh] overflow-hidden flex flex-col gap-0 p-0"
         onEscapeKeyDown={(e) => e.preventDefault()}
         onPointerDownOutside={(e) => e.preventDefault()}
         data-testid="modal-disclaimer"
@@ -43,7 +43,7 @@ export function DisclaimerModal({ open, onContinue }: DisclaimerModalProps) {
         </AlertDialogHeader>
 
         <ScrollArea
-          className="flex-1 px-6"
+          className="flex-1 min-h-0 px-6"
           aria-label="Disclaimer content"
           data-testid="scroll-disclaimer-content"
         >
