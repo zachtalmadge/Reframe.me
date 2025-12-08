@@ -1,6 +1,7 @@
 import { Label } from "@/components/ui/label";
 import { CharacterCountTextarea } from "../CharacterCountTextarea";
 import { OilFrameworkInfo } from "../OilFrameworkInfo";
+import { StepImportanceAlert } from "../StepImportanceAlert";
 import { FormState, FormAction } from "@/lib/formState";
 
 interface Step6ImpactProps {
@@ -24,16 +25,11 @@ export function Step6Impact({ state, dispatch }: Step6ImpactProps) {
         </p>
       </div>
 
-      <div className="space-y-6">
-        <div className="p-4 rounded-lg bg-primary/5 border border-primary/20">
-          <p className="text-sm text-foreground leading-relaxed">
-            <span className="font-medium">We'll write this for you.</span>{" "}
-            Using the information you've already shared, our tool will craft 
-            language that shows awareness and understanding of consequences 
-            in a thoughtful way.
-          </p>
-        </div>
+      <StepImportanceAlert>
+        Using the information you've already shared, our tool will craft language that shows awareness and understanding of consequences in a thoughtful way.
+      </StepImportanceAlert>
 
+      <div className="space-y-6">
         <OilFrameworkInfo />
 
         <div className="space-y-3">

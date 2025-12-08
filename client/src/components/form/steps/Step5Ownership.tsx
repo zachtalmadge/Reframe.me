@@ -1,6 +1,7 @@
 import { Label } from "@/components/ui/label";
 import { CharacterCountTextarea } from "../CharacterCountTextarea";
 import { OilFrameworkInfo } from "../OilFrameworkInfo";
+import { StepImportanceAlert } from "../StepImportanceAlert";
 import { FormState, FormAction } from "@/lib/formState";
 
 interface Step5OwnershipProps {
@@ -28,16 +29,11 @@ export function Step5Ownership({
         </p>
       </div>
 
-      <div className="space-y-6">
-        <div className="p-4 rounded-lg bg-primary/5 border border-primary/20">
-          <p className="text-sm text-foreground leading-relaxed">
-            <span className="font-medium">We've got this covered.</span>{" "}
-            Based on everything you've already shared, our tool will write this 
-            part for you. The language will be honest, direct, and show that you 
-            accept responsibility without making excuses.
-          </p>
-        </div>
+      <StepImportanceAlert>
+        Based on everything you've already shared, our tool will write this part for you. The language will be honest, direct, and show that you accept responsibility without making excuses.
+      </StepImportanceAlert>
 
+      <div className="space-y-6">
         <OilFrameworkInfo />
 
         <div className="space-y-3">
