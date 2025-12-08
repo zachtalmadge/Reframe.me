@@ -76,7 +76,7 @@ export function Step2ProgramsSkills({
             chips={state.skills}
             onAdd={handleAddSkill}
             onRemove={handleRemoveSkill}
-            placeholder="e.g., staying focused, working well with different kinds of people, solving problems"
+            placeholder="e.g., computer skills, forklift certified, staying focused, working well with others"
             helperText="Type a skill and press Enter or tap 'Add'. Think about things like patience, staying organized, or being dependable."
             data-testid="chip-input-skills"
           />
