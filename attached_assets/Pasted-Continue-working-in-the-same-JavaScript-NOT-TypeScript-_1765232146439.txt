@@ -1,0 +1,694 @@
+Continue working in the same JavaScript (NOT TypeScript) + React + Tailwind CSS, mobile-first project.
+The Results page currently lets users download a single narrative, all narratives, or the pre-adverse action letter as a .txt file via a client-side download, using the same Download button text across these actions. I want to switch this behavior so that downloads are generated client-side as PDFs only, with no more .txt files. When downloading a single narrative, the PDF should include the narrative type as a heading above the narrative text. When downloading all narratives, they should appear one after another with clear headings, and this “download all” behavior must always use the latest versions of narratives (including any that have been regenerated after an earlier download). Download button text should remain unchanged; only the underlying behavior and file format should change.
+
+Important for this change:
+For this change, DO NOT perform any end-to-end (e2e) tests or automated full-flow testing.
+You may do local/component-level checks only. I will manually confirm behavior in the UI.
+
+Do not make any code changes yet. First, assess the current implementation, describe your understanding, identify key considerations, and propose a step-by-step plan. Wait for my explicit approval before editing any files.
+
+Business requirement – Switch downloads to client-side PDFs only (always using current narratives/letter)
+
+Current behavior
+
+On the Results page:
+
+Users can Copy a single narrative, all narratives, or the pre-adverse letter to the clipboard.
+
+Users can Download:
+
+A single narrative as a .txt file.
+
+All narratives as a .txt file.
+
+The pre-adverse action response letter as a .txt file.
+
+The Download button text is generic (e.g., “Download”) and does not explicitly mention .txt in the label.
+
+Download implementation likely:
+
+Builds a string from the narrative(s)/letter.
+
+Wraps it in a Blob with type: "text/plain".
+
+Uses URL.createObjectURL() and a hidden <a> element to trigger download.
+
+PDF downloads are not currently supported.
+
+Desired behavior
+
+Replace .txt file downloads with client-side generated PDF files only (no .txt option anywhere in the UI).
+
+Keep the Download button text content unchanged (e.g., still just “Download”).
+
+For single narrative download:
+
+The resulting PDF file should:
+
+Include the narrative type as a heading at the top (e.g., “Phone Screening Narrative”, “Short Interview Narrative”, etc., using whatever label is already used in the UI).
+
+Include that narrative’s content below the heading.
+
+For “Download all narratives”:
+
+The resulting PDF file should:
+
+Contain all narratives in the current in-memory state (including any that have been regenerated since a previous download).
+
+Use a clear heading for each narrative (e.g., “Narrative 1 – [Type]”, “Narrative 2 – [Type]”, or the existing UI labels).
+
+Flow narratives one after another, separated with headings and spacing (no weird blending of narratives).
+
+For the pre-adverse action response letter download:
+
+The resulting PDF file should:
+
+Include a suitable heading (e.g., “Pre-Adverse Action Response Letter”).
+
+Include the full letter text below.
+
+PDFs should be:
+
+Text-based (not images) so users can still copy/paste and screen readers can access the content.
+
+Generated entirely in the browser (client-side) from content already available in the Results page state/context.
+
+Copy actions remain unchanged and continue to give users raw text that they can paste elsewhere.
+
+“Download all narratives” should always reflect the latest narratives, even if the user:
+
+Downloads them once,
+
+Then regenerates some of them,
+
+Then downloads all narratives again.
+
+Constraints
+
+No server-side PDF generation; PDF creation must happen client-side.
+
+No new persistent storage of user content; data must remain in memory only for the current run.
+
+Respect existing privacy and trauma-aware constraints.
+
+Do not change the visual layout of the Results cards/buttons except where necessary to wire in the new behavior.
+
+Do not introduce new download formats besides PDF.
+
+Acceptance criteria (Given / When / Then)
+Scenario: Single narrative download produces a PDF with a heading
+
+Given the user is on the Results page and viewing a narrative (Narratives mode active via the existing toggle)
+
+And there is at least one generated narrative
+
+When the user clicks the Download button on a single narrative card
+
+Then the browser should download a .pdf file (not .txt)
+
+And the filename should have a .pdf extension (e.g., reframe-narrative-1.pdf)
+
+And when opened, the PDF should show:
+
+A clear heading containing the narrative type (e.g., “Phone Interview Narrative” or whatever label is present on that card)
+
+The full narrative text below that heading.
+
+Scenario: “Download all narratives” produces a PDF with multiple headings
+
+Given the user is on the Results page, Narratives mode is active, and multiple narratives have been generated
+
+When the user chooses the “Download all narratives” action
+
+Then the browser should download a .pdf file
+
+And when opened, the PDF should:
+
+Include all narratives in a single document.
+
+Use a clear heading for each narrative in order (e.g., “Narrative 1 – [Type]”, “Narrative 2 – [Type]”, or the existing UI labels).
+
+Separate narratives visually (spacing and/or page breaks) so each one is easy to distinguish.
+
+Scenario: “Download all narratives” reflects regenerated narratives
+
+Given the user has generated multiple narratives and is on the Results page
+
+And they click “Download all narratives” and successfully download a PDF
+
+And after that, they regenerate one or more individual narratives (within the existing regeneration limits)
+
+When they click “Download all narratives” again
+
+Then the new PDF should include the updated text for any narratives that were regenerated
+
+And any narratives that were not regenerated should remain as before
+
+And the order and headings of narratives in the PDF should still match the current state shown in the UI.
+
+Scenario: Pre-adverse action letter downloads as a PDF with a heading
+
+Given the user is on the Results page and the Letter mode is active (via the main toggle), and a pre-adverse action response letter exists
+
+When the user clicks the Download button on the letter card
+
+Then the browser should download a .pdf file
+
+And when opened, the PDF should:
+
+Include a heading such as “Pre-Adverse Action Response Letter”
+
+Include the full letter content below that heading.
+
+Scenario: Download button labels remain unchanged
+
+Given the user is on the Results page
+
+When the page renders
+
+Then the Download buttons on narrative/letter cards should have the same text labels as before (e.g., “Download”)
+
+And there should be no visible reference to .txt or “PDF” in the button text itself (unless currently present in the design—do not add it).
+
+Scenario: There is no way to download .txt files anymore
+
+Given the user has completed a generation and is on the Results page
+
+When they look at the card actions and any secondary menus related to downloading
+
+Then they should not see any option to download .txt files
+
+And any existing .txt-specific logic should be removed or replaced with PDF logic.
+
+Scenario: Copy behavior remains unchanged
+
+Given the user is on the Results page
+
+When they click the Copy button for a narrative, all narratives, or the letter
+
+Then the existing Copy behavior should remain unchanged (same text copied as before)
+
+And the new PDF behavior should not alter the Clipboard behavior at all.
+
+Scenario: No regression in regeneration or result clearing logic
+
+Given the user has generated narratives and/or a letter
+
+When they regenerate content or click “Start Over”
+
+Then all existing logic for clearing results, generation payload, and regen counts should work exactly as before
+
+And no new state introduced for PDF generation should prevent or delay clearing data when a run ends.
+
+What I want you (Replit AI) to do
+1. Assess the current implementation
+
+Locate the Results page component(s) responsible for:
+
+Rendering narrative cards and the letter card.
+
+Rendering the Copy, Download, and Regenerate buttons.
+
+Identify the current download handlers:
+
+The functions that are invoked when:
+
+Downloading a single narrative.
+
+Downloading all narratives.
+
+Downloading the pre-adverse letter.
+
+How they construct the .txt content (single string, concatenation with separators, etc.).
+
+How they create and trigger the .txt file download (Blob creation, object URL, <a> click).
+
+Determine where narrative type/labels are stored:
+
+On each narrative card object in state (e.g., narrative.type, narrative.title).
+
+How those types are rendered in the UI (e.g., card headings).
+
+Confirm that:
+
+The Download button text is generic and does not need to change.
+
+Copy behavior is implemented separately and can be left as-is.
+
+Confirm where the current narratives list and letter text live (state/context), and how regenerated narratives update that state so that “Download all narratives” can always read from the latest data.
+
+2. Describe your understanding of the requirements
+
+In your own words, restate that you will:
+
+Replace .txt downloads with client-side generated PDF files only (no .txt anywhere in the flow).
+
+Keep the Download button text exactly the same as it is now.
+
+For a single narrative:
+
+Generate a PDF with that narrative’s type as a heading and its content as the body.
+
+For all narratives:
+
+Generate a PDF that includes each narrative from the current state/context, using headings for each narrative and ensuring the document always reflects the latest regenerated versions.
+
+For the pre-adverse letter:
+
+Generate a PDF with a heading like “Pre-Adverse Action Response Letter” and the letter body below.
+
+Keep Copy and all other behaviors unchanged.
+
+Ensure “Download all narratives” always uses the current in-memory narratives array (including post-regeneration changes).
+
+3. Identify key considerations / risks
+
+Library choice & bundle size
+
+Choose a client-side PDF library (e.g., pdf-lib, jsPDF, etc.) that:
+
+Works well in browser-only, React environments.
+
+Doesn’t excessively bloat the bundle.
+
+Formatting & readability
+
+Ensure:
+
+Reasonable margins, font sizes, and line wrapping.
+
+Headings are visually distinct from body text.
+
+Multi-narrative PDFs separate sections clearly (spacing and/or page breaks).
+
+Always using current state
+
+Confirm that:
+
+All “Download all narratives” operations use the current narratives list from state/context, which is updated whenever a narrative is regenerated.
+
+No stale copies of narratives are stored in closures or helper functions that could cause outdated content to appear in the PDF after regenerations.
+
+Accessibility & text-based PDFs
+
+Generate text-based PDFs (not images) to:
+
+Keep content selectable/copyable.
+
+Support screen readers where possible.
+
+Privacy & state
+
+Do not persist PDFs or raw text anywhere beyond the user’s session.
+
+Do not introduce any long-term storage (no localStorage/sessionStorage for document content).
+
+Error handling
+
+If PDF generation fails:
+
+Show a gentle error message (aligned with trauma-aware tone).
+
+Do not crash the Results page.
+
+No regression
+
+Ensure:
+
+Regenerate limits (max 3 per narrative/letter) still work.
+
+“Start Over” still clears everything (including any transient PDF state).
+
+The Results toggle (Narratives/Letter) and “How to use what you just got” sync still behave correctly.
+
+4. Propose best-practice implementation details
+
+Suggest adding a PDF utility module, e.g., pdfUtils.js, with:
+
+buildSingleNarrativePdf(narrative) – returns a Blob-compatible PDF binary for one narrative.
+
+buildAllNarrativesPdf(narratives) – returns a PDF binary for all narratives.
+
+buildLetterPdf(letter) – returns a PDF binary for the pre-adverse letter.
+
+Inside each helper:
+
+Create a new PDF document instance using the chosen library.
+
+Add:
+
+A heading text (narrative type or letter title) in a slightly larger/bold font.
+
+Narrative/letter body paragraphs with standard font and line spacing.
+
+For “all narratives”:
+
+Loop through the current narratives array in order as provided by the Results state/context.
+
+For each one:
+
+Add a heading such as Narrative ${index + 1} – ${narrative.type} (or the appropriate label).
+
+Add the body text.
+
+Optionally insert a page break or extra vertical spacing between narratives, depending on length.
+
+Explicitly note that:
+
+buildAllNarrativesPdf(narratives) must always be called with the current narratives array from state/context (the same source that powers the UI), so that any regenerated narratives are automatically reflected in the next “Download all narratives” PDF.
+
+In the Results card handlers:
+
+Replace the .txt-oriented download logic with:
+
+A call to the appropriate build...Pdf helper.
+
+Creation of a Blob from the returned PDF binary with type: "application/pdf".
+
+A generic triggerFileDownload(blob, filename) function that:
+
+Uses URL.createObjectURL.
+
+Creates and clicks a temporary <a> with download="filename.pdf".
+
+Calls URL.revokeObjectURL afterwards.
+
+Keep button labels unchanged:
+
+Only alter the internals of the onClick handlers for Download.
+
+Filename suggestions:
+
+Single narrative: reframe-narrative-{index + 1}.pdf or reframe-narrative-{slugified-type}.pdf.
+
+All narratives: reframe-narratives.pdf.
+
+Letter: reframe-pre-adverse-letter.pdf.
+
+5. Generate a step-by-step implementation plan
+
+Provide a detailed plan, for example:
+
+Review existing Results page download logic
+
+Open the Results page component and any subcomponents for narrative and letter cards.
+
+Identify the functions currently used to:
+
+Compose .txt content for single narrative, all narratives, and the letter.
+
+Trigger the .txt download (Blob + object URL).
+
+Identify where the current narratives array and letter text are read from (state/context).
+
+Choose and import a client-side PDF library
+
+Decide on a PDF library (e.g., pdf-lib or jsPDF) suitable for browser-only use.
+
+Add it as a dependency and import it into a new utility file (e.g., src/utils/pdfUtils.js).
+
+Implement PDF-building helpers
+
+In pdfUtils.js, implement:
+
+buildSingleNarrativePdf(narrative) to produce a PDF with:
+
+A heading based on the narrative type.
+
+The narrative content as body text.
+
+buildAllNarrativesPdf(narratives) to produce a PDF with:
+
+A loop over the current narratives array (as provided at call time).
+
+Headings + body text for each narrative.
+
+Clear separation between narratives (spacing/page breaks).
+
+buildLetterPdf(letter) to produce a PDF with:
+
+A heading “Pre-Adverse Action Response Letter”.
+
+The letter content as body text.
+
+Ensure each function returns a format that can be wrapped in a Blob (e.g., Uint8Array or ArrayBuffer).
+
+Create a generic download helper
+
+Implement a utility function (e.g., triggerPdfDownload(pdfBytes, filename)) that:
+
+Wraps the PDF bytes in a Blob with type: "application/pdf".
+
+Creates an object URL and temporary <a> element.
+
+Sets a.download = filename.
+
+Programmatically clicks it.
+
+Cleans up the object URL.
+
+Wire the helpers into Results card actions
+
+For single narrative Download:
+
+Replace .txt logic with a call to buildSingleNarrativePdf(narrative) followed by triggerPdfDownload.
+
+For Download all narratives:
+
+Read the current narratives list from the same state/context used to render the cards (this ensures regenerated narratives are included).
+
+Call buildAllNarrativesPdf(currentNarratives) and then triggerPdfDownload.
+
+For the pre-adverse letter:
+
+Replace .txt logic with buildLetterPdf(letterText) + triggerPdfDownload.
+
+Ensure button labels and positions remain unchanged.
+
+Remove or refactor .txt-specific code
+
+Remove any redundant .txt helper functions or MIME types.
+
+Confirm there are no remaining references to .txt downloads in the codebase.
+
+Perform local/component-level checks
+
+Run the app locally.
+
+Generate sample narratives and a letter.
+
+Test:
+
+Single narrative Download → PDF with correct heading + body.
+
+Download all narratives → PDF with all narratives, correct headings/order.
+
+Regenerate one or more narratives, then Download all again → PDF shows updated content.
+
+Pre-adverse letter Download → PDF with correct heading + body.
+
+Confirm Copy still works exactly as before.
+
+Confirm regeneration and Start Over behavior are unchanged.
+
+Keep the scope limited
+
+For this prompt, you must NOT:
+
+Change any Copy behavior or labels.
+
+Modify regeneration logic, limits, or error handling.
+
+Alter how narratives or the letter are generated via the OpenAI API.
+
+Change the Results toggle behavior or the “How to use what you just got” section.
+
+Modify the hero, Selection, form steps, or loading screen.
+
+Add new download formats (e.g., .docx); we are moving to PDF only.
+
+Skeleton framework / code snippet (required – example only)
+
+Note: This is an illustrative example only. You must align it with the actual components, state, and chosen PDF library in the codebase before editing any files.
+
+// src/utils/pdfUtils.js (example using pdf-lib)
+import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
+
+export async function buildSingleNarrativePdf(narrative) {
+  const doc = await PDFDocument.create();
+  const page = doc.addPage();
+  const { width, height } = page.getSize();
+
+  const font = await doc.embedFont(StandardFonts.Helvetica);
+  const fontSizeHeading = 16;
+  const fontSizeBody = 12;
+  const margin = 50;
+
+  const heading = narrative.type || "Narrative";
+  const text = narrative.content || "";
+
+  // Heading
+  page.drawText(heading, {
+    x: margin,
+    y: height - margin - fontSizeHeading,
+    size: fontSizeHeading,
+    font,
+    color: rgb(0, 0, 0),
+  });
+
+  const bodyYStart = height - margin - fontSizeHeading - 24;
+  page.drawText(text, {
+    x: margin,
+    y: bodyYStart,
+    size: fontSizeBody,
+    font,
+    color: rgb(0, 0, 0),
+    maxWidth: width - margin * 2,
+    lineHeight: 16,
+  });
+
+  const pdfBytes = await doc.save();
+  return pdfBytes;
+}
+
+export async function buildAllNarrativesPdf(narratives) {
+  const doc = await PDFDocument.create();
+  const font = await doc.embedFont(StandardFonts.Helvetica);
+
+  const fontSizeHeading = 16;
+  const fontSizeBody = 12;
+  const margin = 50;
+
+  narratives.forEach((narrative, index) => {
+    const page = doc.addPage();
+    const { width, height } = page.getSize();
+
+    const heading =
+      `Narrative ${index + 1}` +
+      (narrative.type ? ` – ${narrative.type}` : "");
+    const text = narrative.content || "";
+
+    page.drawText(heading, {
+      x: margin,
+      y: height - margin - fontSizeHeading,
+      size: fontSizeHeading,
+      font,
+      color: rgb(0, 0, 0),
+    });
+
+    const bodyYStart = height - margin - fontSizeHeading - 24;
+    page.drawText(text, {
+      x: margin,
+      y: bodyYStart,
+      size: fontSizeBody,
+      font,
+      color: rgb(0, 0, 0),
+      maxWidth: width - margin * 2,
+      lineHeight: 16,
+    });
+  });
+
+  const pdfBytes = await doc.save();
+  return pdfBytes;
+}
+
+export async function buildLetterPdf(letterText) {
+  const doc = await PDFDocument.create();
+  const page = doc.addPage();
+  const { width, height } = page.getSize();
+
+  const font = await doc.embedFont(StandardFonts.Helvetica);
+  const fontSizeHeading = 16;
+  const fontSizeBody = 12;
+  const margin = 50;
+
+  const heading = "Pre-Adverse Action Response Letter";
+
+  page.drawText(heading, {
+    x: margin,
+    y: height - margin - fontSizeHeading,
+    size: fontSizeHeading,
+    font,
+    color: rgb(0, 0, 0),
+  });
+
+  const bodyYStart = height - margin - fontSizeHeading - 24;
+  page.drawText(letterText || "", {
+    x: margin,
+    y: bodyYStart,
+    size: fontSizeBody,
+    font,
+    color: rgb(0, 0, 0),
+    maxWidth: width - margin * 2,
+    lineHeight: 16,
+  });
+
+  const pdfBytes = await doc.save();
+  return pdfBytes;
+}
+
+// src/utils/downloadUtils.js (example)
+export function triggerPdfDownload(pdfBytes, filename) {
+  const blob = new Blob([pdfBytes], { type: "application/pdf" });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+
+  URL.revokeObjectURL(url);
+}
+
+// Example integration inside a narrative card component – align with your real props/state
+import { buildSingleNarrativePdf } from "../utils/pdfUtils";
+import { triggerPdfDownload } from "../utils/downloadUtils";
+
+function NarrativeCard({ narrative, index }) {
+  const handleDownload = async () => {
+    try {
+      const pdfBytes = await buildSingleNarrativePdf(narrative);
+      const filename = `reframe-narrative-${index + 1}.pdf`;
+      triggerPdfDownload(pdfBytes, filename);
+    } catch (err) {
+      // TODO: show a gentle inline error message
+      console.error("Failed to generate PDF", err);
+    }
+  };
+
+  return (
+    <div className="rounded-2xl border bg-white p-4 shadow-sm">
+      {/* existing narrative content */}
+      <div className="mt-4 flex gap-3">
+        <button
+          type="button"
+          className="rounded-full px-4 py-2 text-sm font-medium shadow-sm"
+          onClick={/* existing copy handler */}
+        >
+          Copy
+        </button>
+        <button
+          type="button"
+          className="rounded-full px-4 py-2 text-sm font-medium shadow-sm"
+          onClick={handleDownload}
+        >
+          Download
+        </button>
+      </div>
+    </div>
+  );
+}
+
+export default NarrativeCard;
+
+Do not modify any files yet
+
+Do not modify any files yet
+
+First, output your understanding of the current implementation and the requirements, along with your detailed implementation plan as described above.
+
+Remember: do NOT perform any e2e tests for this change—I will manually confirm it in the UI.
+
+Wait for my explicit approval before editing code.
