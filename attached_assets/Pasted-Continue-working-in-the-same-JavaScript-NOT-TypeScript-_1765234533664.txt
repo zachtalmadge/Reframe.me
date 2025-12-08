@@ -1,0 +1,455 @@
+Continue working in the same JavaScript (NOT TypeScript) + React + Tailwind CSS, mobile-first project.
+In the unified multi-step form, Steps 2, 4, 7, 8, and 9 currently show “alert” style helper content that explains why that step is important (why the user is being asked these questions / why it matters). These alerts are visible but easy to skim past and don’t visually stand out from other helper text. I want to visually upgrade these alerts into prominent, friendly “Why this step matters” banners that are always visible, sit near the top of the step (under the step title/description), and use Reframe.me’s brand colors to gently draw attention. There should be no user interaction required to see the content (no hover, no click to expand).
+
+Important for this change:
+For this change, DO NOT perform any end-to-end (e2e) tests or automated full-flow testing.
+You may do local/component-level checks only. I will manually confirm behavior in the UI.
+
+Do not make any code changes yet. First, assess the current implementation, describe your understanding, identify key considerations, and propose a step-by-step plan. Wait for my explicit approval before editing any files.
+
+Business requirement – Make “Why this step matters” alerts visually prominent banners on Steps 2, 4, 7, 8, 9
+
+Current behavior
+
+The unified multi-step form has multiple steps; specifically, Steps 2, 4, 7, 8, 9 each contain an “alert-like” text block explaining why that step is important.
+
+These alerts:
+
+Are already visible on the step (not hidden behind tooltips).
+
+Use relatively subtle styling (likely similar to generic helper/error/info blocks).
+
+Do not strongly stand out from the rest of the form content.
+
+Users can easily skim past them or not realize they’re important coaching content, not just generic filler.
+
+Desired behavior
+
+For Steps 2, 4, 7, 8, 9:
+
+Transform the existing alert blocks into full-width, always-visible “Why this step matters” banners that:
+
+Sit near the top of the step, directly below the step title and description and above the form fields.
+
+Use updated styling to make them visually distinct and important.
+
+The banners should:
+
+Be non-dismissible and always visible (no hover, no click to reveal).
+
+Include:
+
+A small icon (e.g., an exclamation, star, or lightbulb) to draw the eye.
+
+A short, bold heading: e.g., “Why this step matters”.
+
+The existing explanatory text for that step (content specific to that step), shown directly under the heading.
+
+Use a friendly, alert-like visual style:
+
+A soft orange-tinted background to signal importance.
+
+An orange left border to “flag” the section.
+
+Teal text for the heading to align with Reframe.me branding.
+
+Dark neutral text for the body for readability.
+
+These changes are visual only:
+
+The copy/content of each alert stays the same (unless minor tweaks are needed for heading text like “Why this step matters”).
+
+The form structure, inputs, and validation do not change.
+
+Steps other than 2, 4, 7, 8, 9 should not suddenly gain this banner; only steps that already have these “this step is important” alerts should be affected.
+
+Constraints
+
+Keep the alerts:
+
+Always visible.
+
+Not interactive (no expand/collapse).
+
+Do not change:
+
+The emotional check-in line behavior.
+
+Step ordering or navigation.
+
+Any business logic, validation, or backend behavior.
+
+Keep tone and visuals trauma-aware:
+
+Important and noticeable, but not shouting or alarming.
+
+Respect mobile-first design:
+
+Banners must look good and be legible on small screens.
+
+Acceptance criteria (Given / When / Then)
+Scenario: Step 2 shows a prominent “Why this step matters” banner
+
+Given the user navigates to Step 2 of the unified multi-step form
+
+When the step renders
+
+Then directly under the step’s main heading/description, there should be a full-width banner that:
+
+Has a soft orange-tinted background and an orange left border.
+
+Shows an icon plus the heading text “Why this step matters” (or equivalent) in teal, bold text.
+
+Shows the existing explanatory text for Step 2 beneath the heading, in neutral readable text.
+
+And the banner should be visible without any user interaction.
+
+Scenario: Steps 4, 7, 8, 9 also show the new banner style
+
+Given the user navigates to Step 4, 7, 8, or 9
+
+When any of these steps render
+
+Then each step should show the same style of “Why this step matters” banner (color, layout, heading/icon style) under its own step heading
+
+And the content inside each banner should be that step’s existing explanation of why the step is important.
+
+Scenario: Other steps are unaffected
+
+Given the user navigates to steps that do not currently have these “this step is important” alerts (e.g., Step 1, Step 3, etc.)
+
+When those steps render
+
+Then they should not show the new orange “Why this step matters” banner
+
+And any existing helper text on those steps should remain unchanged.
+
+Scenario: Banner is always visible and non-interactive
+
+Given the user is on any of Steps 2, 4, 7, 8, 9
+
+When they scroll within the step content
+
+Then the “Why this step matters” banner should be visible at the top of the step content area (unless scrolled off-screen naturally)
+
+And there should be no hover or click needed to view the content inside the banner.
+
+Scenario: Layout remains mobile-friendly and readable
+
+Given the user is on a small viewport (mobile)
+
+When they view Steps 2, 4, 7, 8, 9
+
+Then the banner should:
+
+Fit nicely within the width (no horizontal scroll).
+
+Maintain legible font sizes.
+
+Not push the rest of the form content so far down that it becomes unusable on mobile.
+
+Scenario: No regression in form behavior
+
+Given the user navigates through the form steps, going Back and Next, filling fields, and seeing validation errors
+
+When they interact with these steps
+
+Then:
+
+All existing fields, validations, Next/Back navigation, progress bar, and emotional check-in behavior should remain unchanged.
+
+Only the visual appearance of the “why this matters” content should differ from before.
+
+What I want you (Replit AI) to do
+1. Assess the current implementation
+
+Locate the components that render Steps 2, 4, 7, 8, and 9 in the unified multi-step form:
+
+This might be individual components (e.g., Step2ProgramsAndSkills, Step4Ownership, etc.) or a single form step component with configuration.
+
+Identify:
+
+Where the current “this step is important” alert content lives in each step:
+
+Is it inline JSX in each step?
+
+Is it a shared component (e.g., <Alert />) with different messages?
+
+Is there a specific class name / structure used for these blocks?
+
+Check:
+
+Whether there is already a shared alert or info component that could be reused or extended.
+
+How the alert is positioned relative to:
+
+The step title/description.
+
+The form fields.
+
+2. Describe your understanding of the requirements
+
+In your own words, explain that you will:
+
+Create or reuse a shared React component (e.g., <StepImportanceAlert />) that:
+
+Accepts the step-specific explanatory text as children or props.
+
+Renders a full-width, always-visible “Why this step matters” banner under the step title.
+
+Uses updated Tailwind styling (rounded, border-l-4, orange background tint, teal heading, icon).
+
+Replace or wrap the existing alert content on Steps 2, 4, 7, 8, 9 with this component.
+
+Ensure all other steps remain unchanged.
+
+3. Identify key considerations / risks
+
+Consistency across steps
+
+All five steps should use the same visual pattern for the banner (same classes/icon/layout).
+
+Content and tone
+
+Existing text should remain intact; only heading and wrapper styling change.
+
+Heading text should feel supportive and not alarming.
+
+Accessibility
+
+Ensure:
+
+The heading is semantically appropriate (e.g., <p> with font-semibold or an <h3> with correct hierarchy).
+
+Icon is either decorative (aria-hidden="true") or has appropriate ARIA label.
+
+Mobile layout
+
+The banner must not overflow horizontally.
+
+Text must wrap gracefully on small screens.
+
+No interactive complexity
+
+No toggle/expand logic; keep this a simple static component.
+
+4. Propose best-practice implementation details
+
+Create a dedicated component, e.g. StepImportanceAlert.jsx, that:
+
+Accepts props like:
+
+title (defaulting to "Why this step matters").
+
+children or body for the step-specific copy.
+
+Uses Tailwind classes to create the desired visual style, for example:
+
+Outer container:
+
+mt-4 rounded-xl border border-orange-200 border-l-4 border-l-orange-400 bg-orange-50/80 px-4 py-3 text-sm
+
+Header row:
+
+flex items-center gap-2 text-teal-900 font-semibold
+
+Icon: small, teal, e.g., a circle with ! or a simple inline SVG.
+
+Body text:
+
+mt-1 text-slate-800 text-sm leading-relaxed
+
+Insert <StepImportanceAlert> into Steps 2, 4, 7, 8, 9:
+
+Immediately below the step’s main title and description.
+
+Pass the existing explanatory copy into this component.
+
+Keep the content of each alert short and readable; if any alert was very long, consider minor formatting (line breaks) without changing the message.
+
+5. Generate a step-by-step implementation plan
+
+Provide a concrete implementation plan, such as:
+
+Identify steps and existing alert content
+
+Open the component(s) for Steps 2, 4, 7, 8, 9.
+
+Find the JSX where the current “this step matters” alerts are rendered.
+
+Note whether they share any existing CSS/utility classes.
+
+Create StepImportanceAlert component
+
+In src/components/forms (or similar), create a new file, e.g., StepImportanceAlert.jsx.
+
+Implement the component with:
+
+A heading row with icon + “Why this step matters”.
+
+A body area for explanatory text.
+
+Tailwind classes for a soft orange banner with an orange left border and teal heading.
+
+Make the icon decorative (aria-hidden="true") unless you explicitly add accessible text.
+
+Wire StepImportanceAlert into Step 2
+
+Import StepImportanceAlert into the Step 2 component.
+
+Replace the existing alert markup with <StepImportanceAlert> and pass the existing text as children.
+
+Ensure it appears under the step title and above the fields.
+
+Repeat for Steps 4, 7, 8, 9
+
+For each step:
+
+Import StepImportanceAlert.
+
+Wrap or replace the existing alert content with <StepImportanceAlert>.
+
+Confirm the content remains step-specific but now uses the shared styling.
+
+Check layout on mobile and desktop
+
+Run the app locally, navigate to Steps 2, 4, 7, 8, 9:
+
+Confirm the banner appears in the correct place.
+
+Confirm there is no horizontal scrolling.
+
+Confirm text is readable and does not overlap other elements.
+
+Verify no regression
+
+Check that other steps (without these alerts) did not gain the banner.
+
+Confirm form navigation, validation, and emotional check-in remain unchanged.
+
+Keep the scope limited
+
+For this prompt, you must NOT:
+
+Change step copy beyond minor heading text like “Why this step matters” in the banner component.
+
+Modify validation logic, form data structure, or backend integration.
+
+Alter the emotional check-in line, its text, or behavior.
+
+Change the order or number of steps.
+
+Introduce interactions (e.g., expand/collapse) for these banners.
+
+Change other alert styles outside Steps 2, 4, 7, 8, 9 unless explicitly required to keep things consistent.
+
+Skeleton framework / code snippet (required – example only)
+
+Note: This is an illustrative example only. You must align it with the actual step components, state, and folder structure in the codebase before editing any files.
+
+// src/components/StepImportanceAlert.jsx
+import React from "react";
+
+function StepImportanceAlert({ title = "Why this step matters", children }) {
+  return (
+    <div className="mt-4 rounded-xl border border-orange-200 border-l-4 border-l-orange-400 bg-orange-50/80 px-4 py-3 text-sm text-slate-800">
+      <div className="flex items-center gap-2 text-teal-900 font-semibold">
+        {/* Decorative icon */}
+        <span
+          className="flex h-6 w-6 items-center justify-center rounded-full bg-teal-100 text-xs text-teal-900"
+          aria-hidden="true"
+        >
+          !
+        </span>
+        <span>{title}</span>
+      </div>
+      {children && (
+        <p className="mt-1 text-slate-800 text-sm leading-relaxed">
+          {children}
+        </p>
+      )}
+    </div>
+  );
+}
+
+export default StepImportanceAlert;
+
+// Example usage in a Step 2 component – adjust names/paths to your actual code
+import React from "react";
+import StepImportanceAlert from "../components/StepImportanceAlert";
+
+function Step2ProgramsAndSkills() {
+  return (
+    <div className="space-y-6">
+      {/* Existing step title and description */}
+      <header>
+        <h2 className="text-lg font-semibold text-slate-900">
+          Programs & Transferable Skills
+        </h2>
+        <p className="mt-1 text-sm text-slate-700">
+          Share the programs you’ve completed and the skills and strengths you’ve
+          built—especially the ones you can bring to a job.
+        </p>
+      </header>
+
+      {/* New always-visible alert */}
+      <StepImportanceAlert>
+        {/* Use the existing Step 2 explanatory text here */}
+        This part helps you name the programs and strengths you want employers to
+        see. Taking a moment here can make it easier to talk about how you’ve
+        grown and what you bring to a role.
+      </StepImportanceAlert>
+
+      {/* Existing form fields for Step 2 go here */}
+      <section className="space-y-4">
+        {/* ...inputs... */}
+      </section>
+    </div>
+  );
+}
+
+export default Step2ProgramsAndSkills;
+
+// Example usage in another step (e.g., Step 7) – reuse component, different text
+import StepImportanceAlert from "../components/StepImportanceAlert";
+
+function Step7ClarifyingRelevance() {
+  return (
+    <div className="space-y-6">
+      {/* Step title + description */}
+      <header>
+        <h2 className="text-lg font-semibold text-slate-900">
+          Clarifying Relevance (Optional)
+        </h2>
+        <p className="mt-1 text-sm text-slate-700">
+          Use this space to explain whether and how your record relates to the
+          work you&apos;re applying for.
+        </p>
+      </header>
+
+      {/* Shared banner with step-specific content */}
+      <StepImportanceAlert>
+        This step can help you calmly explain why your past may or may not be
+        relevant to the job. It gives employers context and helps you stay in
+        control of how you tell your story.
+      </StepImportanceAlert>
+
+      {/* Rest of the step fields */}
+      <section className="space-y-4">
+        {/* ...inputs... */}
+      </section>
+    </div>
+  );
+}
+
+export default Step7ClarifyingRelevance;
+
+Do not modify any files yet
+
+Do not modify any files yet
+
+First, output your understanding of the current implementation and the requirements, and then provide your detailed implementation plan as described above.
+
+Remember: do NOT perform any e2e tests for this change—I will manually confirm behavior in the UI.
+
+Wait for my explicit approval before editing code.
