@@ -1,0 +1,362 @@
+Continue working in the same JavaScript (NOT TypeScript) + React + Tailwind CSS, mobile-first project.
+The Home page currently includes a “Safe space / privacy” section rendered with a card-like layout (Shield icon, headline “A judgement-free space, built for your reality.”, bullets about no account, no tracking, etc.).
+
+Right now, that safe-space card is static:
+
+It does not share the hover / interactive effects used by the elements above it on the page (e.g., lift, subtle shadow, border glow, or scale that those cards might use).
+
+The text does not have any “shine” / shimmer effect on hover.
+
+I want you to:
+
+Make this safe-space card feel consistent with the interactive cards above it (same or very similar hover animation style).
+
+Add a subtle left-to-right “shine” effect that ripples through the headline and key text when the user hovers/focuses the section – in a way that’s gentle, not flashy, and still trauma-aware.
+
+Important for this change:
+For this change, DO NOT perform any end-to-end (e2e) tests or automated full-flow testing.
+You may perform local/component-level checks only. I will manually confirm the behavior in the UI.
+
+The current component looks like this:
+
+<section
+  className="py-10 md:py-14 px-4 sm:px-6 lg:px-8"
+  aria-labelledby="safe-space-heading"
+  data-testid="section-safe-space"
+>
+  <div className="max-w-3xl mx-auto">
+    <div className="relative rounded-xl border border-chart-2/20 bg-chart-2/5 p-6 md:p-8">
+      <div className="flex flex-col md:flex-row gap-6 items-start">
+        <div className="flex-shrink-0">
+          <div className="w-12 h-12 rounded-lg bg-chart-2/10 flex items-center justify-center">
+            <Shield className="w-6 h-6 text-chart-2" aria-hidden="true" />
+          </div>
+        </div>
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <h2
+              id="safe-space-heading"
+              className="text-xl md:text-2xl font-semibold text-foreground"
+            >
+              A judgement-free space, built for your reality.
+            </h2>
+            <p className="text-muted-foreground leading-relaxed">
+              We don't store what you write in this session. You decide
+              what to share, and you can close this tab at any time.
+            </p>
+          </div>
+          <ul className="space-y-2 text-sm text-muted-foreground">
+            <li className="flex items-center gap-2">
+              <span
+                className="w-1.5 h-1.5 rounded-full bg-chart-2"
+                aria-hidden="true"
+              />
+              No account required.
+            </li>
+            <li className="flex items-center gap-2">
+              <span
+                className="w-1.5 h-1.5 rounded-full bg-chart-2"
+                aria-hidden="true"
+              />
+              No tracking of your answers.
+            </li>
+            <li className="flex items-center gap-2">
+              <span
+                className="w-1.5 h-1.5 rounded-full bg-chart-2"
+                aria-hidden="true"
+              />
+              You decide what to keep, copy, or delete.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+Business requirement – Safe-space card hover + text shine
+
+Update this safe-space / privacy section so that:
+
+The outer card (the div with rounded-xl border bg-chart-2/5 p-6 md:p-8) has matching hover/interactivity with the cards above it on the page, for example:
+
+Slight lift (translate-y / shadow) or border accent on hover.
+
+Smooth transition for transform/opacity/shadow.
+
+Any subtle glow or outline used by the feature cards, so the safe-space block feels like part of the same family.
+
+The text shine effect:
+
+On hover or focus of the card/section, a subtle shimmer/shine passes from left to right over:
+
+At minimum, the headline “A judgement-free space, built for your reality.”
+
+Ideally also (gently) over the short paragraph or the bullet list text, if that can be done without visual clutter.
+
+The shine should feel:
+
+Soft and slow – not strobe-like or aggressive.
+
+In line with the app’s trauma-aware tone (no harsh flashing).
+
+Implementation notes:
+
+Use Tailwind + simple CSS keyframes / utilities as appropriate (e.g., via a group wrapper and pseudo-element or gradient overlay) to create the shine.
+
+Respect any existing “reduce motion” patterns in the codebase if present (e.g., disable or soften the animation for users with prefers-reduced-motion).
+
+Keep the text fully readable during the shine, with adequate contrast.
+
+Do not change:
+
+The actual text content (copy) of the heading, paragraph, or bullets.
+
+The semantic structure (<section>, <h2>, <p>, <ul>, <li>).
+
+Acceptance criteria (Given / When / Then)
+Scenario: Safe-space card has consistent hover behavior
+
+Given the user is on the page containing the safe-space section
+
+When they move their pointer over the safe-space card (or focus it via keyboard if applicable)
+
+Then:
+
+The card exhibits a similar hover animation to the elements above it (e.g., gentle lift/scale, border/shadow transition).
+
+The animation feels smooth and subtle, not jittery or abrupt.
+
+The visual style clearly matches the interactive pattern used by the other feature/hero cards above it.
+
+Scenario: Text shine effect triggers on hover
+
+Given the user moves their pointer over the safe-space card
+
+When the hover state begins
+
+Then:
+
+A left-to-right text shine effect appears across the main text (at least the heading), creating a brief, soft shimmer.
+
+The text remains readable and does not become obscured.
+
+The shine is not overly bright or harsh.
+
+Scenario: Shine effect is not overwhelming
+
+Given the user repeatedly enters and leaves the safe-space card with their pointer
+
+When the shine animation plays
+
+Then:
+
+The animation duration and intensity remain comfortable (no rapid flashing).
+
+The effect feels like a gentle highlight, not a distracting light show.
+
+If there is any support for reduced-motion in the app, the shine effect honors it (e.g., reduced or disabled if prefers-reduced-motion is set).
+
+Scenario: No regressions to structure or content
+
+Given the existing content and layout of the safe-space section
+
+When the hover and shine effects are added
+
+Then:
+
+The copy (“A judgement-free space…” and the privacy bullets) is unchanged.
+
+The section still uses the same landmarks and aria attributes (aria-labelledby="safe-space-heading").
+
+Responsive behavior (stacked layout on mobile, side-by-side on larger screens) remains intact.
+
+What I want you (Replit AI) to do
+
+Assess the current interactive patterns above this section
+
+Locate the “elements above it” on the page (e.g., feature cards or other interactive blocks that already have hover animations).
+
+Identify:
+
+How those cards are structured (e.g., wrapper div with group class).
+
+Which Tailwind classes or custom utilities are used for:
+
+Hover lift (transform, translate-y, shadow).
+
+Gradients or borders.
+
+Transition durations and easing.
+
+Determine the best way to reuse or mirror those patterns for the safe-space card, so it feels consistent.
+
+Describe your understanding of the requirements
+
+In your own words, explain:
+
+That you will add hover/interactive styles to the safe-space card that align with the other interactive cards on the page.
+
+That you will implement a left-to-right text shine effect that runs on hover/focus of the card.
+
+That the shine must be subtle, trauma-aware, and non-distracting.
+
+That you will not change text content or semantic structure—only styling/animation.
+
+Identify key considerations to avoid disrupting existing functionality
+
+Ensure that:
+
+You don’t inadvertently remove or override existing spacing, colors, or layout.
+
+The safe-space card remains fully accessible:
+
+Text has sufficient contrast.
+
+Headings and lists are preserved.
+
+The shine effect:
+
+Does not create a11y issues for users sensitive to motion.
+
+Is implemented in a way that is performant (avoid overly heavy animations).
+
+Confirm that any global group or hover-related classes you add do not collide with other parts of the page.
+
+Propose best-practice implementation details
+
+Describe how you will:
+
+Wrap the inner card div in a Tailwind group so hover on the entire card can be used to trigger child animations.
+
+Add hover classes: e.g. transition, duration-300, hover:-translate-y-0.5, hover:shadow-lg, or match existing patterns used by the other cards.
+
+For the text shine effect, describe a possible approach, such as:
+
+Using a CSS gradient mask / pseudo-element over the text.
+
+Adding a relative overflow-hidden wrapper around text, and a child span that:
+
+Has a gradient background.
+
+Animates translate-x from left to right on group-hover.
+
+Uses mix-blend or opacity to create a subtle highlight.
+
+Or using a keyframes animation (e.g. shine keyframes) tied to a group-hover class.
+
+Mention how you’ll keep it subtle (e.g., light opacity, limited repeat, moderate duration).
+
+Assess other best practices
+
+Tailwind:
+
+Use utility classes consistent with the rest of the codebase (no bespoke inline style blobs unless necessary).
+
+Motion:
+
+Consider adding a motion-safe: prefix if the project already uses prefers-reduced-motion.
+
+UX & tone:
+
+The hover/shine effect should feel like a gentle signpost that this area is important and safe, not a flashy marketing card.
+
+Generate a step-by-step plan to implement this enhancement
+
+At a minimum include:
+
+Step 1: Inspect the card/feature components above the safe-space section to identify their hover/interactive Tailwind class patterns.
+
+Step 2: Update the safe-space card’s outer div to:
+
+Use group and appropriate transition, transform, shadow, and border classes to match the other cards.
+
+Step 3: Wrap the heading and/or text in a container that:
+
+Is relative and overflow-hidden.
+
+Supports adding a shine overlay element.
+
+Step 4: Add the shine implementation:
+
+Either through Tailwind-compatible classes and a span overlay.
+
+Or by adding a small CSS module / global style with a @keyframes shine and referencing it via className.
+
+Step 5: Tie the shine’s animation start to the card’s group-hover (and optionally focus-within) state.
+
+Step 6: Manually verify on mobile and desktop:
+
+Safe-space card now hovers similarly to other cards.
+
+Shine effect runs once or in a subtle way on hover/focus, and text remains readable.
+
+Step 7: Confirm no layout regressions or console warnings/errors.
+
+Keep the scope limited
+
+Do not:
+
+Change the text/copy of the safe-space section.
+
+Modify unrelated sections (other cards, forms, results pages).
+
+Alter global typography or color tokens.
+
+Only:
+
+Adjust the safe-space section’s styles/animations and any minimal shared CSS needed for the shine effect.
+
+Propose a skeleton framework
+
+Provide a simplified example (in JavaScript React, not TypeScript) showing how the card and text shine might be wired, e.g.:
+
+<section
+  className="py-10 md:py-14 px-4 sm:px-6 lg:px-8"
+  aria-labelledby="safe-space-heading"
+  data-testid="section-safe-space"
+>
+  <div className="max-w-3xl mx-auto">
+    <div className="relative group rounded-xl border border-chart-2/20 bg-chart-2/5 p-6 md:p-8 transition-transform duration-300 ease-out hover:-translate-y-0.5 hover:shadow-lg">
+      <div className="flex flex-col md:flex-row gap-6 items-start">
+        <div className="flex-shrink-0">
+          <div className="w-12 h-12 rounded-lg bg-chart-2/10 flex items-center justify-center">
+            <Shield className="w-6 h-6 text-chart-2" aria-hidden="true" />
+          </div>
+        </div>
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <div className="relative overflow-hidden">
+              <h2
+                id="safe-space-heading"
+                className="text-xl md:text-2xl font-semibold text-foreground"
+              >
+                A judgement-free space, built for your reality.
+              </h2>
+              {/* Shine overlay span; actual implementation may use keyframes/gradient */}
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 translate-x-[-100%] bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-0 transition group-hover:opacity-100 group-hover:translate-x-full"
+              />
+            </div>
+            <p className="text-muted-foreground leading-relaxed">
+              We don't store what you write in this session. You decide what to share, and you can close this tab at any time.
+            </p>
+          </div>
+          {/* ...rest of content unchanged... */}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+This is only a conceptual skeleton; in the actual implementation you can refine class names, durations, and shine effect to align with the existing design system and animation patterns.
+
+Do not modify any files yet
+
+First, output your understanding of this hover + shine enhancement and your implementation plan.
+
+Remember: do NOT perform any e2e tests for this change—I will manually confirm behavior.
+
+Wait for my confirmation that your approach is sound before updating the code.

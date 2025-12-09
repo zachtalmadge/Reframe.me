@@ -2,6 +2,8 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { ErrorMessage } from "@/components/ui/error-message";
 import { CharacterCountTextarea } from "../CharacterCountTextarea";
+import { OilFrameworkInfo } from "../OilFrameworkInfo";
+import { StepImportanceAlert } from "../StepImportanceAlert";
 import { FormState, FormAction } from "@/lib/formState";
 
 interface Step8ClarifyingRelevanceProps {
@@ -38,6 +40,10 @@ export function Step8ClarifyingRelevance({
           you're applying for. This section is optional but can be powerful.
         </p>
       </div>
+
+      <StepImportanceAlert>
+        This is especially helpful when there's a significant time gap since the offense, when the offense was unrelated to the job duties, or when you've completed rehabilitation programs.
+      </StepImportanceAlert>
 
       <div className="space-y-6">
         <div className="flex items-center justify-between gap-4 p-4 rounded-lg bg-muted/50 border border-border">
@@ -88,14 +94,7 @@ export function Step8ClarifyingRelevance({
           </div>
         )}
 
-        <div className="p-4 rounded-lg bg-primary/5 border border-primary/20">
-          <p className="text-sm text-foreground leading-relaxed">
-            <span className="font-medium">When to use this:</span> This is
-            especially helpful when there's a significant time gap since the
-            offense, when the offense was unrelated to the job duties, or when
-            you've completed rehabilitation programs.
-          </p>
-        </div>
+        <OilFrameworkInfo />
       </div>
     </div>
   );

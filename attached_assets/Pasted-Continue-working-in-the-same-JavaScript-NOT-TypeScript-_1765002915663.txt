@@ -1,0 +1,173 @@
+Continue working in the same JavaScript (NOT TypeScript) + React + Tailwind CSS, mobile-first project.
+I want to add a small “Stories of change” carousel to the Home page with anonymized, one-line snapshots of how the tool helps people.
+
+Important:
+DO NOT run any e2e tests for this change. Manual/component-level checks only.
+
+Business requirement – Story snapshot carousel
+
+Add a new section to the Home page that:
+
+Shows anonymized, hopeful story snippets
+
+Content examples (you can tweak but keep tone):
+
+“I used to panic when employers asked about my record. Now I have three honest ways to respond.”
+
+“I turned a terrifying letter into a clear, professional response.”
+
+“For the first time, I feel ready to explain my past and my growth.”
+
+No names or identifying data; if you label them, use things like:
+
+“Job seeker, tech support”
+
+“Retail candidate”
+
+“First-time applicant after reentry”
+
+Carousel behavior
+
+Show one card at a time (or 1–2 on desktop), with:
+
+A short headline or tag (like “Job seeker, hospitality”).
+
+The one-sentence quote.
+
+Carousel should:
+
+Auto-advance every ~4–6 seconds with a fade/slide transition.
+
+Include manual controls:
+
+Left/right arrows and/or small dot indicators.
+
+Pause auto-advance on hover (desktop), and resume when hover ends.
+
+Tone & visual style
+
+Cards should:
+
+Use soft backgrounds and rounded corners.
+
+Feel intimate and respectful, not like hypey testimonials.
+
+Text should be easy to read (no long paragraphs).
+
+Accessibility & motion
+
+Users must be able to manually navigate via buttons.
+
+Indicators should be keyboard-focusable.
+
+For prefers-reduced-motion:
+
+Disable sliding animation; perform instant changes or simple fades.
+
+Acceptance criteria
+Scenario: Carousel shows rotating story snapshots
+
+Given the user scrolls to the Stories section
+
+When they watch for several seconds
+
+Then:
+
+The card automatically cycles through different anonymized one-sentence stories with a subtle transition.
+
+Scenario: Manual navigation works
+
+Given the user sees the carousel
+
+When they click left/right controls or dots
+
+Then:
+
+The displayed story changes to the corresponding slide.
+
+Auto-advance should continue (or resume) after manual navigation, unless you intentionally pause it for a period.
+
+Scenario: Respectful and hopeful tone
+
+Given the user reads the cards
+
+When they scan the text
+
+Then:
+
+Language feels supportive, non-shaming, and realistic.
+
+What I want you (Replit AI) to do
+
+Assess the Home layout and determine where to place the carousel (likely below How It Works and/or Safe Zone).
+
+Describe your understanding of the requirements (one-sentence stories, anonymized, rotating).
+
+Key considerations
+
+Keep performance good; use lightweight state for currentIndex.
+
+Make controls accessible (ARIA labels, focus visible).
+
+Implementation plan
+
+Step 1: Create a stories array with { role, quote }.
+
+Step 2: Build a small carousel component with currentIndex state and setInterval or setTimeout for auto-advance.
+
+Step 3: Add fade/slide transitions with Tailwind (e.g., transition-opacity, translate-x-*).
+
+Step 4: Add left/right buttons and dot indicators.
+
+Step 5: Handle prefers-reduced-motion by simplifying transitions.
+
+Skeleton
+
+const stories = [
+  {
+    role: "Job seeker, retail",
+    quote:
+      "I used to panic when employers asked about my record. Now I have three honest ways to respond.",
+  },
+  {
+    role: "First-time applicant after reentry",
+    quote:
+      "I turned a terrifying letter into a clear, professional response.",
+  },
+  {
+    role: "Job seeker, tech support",
+    quote:
+      "For the first time, I feel ready to explain my past and my growth.",
+  },
+];
+
+function StoriesCarousel() {
+  const [index, setIndex] = useState(0);
+  // interval + handlers, etc.
+
+  return (
+    <section className="px-4 py-10">
+      <div className="max-w-3xl mx-auto text-center mb-6">
+        <h2 className="text-xl font-semibold">Stories of change</h2>
+        <p className="mt-2 text-sm text-muted-foreground">
+          Anonymized snapshots of how people are using Reframe.me.
+        </p>
+      </div>
+
+      <div className="max-w-xl mx-auto">
+        <div className="relative rounded-2xl border bg-white p-6 shadow-sm">
+          <p className="text-sm text-slate-900">
+            “{stories[index].quote}”
+          </p>
+          <p className="mt-3 text-xs text-muted-foreground">
+            {stories[index].role}
+          </p>
+        </div>
+        {/* dots / arrows here */}
+      </div>
+    </section>
+  );
+}
+
+
+Do not run e2e tests

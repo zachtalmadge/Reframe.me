@@ -1,0 +1,199 @@
+Continue working in the same JavaScript (NOT TypeScript) + React + Tailwind CSS, mobile-first project.
+On the Home page, the hero currently has static content (headline, subheadline, primary CTA, etc.).
+I want to add a subtle “reframing” animation that visually communicates the idea of a story shifting from “before” to “after,” without feeling loud or overwhelming.
+
+Important for this fix:
+For this change, DO NOT perform any end-to-end (e2e) tests or automated full-flow testing.
+You may do local/component-level checks only. I will manually confirm the behavior in the UI.
+
+Business requirement – Animated hero that visually “reframes” a story
+
+Enhance the hero so that:
+
+Add a subtle animated “frame” or panel behind the hero content
+
+Behind the main hero text (headline + subcopy), add a soft gradient panel or subtle geometric shape.
+
+On initial page load (Home only), this panel should:
+
+Very slightly shift/tilt or slide into place (e.g., a gentle translate or rotate with fade-in).
+
+Animation should be short and smooth (200–400ms) and occur only once per load.
+
+The effect should suggest “reframing” or “changing perspective” (e.g., a card settling into a new angle).
+
+Add a tiny “Before / After” text microanimation near the hero
+
+Add a small, unobtrusive area in the hero that shows:
+
+“Before:” with a short, messy sentence (e.g., “I freeze when employers ask about my record.”).
+
+“After:” with a clearer, reframed sentence (e.g., “Now I have language that explains my past and what I’ve done since.”).
+
+These can:
+
+Crossfade or slide between each other, OR
+
+Show both stacked, with the “After” line fading in after a short delay.
+
+The text must feel supportive and non-shaming.
+
+Respect motion sensitivity
+
+If prefers-reduced-motion is enabled:
+
+Show the panel and Before/After text without movement (static state).
+
+Skip tilt/slide animations and any timed crossfades, or reduce them to simple fades.
+
+Acceptance criteria (Given / When / Then)
+Scenario: Panel reframing animation on load
+
+Given the user navigates to the Home page
+
+When the hero first renders
+
+Then:
+
+A gradient/shape panel behind the hero content appears with a gentle slide/tilt + fade-in.
+
+The animation runs once and then the panel remains stable.
+
+Scenario: Before/After microcopy appears
+
+Given the user is viewing the hero
+
+When the hero has fully loaded
+
+Then:
+
+A small “Before / After” snippet area is visible in or near the hero.
+
+The “After” text appears in a way that clearly implies a positive shift from the “Before” text (either via crossfade or sequencing).
+
+Scenario: Motion respects reduced-motion users
+
+Given the user has prefers-reduced-motion enabled
+
+When they load the Home page
+
+Then:
+
+The hero and panel appear without noticeable sliding/tilting animation.
+
+Before/After text is still present but shown in a static or minimally animated way.
+
+What I want you (Replit AI) to do
+
+Assess the current hero implementation
+
+Locate the Home page hero component (where the main headline, subtext, and primary CTA are rendered).
+
+Identify:
+
+The container around hero text.
+
+Where you can reasonably place a background panel behind the text using Tailwind (relative parent, absolute panel).
+
+Describe your understanding of the requirements
+
+Explain in your own words:
+
+That you will add a background panel that gently animates into place on load.
+
+That you will add a small Before/After microcopy block that visually suggests transformation.
+
+That motion should be subtle and respect prefers-reduced-motion.
+
+Identify key considerations
+
+Ensure:
+
+Text remains readable and contrast is accessible.
+
+Panel animation does not shift layout in a jarring way.
+
+Before/After text copy is empathetic and non-judgmental.
+
+Propose implementation details (React + Tailwind)
+
+Use a relative wrapper around hero content and an absolute div for the panel:
+
+e.g., absolute inset-0 rounded-3xl bg-gradient-to-r from-slate-900/80 to-slate-800/70 with blur if appropriate.
+
+For animation:
+
+Base class: opacity-0 translate-y-2 (or slight -rotate-1).
+
+After mount: opacity-100 translate-y-0 rotate-0 with transition-* classes and useEffect to toggle a hasMounted state.
+
+For Before/After:
+
+A small div with text-xs or text-sm:
+
+Before: label with muted text.
+
+After: label with slightly emphasized text and a fade-in delay.
+
+Generate a step-by-step plan
+
+Step 1: Wrap hero text in a relative container; add the animated panel div behind it with absolute positioning and Tailwind transitions.
+
+Step 2: Use a useState + useEffect in the hero component to trigger panel animation on mount (unless prefers-reduced-motion is true).
+
+Step 3: Add a small Before/After block near the hero text; implement a fade or sequencing using Tailwind transitions and optional setTimeout or CSS transition-delay.
+
+Step 4: Add a prefers-reduced-motion check to skip or simplify animations.
+
+Step 5: Manually verify on desktop and mobile that layout is intact and motion feels subtle.
+
+Keep scope limited
+
+Do not:
+
+Change hero copy or CTA behavior beyond adding the microcopy block.
+
+Alter other homepage sections.
+
+Skeleton example
+
+function Hero() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    const prefersReduced =
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    if (!prefersReduced) {
+      const id = requestAnimationFrame(() => setMounted(true));
+      return () => cancelAnimationFrame(id);
+    } else {
+      setMounted(true);
+    }
+  }, []);
+
+  return (
+    <section className="px-4 py-12">
+      <div className="relative max-w-3xl mx-auto overflow-hidden rounded-3xl">
+        <div
+          className={cn(
+            "absolute inset-0 bg-gradient-to-r from-slate-900/80 to-slate-800/70 transition-transform transition-opacity duration-400",
+            mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+          )}
+          aria-hidden="true"
+        />
+        <div className="relative p-6 space-y-4">
+          {/* existing hero text + CTA */}
+          <div className="mt-4 text-xs text-left text-muted-foreground">
+            <div>Before: “I freeze when employers ask about my record.”</div>
+            <div className="mt-1 font-medium text-emerald-100">
+              After: “Now I have language that explains my past and what I’ve done since.”
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
+Do not run e2e tests

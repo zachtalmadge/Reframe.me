@@ -1,0 +1,146 @@
+Continue working in the same JavaScript (NOT TypeScript) + React + Tailwind CSS, mobile-first project.
+I want to add very gentle background motion to the hero area to make it feel alive without being distracting.
+
+Important:
+No e2e tests. Manual/component-level checks only.
+
+Business requirement – Subtle animated hero background
+
+Enhance the hero background so that:
+
+Add a soft, animated radial gradient or “light spot”
+
+Behind the hero content, add:
+
+A radial gradient or soft “spotlight” that slowly moves or shifts over time.
+
+Motion:
+
+Very slow (e.g., 20–30 seconds per full cycle).
+
+Small movement (a gentle drift, not big jumps).
+
+Optional abstract shapes
+
+Add 1–3 semi-transparent shapes (e.g., circles/blobs/rounded rects) in the background:
+
+Slightly offset positions.
+
+Very low opacity.
+
+These shapes can:
+
+Slowly move/parallax on scroll or gently oscillate with keyframes.
+
+Always stay behind content (no overlap on text).
+
+Performance and subtlety
+
+Animations must:
+
+Be implemented with lightweight CSS keyframes or transforms.
+
+Not cause jank or heavy repaints.
+
+Visual effect should be:
+
+Calm and modern, not neon or aggressive.
+
+Respect reduced motion
+
+If prefers-reduced-motion is enabled:
+
+Either stop the animation (static gradient) or heavily minimize it (very small changes or none).
+
+Acceptance criteria
+Scenario: Hero background feels gently alive
+
+Given the user views the hero
+
+When they look at it for a few seconds
+
+Then:
+
+They notice a subtle shifting of light/gradient and possibly soft shapes moving slowly.
+
+The motion never competes with reading the headline/CTA.
+
+Scenario: Performance remains smooth
+
+Given the app runs on typical devices
+
+When the background animation is active
+
+Then:
+
+Scrolling and interaction remain smooth.
+
+No visible stuttering or lag due to the animation.
+
+Scenario: Reduced motion users see static background
+
+Given a user has prefers-reduced-motion: reduce
+
+When they load the Home page
+
+Then:
+
+They see a stable, static hero background, or minimal motion only.
+
+No long-running or distracting animations.
+
+What I want you (Replit AI) to do
+
+Assess current hero container
+
+Find where the hero’s background is defined (probably a section with bg-* classes).
+
+Describe your understanding
+
+Confirm you’ll add a subtle animated gradient/spot and optional shapes behind the content using Tailwind + CSS keyframes or inline styles.
+
+Key considerations
+
+Ensure background layers do not interfere with text contrast.
+
+Keep animation GPU-friendly (e.g., transform, opacity).
+
+Implementation plan
+
+Step 1: Wrap hero content in a relative container.
+
+Step 2: Add one or more absolute background layers for radial gradient / shapes with low opacity.
+
+Step 3: Define keyframes (in Tailwind config or a CSS file) for slow drift/oscillation.
+
+Step 4: Use animate-[custom] or transition-transform classes to move shapes.
+
+Step 5: Add a prefers-reduced-motion guard in Tailwind or CSS to disable animations for those users.
+
+Skeleton
+
+// Tailwind config: define keyframes like "float-slow"
+// e.g., 0% { transform: translate3d(0,0,0); } 50% { transform: translate3d(10px, -10px,0);} 100% { ... }
+
+function HeroBackground() {
+  return (
+    <section className="relative overflow-hidden">
+      {/* animated background layers */}
+      <div
+        className="pointer-events-none absolute -left-10 top-0 h-64 w-64 rounded-full bg-orange-300/20 blur-3xl animate-[float-slow_25s_ease-in-out_infinite]"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute right-0 top-20 h-72 w-72 rounded-full bg-emerald-300/10 blur-3xl animate-[float-slow_30s_ease-in-out_infinite]"
+        aria-hidden="true"
+      />
+      {/* hero content wrapper */}
+      <div className="relative px-4 py-12">
+        {/* existing hero content */}
+      </div>
+    </section>
+  );
+}
+
+
+Do not run e2e tests

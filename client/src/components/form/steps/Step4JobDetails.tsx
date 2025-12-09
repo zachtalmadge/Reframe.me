@@ -1,6 +1,7 @@
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { ErrorMessage } from "@/components/ui/error-message";
+import { StepImportanceAlert } from "../StepImportanceAlert";
 import { FormState, FormAction } from "@/lib/formState";
 
 interface Step4JobDetailsProps {
@@ -25,6 +26,10 @@ export function Step4JobDetails({
           personalize your response letter.
         </p>
       </div>
+
+      <StepImportanceAlert>
+        Including the specific job title and employer name makes your response letter more professional and shows you're taking this opportunity seriously.
+      </StepImportanceAlert>
 
       <div className="space-y-6">
         <div className="space-y-3">
@@ -65,14 +70,6 @@ export function Step4JobDetails({
             data-testid="input-employer-name"
           />
           <ErrorMessage message={errors.employerName} />
-        </div>
-
-        <div className="p-4 rounded-lg bg-primary/5 border border-primary/20">
-          <p className="text-sm text-foreground leading-relaxed">
-            <span className="font-medium">Why we ask:</span> Including the
-            specific job title and employer name makes your response letter more
-            professional and shows you're taking this opportunity seriously.
-          </p>
         </div>
       </div>
     </div>

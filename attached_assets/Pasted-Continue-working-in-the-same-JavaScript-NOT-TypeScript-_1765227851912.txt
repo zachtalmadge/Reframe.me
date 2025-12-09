@@ -1,0 +1,276 @@
+Continue working in the same JavaScript (NOT TypeScript) + React + Tailwind CSS, mobile-first project.
+After documents are generated, the app shows a disclaimer modal before navigating to /results.
+
+On smaller viewports (e.g., mobile), there is a bug:
+
+The disclaimer modal’s content is longer than the viewport.
+
+No scrollbar appears, and the user cannot scroll to see all of the disclaimer text.
+
+As a result, the user is unable to view the full disclaimer content and may not be able to reach the bottom buttons.
+
+I need you to fix this so that the disclaimer modal is fully usable on small screens:
+
+The user must be able to scroll through the entire disclaimer content.
+
+The close/continue buttons must remain accessible.
+
+Important for this change:
+
+For this change, DO NOT perform any end-to-end (e2e) tests or automated full-flow testing.
+You may do local/component-level checks only (e.g., manual interaction or unit tests if you have them). I will manually confirm behavior in the UI.
+
+Do not make any code changes yet.
+First, assess the current implementation, describe your understanding, identify key considerations, and generate a step-by-step plan.
+Wait for my explicit approval before editing any files.
+
+Business requirement – Disclaimer modal must be scrollable and fully readable on small screens
+
+Update the disclaimer modal so that:
+
+On small viewports (e.g., mobile, short laptop windows):
+
+The modal’s content area (the inner body with the disclaimer text) is scrollable when the content exceeds available height.
+
+The user can vertically scroll to read the entire disclaimer, down to the bottom.
+
+The buttons at the bottom of the modal remain accessible:
+
+Either pinned at the bottom of the modal, or
+
+Reachable by scrolling.
+
+On larger viewports:
+
+The modal should behave as before, but it’s fine (and often preferable) if:
+
+The content is still scrollable when it exceeds height, instead of overflowing off-screen.
+
+Specifics:
+
+The backdrop behavior (dimming background, preventing background scroll) should remain as currently implemented.
+
+The text content and copy of the disclaimer should not change—only layout/scroll behavior.
+
+The modal must remain visually consistent with the rest of the app’s design (rounded corners, shadows, etc.), while now supporting content overflow.
+
+If the disclaimer modal shares a generic modal component with other modals:
+
+Implement the scroll behavior in a way that:
+
+Either improves all modals safely, or
+
+Is controlled by a prop (e.g., scrollable or withScrollableBody) so that:
+
+The disclaimer modal has a scrollable body.
+
+Other modals are not inadvertently broken.
+
+Acceptance criteria (Given / When / Then)
+Scenario: Disclaimer modal on a small mobile viewport
+
+Given the user completes generation and the disclaimer modal appears on a small/mobile screen
+
+When the disclaimer text is longer than the visible portion of the modal
+
+Then:
+
+A scrollable area is available inside the modal.
+
+The user can scroll vertically to read the entire disclaimer content.
+
+The bottom buttons (e.g., Continue, Close) are accessible (either always visible or reachable via scroll).
+
+No part of the disclaimer is permanently cut off.
+
+Scenario: Disclaimer modal on a larger viewport
+
+Given the user is on a larger screen (desktop or tablet)
+
+When the disclaimer modal appears
+
+Then:
+
+The modal layout looks correct and centered as before.
+
+If the text fits within the viewport, it may not show a scrollbar.
+
+If the text exceeds the viewport height, the content area becomes scrollable instead of overflowing off-screen.
+
+Scenario: Background scroll and accessibility behavior unchanged
+
+Given the disclaimer modal is open
+
+When the user scrolls or interacts
+
+Then:
+
+Background content behind the modal does not scroll (same as current behavior).
+
+The modal still blocks interaction with the page behind it.
+
+Any existing keyboard / accessibility behavior (e.g., focus trapping, Escape to close if implemented) continues to work as before.
+
+Scenario: No regressions to other modals
+
+Given there are other modals in the app (e.g., refresh warnings, logo click warnings)
+
+When this fix is applied
+
+Then:
+
+Other modals still render and function normally.
+
+If the scroll behavior is implemented at a shared modal level, it should not cause layout breakage for other modal types.
+
+What I want you (Replit AI) to do
+
+Assess the current disclaimer modal implementation
+
+Identify the component responsible for the disclaimer modal that appears after generation but before navigating to /results.
+
+Determine:
+
+The outer overlay/backdrop structure (likely fixed inset-0 + background).
+
+The modal dialog container (centered panel).
+
+The content/body area where the disclaimer text lives.
+
+The footer/button area (e.g., Continue / Close buttons).
+
+Note existing Tailwind classes related to:
+
+Sizing: max-w-*, w-full, max-h-*.
+
+Overflow: overflow-hidden, overflow-y-auto, etc.
+
+Positioning: fixed, absolute, inset-*, top-1/2 / transform, etc.
+
+Describe your understanding of the requirements
+
+In your own words, explain:
+
+That you will ensure the body/content of the disclaimer modal uses a scrollable layout when the content height exceeds the available space, especially on small viewports.
+
+That the user must be able to scroll through all disclaimer text while the buttons remain accessible.
+
+That you will not change the disclaimer copy or when it appears—only its layout/overflow behavior.
+
+That if a shared modal component is used, you’ll either enhance it safely or gate the new behavior behind a prop.
+
+Identify key considerations to avoid disrupting existing functionality
+
+Make sure:
+
+You don’t create a confusing double-scroll (page + modal) scenario—modal content should be the primary scroll.
+
+The modal remains visually centered or appropriately placed on small screens (padding/margins may differ by breakpoint).
+
+Other modals that reuse shared components are not unintentionally broken by the overflow changes.
+
+Any focus-trap / accessibility logic still works as intended.
+
+Propose best-practice implementation details
+
+A typical Tailwind approach (you can adapt):
+
+<div className="fixed inset-0 z-50 flex items-center justify-center px-4 py-6 sm:px-6">
+  {/* Backdrop */}
+  <div className="fixed inset-0 bg-black/60" aria-hidden="true" />
+
+  {/* Dialog */}
+  <div className="relative z-10 w-full max-w-lg">
+    <div className="overflow-hidden rounded-2xl bg-background shadow-lg border border-border">
+      {/* Optional header */}
+      <div className="px-4 py-3 border-b border-border">
+        <h2 className="text-base font-semibold text-foreground">
+          Disclaimer
+        </h2>
+      </div>
+
+      {/* Scrollable body */}
+      <div className="max-h-[60vh] overflow-y-auto px-4 py-4 text-sm text-muted-foreground">
+        {/* Disclaimer text content */}
+      </div>
+
+      {/* Footer with buttons */}
+      <div className="px-4 py-3 border-t border-border flex justify-end gap-3">
+        {/* Buttons */}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+Key ideas:
+
+Use a max-h-[Xvh] constraint (e.g., max-h-[60vh] or max-h-[70vh]) on the scrollable area.
+
+Apply overflow-y-auto to the content body to allow vertical scroll.
+
+Maintain padding and the existing style tokens so it feels consistent with the rest of the app.
+
+Generate a step-by-step plan to implement this fix
+
+At a minimum include:
+
+Open the disclaimer modal component file.
+
+Identify the core elements: backdrop, dialog panel, body/content, footer/buttons.
+
+Add appropriate max-h-[vh] and overflow-y-auto classes to the content/body container (or inner panel) so that:
+
+The modal doesn’t overflow beyond the viewport vertically.
+
+Disclaimer text becomes scrollable when it exceeds the height.
+
+Adjust padding/margins as needed so:
+
+The header and footer (if present) do not get cut off.
+
+On mobile, the modal uses sensible px/py so it fits within the viewport.
+
+Manually test:
+
+On a small viewport: verify content can be fully scrolled and buttons are accessible.
+
+On a large viewport: verify the layout still looks correct and no unwanted scrollbars appear when not needed.
+
+If the modal leverages a shared modal component:
+
+Decide whether to add a scrollableBody prop or similar.
+
+Ensure only the disclaimer modal turns this behavior on, unless a general improvement is clearly safe.
+
+Keep the scope limited
+
+Do not:
+
+Change the wording of the disclaimer.
+
+Change when the disclaimer is shown or how the user proceeds.
+
+Modify other unrelated flows (form, selection, results).
+
+Only:
+
+Fix the scroll/overflow behavior of the disclaimer modal so it’s fully readable and usable on small screens.
+
+Final instructions
+
+Do not modify any files yet
+
+First:
+
+Assess the current implementation,
+
+Describe your understanding,
+
+Identify key considerations, and
+
+Provide a step-by-step plan to fix the issue.
+
+Wait for my explicit approval that your understanding and plan are correct before making any code changes.
+
+Remember: do NOT run any e2e tests for this change; I will verify the fix in the UI myself.

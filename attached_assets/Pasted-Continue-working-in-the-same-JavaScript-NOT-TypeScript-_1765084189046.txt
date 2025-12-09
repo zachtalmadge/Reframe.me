@@ -1,0 +1,410 @@
+Continue working in the same JavaScript (NOT TypeScript) + React + Tailwind CSS, mobile-first project.
+The Results / Documents page (where narratives and the pre-adverse letter are shown), the “Start Over” button, the Learn More / FAQ page, and the global navbar + logo are already implemented and working.
+
+Right now, on the Results page:
+
+There is a “Start Over” button that lets the user begin a new run.
+
+The logo and “Learn More”/FAQ navigation may take users away without a results-specific warning.
+
+I want to:
+
+Add a “Learn More” button in orange to the right of the “Start Over” button on the Results page.
+
+When the user tries to leave the Results page via:
+
+The new “Learn More” button,
+
+The Home logo in the header,
+
+Or the “Learn More / FAQ” tab in the navbar,
+show a special warning modal that reminds them to copy/download their results before leaving.
+
+Important constraint:
+The “Start Over” button is the only control that should take them away from the Results page without any warning, and its code must not be touched or modified.
+
+Important for this change:
+For this change, DO NOT perform any end-to-end (e2e) tests or automated full-flow testing.
+You may perform local/component-level checks only. I will manually confirm the behavior in the UI.
+
+Business requirement – Results page “Learn More” button + exit warning
+
+Update the Results / Documents page so that:
+
+A new “Learn More” button:
+
+Appears to the right of the existing “Start Over” button (on the same row, as layout allows).
+
+Uses the orange accent style consistent with the app’s secondary/attention color (e.g., the orange used for alerts/secondary CTAs).
+
+Navigates the user toward the Learn More / FAQ page (existing route), but only after a confirmation modal.
+
+A special warning modal appears when the user attempts to leave the Results page using:
+
+The new “Learn More” button on the Results page.
+
+The Home logo in the header (while on the Results page).
+
+The “Learn More / FAQ” link in the navbar (while on the Results page).
+
+The warning modal content should clearly, calmly convey something like:
+
+“Don’t forget to copy or download your results before you leave this page.”
+
+“Once you leave this page, you’ll need to start over to generate new narratives or letters.”
+
+Modal behavior:
+
+If the user confirms:
+
+They are taken to the target destination:
+
+For the Results page “Learn More” button → to the FAQ / Learn More page.
+
+For the Home logo → to Home.
+
+For the navbar Learn More tab → to the FAQ / Learn More page.
+
+If the user cancels:
+
+They stay on the Results page, and their current results remain visible.
+
+The existing “Start Over” button:
+
+Must not be changed in any way.
+
+Continues to function exactly as it does now (starting a new run) without showing this warning modal.
+
+This new warning modal behavior should be specific to the Results page context:
+
+On other pages (e.g., Home, Selection, Form, Loading), the existing behaviors and warning patterns should remain unchanged, unless they already use a shared confirm-on-exit logic that you can extend in a safe, scoped way.
+
+Acceptance criteria (Given / When / Then)
+Scenario: Learn More button appears next to Start Over
+
+Given the user has successfully generated results and is on the Results / Documents page
+
+When they view the main actions at the bottom/top of the page (where “Start Over” is)
+
+Then they see a “Learn More” button in orange, positioned to the right of the existing “Start Over” button.
+
+Scenario: Learn More button triggers special warning modal
+
+Given the user is on the Results page and sees their narratives/letter
+
+When they click the “Learn More” button
+
+Then:
+
+A warning modal appears with text reminding them to copy or download their results before leaving and that they will have to start over if they leave.
+
+The modal includes clear Confirm and Cancel actions.
+
+If they confirm, they are navigated to the FAQ / Learn More page.
+
+If they cancel, they remain on the Results page and their results are still visible.
+
+Scenario: Home logo on Results page triggers the same warning
+
+Given the user is on the Results page with results visible
+
+When they click the Home logo in the header
+
+Then:
+
+The same special warning modal appears with the “don’t forget to copy/download” message.
+
+If they confirm, they are taken to the Home page.
+
+If they cancel, they stay on the Results page.
+
+Scenario: Navbar Learn More tab on Results page triggers the same warning
+
+Given the user is on the Results page
+
+When they click the “Learn More / FAQ” link in the navbar
+
+Then:
+
+The same special warning modal appears with the “copy/download” reminder.
+
+If they confirm, they are taken to the FAQ / Learn More page.
+
+If they cancel, they stay on the Results page.
+
+Scenario: Start Over remains the only “no-warning” exit
+
+Given the user is on the Results page
+
+When they click “Start Over”
+
+Then:
+
+The warning modal does not appear.
+
+The “Start Over” behavior remains exactly as currently implemented (starting a fresh run, clearing any necessary state).
+
+The code for “Start Over” has not been modified.
+
+Scenario: No regressions outside the Results page
+
+Given navigation behaviors and modals previously implemented for other pages (Home, Selection, Form, Loading, FAQ)
+
+When this new Results-specific warning is added
+
+Then:
+
+Existing confirmation modals for leaving the Form or Loading steps still work as before.
+
+The new “copy/download” warning is only applied when leaving the Results page via the logo or Learn More actions.
+
+No unexpected warnings appear on unrelated pages.
+
+What I want you (Replit AI) to do
+
+Assess the current Results page and navigation behavior
+
+Identify the component(s) that render the Results / Documents page, including:
+
+The existing “Start Over” button.
+
+Any existing secondary actions or buttons in that area.
+
+Identify:
+
+How the Home logo click is currently handled (globally or per route).
+
+How the “Learn More / FAQ” navigation item is implemented and wired to the /faq route.
+
+Determine whether there is already a shared confirm-on-exit modal pattern that you can reuse or extend for the Results page.
+
+Describe your understanding of the requirements
+
+In your own words, explain:
+
+That you will add a new orange “Learn More” button to the Results page, to the right of the existing “Start Over” button.
+
+That clicking this Learn More button, the Home logo (while on Results), or the navbar Learn More tab (while on Results) must all show the same special warning modal.
+
+That this modal will remind users to copy or download their results and warn that leaving means they will have to start over.
+
+That the Start Over button must not be changed and should remain the only way to leave the page without this specific warning.
+
+That you must keep behavior on other pages consistent with existing patterns.
+
+Identify key considerations to avoid disrupting existing functionality
+
+Ensure that:
+
+You do not touch or modify the “Start Over” button’s handler or logic.
+
+The new “Learn More” button uses separate state/handlers from “Start Over”.
+
+The new modal logic is scoped so that:
+
+It only applies when the current route is the Results page.
+
+It doesn’t accidentally show on other pages when using the logo or Learn More nav link.
+
+Accessibility and UX remain strong:
+
+Modal is focus-trapped when open.
+
+There are clear Confirm and Cancel buttons.
+
+The modal can be dismissed with keyboard (e.g., Esc) if consistent with existing modals.
+
+Propose best-practice implementation details
+
+Describe how you will:
+
+Add the Learn More button next to Start Over using Tailwind (e.g., flex row, gap, etc.), ensuring a good layout on mobile and desktop.
+
+Implement or reuse a modal component for the warning:
+
+With a clear title (e.g., “Before you leave this page…”).
+
+Body text that:
+
+Reminds to copy or download.
+
+States that leaving will require them to start over to generate new results.
+
+Manage modal state (e.g., isResultsExitModalOpen) and the pending destination (Home vs FAQ) so that Confirm knows where to navigate.
+
+Explain how you will hook this up to:
+
+The Results page Learn More button click.
+
+The logo click handler when the current route is Results.
+
+The navbar Learn More click when the current route is Results.
+
+Confirm that for other routes, existing behaviors remain unchanged or continue to use their existing confirmation modals.
+
+Assess other best practices
+
+Tailwind usage:
+
+Keep button styling consistent with other orange/secondary CTAs (e.g., rounded corners, hover/active states).
+
+Use appropriate spacing between “Start Over” and “Learn More” on mobile and desktop.
+
+Tone:
+
+Modal text should be gentle and supportive, not alarmist.
+
+Example tone: “We just don’t want you to lose something important by accident.”
+
+UX:
+
+On small screens, ensure buttons and modal content remain readable and easy to tap.
+
+Routing:
+
+Use existing routing patterns (wouter) to navigate after confirmation.
+
+Generate a step-by-step plan to implement this enhancement
+
+At a minimum include:
+
+Step 1: Locate the Results / Documents page component and the section containing the Start Over button.
+
+Step 2: Add a new orange “Learn More” button to the right of “Start Over” in the layout.
+
+Step 3: Implement or reuse a modal component and add new state to the Results page (or a suitable parent) to:
+
+Track whether the results-exit warning modal is open.
+
+Track the requested destination (Home or FAQ).
+
+Step 4: Update:
+
+The Results page Learn More button click handler to open this modal and set the destination to the FAQ page.
+
+The Home logo click behavior (when current route is Results) to:
+
+Open this modal with destination Home instead of navigating immediately.
+
+The navbar Learn More / FAQ link (when current route is Results) to:
+
+Open this modal with destination FAQ instead of navigating immediately.
+
+Step 5: In the modal’s Confirm handler:
+
+Perform the appropriate navigation (Home or FAQ).
+
+Ensure any necessary cleanup of state occurs if required (while not modifying the Start Over logic).
+
+Step 6: In the modal’s Cancel handler:
+
+Close the modal and leave the user on the Results page with their results intact.
+
+Step 7: Manually verify in the UI:
+
+On Results page:
+
+“Start Over” still works as before with no warning.
+
+“Learn More” button shows the warning and navigates only after confirmation.
+
+Logo click and navbar Learn More click show the warning and behave correctly.
+
+On other pages:
+
+Logo and Learn More behave as they did before this change (or continue to use any existing, appropriate confirmation patterns).
+
+Keep the scope limited
+
+Do not:
+
+Modify or refactor the “Start Over” button or its logic.
+
+Change the core regenerate logic, card layout, or download/copy functionality on the Results page.
+
+Alter existing confirmation modals for form or loading stages beyond any necessary small reuse of shared modal components.
+
+Only:
+
+Add the new Learn More button on the Results page.
+
+Implement the Results-specific exit warning modal and hook it into:
+
+Results Learn More button.
+
+Logo click (on Results).
+
+Navbar Learn More click (on Results).
+
+Propose a skeleton framework
+
+Provide a simplified example of how this might look (in JavaScript React, not TypeScript), for example:
+
+// Inside ResultsPage.jsx (simplified)
+const [exitModalOpen, setExitModalOpen] = useState(false);
+const [exitDestination, setExitDestination] = useState(null); // "home" | "faq"
+
+const handleResultsLearnMoreClick = () => {
+  setExitDestination("faq");
+  setExitModalOpen(true);
+};
+
+const handleResultsLogoClick = () => {
+  setExitDestination("home");
+  setExitModalOpen(true);
+};
+
+const handleConfirmExit = () => {
+  setExitModalOpen(false);
+  if (exitDestination === "home") {
+    // navigate to home
+  } else if (exitDestination === "faq") {
+    // navigate to FAQ
+  }
+};
+
+const handleCancelExit = () => {
+  setExitModalOpen(false);
+};
+
+return (
+  <div className="flex flex-col">
+    {/* Results content... */}
+
+    <div className="mt-8 flex flex-wrap gap-3">
+      <button
+        type="button"
+        className="btn-secondary" // existing Start Over styling
+        // IMPORTANT: do not change this handler in the real code
+      >
+        Start over
+      </button>
+
+      <button
+        type="button"
+        className="rounded-full bg-orange-500 px-4 py-2 text-sm font-medium text-white hover:bg-orange-600 active:bg-orange-700"
+        onClick={handleResultsLearnMoreClick}
+      >
+        Learn more
+      </button>
+    </div>
+
+    {exitModalOpen && (
+      <ResultsExitWarningModal
+        onConfirm={handleConfirmExit}
+        onCancel={handleCancelExit}
+      />
+    )}
+  </div>
+);
+
+
+The actual implementation should reuse existing modal and navigation patterns where appropriate and must not alter the Start Over button logic.
+
+Do not modify any files yet
+
+First, output your understanding of this enhancement and your implementation plan.
+
+Remember: do NOT perform any e2e tests for this change—I will manually verify it in the UI.
+
+Wait for my confirmation that your approach is sound before updating the code.

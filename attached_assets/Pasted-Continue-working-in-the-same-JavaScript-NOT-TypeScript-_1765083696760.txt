@@ -1,0 +1,303 @@
+Continue working in the same JavaScript (NOT TypeScript) + React + Tailwind CSS, mobile-first project.
+The FAQ / Learn more page has already been scaffolded, routed, and populated with the existing FAQ questions and answers (from the previous prompts), including:
+
+“When should I disclose my record?”
+
+“What are my rights during a pre-adverse action notice?”
+
+“Does this letter actually work?”
+
+“Is my information stored or shared?”
+
+“Can this guarantee I get a job or keep a job?”
+
+“Is this legal advice? Are you my lawyer?”
+
+“Who is Reframe.me for (and not for)?”
+
+“Can I use this letter in court or for legal proceedings?”
+
+“Can I reuse a narrative or letter for different jobs?”
+
+I now want to add two more FAQ questions and answers and have them appear at the top of the accordion list, above the existing items:
+
+A question like: “Why might I want different ways to talk about my record?”
+
+A question like: “What is a pre-adverse action response letter, and when would I use one?”
+
+The answers should be trauma-aware, non-judgmental, and help users understand:
+
+Why it’s useful to have more than one version of their disclosure story (different contexts, different employers, different comfort levels).
+
+What a pre-adverse action response letter is in general terms, and in what kinds of situations they might want to use one—without turning this into legal advice or making promises.
+
+Important for this change:
+For this change, DO NOT perform any end-to-end (e2e) tests or automated full-flow testing.
+You may perform local/component-level checks only. I will manually confirm the change myself.
+
+Business requirement – Add two new FAQ entries at the top of the list
+
+Update the FAQ page so that:
+
+Two new Q&A entries appear at the top of the accordion list, in this order:
+
+“Why might I want different ways to talk about my record?”
+
+Answer intent:
+
+Explain that people often face different situations (job applications, in-person interviews, written forms, conversations with HR) where:
+
+The amount of detail they share may change.
+
+The focus may shift (e.g., very short version vs longer, more contextual version).
+
+Their own comfort level and safety may differ.
+
+Emphasize that having a few versions of their story can:
+
+Help them feel more prepared and less caught off guard.
+
+Let them choose a version that fits the moment and the audience.
+
+Make it clear this does not mean lying—it’s about honest, consistent information shared in different depths and formats.
+
+Keep the tone gentle and supportive; acknowledge that it’s normal to feel nervous about talking about their record.
+
+“What is a pre-adverse action response letter, and when would I use one?”
+
+Answer intent:
+
+Explain, in general terms, that:
+
+In some hiring processes, employers may send a “pre-adverse action notice” when a background check shows something that might lead them to take back an offer or decide not to hire.
+
+A pre-adverse action response letter is the candidate’s chance to:
+
+Correct mistakes in the report (if there are any).
+
+Share context about their record.
+
+Highlight steps they’ve taken to change and why they’re still a strong fit for the job.
+
+Clarify that:
+
+Laws and exact procedures vary by location and situation.
+
+This site cannot tell them exactly what their rights are.
+
+Encourage them to:
+
+Reach out to legal aid, a lawyer, or local employment rights organizations to understand their specific rights and options.
+
+Reinforce that Reframe.me cannot guarantee any outcome or take responsibility for employer decisions.
+
+The existing FAQ questions remain present and appear below these two new entries, in the same order they had before.
+
+All answers remain plain language, non-judgmental, and avoid giving direct legal advice or promises.
+
+Acceptance criteria (Given / When / Then)
+Scenario: New FAQ questions appear at the top
+
+Given the user opens the FAQ page
+
+When the accordion list of questions is rendered
+
+Then the first two questions they see are:
+
+“Why might I want different ways to talk about my record?”
+
+“What is a pre-adverse action response letter, and when would I use one?”
+
+And the previously existing questions appear below these new ones in their original order.
+
+Scenario: “Different ways to talk about my record” answer is supportive
+
+Given the user is on the FAQ page
+
+When they expand “Why might I want different ways to talk about my record?”
+
+Then:
+
+The answer explains that people sometimes need shorter and longer versions of their story for different contexts and audiences.
+
+The answer clarifies that this is about adjusting detail and emphasis, not about changing the truth.
+
+The tone is gentle, non-judgmental, and acknowledges that feeling unsure about disclosure is normal.
+
+Scenario: “Pre-adverse action response letter” answer is clear and non-legal
+
+Given the user is on the FAQ page
+
+When they expand “What is a pre-adverse action response letter, and when would I use one?”
+
+Then:
+
+The answer gives a plain-language explanation of what a pre-adverse notice and response letter are in general terms.
+
+The answer explains that it’s typically used when an employer’s background check raises issues that might affect a hiring decision.
+
+The answer states that laws and processes vary by place and that this is not legal advice.
+
+The answer encourages them to seek help from legal aid, a lawyer, or local employment rights organizations.
+
+Scenario: Existing FAQ behavior remains unchanged
+
+Given the FAQ page was already working with the previous questions and disclaimers
+
+When the two new Q&A items are added
+
+Then:
+
+The accordion behavior (open/close, aria attributes, keyboard navigation) still works as before.
+
+The page layout remains mobile-first and readable.
+
+Top and bottom disclaimer blocks remain visible and unchanged.
+
+No other FAQ answers are accidentally modified or removed.
+
+What I want you (Replit AI) to do
+
+Assess the current FAQ data and ordering
+
+Identify where the FAQ items are currently defined (e.g., an array of { id, question, answer } objects or similar).
+
+Confirm the current order of FAQ items as rendered in the accordion.
+
+Determine how easy it is to insert new items at the top of the list without disrupting the existing structure.
+
+Describe your understanding of the requirements
+
+In your own words, explain:
+
+That you will add two new FAQ entries with the questions:
+
+“Why might I want different ways to talk about my record?”
+
+“What is a pre-adverse action response letter, and when would I use one?”
+
+That these new entries must appear before all existing FAQ items.
+
+That the answers must be trauma-aware, plain-language, and non-legal, giving general information and guidance without making promises or giving specific legal instructions.
+
+That you will not change routing or navigation logic; only the FAQ content and ordering.
+
+Identify key considerations to avoid disrupting existing functionality
+
+Ensure that:
+
+The new items use unique IDs and do not collide with existing FAQ item IDs.
+
+The insertion of two new entries at the top does not break any logic that depends on ordering (if any).
+
+The two new answers do not contradict existing disclaimers or other FAQ answers.
+
+The overall tone remains consistent with Reframe.me’s trauma-aware, privacy-first voice.
+
+Propose best-practice content implementation
+
+Explain how you will:
+
+Extend the FAQ items array with two new objects prepended to the list.
+
+Keep answers concise but meaningful by:
+
+Using short paragraphs.
+
+Breaking up longer explanations with bullet points where helpful.
+
+Ali gn wording with existing disclaimers (e.g., repeating phrases like “laws vary by place” and “this is not legal advice” where appropriate).
+
+If the FAQ data is defined inline with JSX, describe how you’ll add these two items in a way that keeps the code readable and maintainable.
+
+Assess other best practices
+
+Tone:
+
+Use “many people choose to…” or “in general…” to avoid sounding directive.
+
+Acknowledge emotional realities (fear, uncertainty) without being heavy-handed.
+
+Legal boundaries:
+
+Keep everything high-level and explicitly refer users to legal aid or lawyers for specific legal questions.
+
+UX:
+
+Ensure that adding two more questions at the top doesn’t make the page feel overwhelming; it should still be easy to scan.
+
+Generate a step-by-step plan to implement this enhancement
+
+At a minimum include:
+
+Step 1: Locate the FAQ data structure or the code that defines the list of FAQ items.
+
+Step 2: Add the two new FAQ items with:
+
+IDs (e.g., "why-different-versions" and "what-is-pre-adverse-letter").
+
+Questions as specified.
+
+Answers that follow the intents described above.
+
+Step 3: Ensure these two new items are placed before the existing items in the order used for rendering.
+
+Step 4: Manually verify in the UI that:
+
+The two new questions appear at the top.
+
+Expanding them shows the correct, trauma-aware answers.
+
+All other FAQs still appear below and function as before.
+
+Step 5: Spot-check for typos or phrasing that could accidentally sound like legal advice or guarantees and adjust if needed.
+
+Keep the scope limited
+
+Do not:
+
+Change routing, navigation, data-clearing behavior, or any other part of the app.
+
+Modify other FAQ questions or answers beyond minor adjustments needed to keep tone/wording consistent.
+
+Only:
+
+Add the two new FAQ entries and position them at the top of the accordion list.
+
+Propose a skeleton framework
+
+Provide a simplified example of what the updated FAQ data might look like, for example:
+
+const faqs = [
+  {
+    id: "why-different-versions",
+    question: "Why might I want different ways to talk about my record?",
+    answer: `
+
+
+Different situations call for different versions of your story. You might need a very short version for a form, a slightly longer version for a quick conversation, and a fuller version for a longer interview.
+
+The facts stay the same, but the level of detail and the parts you focus on can change depending on the job, the person you’re talking to, and what feels safe for you. Having a few options prepared can help you feel less caught off guard and more in control.
+
+This is not legal advice. If you can, talk with a trusted person, case manager, or legal aid organization about what makes sense for your situation.
+, }, { id: "what-is-pre-adverse-letter", question: "What is a pre-adverse action response letter, and when would I use one?", answer:
+In some hiring processes, an employer may send you a “pre-adverse action” notice if something on your background check might lead them to change an offer or decide not to hire you. A pre-adverse action response letter is your chance to respond.
+
+People often use this letter to correct mistakes in the report, share context about their past, and highlight the changes they’ve made and why they are still a strong fit for the job.
+
+Laws and procedures are different in different places, and this page cannot tell you exactly what your rights are. This is not legal advice. If you can, talk with a lawyer, legal aid organization, or employment rights group to understand your specific options.
+`,
+},
+// ...existing FAQ items follow here
+];
+```
+
+You can adapt the exact wording and formatting, as long as the intent and tone remain aligned with the requirements.
+
+Do not modify any files yet
+
+First, output your understanding of this change and your implementation plan.
+
+Remember: do NOT perform any e2e tests for this change—I will manually confirm behavior.
+
+Wait for my confirmation that your approach is sound before updating the code.

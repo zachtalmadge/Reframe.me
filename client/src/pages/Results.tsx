@@ -1,8 +1,18 @@
 import { useEffect, useState } from "react";
 import { useSearch, useLocation } from "wouter";
-import { Download, Home, AlertTriangle } from "lucide-react";
+import { Download, Home, AlertTriangle, BookOpen, MessageCircle, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import Layout from "@/components/Layout";
 import { ToolType } from "@/lib/formState";
 import { loadResults, NarrativeItem, ResponseLetter, clearResults, GenerationResult, updateResults } from "@/lib/resultsPersistence";
@@ -23,6 +33,117 @@ import {
   RegenerationCounts,
   NarrativeType,
 } from "@/lib/regenerationPersistence";
+
+function ResultsGuidanceSection({ 
+  hasNarratives, 
+  hasLetter, 
+  activeResultType 
+}: { 
+  hasNarratives: boolean; 
+  hasLetter: boolean;
+  activeResultType: "narratives" | "letter";
+}) {
+  if (!hasNarratives && !hasLetter) return null;
+
+  const showNarrativesGuidance = hasNarratives && (!hasLetter || activeResultType === "narratives");
+  const showLetterGuidance = hasLetter && (!hasNarratives || activeResultType === "letter");
+
+  return (
+    <section 
+      className="mt-8 pt-8 border-t border-border"
+      aria-labelledby="guidance-heading"
+      data-testid="section-guidance"
+    >
+      <div className="space-y-6">
+        <div className="text-center space-y-2">
+          <h2 
+            id="guidance-heading"
+            className="text-xl sm:text-2xl font-bold text-foreground"
+          >
+            How to use what you just created
+          </h2>
+          <p className="text-sm text-muted-foreground">
+            A few ideas to help you put these materials to work.
+          </p>
+        </div>
+
+        {showNarrativesGuidance && (
+          <div 
+            className="space-y-4"
+            role="tabpanel"
+            aria-labelledby="guidance-heading"
+            data-testid="guidance-narratives"
+          >
+            <div className="bg-muted/30 rounded-lg p-5 space-y-4">
+              <h3 className="font-semibold text-foreground flex items-center gap-2">
+                <MessageCircle className="w-5 h-5 text-primary" aria-hidden="true" />
+                Getting comfortable with your narratives
+              </h3>
+              <ul className="space-y-3 text-sm text-muted-foreground">
+                <li className="flex gap-3">
+                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary text-xs font-medium flex items-center justify-center">1</span>
+                  <span><strong className="text-foreground">Practice out loud.</strong> Reading silently is different from speaking. Try saying one version a few times until it feels natural.</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary text-xs font-medium flex items-center justify-center">2</span>
+                  <span><strong className="text-foreground">Pick your anchor sentences.</strong> You don't need to memorize everything. Choose 1-2 sentences that feel most true to you.</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary text-xs font-medium flex items-center justify-center">3</span>
+                  <span><strong className="text-foreground">Make it your own.</strong> Edit the wording so it sounds like you. These are starting points, not scripts.</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary text-xs font-medium flex items-center justify-center">4</span>
+                  <span><strong className="text-foreground">Share with someone you trust.</strong> If it helps, practice with a friend, mentor, or counselor who can give you honest feedback.</span>
+                </li>
+              </ul>
+              <p className="text-sm text-muted-foreground italic border-l-2 border-primary/30 pl-3">
+                Take your time. There's no rush to use these right away. When you're ready, you'll have words that feel prepared, not panicked.
+              </p>
+            </div>
+          </div>
+        )}
+
+        {showLetterGuidance && (
+          <div 
+            className="space-y-4"
+            role="tabpanel"
+            aria-labelledby="guidance-heading"
+            data-testid="guidance-letter"
+          >
+            <div className="bg-muted/30 rounded-lg p-5 space-y-4">
+              <h3 className="font-semibold text-foreground flex items-center gap-2">
+                <FileText className="w-5 h-5 text-chart-2" aria-hidden="true" />
+                Before you send your letter
+              </h3>
+              <ul className="space-y-3 text-sm text-muted-foreground">
+                <li className="flex gap-3">
+                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-chart-2/10 text-chart-2 text-xs font-medium flex items-center justify-center">1</span>
+                  <span><strong className="text-foreground">Check for accuracy.</strong> Review dates, names, charges, and employer details. Small errors can undermine your message.</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-chart-2/10 text-chart-2 text-xs font-medium flex items-center justify-center">2</span>
+                  <span><strong className="text-foreground">Make sure it feels honest.</strong> If anything doesn't sit right with you, edit it. You should feel comfortable with every word.</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-chart-2/10 text-chart-2 text-xs font-medium flex items-center justify-center">3</span>
+                  <span><strong className="text-foreground">Get a second opinion if you can.</strong> Consider sharing it with a trusted friend, reentry counselor, or legal aid organization before sending.</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-chart-2/10 text-chart-2 text-xs font-medium flex items-center justify-center">4</span>
+                  <span><strong className="text-foreground">Know your timeline.</strong> Pre-adverse action notices usually give you a window to respond. Check the deadline on your notice.</span>
+                </li>
+              </ul>
+              <p className="text-sm text-muted-foreground italic border-l-2 border-chart-2/30 pl-3">
+                This letter is a tool to help you respond thoughtfully. You deserve to be heard, and taking time to get it right is a sign of strength.
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
 
 export default function Results() {
   const [, navigate] = useLocation();
@@ -50,6 +171,9 @@ export default function Results() {
     values_aligned: null,
   });
   const [letterError, setLetterError] = useState<string | null>(null);
+
+  const [exitModalOpen, setExitModalOpen] = useState(false);
+  const [exitDestination, setExitDestination] = useState<"home" | "faq" | null>(null);
 
   const {
     handleCopyNarrative,
@@ -95,10 +219,35 @@ export default function Results() {
   };
 
   const handleLogoClick = () => {
+    setExitDestination("home");
+    setExitModalOpen(true);
+  };
+
+  const handleFaqClick = () => {
+    setExitDestination("faq");
+    setExitModalOpen(true);
+  };
+
+  const handleLearnMoreClick = () => {
+    setExitDestination("faq");
+    setExitModalOpen(true);
+  };
+
+  const handleConfirmExit = () => {
+    setExitModalOpen(false);
     clearFormData();
     clearResults();
     clearRegenerationCounts();
-    navigate("/");
+    if (exitDestination === "home") {
+      navigate("/");
+    } else if (exitDestination === "faq") {
+      navigate("/faq");
+    }
+  };
+
+  const handleCancelExit = () => {
+    setExitModalOpen(false);
+    setExitDestination(null);
   };
 
   const handleDownloadAllDocuments = () => {
@@ -214,7 +363,7 @@ export default function Results() {
   };
 
   return (
-    <Layout onLogoClick={handleLogoClick}>
+    <Layout onLogoClick={handleLogoClick} onFaqClick={handleFaqClick}>
       <section
         className="py-8 md:py-12 px-4 sm:px-6 lg:px-8"
         aria-labelledby="results-heading"
@@ -339,18 +488,64 @@ export default function Results() {
               <p className="text-sm text-muted-foreground text-center sm:text-left">
                 Need to make changes? You can start over anytime.
               </p>
-              <Button
-                variant="outline"
-                onClick={handleStartOver}
-                data-testid="button-start-over"
-              >
-                <Home className="w-4 h-4 mr-2" aria-hidden="true" />
-                Start Over
-              </Button>
+              <div className="flex flex-wrap gap-3">
+                <Button
+                  variant="outline"
+                  onClick={handleStartOver}
+                  data-testid="button-start-over"
+                >
+                  <Home className="w-4 h-4 mr-2" aria-hidden="true" />
+                  Start Over
+                </Button>
+                <Button
+                  className="bg-chart-2 hover:bg-chart-2/90 text-white"
+                  onClick={handleLearnMoreClick}
+                  data-testid="button-learn-more-results"
+                >
+                  <BookOpen className="w-4 h-4 mr-2" aria-hidden="true" />
+                  Learn More
+                </Button>
+              </div>
             </div>
           </div>
+
+          <ResultsGuidanceSection 
+            hasNarratives={hasNarratives} 
+            hasLetter={hasLetter}
+            activeResultType={activeTab}
+          />
         </div>
       </section>
+
+      <AlertDialog open={exitModalOpen} onOpenChange={setExitModalOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Before you leave this page</AlertDialogTitle>
+            <AlertDialogDescription className="space-y-3">
+              <p>
+                Don't forget to copy or download your results before you leave. We don't want you to lose something important by accident.
+              </p>
+              <p>
+                Once you leave this page, you'll need to start over to generate new narratives or letters.
+              </p>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel 
+              onClick={handleCancelExit}
+              data-testid="button-cancel-exit"
+            >
+              Stay on this page
+            </AlertDialogCancel>
+            <AlertDialogAction 
+              onClick={handleConfirmExit}
+              data-testid="button-confirm-exit"
+            >
+              Leave anyway
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </Layout>
   );
 }

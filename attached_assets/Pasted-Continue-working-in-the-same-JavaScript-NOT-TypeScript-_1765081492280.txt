@@ -1,0 +1,291 @@
+Continue working in the same JavaScript (NOT TypeScript) + React + Tailwind CSS, mobile-first project.
+On the Home page, the “How It Works” section has a scroll-triggered animation where each step fades and slides in from left to right when the section enters the viewport.
+
+After the last change:
+
+The animation still starts too early.
+
+The fade/slide is still too fast.
+
+The animation only runs once; I want it to reset when the user scrolls away and replay when they scroll back down.
+
+New requirements:
+
+Trigger the animation later (when the section is significantly further into view, closer to halfway or more).
+
+Make the fade/slide animation even slower and smoother than before.
+
+Make the animation reset when the user scrolls up so that, when they scroll back down, they see the animation again.
+
+Important for this fix:
+
+DO NOT perform any end-to-end (e2e) tests or automated full-flow testing.
+
+You may do local/component-level checks only. I will manually confirm the behavior in the UI.
+
+Do not make any code changes yet. First, give me your understanding, considerations, and a step-by-step plan, and wait for my approval before executing anything.
+
+Business requirement – Much later trigger, slower animation, and replay on revisit
+
+Update the How It Works section so that:
+
+Scroll trigger happens noticeably later
+
+The animation should not fire when the section just barely appears at the bottom of the viewport.
+
+It should trigger when the section is roughly:
+
+Around 60–75% visible, or
+
+Near the middle/upper third of the viewport (i.e., when the user has genuinely scrolled into it).
+
+Practically, this can be done by:
+
+Increasing the Intersection Observer threshold (e.g., 0.7 or higher), and/or
+
+Using a more aggressive rootMargin (e.g., rootMargin: "0px 0px -25% 0px" or similar) to delay triggering until the section is more fully within view.
+
+Animations are slower and more legible
+
+Each step card should:
+
+Still fade + slide in from an offset position.
+
+Use slower transition durations than the last version:
+
+For example, bump up to around duration-600–duration-700 (or equivalent in ms) for both opacity and transform.
+
+Preserve a staggered sequence, but also slightly increase the delay:
+
+e.g., 150–200ms increment between step 1, 2, and 3.
+
+Overall effect should feel:
+
+Calm, intentional, and very clear—no “blink and you miss it.”
+
+Animation resets when user scrolls away
+
+The animation should be replayable:
+
+When the section scrolls out of view (above or below), the internal “in view” state should reset.
+
+When the user scrolls back down and the section crosses the trigger point again, the steps should animate again from their initial hidden offset state.
+
+Concretely:
+
+Instead of a one-time hasEnteredView flag that stays true, use a state that reflects current visibility, e.g. isInView.
+
+When the observer callback signals entry.isIntersecting === true and the threshold is met → set isInView = true and run the animation.
+
+When entry.isIntersecting === false (section is out of view) → set isInView = false so that classes reset back to opacity-0 + translated offset.
+
+Scope remains limited to How It Works
+
+These trigger and speed changes should affect only the How It Works section.
+
+Do not change animations for:
+
+Hero, feature cards, CTAs, logo, carousel, etc.
+
+Acceptance criteria (Given / When / Then)
+Scenario: Animation triggers significantly later
+
+Given the user scrolls down the Home page
+
+When the How It Works section is just barely visible at the bottom of the screen
+
+Then:
+
+The step animations do not start yet.
+
+Given the user continues to scroll until the How It Works section is substantially visible (around halfway up or more)
+
+When the section crosses that new trigger threshold
+
+Then:
+
+The step cards begin the fade/slide animation.
+
+Scenario: Animation is noticeably slower
+
+Given the How It Works section reaches its trigger point
+
+When the animations play
+
+Then:
+
+Each step’s fade/slide takes longer than before (e.g., ~600–700ms).
+
+Steps 1, 2, and 3 animate in sequence with a visible stagger (e.g., 150–200ms apart).
+
+The overall animation feels smooth and easy to perceive.
+
+Scenario: Animation resets and replays
+
+Given the user has seen the How It Works steps animate in
+
+When they scroll past the section so that it leaves the viewport
+
+Then:
+
+The state resets, and the steps return to their hidden state (opacity 0 + offset).
+
+Given the user then scrolls back down to the How It Works section
+
+When the section again reaches the trigger point
+
+Then:
+
+The steps animate in again, just like the first time.
+
+What I want you (Replit AI) to do
+
+IMPORTANT PROCESS REQUIREMENT:
+Before making any code changes, you must:
+
+Assess the enhancement.
+
+Describe your understanding.
+
+Call out key considerations.
+
+Propose UX/implementation details.
+
+Generate a step-by-step plan.
+
+Wait for my explicit approval before editing any files.
+
+Assess the current How It Works implementation
+
+Locate the component that renders the How It Works section and its steps.
+
+Identify:
+
+The Intersection Observer / useInView hook usage:
+
+Current threshold, rootMargin, and options.
+
+The state variable controlling animation (e.g., hasEnteredView, inView, etc.).
+
+The Tailwind classes handling opacity, translate-*, and duration-* on each step.
+
+Describe your understanding of the requirements
+
+In your own words, explain:
+
+That you will:
+
+Delay the animation trigger to a later point in scroll, when the section is significantly more visible.
+
+Make the step animations slower and more staggered.
+
+Change the logic so the animation resets when the section is no longer in view and replays when it comes back.
+
+That these changes apply only to How It Works.
+
+Identify key considerations / things not to break
+
+How will you:
+
+Avoid flicker or constant flickering when the user hovers around the threshold?
+
+Ensure performance is good and the observer cleans up correctly?
+
+Make sure behavior is reasonable on both mobile and desktop (different viewport heights)?
+
+Confirm:
+
+You will not affect other animations (hero, buttons, logo, etc.).
+
+You will not cause layout shifts or janky scroll.
+
+Propose best-practice implementation details
+
+Trigger logic:
+
+Propose updated Intersection Observer options, e.g.:
+
+const [ref, isInView] = useInView({
+  threshold: 0.7, // or similar high threshold
+  // optionally: rootMargin: "0px 0px -20% 0px",
+});
+
+
+Explain how isInView will be toggled true when the section is sufficiently visible and false when it leaves the viewport (so animation can reset).
+
+Animation logic:
+
+Propose changing the step card classes to something like:
+
+className={cn(
+  "rounded-xl border bg-white p-6 text-left transition-opacity transition-transform duration-700 ease-out",
+  isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+)}
+
+
+And a stagger:
+
+style={{
+  transitionDelay: isInView ? `${index * 180}ms` : "0ms",
+}}
+
+
+Clarify how this will ensure a “softer, slower” feel.
+
+Reset behavior:
+
+Describe how you will use the entry.isIntersecting callback or useInView semantics so that:
+
+isInView becomes false when the section exits the viewport (top or bottom).
+
+This automatically returns steps to their hidden classes, ready to animate again.
+
+Generate a step-by-step plan (no code changes yet)
+
+Provide a clear, ordered plan like:
+
+Identify and open the How It Works component.
+
+Update the Intersection Observer options to use a higher threshold and/or rootMargin to delay triggering.
+
+Rename or repurpose the view state (e.g., from one-time hasEnteredView to isInView that can toggle true/false).
+
+Update the step card JSX to:
+
+Use longer duration-* Tailwind classes.
+
+Use a larger stagger via inline transitionDelay.
+
+Use isInView instead of a one-time flag so classes reset when isInView becomes false.
+
+Test locally by:
+
+Scrolling slowly to see the delayed trigger.
+
+Observing the slower fade/slide.
+
+Scrolling past the section and back to confirm the animation replays.
+
+Do not execute this plan yet—only describe it.
+
+Do NOT implement or modify code until I approve
+
+After you write out:
+
+Your understanding
+
+Key considerations
+
+Proposed changes
+
+Step-by-step plan
+
+Wait for my confirmation that your approach is sound before you start editing any files.
+
+No e2e tests
+
+For this prompt:
+
+Do not run or modify any end-to-end (e2e) tests.
+
+Limit yourself to explaining your approach and, after my approval, making targeted component-level changes.

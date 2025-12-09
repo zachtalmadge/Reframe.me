@@ -1,5 +1,7 @@
 import { Label } from "@/components/ui/label";
 import { CharacterCountTextarea } from "../CharacterCountTextarea";
+import { OilFrameworkInfo } from "../OilFrameworkInfo";
+import { StepImportanceAlert } from "../StepImportanceAlert";
 import { FormState, FormAction } from "@/lib/formState";
 
 interface Step7LessonsLearnedProps {
@@ -28,35 +30,12 @@ export function Step7LessonsLearned({
         </p>
       </div>
 
-      <div className="space-y-6">
-        <div className="p-4 rounded-lg bg-primary/5 border border-primary/20">
-          <p className="text-sm text-foreground leading-relaxed">
-            <span className="font-medium">We'll highlight your growth.</span>{" "}
-            Based on the programs, skills, and experiences you've shared, our 
-            tool will write about your personal development and the positive 
-            steps you've taken.
-          </p>
-        </div>
+      <StepImportanceAlert>
+        Based on the programs, skills, and experiences you've shared, our tool will write about your personal development and the positive steps you've taken.
+      </StepImportanceAlert>
 
-        <div className="p-4 rounded-lg bg-muted/50 border border-border space-y-2">
-          <p className="text-sm font-medium text-foreground">
-            O.I.L. Framework
-          </p>
-          <ul className="text-sm text-muted-foreground space-y-1">
-            <li>
-              <span className="font-medium text-muted-foreground">O</span>
-              wnership - Taking responsibility
-            </li>
-            <li>
-              <span className="font-medium text-muted-foreground">I</span>mpact
-              - Understanding consequences
-            </li>
-            <li>
-              <span className="font-medium text-foreground">L</span>essons -
-              What you've learned
-            </li>
-          </ul>
-        </div>
+      <div className="space-y-6">
+        <OilFrameworkInfo />
 
         <div className="space-y-3">
           <div className="space-y-1">

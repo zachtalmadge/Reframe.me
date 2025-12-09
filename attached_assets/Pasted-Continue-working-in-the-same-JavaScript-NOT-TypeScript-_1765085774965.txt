@@ -1,0 +1,402 @@
+Continue working in the same JavaScript (NOT TypeScript) + React + Tailwind CSS, mobile-first project.
+The Home page hero currently has a rotating set of before/after text pairs. You recently updated it so that:
+
+There are 4 pairs of before/after text.
+
+Each pair shows the “before” line fading in first, then the “after” line.
+
+The active pair changes roughly every 4 seconds.
+
+Current issue:
+The transition between pairs feels choppy. The text for the next pair appears abruptly when the index changes. There is no smooth fade-out of the current pair and no brief pause before the next pair appears.
+
+Desired behavior:
+
+Once both the before and after texts have fully faded in for a given pair, they should remain visible for ~4 seconds.
+
+After that 4-second visible period:
+
+Both before and after fade out simultaneously.
+
+There should be a 1-second gap with no before/after text visible.
+
+Then the next pair begins:
+
+The before fades in first,
+
+Then the after fades in, just like now.
+
+Important for this change:
+For this change, DO NOT perform any end-to-end (e2e) tests or automated full-flow testing.
+You may perform local/component-level checks only. I will manually confirm behavior in the UI.
+
+Business requirement – Smooth timeline: fade in, show, fade out, pause, next pair
+
+Update the hero’s before/after rotation logic so that:
+
+For each active pair:
+
+Before fade-in:
+
+The before text fades in from opacity-0 to opacity-100.
+
+After fade-in:
+
+After a short delay, the after text fades in from opacity-0 to opacity-100.
+
+Visible duration:
+
+Once both are fully visible, they remain visible together for about 4 seconds.
+
+Simultaneous fade-out:
+
+Both before and after fade out at the same time back to opacity-0.
+
+Gap before next pair:
+
+After they fade out, there is a ~1 second gap where no before/after text is shown.
+
+Next pair:
+
+After this gap, the hero switches to the next before/after pair and repeats the same sequence (before fade-in → after fade-in → 4s visible → fade-out → 1s gap → next).
+
+The logic should loop over all 4 before/after pairs:
+
+After the 4th pair, it returns to the 1st pair and continues.
+
+The animation must be:
+
+Gentle, trauma-aware, and non-jarring.
+
+Free of abrupt text snapping or overlapping pairs.
+
+The existing text content and hero copy should not change, only the timing and sequence behavior for showing/hiding pairs.
+
+Acceptance criteria (Given / When / Then)
+Scenario: One full cycle for a single pair
+
+Given the user is looking at the hero when a specific before/after pair starts
+
+When the sequence plays for that pair
+
+Then:
+
+The before text fades in first.
+
+The after text fades in shortly after.
+
+Both remain visible together for roughly 4 seconds.
+
+Then both fade out at the same time.
+
+There is about a 1-second pause where neither before nor after text is visible.
+
+Only after that pause does the next pair’s before text start to fade in.
+
+Scenario: Smooth transition between pairs
+
+Given the hero is cycling through pairs normally
+
+When it transitions from one pair to the next
+
+Then:
+
+The current pair fades out smoothly, without snapping.
+
+There is a brief moment (about 1 second) with no before/after text.
+
+Then the next pair appears with the same before-then-after staggered fade pattern.
+
+Scenario: Looping through all 4 pairs
+
+Given there are 4 before/after pairs defined
+
+When enough time passes
+
+Then:
+
+The hero cycles through all 4 pairs with the new timing (show, fade-out, pause).
+
+After the 4th pair completes its cycle, the animation returns to the 1st pair and continues.
+
+Scenario: No choppy or overlapping text
+
+Given the new timing is in place
+
+When the hero rotates pairs
+
+Then:
+
+Pairs do not overlap (you don’t see text from two different pairs at the same time).
+
+There are no abrupt jumps from one pair’s content to another.
+
+Fades and pauses feel controlled and intentional.
+
+Scenario: No regressions to hero layout or copy
+
+Given the previous hero layout (headline, subheading, CTA)
+
+When this timing change is applied
+
+Then:
+
+The hero’s layout and text content (outside of the rotating before/after area) remain unchanged.
+
+Only the timing/visibility behavior of the before/after lines is updated.
+
+What I want you (Replit AI) to do
+
+Assess the current rotation implementation
+
+Locate the hero component where the before/after pairs are defined and rotated.
+
+Identify how you currently:
+
+Track the active pair index (e.g., currentIndex).
+
+Track visibility of before and after text (e.g., showBefore, showAfter).
+
+Trigger the rotation (e.g., setInterval every 4 seconds that increments currentIndex).
+
+Describe your understanding of the requirements
+
+In your own words, explain:
+
+That the current setInterval-only approach is causing choppy transitions.
+
+That you need to switch to a timeline-based sequence of fade-in → visible → fade-out → gap → next pair.
+
+That you will:
+
+Show before → show after,
+
+Keep both visible for 4 seconds,
+
+Fade both out together,
+
+Wait 1 second with no text,
+
+Then move to the next pair and repeat.
+
+Identify key considerations to avoid disrupting existing functionality
+
+Ensure that:
+
+All timeouts/intervals are properly cleaned up in useEffect (to avoid memory leaks).
+
+You don’t introduce race conditions where multiple timeouts attempt to update state out of order.
+
+The hero still renders a valid initial state (e.g., the first pair) with no flash of undefined or empty text.
+
+Motion remains comfortable and respects any motion-safe: patterns already in use.
+
+Propose best-practice timeline implementation
+
+Describe a more controlled timeline approach, for example:
+
+Replace the pure setInterval index-rotation with a recursive timeout-based sequence that:
+
+Sets the active pair index.
+
+Resets showBefore/showAfter to false.
+
+After a short delay (e.g., 200ms), sets showBefore to true.
+
+After another delay (e.g., 600–800ms), sets showAfter to true.
+
+After 4 seconds of both visible, triggers:
+
+showBefore = false; showAfter = false; to fade both out (Tailwind handles transition).
+
+After an additional 1 second gap, advances to the next index and repeats.
+
+Suggest using a single useEffect that:
+
+Starts the cycle on mount (runCycle(0)),
+
+Keeps track of all active timeouts (e.g., in an array),
+
+Clears them on unmount.
+
+Assess other best practices
+
+State:
+
+Keep state minimal (currentIndex, showBefore, showAfter) and predictable.
+
+Timing:
+
+Extract timing constants for clarity, e.g.:
+
+const BEFORE_DELAY = 200;
+const AFTER_DELAY = 800;
+const VISIBLE_DURATION = 4000;
+const GAP_DURATION = 1000;
+
+
+Animations:
+
+Continue using Tailwind transition-opacity, duration-*, etc., for smooth fades.
+
+Apply opacity-0 / opacity-100 based on showBefore/showAfter.
+
+Generate a step-by-step plan to implement this enhancement
+
+At a minimum include:
+
+Step 1: Remove or refactor the current fixed-interval (setInterval) logic that blindly advances currentIndex every 4 seconds.
+
+Step 2: Introduce constants for the timeline:
+
+const BEFORE_DELAY = 200;
+const AFTER_DELAY = 800;
+const VISIBLE_DURATION = 4000;
+const GAP_DURATION = 1000;
+
+
+Step 3: Implement a runCycle(index) function inside useEffect that:
+
+Sets currentIndex to index.
+
+Resets showBefore and showAfter to false.
+
+Schedules:
+
+A timeout to setShowBefore(true) after BEFORE_DELAY.
+
+A timeout to setShowAfter(true) after AFTER_DELAY.
+
+A timeout after AFTER_DELAY + VISIBLE_DURATION to:
+
+setShowBefore(false); setShowAfter(false); (both fade out).
+
+A timeout after AFTER_DELAY + VISIBLE_DURATION + GAP_DURATION to:
+
+Call runCycle((index + 1) % beforeAfterPairs.length) to start the next pair.
+
+Step 4: Store all timeout IDs in an array so they can be cleared in the cleanup function of useEffect.
+
+Step 5: Keep the JSX the same conceptually:
+
+Render beforeAfterPairs[currentIndex].before and .after.
+
+Use Tailwind classes (e.g., transition-opacity duration-500) that respond to showBefore/showAfter toggling to handle fade-in/fade-out.
+
+Step 6: Manually verify:
+
+Each pair: before fades in → after fades in → both visible ~4s → both fade out together → 1s gap → next pair.
+
+There is no overlapping content between pairs and no choppy jumps.
+
+Layout and hero content remain as before.
+
+Keep the scope limited
+
+Do not:
+
+Change hero headline, subheading, or CTA text.
+
+Modify other animations on the page (Safe-space, How It Works, Stories of Change).
+
+Introduce any new global animation helpers beyond what’s needed for this hero timeline.
+
+Only:
+
+Adjust the hero’s before/after timing logic and state to create a smooth cycle.
+
+Propose a skeleton framework
+
+Provide a simplified example (in JavaScript React, not TypeScript) showing the general pattern, for example:
+
+const BEFORE_DELAY = 200;
+const AFTER_DELAY = 800;
+const VISIBLE_DURATION = 4000;
+const GAP_DURATION = 1000;
+
+const beforeAfterPairs = [ /* existing 4 pairs */ ];
+
+function Hero() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [showBefore, setShowBefore] = useState(false);
+  const [showAfter, setShowAfter] = useState(false);
+
+  useEffect(() => {
+    let timeouts = [];
+
+    function runCycle(index) {
+      setCurrentIndex(index);
+      setShowBefore(false);
+      setShowAfter(false);
+
+      // Fade in "before"
+      timeouts.push(
+        setTimeout(() => setShowBefore(true), BEFORE_DELAY)
+      );
+
+      // Fade in "after"
+      timeouts.push(
+        setTimeout(() => setShowAfter(true), AFTER_DELAY)
+      );
+
+      // After both visible for VISIBLE_DURATION, fade both out
+      const fadeOutTime = AFTER_DELAY + VISIBLE_DURATION;
+      timeouts.push(
+        setTimeout(() => {
+          setShowBefore(false);
+          setShowAfter(false);
+        }, fadeOutTime)
+      );
+
+      // After fade-out + GAP_DURATION, move to next pair
+      const nextStartTime = fadeOutTime + GAP_DURATION;
+      timeouts.push(
+        setTimeout(() => {
+          const nextIndex = (index + 1) % beforeAfterPairs.length;
+          runCycle(nextIndex);
+        }, nextStartTime)
+      );
+    }
+
+    runCycle(0);
+
+    return () => {
+      timeouts.forEach(clearTimeout);
+    };
+  }, []);
+
+  const pair = beforeAfterPairs[currentIndex];
+
+  return (
+    <section className="...">
+      {/* Hero headline, subheading, CTA... */}
+      <div className="mt-6 space-y-2 text-sm text-slate-100">
+        <p
+          className={`transition-opacity duration-500 ${
+            showBefore ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          {pair.before}
+        </p>
+        <p
+          className={`transition-opacity duration-500 ${
+            showAfter ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          {pair.after}
+        </p>
+      </div>
+    </section>
+  );
+}
+
+
+Adapt the exact timing, classes, and content to match your existing implementation.
+
+Do not modify any files yet
+
+First, output your understanding of this smoother timeline and your implementation plan.
+
+Remember: do NOT perform any e2e tests for this change—I will manually confirm behavior.
+
+Wait for my confirmation that your approach is sound before updating the code.

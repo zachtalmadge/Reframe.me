@@ -1,0 +1,286 @@
+Continue working in the same JavaScript (NOT TypeScript) + React + Tailwind CSS, mobile-first project.
+The Home page hero now shows a rotating set of 4 before/after text pairs, where:
+
+The before text fades in first.
+
+The after text fades in next.
+
+Both remain visible for ~4 seconds, then fade out together.
+
+There is a ~1 second gap, and then the next pair starts.
+
+Current issue:
+One of the “after” texts is longer and wraps onto a new line. When that pair is active, the hero’s before/after text container expands vertically, causing the entire hero section to jump/choppily resize as the pairs change.
+
+Desired behavior:
+
+The hero’s before/after text area should have a stable height that can accommodate the tallest pair.
+
+When different before/after pairs rotate, the hero section should not visibly grow/shrink; the animations should feel smooth and the page layout should not jitter.
+
+The hero can be as tall as needed overall, but it should reserve enough space from the start to fit the largest before/after combination.
+
+Important for this change:
+For this change, DO NOT perform any end-to-end (e2e) tests or automated full-flow testing.
+You may perform local/component-level checks only. I will manually confirm behavior in the UI.
+
+Business requirement – Reserve stable vertical space for rotating text
+
+Update the hero’s rotating before/after block so that:
+
+The vertical space occupied by the before/after lines stays constant while the hero is visible, regardless of:
+
+Which pair is currently active.
+
+Whether some “after” lines wrap to multiple lines.
+
+When the before/after pair changes:
+
+Only the text fades in/out; the container height does not jump or cause the hero to expand/shrink.
+
+The animation feels smooth and predictable.
+
+Implementation should be responsive:
+
+On smaller screens (where text may wrap more), the container still reserves enough height to handle the tallest before/after combination.
+
+On larger screens, it should still look balanced and not leave a huge awkward empty gap.
+
+The textual content and animation timing remain as they are now:
+
+Still 4 pairs, still same fade-in / visible / fade-out / gap sequence.
+
+Acceptance criteria (Given / When / Then)
+Scenario: No height jump when “after” wraps
+
+Given the hero is showing rotating before/after pairs
+
+When it reaches the pair where the after text wraps onto an extra line
+
+Then:
+
+The hero section does not suddenly grow or shrink.
+
+The rotating text area does not push other hero content up/down in a choppy way.
+
+Only the opacity of the text changes; the physical space reserved stays steady.
+
+Scenario: All pairs fit within reserved height
+
+Given the hero is cycling through all 4 before/after pairs
+
+When each pair is displayed
+
+Then:
+
+Every pair’s before + after text fits within the same reserved vertical area, without clipping.
+
+There is no overflow or text cutoff.
+
+Scenario: Responsiveness maintained
+
+Given the user is on a small mobile screen
+
+When they watch the rotating before/after text
+
+Then:
+
+The hero still reserves enough height to handle the worst-case text wrapping.
+
+The layout doesn’t jitter as pairs change.
+
+Given the user is on a larger screen
+
+When they view the hero
+
+Then:
+
+The height reservation still looks visually reasonable (not enormous empty space).
+
+The transitions remain smooth.
+
+Scenario: No regressions to timing or content
+
+Given the previous behavior of the hero (before/after fade sequence, 4 pairs)
+
+When the height stabilization is implemented
+
+Then:
+
+The fade timing and rotation sequence remain as before.
+
+The text content of all before/after pairs remains unchanged.
+
+Only the layout/height behavior is improved.
+
+What I want you (Replit AI) to do
+
+Assess the current hero layout around the rotating text
+
+Locate the markup in the hero component where the before/after text is rendered (e.g., a <div> containing two <p> tags).
+
+Identify:
+
+The container element that currently wraps the before/after pair.
+
+Existing Tailwind classes controlling height, margin, and flex alignment around this block.
+
+Describe your understanding of the requirements
+
+In your own words, explain:
+
+That you need to stabilize the height of the before/after text container so that it doesn’t resize as different pairs (with different line lengths) appear.
+
+That the solution should be responsive and handle the tallest text combination gracefully.
+
+That the rotation timing and animation logic (fade-in/fade-out/gap) must remain intact.
+
+Identify key considerations to avoid disrupting existing functionality
+
+Ensure that:
+
+Any fixed or minimum height you apply does not clip text for any pair on any device.
+
+You don’t hard-code a height that only works at one breakpoint; consider min-h-* responsive utilities or a flex-based solution.
+
+You don’t change the hero’s main headline, subheading, or CTA layout.
+
+The change does not cause horizontal scroll or weird spacing on very small screens.
+
+Propose best-practice implementation approaches
+
+Suggest one or a combination of the following approaches (and choose the most appropriate based on the existing code):
+
+Option A – Fixed/min-height container
+
+Wrap the before/after lines in a dedicated container, e.g.:
+
+<div className="mt-6 text-sm text-slate-100">
+  <div className="relative min-h-[4.5rem] sm:min-h-[3.5rem] flex flex-col justify-start gap-1">
+    {/* before/after <p> tags here */}
+  </div>
+</div>
+
+
+Choose min-h values based on:
+
+Current font-size + line-height.
+
+Enough space for the tallest combination (e.g., 2 lines of before + 2 lines of after on small screens).
+
+Option B – Measure by rendering all pairs invisibly (if needed)
+
+Render all pairs in an invisible container (absolute, opacity-0, pointer-events-none) to determine the max height, then set the visible container’s height to that value.
+
+This is more complex; only do this if the design requires very precise height.
+
+In both options:
+
+Use flex flex-col justify-start (not items-center) to avoid vertical bounce.
+
+Keep the fade animation controlled via opacity classes only; the height should no longer be changing.
+
+Assess other best practices
+
+Tailwind:
+
+Use responsive min-h-* where helpful (e.g., min-h-[5rem] on mobile, slightly smaller on desktop if text wraps less).
+
+Accessibility:
+
+Ensure text remains readable and not cramped; don’t compress line-height just to fit.
+
+Maintainability:
+
+Consider extracting magic numbers into comments or clear class structure so they’re easy to tweak if content changes.
+
+Generate a step-by-step plan to implement this enhancement
+
+At a minimum include:
+
+Step 1: Identify the container currently wrapping the before/after <p> tags in the hero.
+
+Step 2: Wrap the before/after text in a new inner container whose sole job is to reserve vertical space, e.g.:
+
+<div className="mt-6 text-sm text-slate-100">
+  <div className="relative flex flex-col justify-start gap-1 min-h-[Xrem] sm:min-h-[Yrem]">
+    {/* before and after <p> elements here */}
+  </div>
+</div>
+
+
+Step 3: Choose min-h values that comfortably fit the longest before/after pair at small and larger breakpoints (you may need to test a couple of values).
+
+Step 4: Ensure the fade logic (using showBefore / showAfter state and Tailwind transition-opacity) remains unchanged — only the wrapping container changes.
+
+Step 5: Manually verify:
+
+The hero no longer jumps vertically when the long after text appears.
+
+All pairs are readable and fit within the reserved space on mobile and desktop.
+
+No other hero elements are misaligned.
+
+Keep the scope limited
+
+Do not:
+
+Change the text content of any before/after pair.
+
+Adjust the hero headline, subheading, or CTA layout.
+
+Modify the timing or sequence of the fade animations.
+
+Only:
+
+Adjust the layout/height behavior of the before/after container to eliminate layout jumping.
+
+Propose a skeleton framework
+
+Provide a simplified JSX example (in JavaScript React, not TypeScript) of how the height-stabilizing container might look, for example:
+
+const beforeAfterPairs = [/* existing 4 pairs */];
+
+function Hero() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [showBefore, setShowBefore] = useState(false);
+  const [showAfter, setShowAfter] = useState(false);
+
+  const pair = beforeAfterPairs[currentIndex];
+
+  return (
+    <section className="...">
+      {/* ...hero headline, subheading, CTA... */}
+
+      <div className="mt-6 text-sm text-slate-100">
+        <div className="relative flex flex-col justify-start gap-1 min-h-[4.5rem] sm:min-h-[3.75rem]">
+          <p
+            className={`transition-opacity duration-500 ${
+              showBefore ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            {pair.before}
+          </p>
+          <p
+            className={`transition-opacity duration-500 ${
+              showAfter ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            {pair.after}
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
+Adjust the min-h values and Tailwind classes as needed based on actual font sizes and line lengths.
+
+Do not modify any files yet
+
+First, output your understanding of this height-smoothing change and your implementation plan.
+
+Remember: do NOT perform any e2e tests for this change—I will manually confirm behavior.
+
+Wait for my confirmation that your approach is sound before updating the code.

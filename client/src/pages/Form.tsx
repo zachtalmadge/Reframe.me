@@ -38,18 +38,25 @@ export default function Form() {
   const [restoredState, setRestoredState] = useState<FormState | undefined>(undefined);
   const [isRestoring, setIsRestoring] = useState(true);
   const [showLeaveAlert, setShowLeaveAlert] = useState(false);
+  const [pendingNavTarget, setPendingNavTarget] = useState<string>("/");
 
   const tool = toolParam && toolInfo[toolParam] ? toolParam : "narrative";
   const { title, description, icon: Icon } = toolInfo[tool];
 
   const handleLogoClick = useCallback(() => {
+    setPendingNavTarget("/");
+    setShowLeaveAlert(true);
+  }, []);
+
+  const handleFaqClick = useCallback(() => {
+    setPendingNavTarget("/faq");
     setShowLeaveAlert(true);
   }, []);
 
   const handleConfirmLeave = useCallback(() => {
     clearFormData();
-    navigate("/");
-  }, [navigate]);
+    navigate(pendingNavTarget);
+  }, [navigate, pendingNavTarget]);
 
   const handleCancelLeave = useCallback(() => {
     setShowLeaveAlert(false);
@@ -73,7 +80,7 @@ export default function Form() {
   };
 
   return (
-    <Layout onLogoClick={handleLogoClick}>
+    <Layout onLogoClick={handleLogoClick} onFaqClick={handleFaqClick}>
       <section
         className="py-8 md:py-12 px-4 sm:px-6 lg:px-8"
         aria-labelledby="form-heading"

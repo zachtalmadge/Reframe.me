@@ -69,6 +69,7 @@ export default function Loading() {
   const [quoteIndex, setQuoteIndex] = useState(0);
   const [isQuoteVisible, setIsQuoteVisible] = useState(true);
   const [showLeaveAlert, setShowLeaveAlert] = useState(false);
+  const [pendingNavTarget, setPendingNavTarget] = useState<string>("/");
 
   useEffect(() => {
     if (generationState.status !== "loading") return;
@@ -126,7 +127,6 @@ export default function Loading() {
       }
 
       saveResults(result, tool);
-      clearFormData();
       
       setGenerationState((prev) => ({
         ...prev,
@@ -179,13 +179,19 @@ export default function Loading() {
   }, [navigate, tool]);
 
   const handleLogoClick = useCallback(() => {
+    setPendingNavTarget("/");
+    setShowLeaveAlert(true);
+  }, []);
+
+  const handleFaqClick = useCallback(() => {
+    setPendingNavTarget("/faq");
     setShowLeaveAlert(true);
   }, []);
 
   const handleConfirmLeave = useCallback(() => {
     clearFormData();
-    navigate("/");
-  }, [navigate]);
+    navigate(pendingNavTarget);
+  }, [navigate, pendingNavTarget]);
 
   const handleCancelLeave = useCallback(() => {
     setShowLeaveAlert(false);
@@ -193,7 +199,7 @@ export default function Loading() {
 
   if (generationState.status === "error") {
     return (
-      <Layout onLogoClick={handleLogoClick}>
+      <Layout onLogoClick={handleLogoClick} onFaqClick={handleFaqClick}>
         <section
           className="py-16 md:py-24 px-4 sm:px-6 lg:px-8"
           aria-labelledby="error-heading"
@@ -262,7 +268,7 @@ export default function Loading() {
   }
 
   return (
-    <Layout onLogoClick={handleLogoClick}>
+    <Layout onLogoClick={handleLogoClick} onFaqClick={handleFaqClick}>
       <section
         className="py-16 md:py-24 px-4 sm:px-6 lg:px-8"
         aria-labelledby="loading-heading"
