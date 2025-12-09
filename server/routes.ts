@@ -3,10 +3,29 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import OpenAI from "openai";
 
-const openai = new OpenAI({
-  apiKey: process.env.AI_INTEGRATIONS_OPENAI_API_KEY,
-  baseURL: process.env.AI_INTEGRATIONS_OPENAI_BASE_URL,
-});
+/**
+ * Lazy-load OpenAI client to avoid ES module hoisting issue.
+ *
+ * IMPORTANT: This pattern is necessary because ES modules execute imports
+ * before runtime code. If we instantiate OpenAI at module level (e.g.,
+ * `const openai = new OpenAI(...)`), it would execute BEFORE dotenv loads
+ * environment variables in server/index.ts, resulting in undefined API keys.
+ *
+ * Lazy loading defers OpenAI instantiation until the first API call at runtime,
+ * ensuring environment variables are available from dotenv.
+ *
+ * @returns {OpenAI} Singleton OpenAI client instance
+ */
+let openaiClient: OpenAI | null = null;
+function getOpenAI(): OpenAI {
+  if (!openaiClient) {
+    openaiClient = new OpenAI({
+      apiKey: process.env.AI_INTEGRATIONS_OPENAI_API_KEY,
+      baseURL: process.env.AI_INTEGRATIONS_OPENAI_BASE_URL,
+    });
+  }
+  return openaiClient;
+}
 
 type ToolType = "narrative" | "responseLetter" | "both";
 
@@ -109,7 +128,7 @@ ${formData.additionalContext || 'None provided'}
 
 Generate narratives that are authentic, professional, and help the individual present their background in the most favorable light while remaining honest.`;
 
-  const response = await openai.chat.completions.create({
+  const response = await getOpenAI().chat.completions.create({
     model: "gpt-4o-mini",
     messages: [
       { role: "system", content: systemPrompt },
@@ -197,7 +216,7 @@ ${formData.additionalContext || 'None provided'}
 
 Generate a narrative that is authentic, professional, and helps the individual present their background in the most favorable light while remaining honest. Create a fresh version that differs from any previous iterations.`;
 
-  const response = await openai.chat.completions.create({
+  const response = await getOpenAI().chat.completions.create({
     model: "gpt-4o-mini",
     messages: [
       { role: "system", content: systemPrompt },
@@ -279,7 +298,7 @@ ${formData.skills.length > 0 ? formData.skills.join(', ') : 'Not specified'}
 
 Generate a professional, compelling letter that acknowledges the background check findings while making a strong case for reconsideration.`;
 
-  const response = await openai.chat.completions.create({
+  const response = await getOpenAI().chat.completions.create({
     model: "gpt-4o-mini",
     messages: [
       { role: "system", content: systemPrompt },
