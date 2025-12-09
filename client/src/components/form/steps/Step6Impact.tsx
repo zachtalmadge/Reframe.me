@@ -26,7 +26,7 @@ export function Step6Impact({ state, dispatch }: Step6ImpactProps) {
       </div>
 
       <StepImportanceAlert>
-        Using the information you've already shared, our tool will craft language that shows awareness and understanding of consequences in a thoughtful way.
+        This is the <span className="font-semibold">Impact</span> part of the O.I.L. framework. We'll write this section based on what you've already shared. Adding a few of your own words about how your actions affected others can make your letter feel more personal and honest. Share anything you're comfortable with here, or leave it blank — we'll still take care of the wording for you.
       </StepImportanceAlert>
 
       <div className="space-y-6">

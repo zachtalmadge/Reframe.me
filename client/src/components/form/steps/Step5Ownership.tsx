@@ -30,7 +30,7 @@ export function Step5Ownership({
       </div>
 
       <StepImportanceAlert>
-        Based on everything you've already shared, our tool will write this part for you. The language will be honest, direct, and show that you accept responsibility without making excuses.
+        This is the <span className="font-semibold">Ownership</span> part of the O.I.L. framework. Our tool will take care of writing this section for you. The strongest narratives, though, usually include some of your own words about how you see things now. If there's anything you'd like us to highlight here, you can add it — and it's completely okay to leave it blank if you'd rather not. We'll still handle this part for you.
       </StepImportanceAlert>
 
       <div className="space-y-6">

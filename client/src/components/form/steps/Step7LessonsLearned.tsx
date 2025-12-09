@@ -31,7 +31,7 @@ export function Step7LessonsLearned({
       </div>
 
       <StepImportanceAlert>
-        Based on the programs, skills, and experiences you've shared, our tool will write about your personal development and the positive steps you've taken.
+        This is the <span className="font-semibold">Lessons Learned</span> part of the O.I.L. framework, where we focus on your growth and the changes you've made. Our tool will handle this section even if you don't type anything. If you'd like to, you can add your own language about what's different now — your words can make this part even stronger. It's also okay to skip it; we'll still write it for you.
       </StepImportanceAlert>
 
       <div className="space-y-6">
