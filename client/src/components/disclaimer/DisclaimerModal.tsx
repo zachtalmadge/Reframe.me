@@ -4,6 +4,7 @@ import {
   AlertDialogContent,
   AlertDialogHeader,
   AlertDialogTitle,
+  AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogAction,
 } from "@/components/ui/alert-dialog";
@@ -39,6 +40,9 @@ export function DisclaimerModal({ open, onContinue }: DisclaimerModalProps) {
           >
             {disclaimerContent.title}
           </AlertDialogTitle>
+          <AlertDialogDescription className="sr-only">
+            Please read and acknowledge the disclaimer before continuing to use this tool.
+          </AlertDialogDescription>
         </AlertDialogHeader>
 
         <div

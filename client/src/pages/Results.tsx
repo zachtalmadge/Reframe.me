@@ -164,11 +164,11 @@ export default function Results() {
   const [regeneratingType, setRegeneratingType] = useState<NarrativeType | null>(null);
   const [isLetterRegenerating, setIsLetterRegenerating] = useState(false);
   const [narrativeErrors, setNarrativeErrors] = useState<Record<NarrativeType, string | null>>({
-    full_disclosure: null,
-    skills_focused: null,
-    growth_journey: null,
+    justice_focused_org: null,
+    general_employer: null,
     minimal_disclosure: null,
-    values_aligned: null,
+    transformation_focused: null,
+    skills_focused: null,
   });
   const [letterError, setLetterError] = useState<string | null>(null);
 

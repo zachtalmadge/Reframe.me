@@ -2,7 +2,7 @@ import { ToolType } from "./formState";
 
 export interface NarrativeItem {
   id: string;
-  type: "full_disclosure" | "skills_focused" | "growth_journey" | "minimal_disclosure" | "values_aligned";
+  type: "justice_focused_org" | "general_employer" | "minimal_disclosure" | "transformation_focused" | "skills_focused";
   title: string;
   content: string;
 }

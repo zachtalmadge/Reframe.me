@@ -12,19 +12,19 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { MAX_REGENERATIONS } from "@/lib/regenerationPersistence";
 
 const narrativeTypeLabels: Record<string, string> = {
-  full_disclosure: "Direct & Professional",
-  skills_focused: "Skills-First Approach",
-  growth_journey: "Growth-Focused",
-  minimal_disclosure: "Brief & Confident",
-  values_aligned: "Values-Aligned",
+  justice_focused_org: "Justice-Focused Organization",
+  general_employer: "General Employer",
+  minimal_disclosure: "Minimal-Disclosure",
+  transformation_focused: "Transformation-Focused",
+  skills_focused: "Skills-Focused",
 };
 
 const narrativeTypeDescriptions: Record<string, string> = {
-  full_disclosure: "Honest, straightforward acknowledgment with emphasis on accountability",
-  skills_focused: "Leads with qualifications and abilities, briefly acknowledges background",
-  growth_journey: "Emphasizes personal transformation and rehabilitation journey",
-  minimal_disclosure: "Concise acknowledgment without over-explaining, projects confidence",
-  values_aligned: "Connects personal values and growth to the organization's mission",
+  justice_focused_org: "For justice-focused or re-entry organizations, emphasizing how your lived experience and growth align with mission-driven work",
+  general_employer: "A balanced, professional narrative for most workplaces, focusing on stability, reliability, and readiness to work",
+  minimal_disclosure: "A concise narrative that acknowledges your record without unnecessary detail, keeping the focus on who you are today",
+  transformation_focused: "Centers your rehabilitation and personal growth, highlighting what you learned and how you've changed",
+  skills_focused: "Leads with your skills, training, and strengths, briefly acknowledging your record and returning to what you offer an employer",
 };
 
 interface NarrativeCardProps {

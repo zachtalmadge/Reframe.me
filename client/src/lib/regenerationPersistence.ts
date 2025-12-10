@@ -16,11 +16,11 @@ function createEmptyCounts(sessionId: string): RegenerationCounts {
   return {
     sessionId,
     narratives: {
-      full_disclosure: 0,
-      skills_focused: 0,
-      growth_journey: 0,
+      justice_focused_org: 0,
+      general_employer: 0,
       minimal_disclosure: 0,
-      values_aligned: 0,
+      transformation_focused: 0,
+      skills_focused: 0,
     },
     letter: 0,
   };

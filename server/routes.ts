@@ -63,7 +63,7 @@ interface GenerateRequest {
 
 interface NarrativeItem {
   id: string;
-  type: "full_disclosure" | "skills_focused" | "growth_journey" | "minimal_disclosure" | "values_aligned";
+  type: "justice_focused_org" | "general_employer" | "minimal_disclosure" | "transformation_focused" | "skills_focused";
   title: string;
   content: string;
 }
@@ -91,22 +91,22 @@ async function generateNarratives(formData: FormData): Promise<NarrativeItem[]> 
 
 Generate exactly 5 different disclosure narratives, each with a distinct approach:
 
-1. full_disclosure - Direct & Professional: Honest, straightforward acknowledgment with emphasis on accountability and professional demeanor.
-2. skills_focused - Skills-First: Leads with qualifications and abilities, briefly acknowledges background, returns focus to value offered.
-3. growth_journey - Growth-Focused: Emphasizes personal transformation, rehabilitation journey, and lessons learned.
-4. minimal_disclosure - Brief & Confident: Concise acknowledgment without over-explaining, projects confidence.
-5. values_aligned - Values-Aligned: Connects personal values and growth to the organization's mission.
+1. justice_focused_org - Justice-Focused Organization: For roles at justice-focused or re-entry organizations. Emphasize alignment with mission, lived experience as expertise, and commitment to community impact.
+2. general_employer - General Employer: A balanced, professional narrative suitable for most employers, focusing on stability, reliability, and readiness to work.
+3. minimal_disclosure - Minimal-Disclosure: Concise acknowledgment of the record without unnecessary detail, projecting calm confidence and keeping the focus on the present.
+4. transformation_focused - Transformation-Focused: Centers rehabilitation and personal growth, including programs completed, insights gained, and the changes made since the offense(s).
+5. skills_focused - Skills-Focused: Leads with skills, training, and work strengths; briefly acknowledges the record, then quickly returns to what the person brings to the role.
 
 Each narrative should be 2-4 paragraphs, written in first person, ready for the individual to use in interviews or applications.
 
 Return a JSON object with this exact structure:
 {
   "narratives": [
-    { "type": "full_disclosure", "title": "Direct & Professional", "content": "..." },
-    { "type": "skills_focused", "title": "Skills-First Approach", "content": "..." },
-    { "type": "growth_journey", "title": "Growth-Focused", "content": "..." },
-    { "type": "minimal_disclosure", "title": "Brief & Confident", "content": "..." },
-    { "type": "values_aligned", "title": "Values-Aligned", "content": "..." }
+    { "type": "justice_focused_org", "title": "Justice-Focused Organization", "content": "..." },
+    { "type": "general_employer", "title": "General Employer", "content": "..." },
+    { "type": "minimal_disclosure", "title": "Minimal-Disclosure", "content": "..." },
+    { "type": "transformation_focused", "title": "Transformation-Focused", "content": "..." },
+    { "type": "skills_focused", "title": "Skills-Focused", "content": "..." }
   ]
 }`;
 
@@ -152,28 +152,28 @@ Generate narratives that are authentic, professional, and help the individual pr
   }));
 }
 
-type NarrativeType = "full_disclosure" | "skills_focused" | "growth_journey" | "minimal_disclosure" | "values_aligned";
+type NarrativeType = "justice_focused_org" | "general_employer" | "minimal_disclosure" | "transformation_focused" | "skills_focused";
 
 const narrativeTypeInfo: Record<NarrativeType, { title: string; description: string }> = {
-  full_disclosure: {
-    title: "Direct & Professional",
-    description: "Honest, straightforward acknowledgment with emphasis on accountability and professional demeanor."
+  justice_focused_org: {
+    title: "Justice-Focused Organization",
+    description: "Designed for roles at justice-focused or re-entry organizations, highlighting how your lived experience and growth align with mission-driven work."
   },
-  skills_focused: {
-    title: "Skills-First Approach",
-    description: "Leads with qualifications and abilities, briefly acknowledges background, returns focus to value offered."
-  },
-  growth_journey: {
-    title: "Growth-Focused",
-    description: "Emphasizes personal transformation, rehabilitation journey, and lessons learned."
+  general_employer: {
+    title: "General Employer",
+    description: "A balanced, professional narrative that works for most employers and focuses on stability, reliability, and readiness to work."
   },
   minimal_disclosure: {
-    title: "Brief & Confident",
-    description: "Concise acknowledgment without over-explaining, projects confidence."
+    title: "Minimal-Disclosure",
+    description: "A concise narrative that acknowledges your record without going into unnecessary detail, keeping the focus on the present."
   },
-  values_aligned: {
-    title: "Values-Aligned",
-    description: "Connects personal values and growth to the organization's mission."
+  transformation_focused: {
+    title: "Transformation-Focused",
+    description: "Centers your rehabilitation and personal growth, emphasizing programs completed, insights gained, and the changes you've made."
+  },
+  skills_focused: {
+    title: "Skills-Focused",
+    description: "Leads with your skills, training, and strengths, briefly acknowledging your record and returning quickly to what you bring to the job."
   }
 };
 
@@ -413,7 +413,7 @@ export async function registerRoutes(
         });
       }
 
-      const validTypes: NarrativeType[] = ["full_disclosure", "skills_focused", "growth_journey", "minimal_disclosure", "values_aligned"];
+      const validTypes: NarrativeType[] = ["justice_focused_org", "general_employer", "minimal_disclosure", "transformation_focused", "skills_focused"];
       if (!validTypes.includes(narrativeType)) {
         return res.status(400).json({
           error: "Invalid narrative type"
