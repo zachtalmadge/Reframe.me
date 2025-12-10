@@ -76,7 +76,7 @@ const beforeAfterPairs = [
 
 const BEFORE_DELAY = 200;
 const AFTER_DELAY = 800;
-const VISIBLE_DURATION = 4000;
+const VISIBLE_DURATION = 5000;  // ~5 seconds with both visible
 const GAP_DURATION = 1000;
 
 export default function Home() {
