@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Plus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,8 +12,15 @@ import {
 } from "@/components/ui/select";
 import { ErrorMessage } from "@/components/ui/error-message";
 import { ChipInput } from "../ChipInput";
+import { SuggestionChips } from "../SuggestionChips";
+import { TypeChips } from "../TypeChips";
 import { FormState, FormAction, Offense } from "@/lib/formState";
 import { calculateTimeSinceRelease } from "@/lib/utils";
+import {
+  OFFENSE_DESCRIPTION_SUGGESTIONS,
+  OFFENSE_PROGRAM_SUGGESTIONS,
+  filterSuggestions,
+} from "@/lib/suggestionData";
 
 const MAX_OFFENSES = 5;
 
@@ -25,11 +33,6 @@ interface Step1BackgroundProps {
   dispatch: React.Dispatch<FormAction>;
   errors: Record<string, string>;
 }
-
-const offenseTypes = [
-  { value: "felony", label: "Felony" },
-  { value: "misdemeanor", label: "Misdemeanor" },
-];
 
 const months = [
   { value: "1", label: "January" },
@@ -57,6 +60,9 @@ export function Step1Background({
   dispatch,
   errors,
 }: Step1BackgroundProps) {
+  // Track input values for per-offense program ChipInputs (for filtering suggestions)
+  const [programInputs, setProgramInputs] = useState<Record<string, string>>({});
+
   const timeSinceRelease = calculateTimeSinceRelease(
     state.releaseMonth,
     state.releaseYear
@@ -156,27 +162,17 @@ export function Step1Background({
 
                 <div className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor={`offense-type-${offense.id}`}>Type</Label>
-                    <Select
+                    <Label id={`offense-type-label-${offense.id}`}>
+                      Type
+                    </Label>
+                    <TypeChips
                       value={offense.type}
-                      onValueChange={(value) =>
+                      onChange={(value) =>
                         handleUpdateOffense(offense.id, "type", value)
                       }
-                    >
-                      <SelectTrigger
-                        id={`offense-type-${offense.id}`}
-                        data-testid={`select-offense-type-${index}`}
-                      >
-                        <SelectValue placeholder="Select type" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {offenseTypes.map((type) => (
-                          <SelectItem key={type.value} value={type.value}>
-                            {type.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                      error={!!errors[`offense-${offense.id}-type`]}
+                      offenseId={offense.id}
+                    />
                     <ErrorMessage message={errors[`offense-${offense.id}-type`]} />
                   </div>
 
@@ -197,6 +193,17 @@ export function Step1Background({
                       placeholder="e.g., Theft, DUI, etc."
                       data-testid={`input-offense-description-${index}`}
                     />
+                    <SuggestionChips
+                      suggestions={filterSuggestions(
+                        OFFENSE_DESCRIPTION_SUGGESTIONS,
+                        offense.description
+                      )}
+                      onSelect={(value) =>
+                        handleUpdateOffense(offense.id, "description", value)
+                      }
+                      selectedValues={[]}
+                      label="Common descriptions (tap to fill)"
+                    />
                     <ErrorMessage message={errors[`offense-${offense.id}-description`]} />
                   </div>
 
@@ -213,8 +220,24 @@ export function Step1Background({
                       onRemove={(index) =>
                         handleRemoveOffenseProgram(offense.id, index)
                       }
+                      onInputChange={(value) =>
+                        setProgramInputs((prev) => ({ ...prev, [offense.id]: value }))
+                      }
                       placeholder="e.g., Anger management, AA meetings"
                       data-testid={`chip-input-offense-programs-${index}`}
+                    />
+                    <SuggestionChips
+                      suggestions={filterSuggestions(
+                        OFFENSE_PROGRAM_SUGGESTIONS,
+                        programInputs[offense.id] || ""
+                      )}
+                      selectedValues={offense.programs}
+                      onSelect={(value) => {
+                        if (!offense.programs.includes(value)) {
+                          handleAddOffenseProgram(offense.id, value);
+                        }
+                      }}
+                      label="Tap to add a program"
                     />
                   </div>
                 </div>

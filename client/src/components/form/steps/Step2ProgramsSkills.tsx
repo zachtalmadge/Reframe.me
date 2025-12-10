@@ -1,8 +1,15 @@
+import { useState } from "react";
 import { Label } from "@/components/ui/label";
 import { ErrorMessage } from "@/components/ui/error-message";
 import { ChipInput } from "../ChipInput";
+import { SuggestionChips } from "../SuggestionChips";
 import { StepImportanceAlert } from "../StepImportanceAlert";
 import { FormState, FormAction } from "@/lib/formState";
+import {
+  STEP2_PROGRAM_SUGGESTIONS,
+  SKILL_SUGGESTIONS,
+  filterSuggestions,
+} from "@/lib/suggestionData";
 
 interface Step2ProgramsSkillsProps {
   state: FormState;
@@ -15,6 +22,10 @@ export function Step2ProgramsSkills({
   dispatch,
   errors,
 }: Step2ProgramsSkillsProps) {
+  // Track input values for filtering suggestions
+  const [programsInputValue, setProgramsInputValue] = useState("");
+  const [skillsInputValue, setSkillsInputValue] = useState("");
+
   const handleAddProgram = (value: string) => {
     dispatch({ type: "ADD_CHIP", field: "programs", value });
   };
@@ -30,6 +41,13 @@ export function Step2ProgramsSkills({
   const handleRemoveSkill = (index: number) => {
     dispatch({ type: "REMOVE_CHIP", field: "skills", index });
   };
+
+  // Filter suggestions based on current input
+  const filteredPrograms = filterSuggestions(
+    STEP2_PROGRAM_SUGGESTIONS,
+    programsInputValue
+  );
+  const filteredSkills = filterSuggestions(SKILL_SUGGESTIONS, skillsInputValue);
 
   return (
     <div className="space-y-8">
@@ -61,9 +79,20 @@ export function Step2ProgramsSkills({
             chips={state.programs}
             onAdd={handleAddProgram}
             onRemove={handleRemoveProgram}
+            onInputChange={setProgramsInputValue}
             placeholder="e.g., GED, Vocational training, Counseling"
             helperText="Type a program and press Enter or tap 'Add' to save it."
             data-testid="chip-input-programs"
+          />
+          <SuggestionChips
+            suggestions={filteredPrograms}
+            selectedValues={state.programs}
+            onSelect={(value) => {
+              if (!state.programs.includes(value)) {
+                handleAddProgram(value);
+              }
+            }}
+            label="Tap to add a program"
           />
         </div>
 
@@ -81,9 +110,20 @@ export function Step2ProgramsSkills({
             chips={state.skills}
             onAdd={handleAddSkill}
             onRemove={handleRemoveSkill}
+            onInputChange={setSkillsInputValue}
             placeholder="e.g., computer skills, forklift certified, staying focused, working well with others"
             helperText="Type a skill and press Enter or tap 'Add'. Think about things like patience, staying organized, or being dependable."
             data-testid="chip-input-skills"
+          />
+          <SuggestionChips
+            suggestions={filteredSkills}
+            selectedValues={state.skills}
+            onSelect={(value) => {
+              if (!state.skills.includes(value)) {
+                handleAddSkill(value);
+              }
+            }}
+            label="Tap to add a skill"
           />
         </div>
 

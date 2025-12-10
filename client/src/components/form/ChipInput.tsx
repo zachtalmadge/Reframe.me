@@ -8,6 +8,7 @@ interface ChipInputProps {
   chips: string[];
   onAdd: (value: string) => void;
   onRemove: (index: number) => void;
+  onInputChange?: (value: string) => void;
   placeholder?: string;
   helperText?: string;
   maxChips?: number;
@@ -21,6 +22,7 @@ export function ChipInput({
   chips,
   onAdd,
   onRemove,
+  onInputChange,
   placeholder = "Type and press Enter to add",
   helperText = "Type an item and press Enter or tap 'Add' to save it.",
   maxChips,
@@ -36,13 +38,14 @@ export function ChipInput({
 
   const handleAdd = () => {
     const trimmedValue = inputValue.trim();
-    
+
     if (!trimmedValue) return;
     if (chips.includes(trimmedValue)) return;
     if (maxChips && chips.length >= maxChips) return;
 
     onAdd(trimmedValue);
     setInputValue("");
+    onInputChange?.("");
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -85,7 +88,10 @@ export function ChipInput({
           id={id}
           type="text"
           value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
+          onChange={(e) => {
+            setInputValue(e.target.value);
+            onInputChange?.(e.target.value);
+          }}
           onKeyDown={handleKeyDown}
           placeholder={isMaxReached ? `Maximum ${maxChips} items reached` : placeholder}
           disabled={isMaxReached}
