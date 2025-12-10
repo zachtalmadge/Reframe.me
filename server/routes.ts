@@ -91,7 +91,7 @@ async function generateNarratives(formData: FormData): Promise<NarrativeItem[]> 
 
 Generate exactly 5 different disclosure narratives, each with a distinct approach:
 
-1. justice_focused_org - Justice-Focused Organization: For roles at justice-focused or re-entry organizations. Emphasize alignment with mission, lived experience as expertise, and commitment to community impact.
+1. justice_focused_org - Justice-Focused Organization: For justice-focused or re-entry organizations and employers with strong fair chance hiring practices. Emphasize how the person's lived experience and growth align with mission-driven work and fair chance values.
 2. general_employer - General Employer: A balanced, professional narrative suitable for most employers, focusing on stability, reliability, and readiness to work.
 3. minimal_disclosure - Minimal-Disclosure: Concise acknowledgment of the record without unnecessary detail, projecting calm confidence and keeping the focus on the present.
 4. transformation_focused - Transformation-Focused: Centers rehabilitation and personal growth, including programs completed, insights gained, and the changes made since the offense(s).
@@ -157,7 +157,7 @@ type NarrativeType = "justice_focused_org" | "general_employer" | "minimal_discl
 const narrativeTypeInfo: Record<NarrativeType, { title: string; description: string }> = {
   justice_focused_org: {
     title: "Justice-Focused Organization",
-    description: "Designed for roles at justice-focused or re-entry organizations, highlighting how your lived experience and growth align with mission-driven work."
+    description: "For justice-focused or re-entry organizations and employers with strong fair chance hiring practices, highlighting how your lived experience and growth align with mission-driven work and fair chance values."
   },
   general_employer: {
     title: "General Employer",

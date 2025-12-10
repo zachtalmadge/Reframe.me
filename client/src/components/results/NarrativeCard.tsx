@@ -20,7 +20,7 @@ const narrativeTypeLabels: Record<string, string> = {
 };
 
 const narrativeTypeDescriptions: Record<string, string> = {
-  justice_focused_org: "For justice-focused or re-entry organizations, emphasizing how your lived experience and growth align with mission-driven work",
+  justice_focused_org: "For justice-focused or re-entry organizations and employers with strong fair chance hiring practices. Highlights how your lived experience and growth align with mission-driven work and fair chance values",
   general_employer: "A balanced, professional narrative for most workplaces, focusing on stability, reliability, and readiness to work",
   minimal_disclosure: "A concise narrative that acknowledges your record without unnecessary detail, keeping the focus on who you are today",
   transformation_focused: "Centers your rehabilitation and personal growth, highlighting what you learned and how you've changed",
