@@ -105,40 +105,59 @@ function ResultsGuidanceSection({
         )}
 
         {showLetterGuidance && (
-          <div 
-            className="space-y-4"
-            role="tabpanel"
-            aria-labelledby="guidance-heading"
-            data-testid="guidance-letter"
-          >
-            <div className="bg-muted/30 rounded-lg p-5 space-y-4">
-              <h3 className="font-semibold text-foreground flex items-center gap-2">
-                <FileText className="w-5 h-5 text-chart-2" aria-hidden="true" />
-                Before you send your letter
-              </h3>
-              <ul className="space-y-3 text-sm text-muted-foreground">
-                <li className="flex gap-3">
-                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-chart-2/10 text-chart-2 text-xs font-medium flex items-center justify-center">1</span>
-                  <span><strong className="text-foreground">Check for accuracy.</strong> Review dates, names, charges, and employer details. Small errors can undermine your message.</span>
-                </li>
-                <li className="flex gap-3">
-                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-chart-2/10 text-chart-2 text-xs font-medium flex items-center justify-center">2</span>
-                  <span><strong className="text-foreground">Make sure it feels honest.</strong> If anything doesn't sit right with you, edit it. You should feel comfortable with every word.</span>
-                </li>
-                <li className="flex gap-3">
-                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-chart-2/10 text-chart-2 text-xs font-medium flex items-center justify-center">3</span>
-                  <span><strong className="text-foreground">Get a second opinion if you can.</strong> Consider sharing it with a trusted friend, reentry counselor, or legal aid organization before sending.</span>
-                </li>
-                <li className="flex gap-3">
-                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-chart-2/10 text-chart-2 text-xs font-medium flex items-center justify-center">4</span>
-                  <span><strong className="text-foreground">Know your timeline.</strong> Pre-adverse action notices usually give you a window to respond. Check the deadline on your notice.</span>
-                </li>
-              </ul>
-              <p className="text-sm text-muted-foreground italic border-l-2 border-chart-2/30 pl-3">
-                This letter is a tool to help you respond thoughtfully. You deserve to be heard, and taking time to get it right is a sign of strength.
-              </p>
-            </div>
-          </div>
+          <div className="bg-muted/30 rounded-lg p-5 space-y-4">
+  <h3 className="font-semibold text-foreground flex items-center gap-2">
+    <FileText className="w-5 h-5 text-chart-2" aria-hidden="true" />
+    Before you send your letter
+  </h3>
+  <ul className="space-y-3 text-sm text-muted-foreground">
+    <li className="flex gap-3">
+      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-chart-2/10 text-chart-2 text-xs font-medium flex items-center justify-center">
+        1
+      </span>
+      <span>
+        <strong className="text-foreground">Add anything that feels important. </strong> 
+        If you like this letter but want to say more or adjust the wording, copy it into a word-processing document or another AI tool and add your own details in your voice.
+      </span>
+    </li>
+    <li className="flex gap-3">
+      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-chart-2/10 text-chart-2 text-xs font-medium flex items-center justify-center">
+        2
+      </span>
+      <span>
+        <strong className="text-foreground">Check for accuracy.</strong> Review dates, names, charges, and employer details. Small errors can undermine your message.
+      </span>
+    </li>
+    <li className="flex gap-3">
+      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-chart-2/10 text-chart-2 text-xs font-medium flex items-center justify-center">
+        3
+      </span>
+      <span>
+        <strong className="text-foreground">Make sure it feels honest.</strong> If anything doesn't sit right with you, edit it. You should feel comfortable with every word.
+      </span>
+    </li>
+    <li className="flex gap-3">
+      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-chart-2/10 text-chart-2 text-xs font-medium flex items-center justify-center">
+        4
+      </span>
+      <span>
+        <strong className="text-foreground">Get a second opinion if you can.</strong> Consider sharing it with a trusted friend, reentry counselor, or legal aid organization before sending.
+      </span>
+    </li>
+    <li className="flex gap-3">
+      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-chart-2/10 text-chart-2 text-xs font-medium flex items-center justify-center">
+        5
+      </span>
+      <span>
+        <strong className="text-foreground">Know your timeline.</strong> Pre-adverse action notices usually give you a window to respond. Check the deadline on your notice.
+      </span>
+    </li>
+  </ul>
+  <p className="text-sm text-muted-foreground italic border-l-2 border-chart-2/30 pl-3">
+    This letter is a tool to help you respond thoughtfully. You deserve to be heard, and taking time to get it right is a sign of strength.
+  </p>
+</div>
+
         )}
       </div>
     </section>
