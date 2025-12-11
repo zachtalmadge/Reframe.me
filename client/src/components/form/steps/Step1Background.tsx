@@ -19,8 +19,11 @@ import { calculateTimeSinceRelease } from "@/lib/utils";
 import {
   OFFENSE_DESCRIPTION_SUGGESTIONS,
   OFFENSE_PROGRAM_SUGGESTIONS,
+  CURATED_OFFENSE_DESCRIPTIONS,
+  CURATED_OFFENSE_PROGRAMS,
   filterSuggestions,
 } from "@/lib/suggestionData";
+import { CHIP_INPUT_HELPERS, CHIP_SUGGESTION_LABELS } from "@/lib/chipMicrocopy";
 
 const MAX_OFFENSES = 5;
 
@@ -62,6 +65,10 @@ export function Step1Background({
 }: Step1BackgroundProps) {
   // Track input values for per-offense program ChipInputs (for filtering suggestions)
   const [programInputs, setProgramInputs] = useState<Record<string, string>>({});
+
+  // Track "Show all" state for suggestion lists
+  const [showAllOffenseDescriptions, setShowAllOffenseDescriptions] = useState(false);
+  const [showAllOffensePrograms, setShowAllOffensePrograms] = useState(false);
 
   const timeSinceRelease = calculateTimeSinceRelease(
     state.releaseMonth,
@@ -193,17 +200,45 @@ export function Step1Background({
                       placeholder="e.g., Theft, DUI, etc."
                       data-testid={`input-offense-description-${index}`}
                     />
-                    <SuggestionChips
-                      suggestions={filterSuggestions(
-                        OFFENSE_DESCRIPTION_SUGGESTIONS,
-                        offense.description
-                      )}
-                      onSelect={(value) =>
-                        handleUpdateOffense(offense.id, "description", value)
-                      }
-                      selectedValues={[]}
-                      label="Common descriptions (tap to fill)"
-                    />
+                    {(() => {
+                      const hasFilter = offense.description.trim().length > 0;
+                      const baseOptions = hasFilter
+                        ? OFFENSE_DESCRIPTION_SUGGESTIONS
+                        : showAllOffenseDescriptions
+                          ? OFFENSE_DESCRIPTION_SUGGESTIONS
+                          : CURATED_OFFENSE_DESCRIPTIONS;
+                      const filteredOptions = filterSuggestions(baseOptions, offense.description);
+
+                      return (
+                        <>
+                          {!hasFilter &&
+                            OFFENSE_DESCRIPTION_SUGGESTIONS.length > CURATED_OFFENSE_DESCRIPTIONS.length && (
+                              <div className="flex items-center justify-between mt-1">
+                                <span className="text-xs text-muted-foreground">
+                                  Tap to fill, or type your own
+                                </span>
+                                <button
+                                  type="button"
+                                  onClick={() => setShowAllOffenseDescriptions((prev) => !prev)}
+                                  className="text-xs font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded px-1"
+                                >
+                                  {showAllOffenseDescriptions
+                                    ? "Show fewer"
+                                    : `Show all (${OFFENSE_DESCRIPTION_SUGGESTIONS.length})`}
+                                </button>
+                              </div>
+                            )}
+                          <SuggestionChips
+                            suggestions={filteredOptions}
+                            onSelect={(value) =>
+                              handleUpdateOffense(offense.id, "description", value)
+                            }
+                            selectedValues={[]}
+                            label="Common descriptions"
+                          />
+                        </>
+                      );
+                    })()}
                     <ErrorMessage message={errors[`offense-${offense.id}-description`]} />
                   </div>
 
@@ -224,21 +259,50 @@ export function Step1Background({
                         setProgramInputs((prev) => ({ ...prev, [offense.id]: value }))
                       }
                       placeholder="e.g., Anger management, AA meetings"
+                      helperText={CHIP_INPUT_HELPERS.offensePrograms}
                       data-testid={`chip-input-offense-programs-${index}`}
                     />
-                    <SuggestionChips
-                      suggestions={filterSuggestions(
-                        OFFENSE_PROGRAM_SUGGESTIONS,
-                        programInputs[offense.id] || ""
-                      )}
-                      selectedValues={offense.programs}
-                      onSelect={(value) => {
-                        if (!offense.programs.includes(value)) {
-                          handleAddOffenseProgram(offense.id, value);
-                        }
-                      }}
-                      label="Tap to add a program"
-                    />
+                    {(() => {
+                      const inputValue = programInputs[offense.id] || "";
+                      const hasFilter = inputValue.trim().length > 0;
+                      const baseOptions = hasFilter
+                        ? OFFENSE_PROGRAM_SUGGESTIONS
+                        : showAllOffensePrograms
+                          ? OFFENSE_PROGRAM_SUGGESTIONS
+                          : CURATED_OFFENSE_PROGRAMS;
+                      const filteredOptions = filterSuggestions(baseOptions, inputValue);
+
+                      return (
+                        <>
+                          {!hasFilter &&
+                            OFFENSE_PROGRAM_SUGGESTIONS.length > CURATED_OFFENSE_PROGRAMS.length && (
+                              <div className="flex justify-end mt-1">
+                                <button
+                                  type="button"
+                                  onClick={() => setShowAllOffensePrograms((prev) => !prev)}
+                                  className="text-xs font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded px-1"
+                                >
+                                  {showAllOffensePrograms
+                                    ? "Show fewer"
+                                    : `Show all (${OFFENSE_PROGRAM_SUGGESTIONS.length})`}
+                                </button>
+                              </div>
+                            )}
+                          <p className="mt-3 text-xs font-medium text-muted-foreground">
+                            {CHIP_SUGGESTION_LABELS.offensePrograms}
+                          </p>
+                          <SuggestionChips
+                            suggestions={filteredOptions}
+                            selectedValues={offense.programs}
+                            onSelect={(value) => {
+                              if (!offense.programs.includes(value)) {
+                                handleAddOffenseProgram(offense.id, value);
+                              }
+                            }}
+                          />
+                        </>
+                      );
+                    })()}
                   </div>
                 </div>
               </div>

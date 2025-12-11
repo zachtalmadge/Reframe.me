@@ -8,8 +8,11 @@ import { FormState, FormAction } from "@/lib/formState";
 import {
   STEP2_PROGRAM_SUGGESTIONS,
   SKILL_SUGGESTIONS,
+  CURATED_STEP2_PROGRAMS,
+  CURATED_SKILLS,
   filterSuggestions,
 } from "@/lib/suggestionData";
+import { CHIP_INPUT_HELPERS, CHIP_SUGGESTION_LABELS } from "@/lib/chipMicrocopy";
 
 interface Step2ProgramsSkillsProps {
   state: FormState;
@@ -26,6 +29,10 @@ export function Step2ProgramsSkills({
   const [programsInputValue, setProgramsInputValue] = useState("");
   const [skillsInputValue, setSkillsInputValue] = useState("");
 
+  // Track "Show all" state for suggestion lists
+  const [showAllPrograms, setShowAllPrograms] = useState(false);
+  const [showAllSkills, setShowAllSkills] = useState(false);
+
   const handleAddProgram = (value: string) => {
     dispatch({ type: "ADD_CHIP", field: "programs", value });
   };
@@ -41,13 +48,6 @@ export function Step2ProgramsSkills({
   const handleRemoveSkill = (index: number) => {
     dispatch({ type: "REMOVE_CHIP", field: "skills", index });
   };
-
-  // Filter suggestions based on current input
-  const filteredPrograms = filterSuggestions(
-    STEP2_PROGRAM_SUGGESTIONS,
-    programsInputValue
-  );
-  const filteredSkills = filterSuggestions(SKILL_SUGGESTIONS, skillsInputValue);
 
   return (
     <div className="space-y-8">
@@ -81,19 +81,49 @@ export function Step2ProgramsSkills({
             onRemove={handleRemoveProgram}
             onInputChange={setProgramsInputValue}
             placeholder="e.g., GED, Vocational training, Counseling"
-            helperText="Type a program and press Enter or tap 'Add' to save it."
+            helperText={CHIP_INPUT_HELPERS.rehabilitationPrograms}
             data-testid="chip-input-programs"
           />
-          <SuggestionChips
-            suggestions={filteredPrograms}
-            selectedValues={state.programs}
-            onSelect={(value) => {
-              if (!state.programs.includes(value)) {
-                handleAddProgram(value);
-              }
-            }}
-            label="Tap to add a program"
-          />
+          {(() => {
+            const hasFilter = programsInputValue.trim().length > 0;
+            const baseOptions = hasFilter
+              ? STEP2_PROGRAM_SUGGESTIONS
+              : showAllPrograms
+                ? STEP2_PROGRAM_SUGGESTIONS
+                : CURATED_STEP2_PROGRAMS;
+            const filteredOptions = filterSuggestions(baseOptions, programsInputValue);
+
+            return (
+              <>
+                {!hasFilter &&
+                  STEP2_PROGRAM_SUGGESTIONS.length > CURATED_STEP2_PROGRAMS.length && (
+                    <div className="flex justify-end mt-1">
+                      <button
+                        type="button"
+                        onClick={() => setShowAllPrograms((prev) => !prev)}
+                        className="text-xs font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded px-1"
+                      >
+                        {showAllPrograms
+                          ? "Show fewer"
+                          : `Show all (${STEP2_PROGRAM_SUGGESTIONS.length})`}
+                      </button>
+                    </div>
+                  )}
+                <p className="mt-3 text-xs font-medium text-muted-foreground">
+                  {CHIP_SUGGESTION_LABELS.rehabilitationPrograms}
+                </p>
+                <SuggestionChips
+                  suggestions={filteredOptions}
+                  selectedValues={state.programs}
+                  onSelect={(value) => {
+                    if (!state.programs.includes(value)) {
+                      handleAddProgram(value);
+                    }
+                  }}
+                />
+              </>
+            );
+          })()}
         </div>
 
         <div className="space-y-3">
@@ -112,19 +142,49 @@ export function Step2ProgramsSkills({
             onRemove={handleRemoveSkill}
             onInputChange={setSkillsInputValue}
             placeholder="e.g., computer skills, forklift certified, staying focused, working well with others"
-            helperText="Type a skill and press Enter or tap 'Add'. Think about things like patience, staying organized, or being dependable."
+            helperText={CHIP_INPUT_HELPERS.skills}
             data-testid="chip-input-skills"
           />
-          <SuggestionChips
-            suggestions={filteredSkills}
-            selectedValues={state.skills}
-            onSelect={(value) => {
-              if (!state.skills.includes(value)) {
-                handleAddSkill(value);
-              }
-            }}
-            label="Tap to add a skill"
-          />
+          {(() => {
+            const hasFilter = skillsInputValue.trim().length > 0;
+            const baseOptions = hasFilter
+              ? SKILL_SUGGESTIONS
+              : showAllSkills
+                ? SKILL_SUGGESTIONS
+                : CURATED_SKILLS;
+            const filteredOptions = filterSuggestions(baseOptions, skillsInputValue);
+
+            return (
+              <>
+                {!hasFilter &&
+                  SKILL_SUGGESTIONS.length > CURATED_SKILLS.length && (
+                    <div className="flex justify-end mt-1">
+                      <button
+                        type="button"
+                        onClick={() => setShowAllSkills((prev) => !prev)}
+                        className="text-xs font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded px-1"
+                      >
+                        {showAllSkills
+                          ? "Show fewer"
+                          : `Show all (${SKILL_SUGGESTIONS.length})`}
+                      </button>
+                    </div>
+                  )}
+                <p className="mt-3 text-xs font-medium text-muted-foreground">
+                  {CHIP_SUGGESTION_LABELS.skills}
+                </p>
+                <SuggestionChips
+                  suggestions={filteredOptions}
+                  selectedValues={state.skills}
+                  onSelect={(value) => {
+                    if (!state.skills.includes(value)) {
+                      handleAddSkill(value);
+                    }
+                  }}
+                />
+              </>
+            );
+          })()}
         </div>
 
         <ErrorMessage message={errors.programsSkills} data-testid="error-programs-skills" />

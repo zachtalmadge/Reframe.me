@@ -95,12 +95,7 @@ function validateStep(
       break;
 
     case 8:
-      if (tool !== "narrative" && state.clarifyingRelevanceEnabled) {
-        if (!state.clarifyingRelevance.trim()) {
-          errors.clarifyingRelevance =
-            "Please explain relevance or turn off this section";
-        }
-      }
+      // No validation required - boolean choice only
       break;
 
     case 9:

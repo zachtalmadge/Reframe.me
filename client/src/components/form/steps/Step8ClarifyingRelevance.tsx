@@ -1,7 +1,4 @@
 import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
-import { ErrorMessage } from "@/components/ui/error-message";
-import { CharacterCountTextarea } from "../CharacterCountTextarea";
 import { OilFrameworkInfo } from "../OilFrameworkInfo";
 import { StepImportanceAlert } from "../StepImportanceAlert";
 import { FormState, FormAction } from "@/lib/formState";
@@ -17,85 +14,99 @@ export function Step8ClarifyingRelevance({
   dispatch,
   errors,
 }: Step8ClarifyingRelevanceProps) {
-  const handleToggle = (checked: boolean) => {
+  const handleSelect = (value: boolean) => {
     dispatch({
       type: "SET_FIELD",
       field: "clarifyingRelevanceEnabled",
-      value: checked,
+      value,
     });
-  };
-
-  const handleChange = (value: string) => {
-    dispatch({ type: "SET_FIELD", field: "clarifyingRelevance", value });
   };
 
   return (
     <div className="space-y-8">
       <div className="space-y-2">
         <h2 className="text-xl font-semibold text-foreground">
-          Clarifying Relevance
+          Clarifying Relevance to This Job
         </h2>
         <p className="text-muted-foreground">
-          Sometimes, your background may not be directly related to the job
-          you're applying for. This section is optional but can be powerful.
+          You can choose to include a brief section stating that your record does not
+          affect your ability to do this job—but only if you believe that's honestly
+          true based on what you've shared.
         </p>
       </div>
 
       <StepImportanceAlert>
-        This is especially helpful when there's a significant time gap since the offense, when the offense was unrelated to the job duties, or when you've completed rehabilitation programs.
+        This choice helps shape your letter's approach. There's no wrong answer—choose
+        what feels honest and appropriate for your situation.
       </StepImportanceAlert>
 
-      <div className="space-y-6">
-        <div className="flex items-center justify-between gap-4 p-4 rounded-lg bg-muted/50 border border-border">
-          <div className="space-y-1">
-            <Label
-              htmlFor="clarifying-toggle"
-              className="text-base font-medium"
-            >
-              Include relevance clarification?
-            </Label>
-            <p className="text-sm text-muted-foreground">
-              Turn this on if you want to explain why your background isn't
-              relevant to this position.
-            </p>
-          </div>
-          <Switch
-            id="clarifying-toggle"
-            checked={state.clarifyingRelevanceEnabled}
-            onCheckedChange={handleToggle}
-            data-testid="switch-clarifying-relevance"
-          />
+      <div className="space-y-4">
+        <Label id="relevance-question" className="text-base font-medium">
+          Do you want your letter to mention that your record doesn't relate to this job?
+        </Label>
+
+        <div
+          className="flex gap-3 w-full"
+          role="radiogroup"
+          aria-labelledby="relevance-question"
+        >
+          <button
+            type="button"
+            onClick={() => handleSelect(true)}
+            className={`
+              flex-1 py-3 px-4 rounded-lg font-medium text-sm transition-all
+              border-2 focus-visible:outline-none focus-visible:ring-2
+              focus-visible:ring-ring focus-visible:ring-offset-2
+              ${state.clarifyingRelevanceEnabled === true
+                ? "bg-primary text-primary-foreground border-primary shadow-sm"
+                : "bg-background text-foreground border-border hover:border-primary/50"
+              }
+            `}
+            aria-pressed={state.clarifyingRelevanceEnabled === true}
+            data-testid="button-relevance-yes"
+          >
+            Yes
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleSelect(false)}
+            className={`
+              flex-1 py-3 px-4 rounded-lg font-medium text-sm transition-all
+              border-2 focus-visible:outline-none focus-visible:ring-2
+              focus-visible:ring-ring focus-visible:ring-offset-2
+              ${state.clarifyingRelevanceEnabled === false
+                ? "bg-primary text-primary-foreground border-primary shadow-sm"
+                : "bg-background text-foreground border-border hover:border-primary/50"
+              }
+            `}
+            aria-pressed={state.clarifyingRelevanceEnabled === false}
+            data-testid="button-relevance-no"
+          >
+            No
+          </button>
         </div>
 
-        {state.clarifyingRelevanceEnabled && (
-          <div className="space-y-3">
-            <div className="space-y-1">
-              <Label
-                htmlFor="clarifying-relevance"
-                className="text-base font-medium"
-              >
-                How is your background not relevant to this job?
-              </Label>
-              <p className="text-sm text-muted-foreground">
-                Explain why your past doesn't affect your ability to do this job
-                well.
-              </p>
-            </div>
-            <CharacterCountTextarea
-              id="clarifying-relevance"
-              value={state.clarifyingRelevance}
-              onChange={handleChange}
-              maxLength={400}
-              placeholder="For example: The offense occurred over 10 years ago and was unrelated to any professional setting. This position doesn't involve the circumstances that led to my conviction..."
-              rows={5}
-              data-testid="textarea-clarifying-relevance"
-            />
-            <ErrorMessage message={errors.clarifyingRelevance} />
-          </div>
+        {state.clarifyingRelevanceEnabled === true && (
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            You've chosen <span className="font-semibold">Yes</span>. If your record
+            and the job responsibilities appear unrelated, we may include a calm, brief
+            statement clarifying this. If they seem connected, we won't make that claim—instead,
+            we'll focus on your growth and qualifications.
+          </p>
         )}
 
-        <OilFrameworkInfo />
+        {state.clarifyingRelevanceEnabled === false && (
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            You've chosen <span className="font-semibold">No</span>. Your letter will
+            not claim your record is unrelated to the job. Instead, it will acknowledge
+            any potential concerns and emphasize your personal growth, the changes you've
+            made, and your current reliability.
+          </p>
+        )}
       </div>
+
+      <OilFrameworkInfo />
     </div>
   );
 }

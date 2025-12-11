@@ -27,11 +27,7 @@ export function SuggestionChips({
   }
 
   return (
-    <div className={cn("space-y-2 mt-2", className)}>
-      <p className="text-xs font-medium text-muted-foreground">
-        {label}
-        {suggestions.length < 20 && ` (${suggestions.length})`}
-      </p>
+    <div className={cn("mt-2", className)}>
       <div className="flex flex-wrap gap-2">
         {suggestions.map((item) => {
           const isSelected = selectedValues.includes(item);
@@ -42,11 +38,11 @@ export function SuggestionChips({
               onClick={() => !isSelected && onSelect(item)}
               disabled={isSelected}
               className={cn(
-                "text-xs px-3 py-1.5 rounded-full border transition-colors min-h-[36px]",
-                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1",
+                "text-xs px-2.5 py-1.5 rounded-full border transition-colors min-h-[36px]",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-1",
                 isSelected
-                  ? "bg-muted border-muted-foreground/30 text-muted-foreground cursor-default opacity-60"
-                  : "bg-background border-border text-foreground hover:border-primary hover:bg-primary/5 active:bg-primary/10"
+                  ? "bg-muted/50 border-muted-foreground/20 text-muted-foreground/70 cursor-default"
+                  : "bg-muted/30 border-border/50 text-foreground/80 hover:border-primary/60 hover:bg-primary/5 active:bg-primary/10"
               )}
               aria-label={isSelected ? `${item} (already added)` : `Add ${item}`}
               aria-pressed={isSelected}
