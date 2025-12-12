@@ -1,7 +1,13 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
-import { FileText, Mail, ArrowLeft, ArrowRight, Files, Check, Shield } from "lucide-react";
+import { FileText, Mail, ArrowLeft, ArrowRight, Files, Check, Shield, MessageSquare, ChevronDown } from "lucide-react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import Layout from "@/components/Layout";
 
 type ToolSelection = "narrative" | "responseLetter" | "both" | null;
@@ -223,6 +229,102 @@ export default function Selection() {
             <p className="text-center text-base text-muted-foreground font-medium">
               Your information stays private and is not stored after your session.
             </p>
+          </div>
+
+          {/* Quick FAQ Section */}
+          <div className="mt-16 md:mt-20 pt-12 border-t border-orange-500/20">
+            <div className="text-center mb-8">
+              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
+                Quick Answers
+              </h2>
+              <p className="text-muted-foreground">
+                Common questions before you get started
+              </p>
+            </div>
+
+            <Accordion type="single" collapsible className="space-y-4">
+              {/* FAQ 1 */}
+              <AccordionItem
+                value="why-different-versions"
+                className="border-2 border-orange-500/20 rounded-2xl px-6 bg-gradient-to-br from-orange-50 to-orange-100/50 dark:from-orange-950/20 dark:to-orange-900/10 hover:border-orange-500/40 transition-all duration-300 overflow-hidden"
+              >
+                <AccordionTrigger className="hover:no-underline py-5 group">
+                  <div className="flex items-start gap-4 text-left w-full">
+                    <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-orange-500/15 flex items-center justify-center group-hover:bg-orange-500/25 transition-colors duration-300">
+                      <MessageSquare className="w-5 h-5 text-orange-600" aria-hidden="true" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-base md:text-lg font-semibold text-foreground group-hover:text-orange-600 transition-colors duration-300">
+                        Why might I want different ways to talk about my record?
+                      </h3>
+                    </div>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="px-14 pb-5 pt-2">
+                  <div className="space-y-3 text-sm md:text-base text-muted-foreground leading-relaxed">
+                    <p>
+                      Different situations often call for different versions of your story. A quick form might only need a sentence, while a longer interview might give you space to share more context. The job, the person you're talking to, and what feels safe for you can all shape how much detail makes sense.
+                    </p>
+                    <p>
+                      Having a few prepared versions can help you feel less caught off guard and more in control. You're not changing the facts—you're choosing how much to share and what to focus on for each moment.
+                    </p>
+                    <p>
+                      It's completely normal to feel unsure about how to talk about your record. Many people find that practicing a few different versions helps build confidence over time.
+                    </p>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+
+              {/* FAQ 2 */}
+              <AccordionItem
+                value="what-is-pre-adverse-letter"
+                className="border-2 border-orange-500/20 rounded-2xl px-6 bg-gradient-to-br from-orange-50 to-orange-100/50 dark:from-orange-950/20 dark:to-orange-900/10 hover:border-orange-500/40 transition-all duration-300 overflow-hidden"
+              >
+                <AccordionTrigger className="hover:no-underline py-5 group">
+                  <div className="flex items-start gap-4 text-left w-full">
+                    <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-orange-500/15 flex items-center justify-center group-hover:bg-orange-500/25 transition-colors duration-300">
+                      <FileText className="w-5 h-5 text-orange-600" aria-hidden="true" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-base md:text-lg font-semibold text-foreground group-hover:text-orange-600 transition-colors duration-300">
+                        What is a pre-adverse action response letter, and when would I use one?
+                      </h3>
+                    </div>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="px-14 pb-5 pt-2">
+                  <div className="space-y-3 text-sm md:text-base text-muted-foreground leading-relaxed">
+                    <p>
+                      In some hiring processes, if something on your background check might lead an employer to change an offer or decide not to hire you, they may send you a "pre-adverse action" notice first. This gives you a chance to respond before a final decision is made.
+                    </p>
+                    <p>
+                      A pre-adverse action response letter is your opportunity to:
+                    </p>
+                    <ul className="list-disc pl-5 space-y-1">
+                      <li>Correct any mistakes in the background report</li>
+                      <li>Share context about your record and circumstances</li>
+                      <li>Highlight the steps you've taken to grow and why you're still a strong fit for the job</li>
+                    </ul>
+                    <p className="text-xs mt-4 text-muted-foreground/80 italic">
+                      Laws and procedures vary by location and situation. This is not legal advice. Consider reaching out to a lawyer or legal aid organization for specific guidance.
+                    </p>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+
+            {/* Link to full FAQ */}
+            <div className="mt-8 text-center">
+              <Link href="/faq">
+                <Button
+                  variant="ghost"
+                  className="text-orange-600 hover:text-orange-700 hover:bg-orange-50 transition-all duration-200 group"
+                >
+                  <span>View all frequently asked questions</span>
+                  <ArrowRight className="w-4 h-4 ml-2 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
