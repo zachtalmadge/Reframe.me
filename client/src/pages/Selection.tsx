@@ -49,6 +49,7 @@ export default function Selection() {
 
   const handleContinue = () => {
     if (selected) {
+      window.scrollTo(0, 0);
       navigate(`/form?tool=${selected}`);
     }
   };

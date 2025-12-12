@@ -20,6 +20,7 @@ interface DisclaimerModalProps {
 export function DisclaimerModal({ open, onContinue }: DisclaimerModalProps) {
   const [acknowledged, setAcknowledged] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [hasScrolledToBottom, setHasScrolledToBottom] = useState(false);
 
   const handleContinue = () => {
     if (acknowledged) {
@@ -30,6 +31,12 @@ export function DisclaimerModal({ open, onContinue }: DisclaimerModalProps) {
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const target = e.currentTarget;
     setScrolled(target.scrollTop > 10);
+
+    // Check if user has scrolled to the bottom (within 10px threshold)
+    const isAtBottom = target.scrollTop + target.clientHeight >= target.scrollHeight - 10;
+    if (isAtBottom && !hasScrolledToBottom) {
+      setHasScrolledToBottom(true);
+    }
   };
 
   return (
@@ -82,29 +89,18 @@ export function DisclaimerModal({ open, onContinue }: DisclaimerModalProps) {
       `}</style>
 
       <AlertDialogContent
-        className="modal-content-animated max-w-2xl max-h-[85vh] overflow-hidden flex flex-col gap-0 p-0 border-0"
+        className="modal-content-animated max-w-2xl max-h-[85vh] overflow-hidden flex flex-col gap-0 p-0 border-0 bg-white"
         style={{
-          background: 'linear-gradient(135deg, #f9fafb 0%, #f0fdfa 50%, #ecfdf5 100%)',
           boxShadow: '0 20px 60px rgba(13, 148, 136, 0.15)',
         }}
         onEscapeKeyDown={(e) => e.preventDefault()}
-        onPointerDownOutside={(e) => e.preventDefault()}
         data-testid="modal-disclaimer"
       >
         {/* Header with Icon */}
-        <AlertDialogHeader className="px-8 pt-8 pb-6 relative overflow-hidden">
-          {/* Decorative background element */}
-          <div
-            className="absolute -top-20 -right-20 w-48 h-48 rounded-full opacity-10"
-            style={{
-              background: 'radial-gradient(circle, #14b8a6 0%, transparent 70%)',
-            }}
-            aria-hidden="true"
-          />
-
-          <div className="relative flex items-start gap-4">
+        <AlertDialogHeader className="px-8 pt-8 pb-8 relative">
+          <div className="relative flex flex-col items-center sm:flex-row sm:items-start gap-4">
             <div
-              className="flex-shrink-0 w-14 h-14 rounded-2xl bg-gradient-to-br from-teal-500 to-teal-600 flex items-center justify-center shadow-lg"
+              className="flex-shrink-0 w-14 h-14 rounded-2xl bg-teal-500 flex items-center justify-center shadow-lg"
               style={{
                 animation: 'pulse-icon 3s ease-in-out infinite',
               }}
@@ -112,9 +108,9 @@ export function DisclaimerModal({ open, onContinue }: DisclaimerModalProps) {
               <Shield className="w-7 h-7 text-white" />
             </div>
 
-            <div className="flex-1 space-y-2">
+            <div className="flex-1 space-y-3 text-center sm:text-left">
               <AlertDialogTitle
-                className="text-2xl font-bold text-gray-900"
+                className="text-xl sm:text-2xl font-bold text-gray-900"
                 style={{
                   fontFamily: 'DM Sans, system-ui, sans-serif',
                   letterSpacing: '-0.02em',
@@ -123,8 +119,8 @@ export function DisclaimerModal({ open, onContinue }: DisclaimerModalProps) {
               >
                 {disclaimerContent.title}
               </AlertDialogTitle>
-              <p className="text-sm text-gray-600">
-                Please read carefully before continuing
+              <p className="text-sm text-gray-600 leading-relaxed">
+                Please scroll all the way down to the bottom and read carefully before continuing
               </p>
             </div>
           </div>
@@ -136,10 +132,7 @@ export function DisclaimerModal({ open, onContinue }: DisclaimerModalProps) {
           {/* Shadow indicator when scrolled */}
           {scrolled && (
             <div
-              className="absolute bottom-0 left-0 right-0 h-px"
-              style={{
-                background: 'linear-gradient(90deg, transparent 0%, rgba(13, 148, 136, 0.2) 50%, transparent 100%)',
-              }}
+              className="absolute bottom-0 left-0 right-0 h-px bg-teal-200"
               aria-hidden="true"
             />
           )}
@@ -156,11 +149,9 @@ export function DisclaimerModal({ open, onContinue }: DisclaimerModalProps) {
             {disclaimerContent.sections.map((section, index) => (
               <div
                 key={index}
-                className="modal-section-animated space-y-3 p-5 rounded-xl"
+                className="modal-section-animated space-y-3 p-5 rounded-xl bg-gray-50"
                 style={{
                   animationDelay: `${index * 0.1}s`,
-                  background: 'rgba(255, 255, 255, 0.4)',
-                  backdropFilter: 'blur(10px)',
                 }}
               >
                 <h3
@@ -195,48 +186,33 @@ export function DisclaimerModal({ open, onContinue }: DisclaimerModalProps) {
           </div>
         </div>
 
-        {/* Scroll indicator at bottom */}
-        <div
-          className="scroll-indicator absolute left-1/2 -translate-x-1/2 bottom-32 pointer-events-none"
-          style={{
-            opacity: scrolled ? 0 : 1,
-          }}
-          aria-hidden="true"
-        >
-          <div className="flex flex-col items-center gap-2 text-teal-600">
-            <span className="text-xs font-medium">Scroll to read all</span>
-            <ChevronDown className="w-4 h-4 animate-bounce" />
-          </div>
-        </div>
-
         {/* Footer with Checkbox and Button */}
         <div
-          className="px-8 py-6 space-y-5"
+          className="px-8 py-6 space-y-5 bg-gray-50 border-t border-gray-200"
           style={{
-            background: 'rgba(255, 255, 255, 0.5)',
-            backdropFilter: 'blur(10px)',
             boxShadow: '0 -10px 30px rgba(13, 148, 136, 0.05)',
           }}
         >
           <div
-            className="flex items-start gap-4 p-4 rounded-xl"
-            style={{
-              background: 'rgba(240, 253, 250, 0.6)',
-              backdropFilter: 'blur(10px)',
-            }}
+            className="flex items-start gap-4 p-4 rounded-xl bg-white border border-gray-200"
           >
             <Checkbox
               id="disclaimer-acknowledge"
               checked={acknowledged}
               onCheckedChange={(checked) => setAcknowledged(checked === true)}
-              className="mt-1 border-orange-500 data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500"
+              disabled={!hasScrolledToBottom}
+              className="mt-1 border-orange-500 data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500 disabled:opacity-50 disabled:cursor-not-allowed"
               data-testid="checkbox-acknowledge"
               aria-describedby="acknowledge-label"
             />
             <label
               id="acknowledge-label"
               htmlFor="disclaimer-acknowledge"
-              className="text-sm text-gray-800 leading-relaxed cursor-pointer select-none font-medium"
+              className={`text-sm leading-relaxed select-none font-medium transition-colors ${
+                hasScrolledToBottom
+                  ? 'text-gray-800 cursor-pointer'
+                  : 'text-gray-400 cursor-not-allowed'
+              }`}
             >
               {disclaimerContent.checkboxLabel}
             </label>
@@ -248,9 +224,7 @@ export function DisclaimerModal({ open, onContinue }: DisclaimerModalProps) {
               disabled={!acknowledged}
               className="w-full h-12 text-base font-semibold rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               style={{
-                background: acknowledged
-                  ? 'linear-gradient(135deg, #0d9488 0%, #14b8a6 100%)'
-                  : '#e5e7eb',
+                background: acknowledged ? '#0d9488' : '#e5e7eb',
                 color: acknowledged ? 'white' : '#9ca3af',
                 boxShadow: acknowledged
                   ? '0 4px 12px rgba(13, 148, 136, 0.3)'

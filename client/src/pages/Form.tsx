@@ -76,6 +76,7 @@ export default function Form() {
 
   const handleFormComplete = (data: FormState) => {
     saveFormData(data, tool);
+    window.scrollTo(0, 0);
     navigate(`/loading?tool=${tool}`);
   };
 

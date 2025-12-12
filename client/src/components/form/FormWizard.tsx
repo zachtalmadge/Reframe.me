@@ -148,6 +148,7 @@ export function FormWizard({ tool, onComplete, initialState }: FormWizardProps) 
       navigate("/selection");
     } else {
       dispatch({ type: "PREV_STEP" });
+      window.scrollTo(0, 0);
     }
   }, [state.currentStep, navigate]);
 
@@ -163,6 +164,7 @@ export function FormWizard({ tool, onComplete, initialState }: FormWizardProps) 
       onComplete(state);
     } else {
       dispatch({ type: "NEXT_STEP" });
+      window.scrollTo(0, 0);
     }
   }, [state, tool, totalSteps, onComplete]);
 

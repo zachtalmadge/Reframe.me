@@ -77,25 +77,37 @@ export default function Layout({ children, onLogoClick, onFaqClick }: LayoutProp
           opacity: 0.6;
         }
 
-        .nav-link {
+        .faq-button {
           position: relative;
-          overflow: hidden;
+          background: linear-gradient(135deg, rgba(20, 184, 166, 0.08) 0%, rgba(14, 165, 233, 0.08) 100%);
+          border: 1px solid rgba(20, 184, 166, 0.15);
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .nav-link::before {
+        .faq-button::before {
           content: '';
           position: absolute;
-          bottom: 0;
-          left: 50%;
-          width: 0;
-          height: 1.5px;
-          background: linear-gradient(90deg, #14b8a6 0%, #f97316 100%);
-          transition: width 0.3s ease, left 0.3s ease;
+          inset: 0;
+          border-radius: inherit;
+          background: linear-gradient(135deg, rgba(20, 184, 166, 0.1) 0%, rgba(14, 165, 233, 0.15) 100%);
+          opacity: 0;
+          transition: opacity 0.3s ease;
         }
 
-        .nav-link:hover::before {
-          width: 100%;
-          left: 0;
+        .faq-button:hover {
+          background: linear-gradient(135deg, rgba(20, 184, 166, 0.12) 0%, rgba(14, 165, 233, 0.12) 100%);
+          border-color: rgba(20, 184, 166, 0.3);
+          box-shadow: 0 2px 8px rgba(20, 184, 166, 0.15), 0 0 0 3px rgba(20, 184, 166, 0.05);
+          transform: translateY(-1px);
+        }
+
+        .faq-button:hover::before {
+          opacity: 1;
+        }
+
+        .faq-button:active {
+          transform: translateY(0);
+          box-shadow: 0 1px 4px rgba(20, 184, 166, 0.1);
         }
 
         .horizon-line {
@@ -198,7 +210,7 @@ export default function Layout({ children, onLogoClick, onFaqClick }: LayoutProp
                   <span className="logo-text text-2xl md:text-3xl">
                     Reframe.me
                   </span>
-                 
+
                 </div>
               </div>
             </Link>
@@ -206,11 +218,11 @@ export default function Layout({ children, onLogoClick, onFaqClick }: LayoutProp
             <nav className="flex items-center gap-2 sm:gap-4">
               <Link
                 href="/faq"
-                className="nav-link text-sm font-medium text-gray-700 hover:text-teal-700 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 rounded-md px-2 py-2 sm:px-3"
+                className="faq-button text-sm font-medium text-teal-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 rounded-lg px-3 py-2 sm:px-4 relative overflow-hidden"
                 data-testid="link-faq"
                 onClick={handleFaqClick}
               >
-                FAQ
+                <span className="relative z-10">FAQ</span>
               </Link>
               <Link
                 href="/donate"
