@@ -3,17 +3,8 @@ import { useSearch, useLocation } from "wouter";
 import { Download, Home, AlertTriangle, BookOpen, MessageCircle, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
 import Layout from "@/components/Layout";
+import { LeaveConfirmationModal } from "@/components/LeaveConfirmationModal";
 import { ToolType } from "@/lib/formState";
 import { loadResults, NarrativeItem, ResponseLetter, clearResults, GenerationResult, updateResults } from "@/lib/resultsPersistence";
 import { loadFormData, clearFormData } from "@/lib/formPersistence";
@@ -555,35 +546,16 @@ export default function Results() {
         </div>
       </section>
 
-      <AlertDialog open={exitModalOpen} onOpenChange={setExitModalOpen}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Before you leave this page</AlertDialogTitle>
-            <AlertDialogDescription className="space-y-3">
-              <p>
-                Don't forget to copy or download your results before you leave. We don't want you to lose something important by accident.
-              </p>
-              <p>
-                Once you leave this page, you'll need to start over to generate new narratives or letters.
-              </p>
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel 
-              onClick={handleCancelExit}
-              data-testid="button-cancel-exit"
-            >
-              Stay on this page
-            </AlertDialogCancel>
-            <AlertDialogAction 
-              onClick={handleConfirmExit}
-              data-testid="button-confirm-exit"
-            >
-              Leave anyway
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      <LeaveConfirmationModal
+        open={exitModalOpen}
+        onConfirm={handleConfirmExit}
+        onCancel={handleCancelExit}
+        title="Before you leave this page"
+        description="Don't forget to copy or download your results before you leave. We don't want you to lose something important by accident. Once you leave this page, you'll need to start over to generate new narratives or letters."
+        warning="⚠️ Make sure you've saved your documents before leaving."
+        confirmText="Leave anyway"
+        cancelText="Stay on this page"
+      />
     </Layout>
   );
 }
