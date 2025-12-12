@@ -43,15 +43,21 @@ export function LeaveConfirmationModal({
           }
         }
 
-        @keyframes pulse-warning {
+        @keyframes gentle-pulse {
           0%, 100% {
             transform: scale(1);
-            box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4);
+            box-shadow: 0 0 0 0 rgba(20, 184, 166, 0.3);
           }
           50% {
-            transform: scale(1.05);
-            box-shadow: 0 0 0 8px rgba(245, 158, 11, 0);
+            transform: scale(1.03);
+            box-shadow: 0 0 0 6px rgba(20, 184, 166, 0);
           }
+        }
+
+        @keyframes shimmer-border {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
         }
 
         .backdrop-animated {
@@ -61,13 +67,18 @@ export function LeaveConfirmationModal({
         .modal-animated {
           animation: modal-slide-up 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
+
+        .shimmer-border {
+          background-size: 200% 100%;
+          animation: shimmer-border 3s ease infinite;
+        }
       `}</style>
 
       <div
         className="backdrop-animated fixed inset-0 z-50 flex items-center justify-center"
         style={{
-          background: 'rgba(0, 0, 0, 0.6)',
-          backdropFilter: 'blur(8px)',
+          background: 'rgba(13, 148, 136, 0.15)',
+          backdropFilter: 'blur(12px)',
         }}
         role="dialog"
         aria-modal="true"
@@ -75,17 +86,16 @@ export function LeaveConfirmationModal({
         data-testid="modal-leave-confirmation"
       >
         <div
-          className="modal-animated max-w-md w-full mx-4 rounded-2xl overflow-hidden"
+          className="modal-animated max-w-md w-full mx-4 rounded-2xl overflow-hidden bg-white"
           style={{
-            background: 'linear-gradient(135deg, #ffffff 0%, #fffbeb 100%)',
-            boxShadow: '0 25px 50px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(245, 158, 11, 0.1)',
+            boxShadow: '0 25px 50px rgba(13, 148, 136, 0.2), 0 0 0 1px rgba(20, 184, 166, 0.15)',
           }}
         >
-          {/* Decorative top border */}
+          {/* Decorative top border with shimmer */}
           <div
-            className="h-1"
+            className="h-1 shimmer-border"
             style={{
-              background: 'linear-gradient(90deg, #f59e0b 0%, #fb923c 100%)',
+              background: 'linear-gradient(90deg, #14b8a6 0%, #f97316 50%, #14b8a6 100%)',
             }}
             aria-hidden="true"
           />
@@ -94,10 +104,10 @@ export function LeaveConfirmationModal({
             {/* Icon and Title Section */}
             <div className="flex items-start gap-4">
               <div
-                className="flex-shrink-0 w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center"
+                className="flex-shrink-0 w-14 h-14 rounded-2xl bg-teal-500 flex items-center justify-center"
                 style={{
-                  animation: 'pulse-warning 2s ease-in-out infinite',
-                  boxShadow: '0 8px 16px rgba(245, 158, 11, 0.3)',
+                  animation: 'gentle-pulse 2.5s ease-in-out infinite',
+                  boxShadow: '0 8px 16px rgba(20, 184, 166, 0.25)',
                 }}
               >
                 <AlertTriangle
@@ -125,8 +135,8 @@ export function LeaveConfirmationModal({
             </div>
 
             {/* Warning Box */}
-            <div className="p-4 rounded-xl bg-amber-50/50 border-2 border-amber-100">
-              <p className="text-sm text-amber-900 font-medium">
+            <div className="p-4 rounded-xl bg-teal-50 border-2 border-teal-100">
+              <p className="text-sm text-teal-900 font-medium">
                 {warning}
               </p>
             </div>
@@ -136,16 +146,16 @@ export function LeaveConfirmationModal({
               <Button
                 variant="outline"
                 onClick={onCancel}
-                className="h-11 px-6 font-semibold border-2 border-gray-200 hover:border-gray-300 hover:bg-gray-50 transition-all duration-200"
+                className="h-11 px-6 font-semibold border-2 border-teal-200 text-teal-700 hover:border-teal-300 hover:bg-teal-50 transition-all duration-200"
                 data-testid="button-stay-here"
               >
                 {cancelText}
               </Button>
               <Button
                 onClick={onConfirm}
-                className="h-11 px-6 font-semibold transition-all duration-300 hover:shadow-lg"
+                className="h-11 px-6 font-semibold transition-all duration-300 hover:shadow-lg hover:scale-105"
                 style={{
-                  background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
+                  background: 'linear-gradient(135deg, #f97316 0%, #fb923c 100%)',
                   color: 'white',
                 }}
                 data-testid="button-leave-clear"
