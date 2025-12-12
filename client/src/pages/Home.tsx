@@ -93,8 +93,14 @@ export default function Home() {
   const [isPaused, setIsPaused] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [isThisForMeOpen, setIsThisForMeOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    // Detect mobile devices
+    const checkMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) ||
+                       (window.innerWidth <= 768);
+    setIsMobile(checkMobile);
+
     const prefersReduced = window.matchMedia?.(
       "(prefers-reduced-motion: reduce)",
     ).matches;
@@ -122,8 +128,24 @@ export default function Home() {
       setShowBefore(false);
       setShowAfter(false);
 
-      timeouts.push(setTimeout(() => setShowBefore(true), BEFORE_DELAY));
-      timeouts.push(setTimeout(() => setShowAfter(true), AFTER_DELAY));
+      // On mobile, use requestAnimationFrame for smoother timing
+      if (isMobile) {
+        requestAnimationFrame(() => {
+          // Force layout recalculation on mobile
+          document.body.offsetHeight;
+
+          timeouts.push(setTimeout(() => {
+            requestAnimationFrame(() => setShowBefore(true));
+          }, BEFORE_DELAY));
+
+          timeouts.push(setTimeout(() => {
+            requestAnimationFrame(() => setShowAfter(true));
+          }, AFTER_DELAY));
+        });
+      } else {
+        timeouts.push(setTimeout(() => setShowBefore(true), BEFORE_DELAY));
+        timeouts.push(setTimeout(() => setShowAfter(true), AFTER_DELAY));
+      }
 
       const fadeOutTime = AFTER_DELAY + VISIBLE_DURATION;
       timeouts.push(
@@ -141,12 +163,24 @@ export default function Home() {
       );
     }
 
-    runCycle(0);
+    // On mobile, add initial delay to ensure DOM is ready
+    if (isMobile) {
+      const initialDelay = setTimeout(() => {
+        requestAnimationFrame(() => runCycle(0));
+      }, 300);
 
-    return () => {
-      timeouts.forEach(clearTimeout);
-    };
-  }, [prefersReducedMotion]);
+      return () => {
+        clearTimeout(initialDelay);
+        timeouts.forEach(clearTimeout);
+      };
+    } else {
+      runCycle(0);
+
+      return () => {
+        timeouts.forEach(clearTimeout);
+      };
+    }
+  }, [prefersReducedMotion, isMobile]);
 
   useEffect(() => {
     if (isPaused) return;
@@ -266,6 +300,10 @@ export default function Home() {
                           className={`text-lg md:text-xl text-gray-600 italic transition-opacity duration-300 motion-reduce:transition-none ${
                             isActive && showBefore ? "opacity-100" : "opacity-0"
                           }`}
+                          style={isMobile ? {
+                            willChange: isActive ? 'opacity' : 'auto',
+                            transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
+                          } : undefined}
                         >
                           <span className="font-semibold text-gray-700 not-italic block mb-2">
                             Before:
@@ -278,6 +316,11 @@ export default function Home() {
                               ? "opacity-100 translate-y-0"
                               : "opacity-0 translate-y-1"
                           }`}
+                          style={isMobile ? {
+                            willChange: isActive ? 'opacity, transform' : 'auto',
+                            transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
+                            transform: isActive && showAfter ? 'translateY(0) translateZ(0)' : 'translateY(0.25rem) translateZ(0)',
+                          } : undefined}
                         >
                           <span className="text-teal-700 font-semibold block mb-2">After:</span>
                           <span className="text-gray-900">"{pair.after}"</span>
