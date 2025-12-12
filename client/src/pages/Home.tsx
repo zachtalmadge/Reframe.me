@@ -170,48 +170,86 @@ export default function Home() {
 
   return (
     <Layout>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
+
+        @keyframes shimmer-hero {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+
+        .gradient-shimmer-hero {
+          background: linear-gradient(
+            135deg,
+            rgba(20, 184, 166, 0.03) 0%,
+            rgba(249, 115, 22, 0.03) 25%,
+            rgba(20, 184, 166, 0.03) 50%,
+            rgba(249, 115, 22, 0.03) 75%,
+            rgba(20, 184, 166, 0.03) 100%
+          );
+          background-size: 300% 300%;
+          animation: shimmer-hero 10s ease infinite;
+        }
+
+        .hero-heading {
+          font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+          letter-spacing: -0.03em;
+        }
+      `}</style>
+
       <section
-        className="relative py-20 md:py-32 overflow-hidden bg-gradient-to-br from-white via-primary/8 to-primary/5 dark:from-slate-950 dark:via-primary/10 dark:to-slate-900"
+        className="relative py-16 md:py-24 overflow-hidden"
+        style={{
+          background: 'linear-gradient(135deg, #0d9488 0%, #14b8a6 50%, #0891b2 100%)'
+        }}
         aria-labelledby="hero-heading"
       >
-        <div
-          className="pointer-events-none absolute -left-20 -top-10 h-96 w-96 rounded-full bg-primary/10 blur-3xl animate-float-slow motion-reduce:animate-none"
-          aria-hidden="true"
-        />
-        <div
-          className="pointer-events-none absolute -right-16 top-1/4 h-[400px] w-[400px] rounded-full bg-chart-2/10 blur-3xl animate-float-slow-reverse motion-reduce:animate-none"
-          aria-hidden="true"
-        />
-        <div
-          className="pointer-events-none absolute left-1/3 -bottom-20 h-64 w-64 rounded-full bg-primary/5 blur-2xl animate-float-slow motion-reduce:animate-none"
-          style={{ animationDelay: "-8s" }}
-          aria-hidden="true"
-        />
+        {/* Shimmer overlay */}
+        <div className="absolute inset-0 gradient-shimmer-hero opacity-30" aria-hidden="true" />
+
+        {/* Decorative background orbs */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div
+            className="absolute top-20 right-1/4 w-[400px] h-[400px] rounded-full opacity-20 blur-3xl"
+            style={{
+              background: 'radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%)'
+            }}
+          />
+          <div
+            className="absolute bottom-40 left-1/4 w-[350px] h-[350px] rounded-full opacity-20 blur-3xl"
+            style={{
+              background: 'radial-gradient(circle, rgba(249, 115, 22, 0.3) 0%, transparent 70%)'
+            }}
+          />
+        </div>
 
         <div className="relative w-full px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto">
-            <div className="relative text-center space-y-8 md:space-y-10">
+          <div className="max-w-5xl mx-auto">
+            <div className="relative text-center space-y-10">
+              {/* Heading */}
               <div className="space-y-6">
                 <h1
                   id="hero-heading"
-                  className="text-5xl md:text-7xl font-bold leading-tight text-foreground tracking-tight"
+                  className="hero-heading text-4xl md:text-6xl font-bold leading-tight text-white"
                 >
                   Prepare for Your<br/> Next Opportunity
                 </h1>
-                <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-4xl mx-auto font-light">
-                  Your past is part of your story, <em className="font-normal">not the whole story</em>. Reframe.me helps
+                <p className="text-lg md:text-xl text-teal-50 leading-relaxed max-w-3xl mx-auto">
+                  Your past is part of your story, <em className="font-medium">not the whole story</em>. Reframe.me helps
                   you share that story in a way that centers your growth and{" "}
-                  <em className="font-normal">what you offer today</em>.
+                  <em className="font-medium">what you offer today</em>.
                 </p>
               </div>
 
+              {/* Before/After block - preserved functionality */}
               <div
-                className="w-24 h-1.5 bg-gradient-to-r from-primary/40 via-primary to-primary/40 mx-auto rounded-full"
-                aria-hidden="true"
-              />
-
-              <div
-                className="max-w-3xl mx-auto bg-white/60 dark:bg-slate-900/40 rounded-2xl p-8 md:p-10 backdrop-blur-sm border border-white/80 dark:border-slate-700/60 shadow-xl"
+                className="max-w-3xl mx-auto rounded-3xl p-8 md:p-12 backdrop-blur-sm relative"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 253, 250, 0.95) 100%)',
+                  border: '2px solid rgba(255, 255, 255, 0.5)',
+                  boxShadow: '0 20px 60px rgba(0, 0, 0, 0.2)'
+                }}
                 data-testid="before-after-block"
               >
                 <div className="grid" style={{ gridTemplateRows: '1fr', gridTemplateColumns: '1fr' }}>
@@ -225,24 +263,24 @@ export default function Home() {
                         aria-hidden={!isActive}
                       >
                         <div
-                          className={`text-lg md:text-xl text-muted-foreground italic transition-opacity duration-300 motion-reduce:transition-none ${
+                          className={`text-lg md:text-xl text-gray-600 italic transition-opacity duration-300 motion-reduce:transition-none ${
                             isActive && showBefore ? "opacity-100" : "opacity-0"
                           }`}
                         >
-                          <span className="font-semibold text-muted-foreground/90 not-italic block mb-2">
+                          <span className="font-semibold text-gray-700 not-italic block mb-2">
                             Before:
                           </span>
-                          <span className="text-muted-foreground/90">"{pair.before}"</span>
+                          <span className="text-gray-600">"{pair.before}"</span>
                         </div>
                         <div
-                          className={`text-lg md:text-xl text-foreground font-medium transition-all duration-300 motion-reduce:transition-none ${
+                          className={`text-lg md:text-xl text-gray-900 font-medium transition-all duration-300 motion-reduce:transition-none ${
                             isActive && showAfter
                               ? "opacity-100 translate-y-0"
                               : "opacity-0 translate-y-1"
                           }`}
                         >
-                          <span className="text-primary font-semibold block mb-2">After:</span>
-                          <span className="text-foreground">"{pair.after}"</span>
+                          <span className="text-teal-700 font-semibold block mb-2">After:</span>
+                          <span className="text-gray-900">"{pair.after}"</span>
                         </div>
                       </div>
                     );
@@ -250,31 +288,35 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="flex flex-wrap justify-center gap-6 md:gap-10 text-base md:text-lg text-muted-foreground pt-6">
-                <div className="flex items-center gap-3 bg-white/50 dark:bg-slate-900/50 px-6 py-3 rounded-full border border-primary/20 shadow-md">
-                  <Clock className="w-5 h-5 text-primary" aria-hidden="true" />
-                  <span className="font-medium">Takes 5-10 minutes</span>
+              {/* Feature badges */}
+              <div className="flex flex-wrap justify-center gap-4 md:gap-6 text-sm md:text-base pt-4">
+                <div className="flex items-center gap-2.5 bg-white/20 backdrop-blur-sm px-5 py-2.5 rounded-full border border-white/30">
+                  <Clock className="w-4 h-4 text-white" aria-hidden="true" />
+                  <span className="font-medium text-white">Takes 5-10 minutes</span>
                 </div>
-                <div className="flex items-center gap-3 bg-white/50 dark:bg-slate-900/50 px-6 py-3 rounded-full border border-primary/20 shadow-md">
-                  <Heart className="w-5 h-5 text-primary" aria-hidden="true" />
-                  <span className="font-medium">Completely free</span>
+                <div className="flex items-center gap-2.5 bg-white/20 backdrop-blur-sm px-5 py-2.5 rounded-full border border-white/30">
+                  <Heart className="w-4 h-4 text-white" aria-hidden="true" />
+                  <span className="font-medium text-white">Completely free</span>
                 </div>
               </div>
 
+              {/* CTA Button */}
               <div className="pt-6">
                 <Link href="/selection">
                   <Button
                     size="lg"
-                    className="group w-full sm:w-auto min-h-[60px] px-12 text-xl font-semibold shadow-2xl hover:shadow-3xl transition-all"
+                    className="group bg-white text-teal-700 hover:bg-teal-50 min-h-[56px] px-10 text-lg font-semibold shadow-2xl hover:shadow-xl transition-all duration-300 hover:scale-105"
                     data-testid="button-get-started-hero"
                   >
-                    Get Started
-                    <span className="inline-flex transition-transform duration-150 ease-out group-hover:translate-x-1 group-focus-visible:translate-x-1 motion-reduce:transform-none ml-2">
-                      <ArrowRight className="w-6 h-6" aria-hidden="true" />
-                    </span>
+                    Begin Your Journey
+                    <ArrowRight className="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
                   </Button>
                 </Link>
               </div>
+
+              <p className="text-sm text-teal-100 font-medium">
+                No account required • Completely private • Your story, your way
+              </p>
             </div>
           </div>
         </div>
@@ -684,6 +726,63 @@ export default function Home() {
                 </p>
               </div>
             ))}
+          </div>
+
+          {/* Final Encouragement Block */}
+          <div className="mt-16 mb-12">
+            <div
+              className="relative rounded-3xl p-12 md:p-16 text-center overflow-hidden"
+              style={{
+                background: 'linear-gradient(135deg, rgba(240, 253, 250, 0.6) 0%, rgba(224, 242, 254, 0.6) 100%)',
+                border: '2px solid rgba(20, 184, 166, 0.2)',
+                boxShadow: '0 10px 40px rgba(20, 184, 166, 0.15)'
+              }}
+            >
+              {/* Decorative quote mark */}
+              <div
+                className="absolute top-8 left-8 text-9xl font-serif opacity-10 pointer-events-none"
+                style={{ color: 'rgb(20, 184, 166)' }}
+                aria-hidden="true"
+              >
+                "
+              </div>
+
+              {/* Subtle background orbs */}
+              <div
+                className="absolute top-0 right-0 w-64 h-64 rounded-full opacity-20 blur-3xl"
+                style={{
+                  background: 'radial-gradient(circle, rgba(20, 184, 166, 0.3) 0%, transparent 70%)'
+                }}
+                aria-hidden="true"
+              />
+              <div
+                className="absolute bottom-0 left-0 w-48 h-48 rounded-full opacity-20 blur-3xl"
+                style={{
+                  background: 'radial-gradient(circle, rgba(249, 115, 22, 0.3) 0%, transparent 70%)'
+                }}
+                aria-hidden="true"
+              />
+
+              <div className="relative z-10 max-w-3xl mx-auto space-y-6">
+                <p
+                  className="text-3xl md:text-4xl font-bold leading-tight bg-gradient-to-r from-teal-700 via-teal-600 to-cyan-700 bg-clip-text text-transparent"
+                  style={{ fontFamily: 'DM Sans, system-ui, sans-serif', letterSpacing: '-0.02em' }}
+                >
+                  Your past doesn't define your future
+                </p>
+
+                <p className="text-lg md:text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto">
+                  Every person deserves the chance to move forward. You've already taken the first step by being here.
+                </p>
+
+                <div className="pt-4">
+                  <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-teal-100/60 border border-teal-200">
+                    <div className="w-2 h-2 rounded-full bg-teal-500 animate-pulse" aria-hidden="true" />
+                    <span className="text-sm font-semibold text-teal-700">Start reframing today</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="text-center">

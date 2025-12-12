@@ -1,7 +1,8 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, MessageSquare, FileText, Scale, Shield, Lightbulb, Users, AlertCircle, BookOpen, RefreshCw } from "lucide-react";
 import Layout from "@/components/Layout";
+import { useState } from "react";
 import {
   Accordion,
   AccordionContent,
@@ -13,6 +14,8 @@ const faqs = [
   {
     id: "why-different-versions",
     question: "Why might I want different ways to talk about my record?",
+    icon: MessageSquare,
+    category: "Your Story",
     answer: (
       <div className="space-y-3 text-muted-foreground">
         <p>
@@ -33,6 +36,8 @@ const faqs = [
   {
     id: "what-is-pre-adverse-letter",
     question: "What is a pre-adverse action response letter, and when would I use one?",
+    icon: FileText,
+    category: "Letters & Responses",
     answer: (
       <div className="space-y-3 text-muted-foreground">
         <p>
@@ -58,6 +63,8 @@ const faqs = [
   {
     id: "when-disclose",
     question: "When should I disclose my record?",
+    icon: Lightbulb,
+    category: "Disclosure Timing",
     answer: (
       <div className="space-y-3 text-muted-foreground">
         <p>
@@ -75,6 +82,8 @@ const faqs = [
   {
     id: "pre-adverse-rights",
     question: "What are my rights during a pre-adverse action notice?",
+    icon: Scale,
+    category: "Your Rights",
     answer: (
       <div className="space-y-3 text-muted-foreground">
         <p>
@@ -92,6 +101,8 @@ const faqs = [
   {
     id: "letter-effectiveness",
     question: "Does this letter actually work?",
+    icon: Shield,
+    category: "Effectiveness",
     answer: (
       <div className="space-y-3 text-muted-foreground">
         <p>
@@ -109,6 +120,8 @@ const faqs = [
   {
     id: "privacy-data",
     question: "Is my information stored or shared?",
+    icon: Shield,
+    category: "Privacy & Security",
     answer: (
       <div className="space-y-3 text-muted-foreground">
         <p>
@@ -126,6 +139,8 @@ const faqs = [
   {
     id: "job-guarantee",
     question: "Can this guarantee I get a job or keep a job?",
+    icon: Users,
+    category: "Expectations",
     answer: (
       <div className="space-y-3 text-muted-foreground">
         <p>
@@ -143,6 +158,8 @@ const faqs = [
   {
     id: "legal-advice",
     question: "Is this legal advice? Are you my lawyer?",
+    icon: AlertCircle,
+    category: "Legal Disclaimer",
     answer: (
       <div className="space-y-3 text-muted-foreground">
         <p>
@@ -160,6 +177,8 @@ const faqs = [
   {
     id: "who-is-this-for",
     question: "Who is Reframe.me for (and not for)?",
+    icon: BookOpen,
+    category: "About This Tool",
     answer: (
       <div className="space-y-3 text-muted-foreground">
         <p>
@@ -177,6 +196,8 @@ const faqs = [
   {
     id: "legal-proceedings",
     question: "Can I use this letter in court or for legal proceedings?",
+    icon: Scale,
+    category: "Legal Use",
     answer: (
       <div className="space-y-3 text-muted-foreground">
         <p>
@@ -194,6 +215,8 @@ const faqs = [
   {
     id: "reuse-materials",
     question: "Can I reuse a narrative or letter for different jobs?",
+    icon: RefreshCw,
+    category: "Usage Tips",
     answer: (
       <div className="space-y-3 text-muted-foreground">
         <p>
@@ -211,91 +234,278 @@ const faqs = [
 ];
 
 export default function Faq() {
+  const [openItem, setOpenItem] = useState<string>("");
+
   return (
     <Layout>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
+
+        @keyframes float-in {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes shimmer-bg {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+
+        .faq-question {
+          font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+          letter-spacing: -0.02em;
+        }
+
+        .faq-card {
+          animation: float-in 0.6s ease-out;
+          animation-fill-mode: backwards;
+        }
+
+        .faq-card:nth-child(1) { animation-delay: 0.05s; }
+        .faq-card:nth-child(2) { animation-delay: 0.1s; }
+        .faq-card:nth-child(3) { animation-delay: 0.15s; }
+        .faq-card:nth-child(4) { animation-delay: 0.2s; }
+        .faq-card:nth-child(5) { animation-delay: 0.25s; }
+        .faq-card:nth-child(6) { animation-delay: 0.3s; }
+        .faq-card:nth-child(7) { animation-delay: 0.35s; }
+        .faq-card:nth-child(8) { animation-delay: 0.4s; }
+        .faq-card:nth-child(9) { animation-delay: 0.45s; }
+        .faq-card:nth-child(10) { animation-delay: 0.5s; }
+
+        .gradient-shimmer {
+          background: linear-gradient(
+            135deg,
+            rgba(20, 184, 166, 0.03) 0%,
+            rgba(249, 115, 22, 0.03) 25%,
+            rgba(20, 184, 166, 0.03) 50%,
+            rgba(249, 115, 22, 0.03) 75%,
+            rgba(20, 184, 166, 0.03) 100%
+          );
+          background-size: 300% 300%;
+          animation: shimmer-bg 10s ease infinite;
+        }
+
+        .category-badge {
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+        }
+      `}</style>
+
       <section
-        className="py-8 md:py-12 px-4 sm:px-6 lg:px-8 min-h-screen bg-gradient-to-b from-chart-2/5 via-slate-50 to-primary/5 dark:from-chart-2/10 dark:via-slate-900 dark:to-primary/10"
+        className="py-12 md:py-20 px-4 sm:px-6 lg:px-8 min-h-screen relative overflow-hidden"
+        style={{
+          background: 'linear-gradient(180deg, #fafaf9 0%, #f0fdfa 30%, #fff7ed 60%, #fafaf9 100%)'
+        }}
         aria-labelledby="faq-heading"
       >
-        <div className="max-w-2xl mx-auto">
-          <div className="text-center space-y-4 mb-8">
+        {/* Decorative background elements */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div
+            className="absolute top-20 right-1/4 w-[400px] h-[400px] rounded-full opacity-30 blur-3xl"
+            style={{
+              background: 'radial-gradient(circle, rgba(20, 184, 166, 0.15) 0%, transparent 70%)'
+            }}
+          />
+          <div
+            className="absolute bottom-40 left-1/4 w-[350px] h-[350px] rounded-full opacity-30 blur-3xl"
+            style={{
+              background: 'radial-gradient(circle, rgba(249, 115, 22, 0.12) 0%, transparent 70%)'
+            }}
+          />
+        </div>
+
+        <div className="max-w-4xl mx-auto relative z-10">
+          {/* Hero section */}
+          <div className="text-center space-y-6 mb-16">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-50 border border-teal-100">
+              <BookOpen className="w-4 h-4 text-teal-600" />
+              <span className="text-sm font-medium text-teal-700 tracking-wide">Knowledge Base</span>
+            </div>
+
             <h1
               id="faq-heading"
-              className="text-2xl md:text-3xl font-bold leading-tight text-foreground"
+              className="text-4xl md:text-5xl font-bold leading-tight bg-gradient-to-br from-gray-900 via-teal-800 to-gray-900 bg-clip-text text-transparent pb-2"
+              style={{ fontFamily: 'DM Sans, system-ui, sans-serif', letterSpacing: '-0.03em' }}
             >
-              Learn More
+              Everything You Need to Know
             </h1>
-            <p className="text-muted-foreground leading-relaxed">
-              Answers to common questions about background checks, disclosure,
-              and your rights during the hiring process.
+
+            <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+              Clear answers about background checks, disclosure, and your rights during the hiring process.
             </p>
           </div>
 
-          <div className="rounded-xl border border-chart-2/20 bg-chart-2/5 p-4 md:p-6 mb-8">
-            <p className="text-sm text-muted-foreground leading-relaxed mb-3">
-              <span className="font-medium text-foreground">
-                Important:
-              </span>{" "}
-              Reframe.me is not a law firm and does not provide legal advice. The information on this page is for general educational purposes only.
-            </p>
-            <p className="text-sm text-muted-foreground leading-relaxed mb-3">
-              We cannot guarantee any hiring outcome. Every situation is different, and employment laws vary significantly by location and industry.
-            </p>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              When possible, consult with a qualified attorney or legal aid organization about your specific circumstances.
-            </p>
+          {/* Important notice - redesigned */}
+          <div
+            className="rounded-2xl p-6 md:p-8 mb-12 relative overflow-hidden"
+            style={{
+              background: 'linear-gradient(135deg, rgba(251, 146, 60, 0.08) 0%, rgba(249, 115, 22, 0.12) 100%)',
+              border: '2px solid rgba(249, 115, 22, 0.2)'
+            }}
+          >
+            <div className="absolute top-0 right-0 w-32 h-32 opacity-10">
+              <AlertCircle className="w-full h-full text-orange-500" />
+            </div>
+
+            <div className="relative space-y-3">
+              <div className="flex items-center gap-2 mb-3">
+                <AlertCircle className="w-5 h-5 text-orange-600" />
+                <h3 className="text-lg font-bold text-orange-900">Important Disclaimer</h3>
+              </div>
+
+              <p className="text-sm text-gray-700 leading-relaxed">
+                Reframe.me is not a law firm and does not provide legal advice. The information here is for educational purposes only. We cannot guarantee hiring outcomes—every situation is unique, and employment laws vary by location and industry.
+              </p>
+
+              <p className="text-sm text-gray-700 leading-relaxed">
+                When possible, consult with a qualified attorney or legal aid organization about your specific circumstances.
+              </p>
+            </div>
           </div>
 
-          <div className="mb-10">
-            <h2 className="text-lg font-semibold text-foreground mb-4">
-              Frequently Asked Questions
-            </h2>
-            <Accordion type="single" collapsible className="w-full">
-              {faqs.map((faq) => (
-                <AccordionItem
+          {/* FAQs - card-based design */}
+          <div className="space-y-4 mb-16">
+            {faqs.map((faq, index) => {
+              const Icon = faq.icon;
+              const isOpen = openItem === faq.id;
+
+              return (
+                <div
                   key={faq.id}
-                  value={faq.id}
+                  className="faq-card group"
                   data-testid={`faq-item-${faq.id}`}
                 >
-                  <AccordionTrigger
-                    className="text-left text-sm md:text-base"
-                    data-testid={`faq-trigger-${faq.id}`}
+                  <div
+                    className="rounded-2xl border border-gray-200 bg-white/80 backdrop-blur-sm overflow-hidden transition-all duration-300 hover:shadow-xl hover:border-teal-200"
+                    style={{
+                      boxShadow: isOpen ? '0 10px 40px rgba(20, 184, 166, 0.15)' : '0 2px 8px rgba(0, 0, 0, 0.04)'
+                    }}
                   >
-                    {faq.question}
-                  </AccordionTrigger>
-                  <AccordionContent data-testid={`faq-content-${faq.id}`}>
-                    {faq.answer}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
+                    <button
+                      onClick={() => setOpenItem(isOpen ? "" : faq.id)}
+                      className="w-full text-left p-6 md:p-8 transition-colors duration-200"
+                      data-testid={`faq-trigger-${faq.id}`}
+                      aria-expanded={isOpen}
+                    >
+                      <div className="flex items-start gap-4">
+                        {/* Icon */}
+                        <div
+                          className="flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300"
+                          style={{
+                            background: isOpen
+                              ? 'linear-gradient(135deg, #14b8a6 0%, #0891b2 100%)'
+                              : 'linear-gradient(135deg, rgba(20, 184, 166, 0.1) 0%, rgba(8, 145, 178, 0.1) 100%)'
+                          }}
+                        >
+                          <Icon
+                            className={`w-6 h-6 transition-colors duration-300 ${
+                              isOpen ? 'text-white' : 'text-teal-600'
+                            }`}
+                          />
+                        </div>
+
+                        {/* Content */}
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-start justify-between gap-4 mb-2">
+                            <h3
+                              className="faq-question text-lg md:text-xl font-semibold text-gray-900 leading-tight pr-4"
+                            >
+                              {faq.question}
+                            </h3>
+
+                            <div
+                              className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${
+                                isOpen ? 'bg-teal-100 rotate-180' : 'bg-gray-100'
+                              }`}
+                            >
+                              <ArrowRight
+                                className={`w-4 h-4 transition-colors duration-300 ${
+                                  isOpen ? 'text-teal-700 rotate-90' : 'text-gray-500'
+                                }`}
+                              />
+                            </div>
+                          </div>
+
+                          <div className="category-badge inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gray-100/80 border border-gray-200/50">
+                            <span className="text-xs font-medium text-gray-600">{faq.category}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </button>
+
+                    {/* Answer - accordion content */}
+                    <div
+                      className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                        isOpen ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'
+                      }`}
+                    >
+                      <div
+                        className="px-6 md:px-8 pb-6 md:pb-8 pt-2"
+                        style={{
+                          background: 'linear-gradient(180deg, rgba(240, 253, 250, 0.3) 0%, transparent 100%)'
+                        }}
+                        data-testid={`faq-content-${faq.id}`}
+                      >
+                        <div className="pl-16 prose prose-sm max-w-none">
+                          {faq.answer}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
 
-          <div className="rounded-xl border border-muted/40 bg-muted/10 p-4 md:p-6 mb-8">
-            <p className="text-xs text-muted-foreground leading-relaxed mb-2">
-              <span className="font-medium">Reminder:</span> Nothing on this site constitutes legal advice. We are not responsible for hiring decisions made by employers. Results vary, and we make no guarantees about employment outcomes.
-            </p>
-            <p className="text-xs text-muted-foreground leading-relaxed">
-              If you have legal questions, please seek help from a qualified attorney in your jurisdiction.
+          {/* Bottom disclaimer - minimalist */}
+          <div className="rounded-xl bg-gray-50 border border-gray-200 p-4 md:p-6 mb-12">
+            <p className="text-xs text-gray-600 leading-relaxed text-center">
+              <span className="font-semibold">Legal Reminder:</span> Nothing on this site constitutes legal advice. We are not responsible for hiring decisions. Results vary, and we make no guarantees. If you have legal questions, seek help from a qualified attorney.
             </p>
           </div>
 
-          <div className="text-center space-y-4 pt-6 border-t border-border">
-            <p className="text-muted-foreground">
-              Ready to prepare for your next opportunity?
-            </p>
-            <Link href="/selection">
-              <Button
-                size="lg"
-                className="group w-full sm:w-auto min-h-[48px] px-8 text-lg font-medium"
-                data-testid="button-get-started-faq"
-              >
-                Get Started
-                <span className="inline-flex transition-transform duration-150 ease-out group-hover:translate-x-1 group-focus-visible:translate-x-1 motion-reduce:transform-none">
-                  <ArrowRight className="w-5 h-5" aria-hidden="true" />
-                </span>
-              </Button>
-            </Link>
+          {/* CTA section - elevated design */}
+          <div
+            className="rounded-3xl p-8 md:p-12 text-center relative overflow-hidden"
+            style={{
+              background: 'linear-gradient(135deg, #0d9488 0%, #14b8a6 50%, #0891b2 100%)',
+              boxShadow: '0 20px 60px rgba(20, 184, 166, 0.3)'
+            }}
+          >
+            <div className="absolute inset-0 gradient-shimmer opacity-30" />
+
+            <div className="relative z-10 space-y-6">
+              <div className="space-y-3">
+                <h2 className="text-3xl md:text-4xl font-bold text-white" style={{ fontFamily: 'DM Sans, system-ui, sans-serif', letterSpacing: '-0.02em' }}>
+                  Ready to Get Started?
+                </h2>
+                <p className="text-teal-50 text-lg max-w-2xl mx-auto">
+                  Create your personalized narratives and response letters in minutes. Free, private, and designed for your success.
+                </p>
+              </div>
+
+              <Link href="/selection">
+                <Button
+                  size="lg"
+                  className="group bg-white text-teal-700 hover:bg-teal-50 min-h-[56px] px-10 text-lg font-semibold shadow-2xl hover:shadow-xl transition-all duration-300 hover:scale-105"
+                  data-testid="button-get-started-faq"
+                >
+                  Begin Your Journey
+                  <ArrowRight className="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
+                </Button>
+              </Link>
+
+              <p className="text-sm text-teal-100 font-medium">
+                No account required • Completely free • Takes 10-15 minutes
+              </p>
+            </div>
           </div>
         </div>
       </section>

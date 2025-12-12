@@ -37,36 +37,130 @@ export default function Layout({ children, onLogoClick, onFaqClick }: LayoutProp
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
-      <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between gap-4">
-            <Link 
-              href="/" 
-              className="flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-md"
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&display=swap');
+
+        @keyframes shimmer {
+          0% { background-position: -200% center; }
+          100% { background-position: 200% center; }
+        }
+
+        @keyframes horizon-rise {
+          from { transform: scaleX(0); opacity: 0; }
+          to { transform: scaleX(1); opacity: 1; }
+        }
+
+        .logo-text {
+          font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+          font-weight: 700;
+          background: linear-gradient(135deg, #0d9488 0%, #14b8a6 50%, #0891b2 100%);
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+          position: relative;
+          letter-spacing: -0.03em;
+        }
+
+        .logo-text::after {
+          content: '';
+          position: absolute;
+          bottom: -4px;
+          left: 0;
+          right: 0;
+          height: 2px;
+          background: linear-gradient(90deg, transparent 0%, #14b8a6 20%, #f97316 50%, #14b8a6 80%, transparent 100%);
+          opacity: 0;
+          transition: opacity 0.4s ease;
+        }
+
+        .logo-text:hover::after {
+          opacity: 0.6;
+        }
+
+        .nav-link {
+          position: relative;
+          overflow: hidden;
+        }
+
+        .nav-link::before {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          width: 0;
+          height: 1.5px;
+          background: linear-gradient(90deg, #14b8a6 0%, #f97316 100%);
+          transition: width 0.3s ease, left 0.3s ease;
+        }
+
+        .nav-link:hover::before {
+          width: 100%;
+          left: 0;
+        }
+
+        .horizon-line {
+          background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(20, 184, 166, 0.1) 10%,
+            rgba(20, 184, 166, 0.2) 25%,
+            rgba(249, 115, 22, 0.15) 50%,
+            rgba(20, 184, 166, 0.2) 75%,
+            rgba(20, 184, 166, 0.1) 90%,
+            transparent 100%
+          );
+          background-size: 200% 100%;
+          animation: shimmer 8s ease-in-out infinite;
+        }
+      `}</style>
+
+      <header className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-xl border-b border-transparent relative">
+        {/* Horizon gradient line */}
+        <div className="absolute bottom-0 left-0 right-0 h-px horizon-line" aria-hidden="true" />
+
+        {/* Subtle top gradient glow */}
+        <div
+          className="absolute inset-0 opacity-30 pointer-events-none"
+          style={{
+            background: 'linear-gradient(180deg, rgba(20, 184, 166, 0.03) 0%, transparent 100%)'
+          }}
+          aria-hidden="true"
+        />
+
+        <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-12 relative">
+          <div className="flex h-20 items-center justify-between">
+            <Link
+              href="/"
+              className="group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 rounded-lg px-2 -ml-2"
               data-testid="link-home"
               onClick={handleLogoClick}
               aria-label="Reframe.me home"
             >
-              <span className="relative text-xl font-semibold text-primary tracking-tight overflow-hidden">
-                Reframe.me
-                {isHome && (
-                  <span 
-                    className={`absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full motion-reduce:hidden ${
-                      showSweep ? "animate-logo-sweep" : ""
-                    }`}
-                    aria-hidden="true"
-                  />
-                )}
-              </span>
+              <div className="flex items-center gap-3">
+                {/* Decorative accent mark */}
+                <div
+                  className="w-1 h-8 rounded-full bg-gradient-to-b from-teal-500 via-orange-400 to-teal-500 opacity-60 group-hover:opacity-100 transition-opacity duration-300"
+                  aria-hidden="true"
+                />
+
+                <div className="flex flex-col">
+                  <span className="logo-text text-2xl md:text-3xl">
+                    Reframe.me
+                  </span>
+                 
+                </div>
+              </div>
             </Link>
-            <Link
-              href="/faq"
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-md px-2 py-1"
-              data-testid="link-faq"
-              onClick={handleFaqClick}
-            >
-              Learn more
-            </Link>
+
+            <nav className="flex items-center gap-8">
+              <Link
+                href="/faq"
+                className="nav-link text-sm font-medium text-gray-700 hover:text-teal-700 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 rounded-md px-3 py-2"
+                data-testid="link-faq"
+                onClick={handleFaqClick}
+              >
+                Learn More
+              </Link>
+            </nav>
           </div>
         </div>
       </header>
@@ -75,11 +169,84 @@ export default function Layout({ children, onLogoClick, onFaqClick }: LayoutProp
         {children}
       </main>
       
-      <footer className="border-t-2 border-border/50 bg-gradient-to-b from-background to-muted/20 py-8 mt-auto">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-base font-medium text-muted-foreground text-center">
-            Free to use. No account required.
-          </p>
+      <footer className="mt-auto relative overflow-hidden">
+        {/* Decorative top border with gradient */}
+        <div
+          className="absolute top-0 left-0 right-0 h-px"
+          style={{
+            background: 'linear-gradient(90deg, transparent 0%, rgba(20, 184, 166, 0.3) 20%, rgba(249, 115, 22, 0.2) 50%, rgba(20, 184, 166, 0.3) 80%, transparent 100%)'
+          }}
+          aria-hidden="true"
+        />
+
+        <div
+          className="relative py-12"
+          style={{
+            background: 'linear-gradient(180deg, #fafaf9 0%, #f0f9ff 100%)'
+          }}
+        >
+          {/* Subtle background orb */}
+          <div
+            className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[200px] opacity-30 blur-3xl"
+            style={{
+              background: 'radial-gradient(circle, rgba(20, 184, 166, 0.15) 0%, transparent 70%)'
+            }}
+            aria-hidden="true"
+          />
+
+          <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 relative">
+            <div className="flex flex-col items-center gap-8">
+              {/* Logo/Brand section */}
+              <div className="flex items-center gap-3">
+                <div
+                  className="w-1 h-10 rounded-full bg-gradient-to-b from-teal-500 via-orange-400 to-teal-500"
+                  aria-hidden="true"
+                />
+                <div className="text-center">
+                  <div
+                    className="text-2xl font-bold bg-gradient-to-r from-teal-600 via-teal-500 to-cyan-600 bg-clip-text text-transparent"
+                    style={{ fontFamily: 'DM Sans, system-ui, sans-serif', letterSpacing: '-0.02em' }}
+                  >
+                    Reframe.me
+                  </div>
+                  <div className="text-xs text-gray-500 font-medium tracking-wider uppercase mt-0.5">
+                    New Opportunities
+                  </div>
+                </div>
+              </div>
+
+              {/* Main message */}
+              <div className="text-center max-w-2xl space-y-3">
+                <p className="text-base font-semibold text-gray-700" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                  Free to use. No account required.
+                </p>
+                <p className="text-sm text-gray-500 leading-relaxed">
+                  Built with care to support your journey toward meaningful work and second chances.
+                </p>
+              </div>
+
+              {/* Divider */}
+              <div className="w-full max-w-xs">
+                <div
+                  className="h-px"
+                  style={{
+                    background: 'linear-gradient(90deg, transparent 0%, rgba(20, 184, 166, 0.2) 50%, transparent 100%)'
+                  }}
+                  aria-hidden="true"
+                />
+              </div>
+
+              {/* Bottom info */}
+              <div className="text-center space-y-2">
+                <p className="text-xs text-gray-400 font-medium">
+                  © {new Date().getFullYear()} Reframe.me • Your story matters
+                </p>
+                <p className="text-xs text-gray-400">
+                  This tool provides educational information only and is not legal advice.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </footer>
     </div>

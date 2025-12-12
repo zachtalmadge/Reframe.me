@@ -70,7 +70,7 @@ export default function Selection() {
   return (
     <Layout>
       <section
-        className="py-8 md:py-16 px-4 sm:px-6 lg:px-8 min-h-screen bg-gradient-to-b from-primary/5 via-slate-50 to-primary/10 dark:from-primary/10 dark:via-slate-900 dark:to-primary/5"
+        className="py-8 md:py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-primary/5 via-slate-50 to-primary/10 dark:from-primary/10 dark:via-slate-900 dark:to-primary/5"
         aria-labelledby="selection-heading"
       >
         <div className="max-w-4xl mx-auto">
