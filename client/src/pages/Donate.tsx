@@ -70,53 +70,20 @@ export default function Donate() {
 
   return (
     <Layout>
+      <div style={{ overflowX: 'hidden', width: '100%', position: 'relative' }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap');
 
-        @keyframes float-slow {
-          0%, 100% { transform: translate(0, 0) rotate(0deg); }
-          33% { transform: translate(30px, -30px) rotate(3deg); }
-          66% { transform: translate(-20px, 20px) rotate(-3deg); }
-        }
-
-        @keyframes float-fast {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          50% { transform: translate(-20px, -20px) scale(1.05); }
-        }
-
-        @keyframes pulse-glow {
-          0%, 100% { opacity: 0.6; transform: scale(1); }
-          50% { opacity: 0.8; transform: scale(1.05); }
+        /* Prevent horizontal scroll on the entire page */
+        html, body {
+          overflow-x: hidden !important;
+          max-width: 100vw !important;
         }
 
         @keyframes shimmer-flow {
           0% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
           100% { background-position: 0% 50%; }
-        }
-
-        @keyframes slide-up {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @keyframes grain {
-          0%, 100% { transform: translate(0, 0); }
-          10% { transform: translate(-5%, -10%); }
-          20% { transform: translate(-15%, 5%); }
-          30% { transform: translate(7%, -25%); }
-          40% { transform: translate(-5%, 25%); }
-          50% { transform: translate(-15%, 10%); }
-          60% { transform: translate(15%, 0%); }
-          70% { transform: translate(0%, 15%); }
-          80% { transform: translate(3%, 35%); }
-          90% { transform: translate(-10%, 10%); }
         }
 
         .display-font {
@@ -130,7 +97,6 @@ export default function Donate() {
           background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
           opacity: 0.03;
           pointer-events: none;
-          animation: grain 8s steps(10) infinite;
         }
 
         .shimmer-gradient {
@@ -201,27 +167,24 @@ export default function Donate() {
           background: 'linear-gradient(135deg, #0a7e72 0%, #0d9488 30%, #f97316 100%)',
         }}
       >
-        {/* Animated background elements */}
+        {/* Background elements */}
         <div className="absolute inset-0 overflow-hidden">
           <div
             className="absolute -top-40 -right-40 w-96 h-96 organic-blob opacity-20"
             style={{
               background: 'radial-gradient(circle, #ffffff 0%, transparent 70%)',
-              animation: 'float-slow 20s ease-in-out infinite',
             }}
           />
           <div
             className="absolute -bottom-32 -left-32 w-80 h-80 organic-blob opacity-15"
             style={{
               background: 'radial-gradient(circle, #fb923c 0%, transparent 70%)',
-              animation: 'float-fast 15s ease-in-out infinite',
             }}
           />
           <div
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] opacity-10"
             style={{
               background: 'radial-gradient(circle, #ffffff 0%, transparent 60%)',
-              animation: 'pulse-glow 8s ease-in-out infinite',
             }}
           />
         </div>
@@ -229,9 +192,9 @@ export default function Donate() {
         <div className="grain-overlay" />
 
         <div className="relative max-w-5xl mx-auto px-6 sm:px-8 lg:px-12 text-center space-y-10">
-          {/* Floating heart icon */}
+          {/* Heart icon */}
           <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-white/20 backdrop-blur-md shadow-2xl border-2 border-white/30">
-            <Heart className="w-12 h-12 text-white" fill="white" style={{ animation: 'pulse-glow 3s ease-in-out infinite' }} />
+            <Heart className="w-12 h-12 text-white" fill="white" />
           </div>
 
           <div className="space-y-8">
@@ -389,9 +352,9 @@ export default function Donate() {
         }}
       >
         {/* Decorative background */}
-        <div className="absolute inset-0">
-          <div className="absolute top-20 left-10 w-72 h-72 organic-blob bg-teal-200/20 blur-3xl" style={{ animation: 'float-slow 25s ease-in-out infinite' }} />
-          <div className="absolute bottom-20 right-10 w-96 h-96 organic-blob bg-orange-200/20 blur-3xl" style={{ animation: 'float-fast 20s ease-in-out infinite' }} />
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-20 left-10 w-72 h-72 organic-blob bg-teal-200/20 blur-3xl" />
+          <div className="absolute bottom-20 right-10 w-96 h-96 organic-blob bg-orange-200/20 blur-3xl" />
         </div>
 
         <div className="grain-overlay" />
@@ -785,6 +748,7 @@ export default function Donate() {
           <ArrowUp className="w-7 h-7 text-white" />
         </button>
       )}
+      </div>
     </Layout>
   );
 }
