@@ -363,9 +363,7 @@ export default function Home() {
                     5 Disclosure Narratives
                   </h3>
                   <p className="text-muted-foreground leading-relaxed text-base">
-                    You can generate five unique ways to discuss your background
-                    with potential employers. Each narrative is tailored to help
-                    you communicate your story professionally and confidently.
+                    Generate five unique ways to talk about your background with employers—each narrative focuses on your growth, strengths, and who you are today, so you can speak with more confidence.
                   </p>
                   <div className="pt-2">
                     <p
@@ -395,9 +393,7 @@ export default function Home() {
                     Pre-Adverse Action Response
                   </h3>
                   <p className="text-muted-foreground leading-relaxed text-base">
-                    You can create a professional response letter if you receive
-                    a pre-adverse action notice. This letter helps you present
-                    additional context about your circumstances.
+                    Get a strong, professional response letter you can send if you receive a pre-adverse action notice—one that adds context, highlights your growth, and helps the employer see the full picture of who you are today.
                   </p>
                   <div className="pt-2">
                     <p
