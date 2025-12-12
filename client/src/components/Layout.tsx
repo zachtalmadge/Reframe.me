@@ -210,7 +210,7 @@ export default function Layout({ children, onLogoClick, onFaqClick }: LayoutProp
                 data-testid="link-faq"
                 onClick={handleFaqClick}
               >
-                Learn More
+                FAQ
               </Link>
               <Link
                 href="/donate"
