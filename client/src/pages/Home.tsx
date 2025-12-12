@@ -85,6 +85,11 @@ export default function Home() {
     rootMargin: "0px 0px -5% 0px",
     triggerOnce: false,
   });
+
+  // Detect mobile synchronously before any state initialization
+  const isMobile = typeof window !== 'undefined' &&
+    (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.innerWidth <= 768);
+
   const [heroMounted, setHeroMounted] = useState(false);
   const [showBefore, setShowBefore] = useState(false);
   const [showAfter, setShowAfter] = useState(false);
@@ -93,61 +98,81 @@ export default function Home() {
   const [isPaused, setIsPaused] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [isThisForMeOpen, setIsThisForMeOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [animationReady, setAnimationReady] = useState(false);
 
   useEffect(() => {
-    // Detect mobile devices
-    const checkMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) ||
-                       (window.innerWidth <= 768);
-    setIsMobile(checkMobile);
-
     const prefersReduced = window.matchMedia?.(
       "(prefers-reduced-motion: reduce)",
     ).matches;
     setPrefersReducedMotion(prefersReduced);
+
     if (prefersReduced) {
       setHeroMounted(true);
       setShowBefore(true);
       setShowAfter(true);
+      setAnimationReady(true);
     } else {
-      requestAnimationFrame(() => setHeroMounted(true));
+      // On mobile, add significant delay to ensure DOM is ready
+      if (isMobile) {
+        setTimeout(() => {
+          requestAnimationFrame(() => {
+            setHeroMounted(true);
+            setAnimationReady(true);
+          });
+        }, 500);
+      } else {
+        requestAnimationFrame(() => {
+          setHeroMounted(true);
+          setAnimationReady(true);
+        });
+      }
     }
-  }, []);
+  }, [isMobile]);
 
   useEffect(() => {
-    if (prefersReducedMotion) {
-      setShowBefore(true);
-      setShowAfter(true);
+    if (!animationReady || prefersReducedMotion) {
       return;
     }
 
     const timeouts: NodeJS.Timeout[] = [];
 
     function runCycle(index: number) {
-      setCurrentPairIndex(index);
-      setShowBefore(false);
-      setShowAfter(false);
-
-      // On mobile, use requestAnimationFrame for smoother timing
       if (isMobile) {
+        // Mobile: Set states to hidden first, then wait for next frame
+        setCurrentPairIndex(index);
+        setShowBefore(false);
+        setShowAfter(false);
+
         requestAnimationFrame(() => {
-          // Force layout recalculation on mobile
-          document.body.offsetHeight;
+          // Force a reflow
+          void document.body.offsetHeight;
 
-          timeouts.push(setTimeout(() => {
-            requestAnimationFrame(() => setShowBefore(true));
-          }, BEFORE_DELAY));
+          requestAnimationFrame(() => {
+            // Now start the fade-in sequence
+            timeouts.push(setTimeout(() => {
+              requestAnimationFrame(() => {
+                setShowBefore(true);
+              });
+            }, BEFORE_DELAY + 200)); // Add extra delay on mobile
 
-          timeouts.push(setTimeout(() => {
-            requestAnimationFrame(() => setShowAfter(true));
-          }, AFTER_DELAY));
+            timeouts.push(setTimeout(() => {
+              requestAnimationFrame(() => {
+                setShowAfter(true);
+              });
+            }, AFTER_DELAY + 200)); // Add extra delay on mobile
+          });
         });
       } else {
+        // Desktop: Original simple timing
+        setCurrentPairIndex(index);
+        setShowBefore(false);
+        setShowAfter(false);
+
         timeouts.push(setTimeout(() => setShowBefore(true), BEFORE_DELAY));
         timeouts.push(setTimeout(() => setShowAfter(true), AFTER_DELAY));
       }
 
-      const fadeOutTime = AFTER_DELAY + VISIBLE_DURATION;
+      const fadeOutTime = AFTER_DELAY + VISIBLE_DURATION + (isMobile ? 200 : 0);
       timeouts.push(
         setTimeout(() => {
           setShowBefore(false);
@@ -163,24 +188,13 @@ export default function Home() {
       );
     }
 
-    // On mobile, add initial delay to ensure DOM is ready
-    if (isMobile) {
-      const initialDelay = setTimeout(() => {
-        requestAnimationFrame(() => runCycle(0));
-      }, 300);
+    // Start the cycle
+    runCycle(0);
 
-      return () => {
-        clearTimeout(initialDelay);
-        timeouts.forEach(clearTimeout);
-      };
-    } else {
-      runCycle(0);
-
-      return () => {
-        timeouts.forEach(clearTimeout);
-      };
-    }
-  }, [prefersReducedMotion, isMobile]);
+    return () => {
+      timeouts.forEach(clearTimeout);
+    };
+  }, [animationReady, prefersReducedMotion, isMobile]);
 
   useEffect(() => {
     if (isPaused) return;
@@ -297,12 +311,15 @@ export default function Home() {
                         aria-hidden={!isActive}
                       >
                         <div
-                          className={`text-lg md:text-xl text-gray-600 italic transition-opacity duration-300 motion-reduce:transition-none ${
-                            isActive && showBefore ? "opacity-100" : "opacity-0"
-                          }`}
+                          className={`text-lg md:text-xl text-gray-600 italic motion-reduce:transition-none ${
+                            isMobile ? '' : 'transition-opacity duration-300'
+                          } ${isActive && showBefore ? "opacity-100" : "opacity-0"}`}
                           style={isMobile ? {
                             willChange: isActive ? 'opacity' : 'auto',
-                            transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
+                            transition: 'opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+                            backfaceVisibility: 'hidden',
+                            WebkitBackfaceVisibility: 'hidden',
+                            WebkitFontSmoothing: 'antialiased',
                           } : undefined}
                         >
                           <span className="font-semibold text-gray-700 not-italic block mb-2">
@@ -311,15 +328,20 @@ export default function Home() {
                           <span className="text-gray-600">"{pair.before}"</span>
                         </div>
                         <div
-                          className={`text-lg md:text-xl text-gray-900 font-medium transition-all duration-300 motion-reduce:transition-none ${
+                          className={`text-lg md:text-xl text-gray-900 font-medium motion-reduce:transition-none ${
+                            isMobile ? '' : 'transition-all duration-300'
+                          } ${
                             isActive && showAfter
                               ? "opacity-100 translate-y-0"
                               : "opacity-0 translate-y-1"
                           }`}
                           style={isMobile ? {
                             willChange: isActive ? 'opacity, transform' : 'auto',
-                            transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
-                            transform: isActive && showAfter ? 'translateY(0) translateZ(0)' : 'translateY(0.25rem) translateZ(0)',
+                            transition: 'opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+                            transform: isActive && showAfter ? 'translate3d(0, 0, 0)' : 'translate3d(0, 0.25rem, 0)',
+                            backfaceVisibility: 'hidden',
+                            WebkitBackfaceVisibility: 'hidden',
+                            WebkitFontSmoothing: 'antialiased',
                           } : undefined}
                         >
                           <span className="text-teal-700 font-semibold block mb-2">After:</span>
