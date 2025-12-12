@@ -30,16 +30,14 @@ export function Step6Impact({ state, dispatch }: Step6ImpactProps) {
       </StepImportanceAlert>
 
       <div className="space-y-6">
-        <OilFrameworkInfo />
-
         <div className="space-y-3">
           <div className="space-y-1">
             <Label htmlFor="impact" className="text-base font-medium">
               Optional: Anything you'd like us to keep in mind?
             </Label>
             <p className="text-sm text-muted-foreground">
-              If there's something about how you think about the impact of your 
-              actions that you'd like us to include, you can share it here. This 
+              If there's something about how you think about the impact of your
+              actions that you'd like us to include, you can share it here. This
               is completely optional — feel free to skip this if you prefer.
             </p>
           </div>
@@ -53,6 +51,8 @@ export function Step6Impact({ state, dispatch }: Step6ImpactProps) {
             data-testid="textarea-impact"
           />
         </div>
+
+        <OilFrameworkInfo />
       </div>
     </div>
   );

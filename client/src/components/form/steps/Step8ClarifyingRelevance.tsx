@@ -23,7 +23,25 @@ export function Step8ClarifyingRelevance({
   };
 
   return (
-    <div className="space-y-8">
+    <>
+      <style>{`
+        @keyframes fadeSlideIn {
+          from {
+            opacity: 0;
+            transform: translateY(-8px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .fade-slide-in {
+          animation: fadeSlideIn 0.4s ease-out;
+        }
+      `}</style>
+
+      <div className="space-y-8">
       <div className="space-y-2">
         <h2 className="text-xl font-semibold text-foreground">
           Clarifying Relevance to This Job
@@ -88,7 +106,7 @@ export function Step8ClarifyingRelevance({
         </div>
 
         {state.clarifyingRelevanceEnabled === true && (
-          <p className="text-sm text-muted-foreground leading-relaxed">
+          <p className="fade-slide-in text-sm text-muted-foreground leading-relaxed">
             You've chosen <span className="font-semibold">Yes</span>. If your record
             and the job responsibilities appear unrelated, we may include a calm, brief
             statement clarifying this. If they seem connected, we won't make that claim—instead,
@@ -97,7 +115,7 @@ export function Step8ClarifyingRelevance({
         )}
 
         {state.clarifyingRelevanceEnabled === false && (
-          <p className="text-sm text-muted-foreground leading-relaxed">
+          <p className="fade-slide-in text-sm text-muted-foreground leading-relaxed">
             You've chosen <span className="font-semibold">No</span>. Your letter will
             not claim your record is unrelated to the job. Instead, it will acknowledge
             any potential concerns and emphasize your personal growth, the changes you've
@@ -108,5 +126,6 @@ export function Step8ClarifyingRelevance({
 
       <OilFrameworkInfo />
     </div>
+    </>
   );
 }

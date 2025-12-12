@@ -35,16 +35,14 @@ export function Step7LessonsLearned({
       </StepImportanceAlert>
 
       <div className="space-y-6">
-        <OilFrameworkInfo />
-
         <div className="space-y-3">
           <div className="space-y-1">
             <Label htmlFor="lessons-learned" className="text-base font-medium">
               Optional: Anything you'd like us to keep in mind?
             </Label>
             <p className="text-sm text-muted-foreground">
-              If there's something specific about what you've learned or how 
-              you've changed that you'd like us to highlight, you can share it 
+              If there's something specific about what you've learned or how
+              you've changed that you'd like us to highlight, you can share it
               here. This is completely optional — you can skip this if you prefer.
             </p>
           </div>
@@ -58,6 +56,8 @@ export function Step7LessonsLearned({
             data-testid="textarea-lessons-learned"
           />
         </div>
+
+        <OilFrameworkInfo />
       </div>
     </div>
   );

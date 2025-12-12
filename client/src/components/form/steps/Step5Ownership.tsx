@@ -34,16 +34,14 @@ export function Step5Ownership({
       </StepImportanceAlert>
 
       <div className="space-y-6">
-        <OilFrameworkInfo />
-
         <div className="space-y-3">
           <div className="space-y-1">
             <Label htmlFor="ownership" className="text-base font-medium">
               Optional: Anything you'd like us to keep in mind?
             </Label>
             <p className="text-sm text-muted-foreground">
-              If there's something specific about how you see your past that you'd 
-              like us to include, you can share it here. This is completely optional 
+              If there's something specific about how you see your past that you'd
+              like us to include, you can share it here. This is completely optional
               — you can also skip this and move on.
             </p>
           </div>
@@ -57,6 +55,8 @@ export function Step5Ownership({
             data-testid="textarea-ownership"
           />
         </div>
+
+        <OilFrameworkInfo />
       </div>
     </div>
   );

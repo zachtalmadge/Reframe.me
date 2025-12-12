@@ -20,7 +20,7 @@ export interface FormState {
   ownership: string;
   impact: string;
   lessonsLearned: string;
-  clarifyingRelevanceEnabled: boolean;
+  clarifyingRelevanceEnabled: boolean | null;
   clarifyingRelevance: string;
   qualifications: string;
   useResumeAndJobPosting: boolean;
@@ -56,7 +56,7 @@ export const initialFormState: FormState = {
   ownership: "",
   impact: "",
   lessonsLearned: "",
-  clarifyingRelevanceEnabled: false,
+  clarifyingRelevanceEnabled: null,
   clarifyingRelevance: "",
   qualifications: "",
   useResumeAndJobPosting: false,
