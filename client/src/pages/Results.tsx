@@ -49,55 +49,57 @@ function ResultsGuidanceSection({
   const showLetterGuidance = hasLetter && (!hasNarratives || activeResultType === "letter");
 
   return (
-    <section 
-      className="mt-8 pt-8 border-t border-border"
+    <section
+      className="mt-10 pt-10 border-t-2 border-border/50"
       aria-labelledby="guidance-heading"
       data-testid="section-guidance"
     >
-      <div className="space-y-6">
-        <div className="text-center space-y-2">
-          <h2 
+      <div className="space-y-8">
+        <div className="text-center space-y-3 bg-gradient-to-r from-primary/5 via-transparent to-primary/5 py-6 rounded-2xl">
+          <h2
             id="guidance-heading"
-            className="text-xl sm:text-2xl font-bold text-foreground"
+            className="text-2xl sm:text-3xl font-bold text-foreground"
           >
             How to use what you just created
           </h2>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-base text-muted-foreground">
             A few ideas to help you put these materials to work.
           </p>
         </div>
 
         {showNarrativesGuidance && (
-          <div 
+          <div
             className="space-y-4"
             role="tabpanel"
             aria-labelledby="guidance-heading"
             data-testid="guidance-narratives"
           >
-            <div className="bg-muted/30 rounded-lg p-5 space-y-4">
-              <h3 className="font-semibold text-foreground flex items-center gap-2">
-                <MessageCircle className="w-5 h-5 text-primary" aria-hidden="true" />
+            <div className="bg-gradient-to-br from-primary/5 to-primary/10 rounded-2xl p-6 md:p-8 border-2 border-primary/20 shadow-lg space-y-5">
+              <h3 className="text-lg font-bold text-foreground flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center">
+                  <MessageCircle className="w-5 h-5 text-primary" aria-hidden="true" />
+                </div>
                 Getting comfortable with your narratives
               </h3>
-              <ul className="space-y-3 text-sm text-muted-foreground">
-                <li className="flex gap-3">
-                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary text-xs font-medium flex items-center justify-center">1</span>
+              <ul className="space-y-4 text-sm text-muted-foreground">
+                <li className="flex gap-4 bg-white/60 dark:bg-slate-900/40 p-4 rounded-xl">
+                  <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground text-sm font-bold flex items-center justify-center shadow-md">1</span>
                   <span><strong className="text-foreground">Practice out loud.</strong> Reading silently is different from speaking. Try saying one version a few times until it feels natural.</span>
                 </li>
-                <li className="flex gap-3">
-                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary text-xs font-medium flex items-center justify-center">2</span>
+                <li className="flex gap-4 bg-white/60 dark:bg-slate-900/40 p-4 rounded-xl">
+                  <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground text-sm font-bold flex items-center justify-center shadow-md">2</span>
                   <span><strong className="text-foreground">Pick your anchor sentences.</strong> You don't need to memorize everything. Choose 1-2 sentences that feel most true to you.</span>
                 </li>
-                <li className="flex gap-3">
-                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary text-xs font-medium flex items-center justify-center">3</span>
+                <li className="flex gap-4 bg-white/60 dark:bg-slate-900/40 p-4 rounded-xl">
+                  <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground text-sm font-bold flex items-center justify-center shadow-md">3</span>
                   <span><strong className="text-foreground">Make it your own.</strong> Edit the wording so it sounds like you. These are starting points, not scripts.</span>
                 </li>
-                <li className="flex gap-3">
-                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary text-xs font-medium flex items-center justify-center">4</span>
+                <li className="flex gap-4 bg-white/60 dark:bg-slate-900/40 p-4 rounded-xl">
+                  <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground text-sm font-bold flex items-center justify-center shadow-md">4</span>
                   <span><strong className="text-foreground">Share with someone you trust.</strong> If it helps, practice with a friend, mentor, or counselor who can give you honest feedback.</span>
                 </li>
               </ul>
-              <p className="text-sm text-muted-foreground italic border-l-2 border-primary/30 pl-3">
+              <p className="text-sm text-foreground/80 italic border-l-4 border-primary/50 pl-4 py-2 bg-white/40 dark:bg-slate-900/30 rounded">
                 Take your time. There's no rush to use these right away. When you're ready, you'll have words that feel prepared, not panicked.
               </p>
             </div>
@@ -105,47 +107,49 @@ function ResultsGuidanceSection({
         )}
 
         {showLetterGuidance && (
-          <div className="bg-muted/30 rounded-lg p-5 space-y-4">
-  <h3 className="font-semibold text-foreground flex items-center gap-2">
-    <FileText className="w-5 h-5 text-chart-2" aria-hidden="true" />
+          <div className="bg-gradient-to-br from-chart-2/5 to-chart-2/10 rounded-2xl p-6 md:p-8 border-2 border-chart-2/20 shadow-lg space-y-5">
+  <h3 className="text-lg font-bold text-foreground flex items-center gap-3">
+    <div className="w-10 h-10 rounded-xl bg-chart-2/20 flex items-center justify-center">
+      <FileText className="w-5 h-5 text-chart-2" aria-hidden="true" />
+    </div>
     Before you send your letter
   </h3>
-  <ul className="space-y-3 text-sm text-muted-foreground">
-    <li className="flex gap-3">
-      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-chart-2/10 text-chart-2 text-xs font-medium flex items-center justify-center">
+  <ul className="space-y-4 text-sm text-muted-foreground">
+    <li className="flex gap-4 bg-white/60 dark:bg-slate-900/40 p-4 rounded-xl">
+      <span className="flex-shrink-0 w-8 h-8 rounded-full bg-chart-2 text-white text-sm font-bold flex items-center justify-center shadow-md">
         1
       </span>
       <span>
-        <strong className="text-foreground">Add anything that feels important. </strong> 
+        <strong className="text-foreground">Add anything that feels important. </strong>
         If you like this letter but want to say more or adjust the wording, copy it into a word-processing document or another AI tool and add your own details in your voice.
       </span>
     </li>
-    <li className="flex gap-3">
-      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-chart-2/10 text-chart-2 text-xs font-medium flex items-center justify-center">
+    <li className="flex gap-4 bg-white/60 dark:bg-slate-900/40 p-4 rounded-xl">
+      <span className="flex-shrink-0 w-8 h-8 rounded-full bg-chart-2 text-white text-sm font-bold flex items-center justify-center shadow-md">
         2
       </span>
       <span>
         <strong className="text-foreground">Check for accuracy.</strong> Review dates, names, charges, and employer details. Small errors can undermine your message.
       </span>
     </li>
-    <li className="flex gap-3">
-      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-chart-2/10 text-chart-2 text-xs font-medium flex items-center justify-center">
+    <li className="flex gap-4 bg-white/60 dark:bg-slate-900/40 p-4 rounded-xl">
+      <span className="flex-shrink-0 w-8 h-8 rounded-full bg-chart-2 text-white text-sm font-bold flex items-center justify-center shadow-md">
         3
       </span>
       <span>
         <strong className="text-foreground">Make sure it feels honest.</strong> If anything doesn't sit right with you, edit it. You should feel comfortable with every word.
       </span>
     </li>
-    <li className="flex gap-3">
-      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-chart-2/10 text-chart-2 text-xs font-medium flex items-center justify-center">
+    <li className="flex gap-4 bg-white/60 dark:bg-slate-900/40 p-4 rounded-xl">
+      <span className="flex-shrink-0 w-8 h-8 rounded-full bg-chart-2 text-white text-sm font-bold flex items-center justify-center shadow-md">
         4
       </span>
       <span>
         <strong className="text-foreground">Get a second opinion if you can.</strong> Consider sharing it with a trusted friend, reentry counselor, or legal aid organization before sending.
       </span>
     </li>
-    <li className="flex gap-3">
-      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-chart-2/10 text-chart-2 text-xs font-medium flex items-center justify-center">
+    <li className="flex gap-4 bg-white/60 dark:bg-slate-900/40 p-4 rounded-xl">
+      <span className="flex-shrink-0 w-8 h-8 rounded-full bg-chart-2 text-white text-sm font-bold flex items-center justify-center shadow-md">
         5
       </span>
       <span>
@@ -153,7 +157,7 @@ function ResultsGuidanceSection({
       </span>
     </li>
   </ul>
-  <p className="text-sm text-muted-foreground italic border-l-2 border-chart-2/30 pl-3">
+  <p className="text-sm text-foreground/80 italic border-l-4 border-chart-2/50 pl-4 py-2 bg-white/40 dark:bg-slate-900/30 rounded">
     This letter is a tool to help you respond thoughtfully. You deserve to be heard, and taking time to get it right is a sign of strength.
   </p>
 </div>
@@ -384,22 +388,32 @@ export default function Results() {
   return (
     <Layout onLogoClick={handleLogoClick} onFaqClick={handleFaqClick}>
       <section
-        className="py-8 md:py-12 px-4 sm:px-6 lg:px-8"
+        className="py-8 md:py-12 px-4 sm:px-6 lg:px-8 min-h-screen bg-gradient-to-b from-white via-primary/5 to-slate-100/50 dark:from-slate-950 dark:via-primary/10 dark:to-slate-900 relative overflow-hidden"
         aria-labelledby="results-heading"
       >
-        <div className="max-w-3xl mx-auto space-y-6">
-          <Card className="border-amber-200 dark:border-amber-800 bg-amber-50/50 dark:bg-amber-950/20">
+        {/* Decorative background elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-80 h-80 bg-chart-2/10 rounded-full blur-3xl" />
+        </div>
+
+        <div className="max-w-3xl mx-auto space-y-8 relative z-10">
+          <Card className="border-2 border-amber-300 dark:border-amber-700 bg-gradient-to-br from-amber-50 to-amber-100/50 dark:from-amber-950/30 dark:to-amber-900/20 shadow-lg">
             <CardContent className="pt-6">
               <div className="flex gap-4">
-                <AlertTriangle
-                  className="w-6 h-6 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5"
-                  aria-hidden="true"
-                />
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 rounded-xl bg-amber-200/50 dark:bg-amber-800/30 flex items-center justify-center">
+                    <AlertTriangle
+                      className="w-6 h-6 text-amber-700 dark:text-amber-400"
+                      aria-hidden="true"
+                    />
+                  </div>
+                </div>
                 <div className="space-y-2">
-                  <h2 className="font-semibold text-foreground">
+                  <h2 className="text-lg font-bold text-amber-900 dark:text-amber-200">
                     Important Disclaimer
                   </h2>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
+                  <p className="text-sm text-amber-800 dark:text-amber-300 leading-relaxed">
                     These documents are personalized tools to help you prepare
                     for employment conversations. They are not legal advice.
                     Please review and customize them to reflect your personal
@@ -411,21 +425,24 @@ export default function Results() {
           </Card>
 
           {status === "partial_fail" && errors.length > 0 && (
-            <PartialFailureAlert 
-              errors={errors} 
+            <PartialFailureAlert
+              errors={errors}
               onRetry={handleRetryFailed}
               isRetrying={isRetrying}
             />
           )}
 
-          <div className="text-center space-y-4">
+          <div className="text-center space-y-5 py-6">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/10 shadow-lg ring-2 ring-primary/20 ring-offset-2 mx-auto">
+              <FileText className="w-8 h-8 text-primary" aria-hidden="true" />
+            </div>
             <h1
               id="results-heading"
-              className="text-2xl md:text-3xl font-bold text-foreground"
+              className="text-3xl md:text-4xl font-bold text-foreground"
             >
               Your Documents Are Ready
             </h1>
-            <p className="text-muted-foreground">
+            <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto">
               Review and download your personalized documents below.
             </p>
           </div>
@@ -491,37 +508,39 @@ export default function Results() {
             )}
           </div>
 
-          <div className="pt-4 border-t border-border space-y-4">
+          <div className="pt-8 border-t-2 border-border/50 space-y-6">
             {(hasNarratives || hasLetter) && (
               <Button
-                className="w-full"
+                size="lg"
+                className="w-full group shadow-lg hover:shadow-xl transition-all"
                 onClick={handleDownloadAllDocuments}
                 data-testid="button-download-all"
               >
-                <Download className="w-4 h-4 mr-2" aria-hidden="true" />
+                <Download className="w-5 h-5 mr-2 group-hover:animate-bounce" aria-hidden="true" />
                 Download All Documents
               </Button>
             )}
 
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-              <p className="text-sm text-muted-foreground text-center sm:text-left">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-6 bg-muted/30 p-6 rounded-2xl border border-border/50">
+              <p className="text-sm font-medium text-muted-foreground text-center sm:text-left">
                 Need to make changes? You can start over anytime.
               </p>
               <div className="flex flex-wrap gap-3">
                 <Button
                   variant="outline"
                   onClick={handleStartOver}
+                  className="group border-2"
                   data-testid="button-start-over"
                 >
-                  <Home className="w-4 h-4 mr-2" aria-hidden="true" />
+                  <Home className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" aria-hidden="true" />
                   Start Over
                 </Button>
                 <Button
-                  className="bg-chart-2 hover:bg-chart-2/90 text-white"
+                  className="bg-chart-2 hover:bg-chart-2/90 text-white shadow-md hover:shadow-lg transition-all group"
                   onClick={handleLearnMoreClick}
                   data-testid="button-learn-more-results"
                 >
-                  <BookOpen className="w-4 h-4 mr-2" aria-hidden="true" />
+                  <BookOpen className="w-4 h-4 mr-2 group-hover:rotate-12 transition-transform" aria-hidden="true" />
                   Learn More
                 </Button>
               </div>

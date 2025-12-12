@@ -1,6 +1,6 @@
 import { useReducer, useCallback, useState, useEffect } from "react";
 import { useLocation } from "wouter";
-import { ArrowLeft, ArrowRight, Loader2 } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ProgressBar } from "./ProgressBar";
 import {
@@ -207,39 +207,50 @@ export function FormWizard({ tool, onComplete, initialState }: FormWizardProps) 
         stepTitle={stepTitle}
       />
 
-      <div className="min-h-[400px]">{renderStep()}</div>
+      <div className="min-h-[400px] bg-card/30 rounded-2xl p-6 md:p-8 border border-border/50 shadow-sm">
+        {renderStep()}
+      </div>
 
-      <div className="flex items-center justify-between gap-4 pt-4 border-t border-border">
+      <div className="flex items-center justify-between gap-4 pt-6">
         <Button
           type="button"
-          variant="ghost"
+          variant="outline"
           onClick={handleBack}
+          className="group hover:bg-muted/50 border-2"
           data-testid="button-form-back"
         >
-          <ArrowLeft className="w-4 h-4 mr-2" aria-hidden="true" />
+          <ArrowLeft className="w-4 h-4 mr-2 transition-transform duration-200 group-hover:-translate-x-1" aria-hidden="true" />
           {state.currentStep === 1 ? "Back to Selection" : "Back"}
         </Button>
 
         <Button
           type="button"
           onClick={handleNext}
+          className={`group ${isLastStep ? 'min-w-[200px]' : ''}`}
+          size={isLastStep ? "lg" : "default"}
           data-testid="button-form-next"
         >
-          {isLastStep ? "Generate Documents" : "Continue"}
-          {!isLastStep && (
-            <ArrowRight className="w-4 h-4 ml-2" aria-hidden="true" />
+          {isLastStep ? (
+            "Generate Documents"
+          ) : (
+            <>
+              Continue
+              <ArrowRight className="w-4 h-4 ml-2 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
+            </>
           )}
         </Button>
       </div>
 
-      <p
-        className={`mt-4 text-xs text-center transition-opacity duration-500 text-chart-2 ${
-          showEmotionalMessage ? "opacity-100" : "opacity-0"
+      <div
+        className={`rounded-xl border-2 border-chart-2/30 bg-gradient-to-br from-chart-2/5 to-chart-2/10 p-4 transition-all duration-500 ${
+          showEmotionalMessage ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"
         }`}
         data-testid="text-emotional-checkin"
       >
-        Talking about your past and your record can feel heavy. It's okay to pause, take a break, or talk this through with someone you trust.
-      </p>
+        <p className="text-sm text-center text-chart-2 dark:text-chart-2/90 leading-relaxed">
+          <span className="font-semibold">A gentle reminder:</span> Talking about your past and your record can feel heavy. It's okay to pause, take a break, or talk this through with someone you trust.
+        </p>
+      </div>
     </div>
   );
 }

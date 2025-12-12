@@ -171,56 +171,47 @@ export default function Home() {
   return (
     <Layout>
       <section
-        className="relative py-12 md:py-20 px-4 sm:px-6 lg:px-8 overflow-hidden"
+        className="relative py-20 md:py-32 overflow-hidden bg-gradient-to-br from-white via-primary/8 to-primary/5 dark:from-slate-950 dark:via-primary/10 dark:to-slate-900"
         aria-labelledby="hero-heading"
       >
         <div
-          className="pointer-events-none absolute -left-20 -top-10 h-72 w-72 rounded-full bg-primary/10 blur-3xl animate-float-slow motion-reduce:animate-none"
+          className="pointer-events-none absolute -left-20 -top-10 h-96 w-96 rounded-full bg-primary/10 blur-3xl animate-float-slow motion-reduce:animate-none"
           aria-hidden="true"
         />
         <div
-          className="pointer-events-none absolute -right-16 top-1/3 h-80 w-80 rounded-full bg-chart-2/10 blur-3xl animate-float-slow-reverse motion-reduce:animate-none"
+          className="pointer-events-none absolute -right-16 top-1/4 h-[400px] w-[400px] rounded-full bg-chart-2/10 blur-3xl animate-float-slow-reverse motion-reduce:animate-none"
           aria-hidden="true"
         />
         <div
-          className="pointer-events-none absolute left-1/4 -bottom-20 h-56 w-56 rounded-full bg-primary/5 blur-2xl animate-float-slow motion-reduce:animate-none"
+          className="pointer-events-none absolute left-1/3 -bottom-20 h-64 w-64 rounded-full bg-primary/5 blur-2xl animate-float-slow motion-reduce:animate-none"
           style={{ animationDelay: "-8s" }}
           aria-hidden="true"
         />
 
-        <div className="max-w-4xl mx-auto relative">
-          <div className="relative overflow-hidden rounded-2xl p-8 md:p-12">
-            <div
-              className={`absolute inset-0 bg-gradient-to-br from-primary/5 via-primary/10 to-chart-2/5 rounded-2xl transition-all duration-500 ease-out motion-reduce:transition-none ${
-                heroMounted
-                  ? "opacity-100 translate-y-0 rotate-0"
-                  : "opacity-0 translate-y-2 -rotate-1"
-              }`}
-              aria-hidden="true"
-            />
-
-            <div className="relative text-center space-y-6">
-              <div className="space-y-4">
+        <div className="relative w-full px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto">
+            <div className="relative text-center space-y-8 md:space-y-10">
+              <div className="space-y-6">
                 <h1
                   id="hero-heading"
-                  className="text-4xl md:text-5xl font-bold leading-tight text-foreground"
+                  className="text-5xl md:text-7xl font-bold leading-tight text-foreground tracking-tight"
                 >
-                  Prepare for Your Next Opportunity
+                  Prepare for Your<br/> Next Opportunity
                 </h1>
-                <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-                  Your past is part of your story, <em>not the whole story</em>. Reframe.me helps
+                <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-4xl mx-auto font-light">
+                  Your past is part of your story, <em className="font-normal">not the whole story</em>. Reframe.me helps
                   you share that story in a way that centers your growth and{" "}
-                  <em>what you offer today</em>.
+                  <em className="font-normal">what you offer today</em>.
                 </p>
               </div>
 
               <div
-                className="w-16 h-1 bg-primary mx-auto rounded-full"
+                className="w-24 h-1.5 bg-gradient-to-r from-primary/40 via-primary to-primary/40 mx-auto rounded-full"
                 aria-hidden="true"
               />
 
               <div
-                className="max-w-md mx-auto text-left"
+                className="max-w-3xl mx-auto bg-white/60 dark:bg-slate-900/40 rounded-2xl p-8 md:p-10 backdrop-blur-sm border border-white/80 dark:border-slate-700/60 shadow-xl"
                 data-testid="before-after-block"
               >
                 <div className="grid" style={{ gridTemplateRows: '1fr', gridTemplateColumns: '1fr' }}>
@@ -229,28 +220,29 @@ export default function Home() {
                     return (
                       <div
                         key={index}
-                        className="flex flex-col gap-3"
+                        className="flex flex-col gap-5"
                         style={{ gridRow: 1, gridColumn: 1 }}
                         aria-hidden={!isActive}
                       >
                         <div
-                          className={`text-sm text-muted-foreground/80 italic transition-opacity duration-300 motion-reduce:transition-none ${
+                          className={`text-lg md:text-xl text-muted-foreground italic transition-opacity duration-300 motion-reduce:transition-none ${
                             isActive && showBefore ? "opacity-100" : "opacity-0"
                           }`}
                         >
-                          <span className="font-medium text-muted-foreground not-italic">
+                          <span className="font-semibold text-muted-foreground/90 not-italic block mb-2">
                             Before:
-                          </span>{" "}
-                          "{pair.before}"
+                          </span>
+                          <span className="text-muted-foreground/90">"{pair.before}"</span>
                         </div>
                         <div
-                          className={`text-sm text-foreground font-medium transition-all duration-300 motion-reduce:transition-none ${
+                          className={`text-lg md:text-xl text-foreground font-medium transition-all duration-300 motion-reduce:transition-none ${
                             isActive && showAfter
                               ? "opacity-100 translate-y-0"
                               : "opacity-0 translate-y-1"
                           }`}
                         >
-                          <span className="text-primary">After:</span> "{pair.after}"
+                          <span className="text-primary font-semibold block mb-2">After:</span>
+                          <span className="text-foreground">"{pair.after}"</span>
                         </div>
                       </div>
                     );
@@ -258,27 +250,27 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="flex flex-wrap justify-center gap-4 md:gap-6 text-sm text-muted-foreground">
-                <div className="flex items-center gap-2">
-                  <Clock className="w-4 h-4 text-primary" aria-hidden="true" />
-                  <span>Takes 5-10 minutes</span>
+              <div className="flex flex-wrap justify-center gap-6 md:gap-10 text-base md:text-lg text-muted-foreground pt-6">
+                <div className="flex items-center gap-3 bg-white/50 dark:bg-slate-900/50 px-6 py-3 rounded-full border border-primary/20 shadow-md">
+                  <Clock className="w-5 h-5 text-primary" aria-hidden="true" />
+                  <span className="font-medium">Takes 5-10 minutes</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Heart className="w-4 h-4 text-primary" aria-hidden="true" />
-                  <span>Completely free</span>
+                <div className="flex items-center gap-3 bg-white/50 dark:bg-slate-900/50 px-6 py-3 rounded-full border border-primary/20 shadow-md">
+                  <Heart className="w-5 h-5 text-primary" aria-hidden="true" />
+                  <span className="font-medium">Completely free</span>
                 </div>
               </div>
 
-              <div>
+              <div className="pt-6">
                 <Link href="/selection">
-                  <Button 
+                  <Button
                     size="lg"
-                    className="group w-full sm:w-auto min-h-[48px] px-8 text-lg font-medium shadow-md"
+                    className="group w-full sm:w-auto min-h-[60px] px-12 text-xl font-semibold shadow-2xl hover:shadow-3xl transition-all"
                     data-testid="button-get-started-hero"
                   >
                     Get Started
-                    <span className="inline-flex transition-transform duration-150 ease-out group-hover:translate-x-1 group-focus-visible:translate-x-1 motion-reduce:transform-none">
-                      <ArrowRight className="w-5 h-5" aria-hidden="true" />
+                    <span className="inline-flex transition-transform duration-150 ease-out group-hover:translate-x-1 group-focus-visible:translate-x-1 motion-reduce:transform-none ml-2">
+                      <ArrowRight className="w-6 h-6" aria-hidden="true" />
                     </span>
                   </Button>
                 </Link>
@@ -286,82 +278,90 @@ export default function Home() {
             </div>
           </div>
         </div>
-        
+
       </section>
 
       <section
-        className="py-8 md:py-12 px-4 sm:px-6 lg:px-8"
+        className="py-12 md:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-transparent via-slate-50 to-slate-100/50 dark:from-transparent dark:via-slate-900/50 dark:to-slate-800/30"
         aria-labelledby="tools-heading"
       >
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-8">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
             <h2
               id="tools-heading"
-              className="text-2xl md:text-3xl font-semibold text-foreground"
+              className="text-3xl md:text-4xl font-bold text-foreground mb-4"
             >
               What we offer
             </h2>
-            <p className="mt-3 text-muted-foreground max-w-xl mx-auto">
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
               Two free tools to help you prepare for employment conversations.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <Card
-              className="group border-border shadow-sm cursor-default transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-lg focus-within:-translate-y-1 focus-within:shadow-lg motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+              className="group relative border-2 border-primary/20 shadow-lg cursor-default transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-2xl hover:border-primary/40 focus-within:-translate-y-2 focus-within:shadow-2xl focus-within:border-primary/40 motion-reduce:transition-none motion-reduce:hover:translate-y-0 overflow-hidden"
               tabIndex={0}
               data-testid="card-disclosure-narratives"
             >
-              <CardContent className="p-6 md:p-8 space-y-4">
-                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center transition-transform duration-200 ease-out group-hover:scale-110 group-focus-within:scale-110 motion-reduce:group-hover:scale-100">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-full" aria-hidden="true" />
+              <CardContent className="p-8 md:p-10 space-y-5 relative">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center transition-transform duration-300 ease-out group-hover:scale-110 group-hover:rotate-3 group-focus-within:scale-110 group-focus-within:rotate-3 motion-reduce:group-hover:scale-100 motion-reduce:group-hover:rotate-0 shadow-md">
                   <FileText
-                    className="w-6 h-6 text-primary"
+                    className="w-8 h-8 text-primary"
                     aria-hidden="true"
                   />
                 </div>
-                <div className="space-y-2">
-                  <h3 className="text-xl font-semibold text-foreground">
+                <div className="space-y-3">
+                  <h3 className="text-2xl font-bold text-foreground">
                     5 Disclosure Narratives
                   </h3>
-                  <p className="text-muted-foreground leading-relaxed">
+                  <p className="text-muted-foreground leading-relaxed text-base">
                     You can generate five unique ways to discuss your background
                     with potential employers. Each narrative is tailored to help
                     you communicate your story professionally and confidently.
                   </p>
-                  <p
-                    className="text-sm font-medium text-primary opacity-0 translate-y-1 transition-all duration-200 ease-out group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:opacity-100 group-focus-within:translate-y-0 motion-reduce:transition-none"
-                    aria-hidden="true"
-                  >
-                    Show up prepared, not panicked.
-                  </p>
+                  <div className="pt-2">
+                    <p
+                      className="text-base font-semibold text-primary opacity-0 translate-y-2 transition-all duration-300 ease-out group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:opacity-100 group-focus-within:translate-y-0 motion-reduce:transition-none flex items-center gap-2"
+                      aria-hidden="true"
+                    >
+                      <ArrowRight className="w-4 h-4" />
+                      Show up prepared, not panicked.
+                    </p>
+                  </div>
                 </div>
               </CardContent>
             </Card>
 
             <Card
-              className="group border-border shadow-sm cursor-default transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-lg focus-within:-translate-y-1 focus-within:shadow-lg motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+              className="group relative border-2 border-chart-2/20 shadow-lg cursor-default transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-2xl hover:border-chart-2/40 focus-within:-translate-y-2 focus-within:shadow-2xl focus-within:border-chart-2/40 motion-reduce:transition-none motion-reduce:hover:translate-y-0 overflow-hidden"
               tabIndex={0}
               data-testid="card-pre-adverse-response"
             >
-              <CardContent className="p-6 md:p-8 space-y-4">
-                <div className="w-12 h-12 rounded-lg bg-chart-2/10 flex items-center justify-center transition-transform duration-200 ease-out group-hover:scale-110 group-focus-within:scale-110 motion-reduce:group-hover:scale-100">
-                  <Mail className="w-6 h-6 text-chart-2" aria-hidden="true" />
+              <div className="absolute top-0 right-0 w-32 h-32 bg-chart-2/5 rounded-bl-full" aria-hidden="true" />
+              <CardContent className="p-8 md:p-10 space-y-5 relative">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-chart-2/20 to-chart-2/10 flex items-center justify-center transition-transform duration-300 ease-out group-hover:scale-110 group-hover:rotate-3 group-focus-within:scale-110 group-focus-within:rotate-3 motion-reduce:group-hover:scale-100 motion-reduce:group-hover:rotate-0 shadow-md">
+                  <Mail className="w-8 h-8 text-chart-2" aria-hidden="true" />
                 </div>
-                <div className="space-y-2">
-                  <h3 className="text-xl font-semibold text-foreground">
+                <div className="space-y-3">
+                  <h3 className="text-2xl font-bold text-foreground">
                     Pre-Adverse Action Response
                   </h3>
-                  <p className="text-muted-foreground leading-relaxed">
+                  <p className="text-muted-foreground leading-relaxed text-base">
                     You can create a professional response letter if you receive
                     a pre-adverse action notice. This letter helps you present
                     additional context about your circumstances.
                   </p>
-                  <p
-                    className="text-sm font-medium text-chart-2 opacity-0 translate-y-1 transition-all duration-200 ease-out group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:opacity-100 group-focus-within:translate-y-0 motion-reduce:transition-none"
-                    aria-hidden="true"
-                  >
-                    Turn a scary letter into a grounded response.
-                  </p>
+                  <div className="pt-2">
+                    <p
+                      className="text-base font-semibold text-chart-2 opacity-0 translate-y-2 transition-all duration-300 ease-out group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:opacity-100 group-focus-within:translate-y-0 motion-reduce:transition-none flex items-center gap-2"
+                      aria-hidden="true"
+                    >
+                      <ArrowRight className="w-4 h-4" />
+                      Turn a scary letter into a grounded response.
+                    </p>
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -372,61 +372,61 @@ export default function Home() {
 
 
       <section
-        className="py-10 md:py-14 px-4 sm:px-6 lg:px-8"
+        className="group relative py-16 md:py-24 overflow-hidden bg-gradient-to-br from-slate-100 via-slate-50 to-white dark:from-slate-800 dark:via-slate-900 dark:to-slate-950 border-y-2 border-slate-200/50 dark:border-slate-700/50 cursor-default"
         aria-labelledby="safe-space-heading"
         data-testid="section-safe-space"
+        tabIndex={0}
       >
-        <div className="max-w-3xl mx-auto">
-          <div 
-            className="group relative rounded-xl border border-slate-200 bg-slate-100 p-6 md:p-8 cursor-default transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-lg hover:border-slate-300 hover:bg-slate-50 focus-within:-translate-y-1 focus-within:shadow-lg motion-reduce:transition-none motion-reduce:hover:translate-y-0 dark:border-slate-700 dark:bg-slate-800/50 dark:hover:border-slate-600 dark:hover:bg-slate-800"
-            tabIndex={0}
-          >
-            <div className="flex flex-col md:flex-row gap-6 items-start">
+        {/* Decorative elements */}
+        <div className="absolute top-0 right-0 w-64 h-64 bg-slate-200/20 dark:bg-slate-700/20 rounded-bl-full transition-opacity duration-300 group-hover:opacity-100 opacity-70" aria-hidden="true" />
+        <div className="absolute bottom-0 left-0 w-48 h-48 bg-slate-300/10 dark:bg-slate-600/10 rounded-tr-full" aria-hidden="true" />
+
+        <div className="relative w-full px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex flex-col md:flex-row gap-10 items-center justify-center relative">
               <div className="flex-shrink-0">
-                <div className="w-12 h-12 rounded-lg bg-slate-200 dark:bg-slate-700 flex items-center justify-center transition-transform duration-200 ease-out group-hover:scale-110 group-focus-within:scale-110 motion-reduce:group-hover:scale-100">
-                  <Shield className="w-6 h-6 text-slate-600 dark:text-slate-300" aria-hidden="true" />
+                <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-600 flex items-center justify-center transition-transform duration-300 ease-out group-hover:scale-110 group-hover:rotate-3 group-focus-within:scale-110 group-focus-within:rotate-3 motion-reduce:group-hover:scale-100 motion-reduce:group-hover:rotate-0 shadow-xl">
+                  <Shield className="w-10 h-10 text-slate-700 dark:text-slate-200" aria-hidden="true" />
                 </div>
               </div>
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <div className="text-glossy-wrapper">
-                    <h2
-                      id="safe-space-heading"
-                      className="text-xl md:text-2xl font-semibold text-slate-800 dark:text-slate-100"
-                    >
-                      A judgement-free space, built for your privacy.
-                    </h2>
+              <div className="space-y-5 flex-1 md:text-left text-center max-w-3xl">
+                <div className="space-y-3">
+                  <h2
+                    id="safe-space-heading"
+                    className="relative inline-block text-2xl md:text-3xl font-bold text-slate-900 dark:text-slate-100 overflow-hidden"
+                  >
+                    <span className="relative z-10">A judgement-free space, built for your privacy.</span>
                     <span
                       aria-hidden="true"
-                      className="text-glossy-overlay group-hover:text-glossy-active group-focus-within:text-glossy-active motion-reduce:hidden"
+                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/90 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out motion-reduce:hidden dark:via-white/60"
                     />
-                  </div>
-                  <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
+                  </h2>
+                  <p className="text-base md:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
                     We don't store what you write in this session. You decide
                     what to share, and you can close this tab at any time.
                   </p>
                 </div>
-                <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-300">
-                  <li className="flex items-center gap-2">
+                <ul className="flex flex-col gap-3 text-sm text-slate-700 dark:text-slate-300 md:mx-0 mx-auto max-w-md">
+                  <li className="flex items-center gap-2.5">
                     <span
-                      className="w-1.5 h-1.5 rounded-full bg-slate-500 dark:bg-slate-400"
+                      className="w-2 h-2 rounded-full bg-slate-600 dark:bg-slate-400 flex-shrink-0"
                       aria-hidden="true"
                     />
-                    No account required.
+                    <span className="font-medium">No account required.</span>
                   </li>
-                  <li className="flex items-center gap-2">
+                  <li className="flex items-center gap-2.5">
                     <span
-                      className="w-1.5 h-1.5 rounded-full bg-slate-500 dark:bg-slate-400"
+                      className="w-2 h-2 rounded-full bg-slate-600 dark:bg-slate-400 flex-shrink-0"
                       aria-hidden="true"
                     />
-                    No tracking of your answers.
+                    <span className="font-medium">No tracking of your answers.</span>
                   </li>
-                  <li className="flex items-center gap-2">
+                  <li className="flex items-center gap-2.5">
                     <span
-                      className="w-1.5 h-1.5 rounded-full bg-slate-500 dark:bg-slate-400"
+                      className="w-2 h-2 rounded-full bg-slate-600 dark:bg-slate-400 flex-shrink-0"
                       aria-hidden="true"
                     />
-                    You decide what to keep, copy, or delete.
+                    <span className="font-medium">You decide what to keep, copy, or delete.</span>
                   </li>
                 </ul>
               </div>
@@ -436,33 +436,33 @@ export default function Home() {
       </section>
 
       <section
-        className="py-10 md:py-14 px-4 sm:px-6 lg:px-8"
+        className="py-12 md:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-transparent via-orange-50/60 to-orange-100/40 dark:from-transparent dark:via-orange-950/20 dark:to-orange-900/10"
         aria-labelledby="is-this-for-me-heading"
         data-testid="section-is-this-for-me"
       >
-        <div className="max-w-3xl mx-auto">
-          <div className="rounded-xl border border-orange-400/30 bg-orange-500/5 p-4 md:p-6">
+        <div className="max-w-4xl mx-auto">
+          <div className="rounded-2xl border-2 border-orange-400/30 bg-gradient-to-br from-orange-50/80 to-orange-100/40 dark:from-orange-950/20 dark:to-orange-900/10 p-6 md:p-8 shadow-lg">
             <button
               type="button"
-              className="flex w-full items-center justify-between gap-3 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 focus-visible:ring-offset-2 rounded-lg p-2 -m-2"
+              className="flex w-full items-center justify-between gap-4 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 focus-visible:ring-offset-2 rounded-lg p-3 -m-3 hover:bg-orange-100/30 dark:hover:bg-orange-900/20 transition-colors"
               aria-expanded={isThisForMeOpen}
               aria-controls="is-this-for-me-panel"
               onClick={() => setIsThisForMeOpen((prev) => !prev)}
               data-testid="button-is-this-for-me-toggle"
             >
-              <div className="flex items-center gap-3">
-                <div className="inline-flex items-center rounded-full bg-orange-500/10 px-3 py-1 text-xs font-medium uppercase tracking-wide text-orange-600 dark:text-orange-400">
+              <div className="flex items-center gap-4">
+                <div className="inline-flex items-center rounded-full bg-orange-500/15 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-orange-700 dark:text-orange-400 border border-orange-400/30">
                   Who this is for
                 </div>
                 <h2
                   id="is-this-for-me-heading"
-                  className="text-base md:text-lg font-semibold text-foreground"
+                  className="text-xl md:text-2xl font-bold text-foreground"
                 >
                   Is this for me?
                 </h2>
               </div>
-              <ChevronDown 
-                className={`w-5 h-5 text-orange-600 dark:text-orange-400 flex-shrink-0 transition-transform duration-200 ${
+              <ChevronDown
+                className={`w-6 h-6 text-orange-600 dark:text-orange-400 flex-shrink-0 transition-transform duration-300 ${
                   isThisForMeOpen ? "rotate-180" : ""
                 }`}
                 aria-hidden="true"
@@ -472,38 +472,57 @@ export default function Home() {
             <div
               id="is-this-for-me-panel"
               className={`overflow-hidden transition-all duration-300 ease-out ${
-                isThisForMeOpen 
-                  ? "max-h-[500px] opacity-100 mt-4" 
+                isThisForMeOpen
+                  ? "max-h-[600px] opacity-100 mt-6"
                   : "max-h-0 opacity-0"
               }`}
             >
-              <div className="space-y-4 text-sm text-muted-foreground pt-4 border-t border-orange-400/20">
-                <p className="text-sm text-muted-foreground">
+              <div className="space-y-6 text-base text-muted-foreground pt-6 border-t-2 border-orange-400/20">
+                <p className="text-base md:text-lg text-foreground/80 leading-relaxed">
                   Reframe.me is designed for people navigating job searches with a past record or justice involvement.
                 </p>
 
-                <div>
-                  <p className="font-medium text-orange-600 dark:text-orange-400">
+                <div className="bg-white/60 dark:bg-slate-900/30 rounded-xl p-5 border border-orange-400/20">
+                  <p className="font-bold text-lg text-orange-700 dark:text-orange-400 mb-3">
                     Reframe.me might help if:
                   </p>
-                  <ul className="mt-2 space-y-1.5 list-disc list-inside marker:text-orange-500/60">
-                    <li>You're applying for jobs after a conviction or justice involvement.</li>
-                    <li>You feel stuck on what to say when your background comes up in the hiring process.</li>
-                    <li>You've received (or are worried about) a pre-adverse action notice and don't know how to respond.</li>
+                  <ul className="space-y-2.5 list-none">
+                    <li className="flex items-start gap-3">
+                      <span className="w-1.5 h-1.5 rounded-full bg-orange-500 mt-2.5 flex-shrink-0" aria-hidden="true" />
+                      <span className="text-foreground/80">You're applying for jobs after a conviction or justice involvement.</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="w-1.5 h-1.5 rounded-full bg-orange-500 mt-2.5 flex-shrink-0" aria-hidden="true" />
+                      <span className="text-foreground/80">You feel stuck on what to say when your background comes up in the hiring process.</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="w-1.5 h-1.5 rounded-full bg-orange-500 mt-2.5 flex-shrink-0" aria-hidden="true" />
+                      <span className="text-foreground/80">You've received (or are worried about) a pre-adverse action notice and don't know how to respond.</span>
+                    </li>
                   </ul>
                 </div>
-                <p className="text-sm text-muted-foreground">
-                  Even if you came home recently or it’s been years, it’s okay to still be finding the words for your story.
+
+                <p className="text-base text-foreground/80 italic leading-relaxed bg-orange-100/40 dark:bg-orange-900/20 p-4 rounded-lg border-l-4 border-orange-400">
+                  Even if you came home recently or it's been years, it's okay to still be finding the words for your story.
                 </p>
 
-                <div className="pt-4 border-t border-orange-400/20">
-                  <p className="font-medium text-orange-600 dark:text-orange-400">
+                <div className="bg-white/60 dark:bg-slate-900/30 rounded-xl p-5 border border-orange-400/20">
+                  <p className="font-bold text-lg text-orange-700 dark:text-orange-400 mb-3">
                     This is not:
                   </p>
-                  <ul className="mt-2 space-y-1.5 list-disc list-inside marker:text-orange-500/60">
-                    <li>Legal advice or a substitute for speaking with a lawyer or legal aid.</li>
-                    <li>A guarantee that you will be hired or keep a job.</li>
-                    <li>A replacement for your own judgment or support from trusted people in your life.</li>
+                  <ul className="space-y-2.5 list-none">
+                    <li className="flex items-start gap-3">
+                      <span className="w-1.5 h-1.5 rounded-full bg-orange-500/50 mt-2.5 flex-shrink-0" aria-hidden="true" />
+                      <span className="text-foreground/80">Legal advice or a substitute for speaking with a lawyer or legal aid.</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="w-1.5 h-1.5 rounded-full bg-orange-500/50 mt-2.5 flex-shrink-0" aria-hidden="true" />
+                      <span className="text-foreground/80">A guarantee that you will be hired or keep a job.</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="w-1.5 h-1.5 rounded-full bg-orange-500/50 mt-2.5 flex-shrink-0" aria-hidden="true" />
+                      <span className="text-foreground/80">A replacement for your own judgment or support from trusted people in your life.</span>
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -513,65 +532,71 @@ export default function Home() {
       </section>
 
             <section
-        className="py-10 md:py-14 px-4 sm:px-6 lg:px-8"
+        className="py-12 md:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-orange-100/40 via-primary/5 to-primary/10 dark:from-orange-900/10 dark:via-primary/5 dark:to-primary/10"
         aria-labelledby="stories-heading"
         data-testid="section-stories"
       >
-        <div className="max-w-3xl mx-auto">
-          <div className="text-center mb-8">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-10">
             <h2
               id="stories-heading"
-              className="text-xl md:text-2xl font-semibold text-foreground"
+              className="text-3xl md:text-4xl font-bold text-foreground mb-3"
             >
               Stories of change
             </h2>
-            <p className="mt-2 text-sm text-muted-foreground">
+            <p className="text-lg text-muted-foreground">
               Anonymized snapshots of how people are using Reframe.me.
             </p>
           </div>
 
           <div
-            className="relative max-w-xl mx-auto"
+            className="relative max-w-2xl mx-auto"
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
           >
             <div
-              className="relative rounded-xl border border-border bg-card p-6 md:p-8 min-h-[140px] flex flex-col justify-center"
+              className="relative rounded-2xl border-2 border-primary/20 bg-gradient-to-br from-card to-muted/30 p-8 md:p-12 min-h-[180px] flex flex-col justify-center shadow-lg"
               role="region"
               aria-roledescription="carousel"
               aria-label="Stories of change"
             >
+              <div className="absolute top-4 right-4 text-6xl text-primary/10 font-serif" aria-hidden="true">"</div>
               <div
                 key={storyIndex}
-                className={`text-center ${
+                className={`text-center relative z-10 ${
                   prefersReducedMotion ? "" : "animate-fade-in"
                 }`}
                 role="group"
                 aria-roledescription="slide"
                 aria-label={`${storyIndex + 1} of ${stories.length}`}
               >
-                <p className="text-foreground leading-relaxed italic">
+                <p className="text-lg md:text-xl text-foreground leading-relaxed italic font-light">
                   "{stories[storyIndex].quote}"
                 </p>
-                <p className="mt-4 text-sm text-muted-foreground">
-                  {stories[storyIndex].role}
-                </p>
+                <div className="mt-6 flex items-center justify-center gap-2">
+                  <div className="w-8 h-0.5 bg-primary/30" aria-hidden="true" />
+                  <p className="text-sm font-medium text-muted-foreground">
+                    {stories[storyIndex].role}
+                  </p>
+                  <div className="w-8 h-0.5 bg-primary/30" aria-hidden="true" />
+                </div>
               </div>
             </div>
 
-            <div className="flex items-center justify-center gap-4 mt-6">
+            <div className="flex items-center justify-center gap-6 mt-8">
               <Button
-                variant="ghost"
+                variant="outline"
                 size="icon"
                 onClick={prevStory}
                 aria-label="Previous story"
                 data-testid="button-story-prev"
+                className="rounded-full border-2 hover:border-primary/40 hover:bg-primary/5"
               >
                 <ChevronLeft className="w-5 h-5" aria-hidden="true" />
               </Button>
 
               <div
-                className="flex items-center gap-2"
+                className="flex items-center gap-2.5"
                 role="tablist"
                 aria-label="Story slides"
               >
@@ -579,10 +604,10 @@ export default function Home() {
                   <button
                     key={index}
                     onClick={() => goToStory(index)}
-                    className={`w-2 h-2 rounded-full transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${
+                    className={`rounded-full transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${
                       index === storyIndex
-                        ? "bg-primary w-4"
-                        : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
+                        ? "bg-primary w-8 h-2.5"
+                        : "bg-muted-foreground/30 hover:bg-muted-foreground/50 w-2.5 h-2.5"
                     }`}
                     role="tab"
                     aria-selected={index === storyIndex}
@@ -593,11 +618,12 @@ export default function Home() {
               </div>
 
               <Button
-                variant="ghost"
+                variant="outline"
                 size="icon"
                 onClick={nextStory}
                 aria-label="Next story"
                 data-testid="button-story-next"
+                className="rounded-full border-2 hover:border-primary/40 hover:bg-primary/5"
               >
                 <ChevronRight className="w-5 h-5" aria-hidden="true" />
               </Button>
@@ -609,33 +635,33 @@ export default function Home() {
 
       <section
         ref={howItWorksRef as React.RefObject<HTMLElement>}
-        className="py-12 md:py-16 px-4 sm:px-6 lg:px-8 bg-muted/30"
+        className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-primary/10 via-slate-50 to-slate-100 dark:from-primary/10 dark:via-slate-900 dark:to-slate-800"
         aria-labelledby="how-it-works-heading"
         data-testid="section-how-it-works"
       >
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-10">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-14">
             <h2
               id="how-it-works-heading"
-              className="text-2xl md:text-3xl font-semibold text-foreground"
+              className="text-3xl md:text-5xl font-bold text-foreground mb-4"
             >
               How it works
             </h2>
-            <p className="mt-3 text-muted-foreground max-w-xl mx-auto">
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
               Three clear steps from feeling stuck to feeling prepared.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 relative">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 relative mb-12">
             <div
-              className="hidden md:block absolute top-8 left-[16.67%] right-[16.67%] h-0.5 bg-border"
+              className="hidden md:block absolute top-10 left-[16.67%] right-[16.67%] h-1 bg-gradient-to-r from-primary/20 via-primary/40 to-primary/20 rounded-full"
               aria-hidden="true"
             />
 
             {howItWorksSteps.map((step, index) => (
               <div
                 key={step.title}
-                className={`relative bg-background rounded-xl border border-border p-6 text-center transition-all duration-700 ease-out motion-reduce:transition-none ${
+                className={`relative bg-gradient-to-br from-background to-muted/20 rounded-2xl border-2 border-border shadow-lg p-8 text-center transition-all duration-700 ease-out hover:-translate-y-2 hover:shadow-2xl hover:border-primary/30 motion-reduce:transition-none motion-reduce:hover:translate-y-0 ${
                   howItWorksInView
                     ? "opacity-100 translate-y-0"
                     : "opacity-0 translate-y-6"
@@ -647,29 +673,29 @@ export default function Home() {
                 }}
                 data-testid={`step-${index + 1}`}
               >
-                <div className="flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 text-primary font-semibold text-lg mx-auto mb-4 relative z-10">
+                <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-primary/80 text-white font-bold text-2xl mx-auto mb-6 relative z-10 shadow-lg">
                   {index + 1}
                 </div>
-                <h3 className="text-base font-semibold text-foreground mb-2">
+                <h3 className="text-xl font-bold text-foreground mb-3">
                   {step.title}
                 </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
+                <p className="text-base text-muted-foreground leading-relaxed">
                   {step.description}
                 </p>
               </div>
             ))}
           </div>
 
-          <div className="mt-8">
+          <div className="text-center">
             <Link href="/selection">
               <Button
                 size="lg"
-                className="group w-full min-h-[48px] px-8 text-lg font-medium shadow-md"
+                className="group w-full sm:w-auto min-h-[56px] px-12 text-xl font-semibold shadow-xl hover:shadow-2xl transition-all"
                 data-testid="button-get-started"
               >
                 Get Started
-                <span className="inline-flex transition-transform duration-150 ease-out group-hover:translate-x-1 group-focus-visible:translate-x-1 motion-reduce:transform-none">
-                  <ArrowRight className="w-5 h-5" aria-hidden="true" />
+                <span className="inline-flex transition-transform duration-150 ease-out group-hover:translate-x-1 group-focus-visible:translate-x-1 motion-reduce:transform-none ml-2">
+                  <ArrowRight className="w-6 h-6" aria-hidden="true" />
                 </span>
               </Button>
             </Link>

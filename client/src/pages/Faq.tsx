@@ -214,7 +214,7 @@ export default function Faq() {
   return (
     <Layout>
       <section
-        className="py-8 md:py-12 px-4 sm:px-6 lg:px-8"
+        className="py-8 md:py-12 px-4 sm:px-6 lg:px-8 min-h-screen bg-gradient-to-b from-chart-2/5 via-slate-50 to-primary/5 dark:from-chart-2/10 dark:via-slate-900 dark:to-primary/10"
         aria-labelledby="faq-heading"
       >
         <div className="max-w-2xl mx-auto">

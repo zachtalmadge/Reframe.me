@@ -17,17 +17,17 @@ export function ProgressBar({
   const progress = (currentStep / totalSteps) * 100;
 
   return (
-    <div className={cn("space-y-3", className)}>
+    <div className={cn("space-y-4 bg-gradient-to-r from-primary/5 via-transparent to-primary/5 p-6 rounded-2xl border border-primary/10", className)}>
       <div className="flex items-center justify-between gap-4">
         <span
-          className="text-sm font-medium text-foreground"
+          className="text-base font-semibold text-foreground"
           data-testid="text-step-indicator"
         >
           Step {currentStep} of {totalSteps}
         </span>
         {stepTitle && (
           <span
-            className="text-sm text-muted-foreground truncate"
+            className="text-sm font-medium text-muted-foreground truncate bg-muted/30 px-3 py-1 rounded-full"
             data-testid="text-step-title"
           >
             {stepTitle}
@@ -36,7 +36,7 @@ export function ProgressBar({
       </div>
       <Progress
         value={progress}
-        className="h-2"
+        className="h-3 shadow-sm"
         aria-label={`Progress: step ${currentStep} of ${totalSteps}`}
         data-testid="progress-bar"
       />

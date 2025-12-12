@@ -82,7 +82,7 @@ export default function Form() {
   return (
     <Layout onLogoClick={handleLogoClick} onFaqClick={handleFaqClick}>
       <section
-        className="py-8 md:py-12 px-4 sm:px-6 lg:px-8"
+        className="py-8 md:py-12 px-4 sm:px-6 lg:px-8 min-h-screen bg-gradient-to-b from-slate-50 via-white to-primary/5 dark:from-slate-900 dark:via-slate-950 dark:to-primary/10"
         aria-labelledby="form-heading"
       >
         <div className="max-w-2xl mx-auto">
@@ -100,20 +100,20 @@ export default function Form() {
             </Link>
           </div>
 
-          <div className="text-center space-y-4 mb-8">
-            <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto">
-              <Icon className="w-7 h-7 text-primary" aria-hidden="true" />
+          <div className="text-center space-y-5 mb-10">
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center mx-auto shadow-lg ring-2 ring-primary/10 ring-offset-2">
+              <Icon className="w-8 h-8 text-primary" aria-hidden="true" />
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-3">
               <h1
                 id="form-heading"
-                className="text-2xl md:text-3xl font-bold leading-tight text-foreground"
+                className="text-3xl md:text-4xl font-bold leading-tight text-foreground"
               >
                 {title}
               </h1>
               <p
-                className="text-muted-foreground"
+                className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto"
                 data-testid="text-tool-description"
               >
                 {description}

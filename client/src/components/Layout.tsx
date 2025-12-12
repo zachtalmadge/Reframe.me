@@ -75,9 +75,9 @@ export default function Layout({ children, onLogoClick, onFaqClick }: LayoutProp
         {children}
       </main>
       
-      <footer className="border-t border-border py-6 mt-auto">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-sm text-muted-foreground text-center">
+      <footer className="border-t-2 border-border/50 bg-gradient-to-b from-background to-muted/20 py-8 mt-auto">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-base font-medium text-muted-foreground text-center">
             Free to use. No account required.
           </p>
         </div>
