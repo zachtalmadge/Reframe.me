@@ -111,6 +111,58 @@ export default function Layout({ children, onLogoClick, onFaqClick }: LayoutProp
           background-size: 200% 100%;
           animation: shimmer 8s ease-in-out infinite;
         }
+
+        @keyframes gentle-pulse {
+          0%, 100% {
+            box-shadow: 0 2px 8px rgba(249, 115, 22, 0.25), 0 0 0 0 rgba(249, 115, 22, 0);
+          }
+          50% {
+            box-shadow: 0 2px 8px rgba(249, 115, 22, 0.25), 0 0 0 4px rgba(249, 115, 22, 0.15);
+          }
+        }
+
+        @keyframes subtle-shimmer {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+
+        .donate-button {
+          position: relative;
+          overflow: hidden;
+          animation: gentle-pulse 4s ease-in-out infinite;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .donate-button::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            120deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.15) 50%,
+            transparent 100%
+          );
+          background-size: 200% 100%;
+          animation: subtle-shimmer 3s ease-in-out infinite;
+          opacity: 0;
+          transition: opacity 0.3s ease;
+        }
+
+        .donate-button:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(249, 115, 22, 0.35), 0 0 0 3px rgba(249, 115, 22, 0.1);
+        }
+
+        .donate-button:hover::before {
+          opacity: 1;
+        }
+
+        .donate-button:active {
+          transform: translateY(0);
+          box-shadow: 0 2px 8px rgba(249, 115, 22, 0.25);
+        }
       `}</style>
 
       <header className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-xl border-b border-transparent relative">
@@ -151,7 +203,7 @@ export default function Layout({ children, onLogoClick, onFaqClick }: LayoutProp
               </div>
             </Link>
 
-            <nav className="flex items-center gap-8">
+            <nav className="flex items-center gap-4">
               <Link
                 href="/faq"
                 className="nav-link text-sm font-medium text-gray-700 hover:text-teal-700 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 rounded-md px-3 py-2"
@@ -159,6 +211,17 @@ export default function Layout({ children, onLogoClick, onFaqClick }: LayoutProp
                 onClick={handleFaqClick}
               >
                 Learn More
+              </Link>
+              <Link
+                href="/donate"
+                className="donate-button text-sm font-semibold px-4 py-2 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
+                style={{
+                  background: 'linear-gradient(135deg, #f97316 0%, #fb923c 100%)',
+                  color: 'white'
+                }}
+                data-testid="link-donate"
+              >
+                Donate
               </Link>
             </nav>
           </div>

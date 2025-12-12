@@ -81,8 +81,8 @@ const GAP_DURATION = 1000;
 
 export default function Home() {
   const { ref: howItWorksRef, isInView: howItWorksInView } = useInView({
-    threshold: 0.5,
-    rootMargin: "0px 0px -20% 0px",
+    threshold: 0.2,
+    rootMargin: "0px 0px -5% 0px",
     triggerOnce: false,
   });
   const [heroMounted, setHeroMounted] = useState(false);
@@ -305,7 +305,7 @@ export default function Home() {
                 <Link href="/selection">
                   <Button
                     size="lg"
-                    className="group min-h-[56px] px-10 text-lg font-semibold shadow-2xl hover:shadow-xl transition-all duration-300 hover:scale-105"
+                    className="group min-h-[56px] px-10 text-lg font-semibold transition-all duration-300 hover:scale-105"
                     style={{
                       background: 'linear-gradient(135deg, #f97316 0%, #fb923c 100%)',
                       color: 'white'
@@ -793,7 +793,7 @@ export default function Home() {
             <Link href="/selection">
               <Button
                 size="lg"
-                className="group w-full sm:w-auto min-h-[56px] px-12 text-xl font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
+                className="group w-full sm:w-auto min-h-[56px] px-12 text-xl font-semibold transition-all duration-300 hover:scale-105"
                 style={{
                   background: 'linear-gradient(135deg, #f97316 0%, #fb923c 100%)',
                   color: 'white'

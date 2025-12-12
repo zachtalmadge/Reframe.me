@@ -12,6 +12,7 @@ import Form from "@/pages/Form";
 import Loading from "@/pages/Loading";
 import Results from "@/pages/Results";
 import Faq from "@/pages/Faq";
+import Donate from "@/pages/Donate";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -23,6 +24,7 @@ function Router() {
       <Route path="/loading" component={Loading} />
       <Route path="/results" component={Results} />
       <Route path="/faq" component={Faq} />
+      <Route path="/donate" component={Donate} />
       <Route component={NotFound} />
     </Switch>
   );
