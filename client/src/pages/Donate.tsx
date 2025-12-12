@@ -199,7 +199,7 @@ export default function Donate() {
 
           <div className="space-y-8">
             <h1
-              className="display-font text-5xl md:text-7xl font-bold leading-tight text-white"
+              className="display-font text-3xl md:text-5xl lg:text-7xl font-bold leading-tight text-white"
               style={{
                 textShadow: '0 4px 20px rgba(0,0,0,0.3), 0 0 40px rgba(255,255,255,0.2)',
                 letterSpacing: '-0.02em',
