@@ -203,10 +203,10 @@ export default function Layout({ children, onLogoClick, onFaqClick }: LayoutProp
               </div>
             </Link>
 
-            <nav className="flex items-center gap-4">
+            <nav className="flex items-center gap-2 sm:gap-4">
               <Link
                 href="/faq"
-                className="nav-link text-sm font-medium text-gray-700 hover:text-teal-700 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 rounded-md px-3 py-2"
+                className="nav-link text-sm font-medium text-gray-700 hover:text-teal-700 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 rounded-md px-2 py-2 sm:px-3"
                 data-testid="link-faq"
                 onClick={handleFaqClick}
               >
@@ -214,7 +214,7 @@ export default function Layout({ children, onLogoClick, onFaqClick }: LayoutProp
               </Link>
               <Link
                 href="/donate"
-                className="donate-button text-sm font-semibold px-4 py-2 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
+                className="donate-button text-sm font-semibold px-3 py-2 sm:px-4 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 flex items-center justify-center"
                 style={{
                   background: 'linear-gradient(135deg, #f97316 0%, #fb923c 100%)',
                   color: 'white'
