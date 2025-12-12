@@ -312,7 +312,7 @@ export default function Home() {
                     }}
                     data-testid="button-get-started-hero"
                   >
-                    Begin Your Journey
+                    Get Started
                     <ArrowRight className="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
                   </Button>
                 </Link>

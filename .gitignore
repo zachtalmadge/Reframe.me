@@ -16,3 +16,6 @@ vite.config.ts.*
 # Editor
 .vscode
 .idea
+
+CHANGELOG.md
+.env.example

@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <!-- Gradient for depth -->
+    <linearGradient id="tealGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#14b8a6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0D9488;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="orangeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fb923c;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#F97316;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background (optional, for visual interest) -->
+  <rect width="128" height="128" rx="24" fill="#ffffff"/>
+
+  <!-- Main teal frame - rounded square outline -->
+  <path d="M 32 24
+           L 96 24
+           Q 104 24 104 32
+           L 104 64
+           Q 104 72 96 72
+           L 64 72
+           L 64 96
+           Q 64 104 56 104
+           L 32 104
+           Q 24 104 24 96
+           L 24 32
+           Q 24 24 32 24 Z
+           M 32 32
+           Q 32 32 32 32
+           L 32 96
+           Q 32 96 32 96
+           L 56 96
+           Q 56 96 56 96
+           L 56 72
+           L 56 64
+           L 96 64
+           Q 96 64 96 64
+           L 96 32
+           Q 96 32 96 32
+           L 32 32 Z"
+        fill="url(#tealGrad)"
+        stroke="none"/>
+
+  <!-- Orange breakthrough element - dynamic chevron/arrow shape -->
+  <path d="M 72 40
+           L 100 64
+           L 72 88
+           L 80 88
+           L 108 64
+           L 80 40
+           Z"
+        fill="url(#orangeGrad)"
+        opacity="0.95"/>
+
+  <!-- Secondary orange accent for depth -->
+  <circle cx="90" cy="64" r="6" fill="#F97316" opacity="0.6"/>
+</svg>
