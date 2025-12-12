@@ -296,7 +296,7 @@ export default function Home() {
                 </div>
                 <div className="flex items-center gap-2.5 bg-white/20 backdrop-blur-sm px-5 py-2.5 rounded-full border border-white/30">
                   <Heart className="w-4 h-4 text-white" aria-hidden="true" />
-                  <span className="font-medium text-white">Completely free</span>
+                  <span className="font-medium text-white">Free to use</span>
                 </div>
               </div>
 
@@ -305,7 +305,11 @@ export default function Home() {
                 <Link href="/selection">
                   <Button
                     size="lg"
-                    className="group bg-white text-teal-700 hover:bg-teal-50 min-h-[56px] px-10 text-lg font-semibold shadow-2xl hover:shadow-xl transition-all duration-300 hover:scale-105"
+                    className="group min-h-[56px] px-10 text-lg font-semibold shadow-2xl hover:shadow-xl transition-all duration-300 hover:scale-105"
+                    style={{
+                      background: 'linear-gradient(135deg, #f97316 0%, #fb923c 100%)',
+                      color: 'white'
+                    }}
                     data-testid="button-get-started-hero"
                   >
                     Begin Your Journey
@@ -789,7 +793,11 @@ export default function Home() {
             <Link href="/selection">
               <Button
                 size="lg"
-                className="group w-full sm:w-auto min-h-[56px] px-12 text-xl font-semibold shadow-xl hover:shadow-2xl transition-all"
+                className="group w-full sm:w-auto min-h-[56px] px-12 text-xl font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
+                style={{
+                  background: 'linear-gradient(135deg, #f97316 0%, #fb923c 100%)',
+                  color: 'white'
+                }}
                 data-testid="button-get-started"
               >
                 Get Started

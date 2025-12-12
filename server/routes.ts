@@ -641,6 +641,7 @@ export async function registerRoutes(
       if (needsNarratives) {
         try {
           result.narratives = await generateNarratives(formData);
+          console.log('📊 ANALYTICS: Generated 5 narratives');
         } catch (error) {
           narrativesSuccess = false;
           result.errors.push({
@@ -653,6 +654,7 @@ export async function registerRoutes(
       if (needsResponseLetter) {
         try {
           result.responseLetter = await generateResponseLetter(formData);
+          console.log('📊 ANALYTICS: Generated response letter');
         } catch (error) {
           responseLetterSuccess = false;
           result.errors.push({
@@ -707,6 +709,7 @@ export async function registerRoutes(
       }
 
       const narrative = await generateSingleNarrative(formData, narrativeType);
+      console.log(`📊 ANALYTICS: Regenerated narrative (${narrativeType})`);
       return res.json({ narrative });
     } catch (error) {
       console.error("Error in regenerate-narrative:", error);
@@ -727,6 +730,7 @@ export async function registerRoutes(
       }
 
       const letter = await generateResponseLetter(formData);
+      console.log('📊 ANALYTICS: Regenerated response letter');
       return res.json({ letter });
     } catch (error) {
       console.error("Error in regenerate-letter:", error);
