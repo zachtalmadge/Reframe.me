@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import Layout from "@/components/Layout";
 import {
   ToolType,
+  FormState,
   GenerationState,
   initialGenerationState,
   getErrorMessage,
@@ -17,7 +18,7 @@ import { LeaveConfirmationModal } from "@/components/LeaveConfirmationModal";
 
 const loadingMessages = [
   "Analyzing your information...",
-    "Preparing your documents...",
+  "Preparing your documents...",
   "Almost there...",
 ];
 
@@ -31,7 +32,7 @@ const motivationalQuotes = [
 
 async function generateDocuments(
   selection: ToolType,
-  formData: Record<string, unknown>
+  formData: FormState
 ): Promise<GenerationResult> {
   const response = await fetch("/api/generate-documents", {
     method: "POST",
