@@ -65,7 +65,7 @@ const beforeAfterPairs = [
     after: "Now I have language ready for if my record comes up in the hiring process.",
   },
   {
-    before: "I'm scared my past will cost me the job once they see my background.",
+    before: "I'm worried my past will cost me the job once they see my background.",
     after: "I can explain what happened, what’s changed, and the skills I bring today.",
   },
   {
@@ -305,7 +305,7 @@ export default function Home() {
                   }`}
                   style={{ transitionDelay: '200ms' }}
                 >
-                  Prepare to talk honestly<br className="hidden sm:inline"/> about your record
+                  Prepare to talk confidently<br className="hidden sm:inline"/> about your record
                 </h1>
                 <p className={`text-lg md:text-xl text-teal-50 leading-relaxed max-w-3xl mx-auto transition-all duration-700 ease-out ${
                   heroMounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
