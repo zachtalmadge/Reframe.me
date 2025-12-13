@@ -141,78 +141,117 @@ export default function Loading() {
       error: null,
     }));
 
-    try {
-      const timeout = isMobile ? 90000 : 60000; // 90s mobile, 60s desktop
-      console.log('[Loading] Calling generateDocuments with timeout:', timeout);
+    /**
+     * WORKAROUND: Automatic silent retry on mobile
+     *
+     * Problem: On mobile browsers (especially iOS Safari), document generation fails on first
+     * attempt but succeeds on second attempt. Root cause appears to be race condition with
+     * sessionStorage writes or network/API initialization timing issues on mobile.
+     *
+     * Solution: Automatically retry once on mobile without showing error to user. This makes
+     * the failure invisible - user sees continuous loading animation while we retry in background.
+     *
+     * TODO: Remove this workaround once root cause is identified and fixed. Possible fixes:
+     * - Investigate sessionStorage write delays on mobile Safari
+     * - Check for API/network initialization issues on mobile
+     * - Review AppInitializer timing and route protection logic
+     * - Consider using alternative storage mechanism that doesn't have mobile timing issues
+     *
+     * To test if this is still needed: Set maxAttempts to 1 for mobile and test on iPhone Safari
+     */
+    const maxAttempts = isMobile ? 2 : 1;
+    let lastError: Error | null = null;
 
-      const result = await generateDocuments(tool, persistedData.formState, timeout);
-      console.log('[Loading] Generation result:', result.status);
+    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+      try {
+        if (attempt > 1) {
+          console.log(`[Loading] WORKAROUND: Silent retry attempt ${attempt}/${maxAttempts} on mobile`);
+          // Small delay before retry to let any timing issues resolve
+          await new Promise(resolve => setTimeout(resolve, 200));
+        }
 
-      if (result.status === "total_fail") {
-        throw new Error(result.errors[0]?.detail || "Failed to generate documents");
-      }
+        const timeout = isMobile ? 90000 : 60000; // 90s mobile, 60s desktop
+        console.log('[Loading] Calling generateDocuments with timeout:', timeout);
 
-      console.log('[Loading] Saving results to sessionStorage');
-      const saveResult = saveResults(result, tool);
-      if (!saveResult.success) {
-        console.error('[Loading] Failed to save results:', saveResult.error);
-        // Still continue to show disclaimer - data is in memory
-      } else {
-        console.log('[Loading] Results saved successfully');
-      }
+        const result = await generateDocuments(tool, persistedData.formState, timeout);
+        console.log('[Loading] Generation result:', result.status);
 
-      // On mobile, add delay and verify save completed before proceeding
-      if (isMobile) {
-        console.log('[Loading] Mobile detected, waiting 150ms for storage stabilization');
-        await new Promise(resolve => setTimeout(resolve, 150));
+        if (result.status === "total_fail") {
+          throw new Error(result.errors[0]?.detail || "Failed to generate documents");
+        }
 
-        // Verify the save actually worked
-        const verification = loadResults();
-        if (!verification) {
-          console.error('[Loading] Save verification FAILED on mobile, retrying save...');
-          saveResults(result, tool);
-          await new Promise(resolve => setTimeout(resolve, 100));
-
-          // Verify again
-          const secondVerification = loadResults();
-          if (!secondVerification) {
-            console.error('[Loading] Second save verification FAILED! Data may be lost.');
-          } else {
-            console.log('[Loading] Second save successful');
-          }
+        console.log('[Loading] Saving results to sessionStorage');
+        const saveResult = saveResults(result, tool);
+        if (!saveResult.success) {
+          console.error('[Loading] Failed to save results:', saveResult.error);
+          // Still continue to show disclaimer - data is in memory
         } else {
-          console.log('[Loading] Save verification successful');
+          console.log('[Loading] Results saved successfully');
         }
-      }
 
-      console.log('[Loading] Setting success state and showing disclaimer');
-      setGenerationState((prev) => ({
-        ...prev,
-        status: "success",
-      }));
-      setShowDisclaimer(true);
-    } catch (err) {
-      console.error('[Loading] Generation error:', err);
-      let errorType: GenerationErrorType = "unknown";
-      
-      if (err instanceof Error) {
-        if (err.message.includes("network") || err.message.includes("fetch") || err.message.includes("Failed to fetch")) {
-          errorType = "network";
-        } else if (err.message.includes("timeout")) {
-          errorType = "timeout";
-        } else if (err.message.includes("500") || err.message.includes("server") || err.message.includes("Server error")) {
-          errorType = "server";
+        // On mobile, add delay and verify save completed before proceeding
+        if (isMobile) {
+          console.log('[Loading] Mobile detected, waiting 150ms for storage stabilization');
+          await new Promise(resolve => setTimeout(resolve, 150));
+
+          // Verify the save actually worked
+          const verification = loadResults();
+          if (!verification) {
+            console.error('[Loading] Save verification FAILED on mobile, retrying save...');
+            saveResults(result, tool);
+            await new Promise(resolve => setTimeout(resolve, 100));
+
+            // Verify again
+            const secondVerification = loadResults();
+            if (!secondVerification) {
+              console.error('[Loading] Second save verification FAILED! Data may be lost.');
+            } else {
+              console.log('[Loading] Second save successful');
+            }
+          } else {
+            console.log('[Loading] Save verification successful');
+          }
         }
-      }
 
-      setGenerationState((prev) => ({
-        status: "error",
-        error: {
-          type: errorType,
-          message: getErrorMessage(errorType),
-        },
-        retryCount: prev.retryCount + 1,
-      }));
+        console.log('[Loading] Setting success state and showing disclaimer');
+        setGenerationState((prev) => ({
+          ...prev,
+          status: "success",
+        }));
+        setShowDisclaimer(true);
+
+        // SUCCESS - break out of retry loop
+        return;
+
+      } catch (err) {
+        console.error(`[Loading] Generation error on attempt ${attempt}/${maxAttempts}:`, err);
+        lastError = err as Error;
+
+        // If this was our last attempt, show the error
+        if (attempt === maxAttempts) {
+          let errorType: GenerationErrorType = "unknown";
+
+          if (err instanceof Error) {
+            if (err.message.includes("network") || err.message.includes("fetch") || err.message.includes("Failed to fetch")) {
+              errorType = "network";
+            } else if (err.message.includes("timeout")) {
+              errorType = "timeout";
+            } else if (err.message.includes("500") || err.message.includes("server") || err.message.includes("Server error")) {
+              errorType = "server";
+            }
+          }
+
+          setGenerationState((prev) => ({
+            status: "error",
+            error: {
+              type: errorType,
+              message: getErrorMessage(errorType),
+            },
+            retryCount: prev.retryCount + 1,
+          }));
+        }
+        // If not last attempt, continue loop for silent retry
+      }
     }
   }, [navigate, tool]);
 
