@@ -324,3 +324,307 @@
     transform: translateX(130%);
   }
 }
+
+/* =================================================================
+   iOS 26 Liquid Glass Button Styles - iPhone Optimized
+   ================================================================= */
+
+/* Apply to all iOS devices (iPhone, iPad) */
+@supports (-webkit-touch-callout: none) {
+
+  /* Base iOS Button - Liquid Glass Foundation */
+  .ios-button {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1.25rem !important;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    isolation: isolate;
+  }
+
+  /* Liquid Glass reflection layer - top highlight */
+  .ios-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0.1) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0.8;
+    z-index: 1;
+  }
+
+  /* Glow effect layer */
+  .ios-button::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  /* Primary Button - Teal Glass */
+  .ios-button-primary {
+    background: linear-gradient(
+      135deg,
+      rgba(20, 184, 166, 0.85) 0%,
+      rgba(13, 148, 136, 0.9) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    box-shadow:
+      0 8px 32px rgba(13, 148, 136, 0.35),
+      0 2px 8px rgba(0, 0, 0, 0.15),
+      inset 0 1px 2px rgba(255, 255, 255, 0.4),
+      inset 0 -2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .ios-button-primary::after {
+    background: radial-gradient(
+      circle at 50% 50%,
+      rgba(20, 184, 166, 0.6),
+      rgba(13, 148, 136, 0.4)
+    );
+    filter: blur(12px);
+  }
+
+  .ios-button-primary:hover::after {
+    opacity: 1;
+  }
+
+  .ios-button-primary:active {
+    background: linear-gradient(
+      135deg,
+      rgba(13, 148, 136, 0.9) 0%,
+      rgba(15, 118, 110, 0.95) 100%
+    );
+    box-shadow:
+      0 4px 16px rgba(13, 148, 136, 0.4),
+      0 1px 4px rgba(0, 0, 0, 0.2),
+      inset 0 1px 2px rgba(255, 255, 255, 0.3),
+      inset 0 -1px 2px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Destructive Button - Red Glass */
+  .ios-button-destructive {
+    background: linear-gradient(
+      135deg,
+      rgba(220, 38, 38, 0.85) 0%,
+      rgba(185, 28, 28, 0.9) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    box-shadow:
+      0 8px 32px rgba(220, 38, 38, 0.35),
+      0 2px 8px rgba(0, 0, 0, 0.15),
+      inset 0 1px 2px rgba(255, 255, 255, 0.4),
+      inset 0 -2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .ios-button-destructive::after {
+    background: radial-gradient(
+      circle at 50% 50%,
+      rgba(220, 38, 38, 0.6),
+      rgba(185, 28, 28, 0.4)
+    );
+    filter: blur(12px);
+  }
+
+  .ios-button-destructive:hover::after {
+    opacity: 1;
+  }
+
+  /* Secondary Button - Neutral Glass */
+  .ios-button-secondary {
+    background: linear-gradient(
+      135deg,
+      rgba(148, 163, 184, 0.6) 0%,
+      rgba(100, 116, 139, 0.65) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.35) !important;
+    box-shadow:
+      0 6px 24px rgba(100, 116, 139, 0.25),
+      0 2px 8px rgba(0, 0, 0, 0.1),
+      inset 0 1px 2px rgba(255, 255, 255, 0.5),
+      inset 0 -2px 4px rgba(0, 0, 0, 0.08);
+  }
+
+  .ios-button-secondary::after {
+    background: radial-gradient(
+      circle at 50% 50%,
+      rgba(148, 163, 184, 0.5),
+      rgba(100, 116, 139, 0.3)
+    );
+    filter: blur(10px);
+  }
+
+  .ios-button-secondary:hover::after {
+    opacity: 1;
+  }
+
+  /* Outline Button - Subtle Glass */
+  .ios-button-outline {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.15) 0%,
+      rgba(255, 255, 255, 0.08) 100%
+    );
+    border: 1.5px solid rgba(255, 255, 255, 0.25) !important;
+    box-shadow:
+      0 4px 16px rgba(0, 0, 0, 0.08),
+      inset 0 1px 2px rgba(255, 255, 255, 0.6),
+      inset 0 -1px 2px rgba(0, 0, 0, 0.05);
+  }
+
+  .ios-button-outline::after {
+    background: radial-gradient(
+      circle at 50% 50%,
+      rgba(255, 255, 255, 0.3),
+      rgba(255, 255, 255, 0.1)
+    );
+    filter: blur(8px);
+  }
+
+  .ios-button-outline:hover::after {
+    opacity: 0.8;
+  }
+
+  .ios-button-outline:active {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.2) 0%,
+      rgba(255, 255, 255, 0.12) 100%
+    );
+  }
+
+  /* Ghost Button - Ultra Minimal Glass */
+  .ios-button-ghost {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.05) 0%,
+      rgba(255, 255, 255, 0.02) 100%
+    );
+    border: 1px solid transparent !important;
+    box-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.04),
+      inset 0 1px 1px rgba(255, 255, 255, 0.3);
+  }
+
+  .ios-button-ghost::after {
+    background: radial-gradient(
+      circle at 50% 50%,
+      rgba(255, 255, 255, 0.2),
+      rgba(255, 255, 255, 0.05)
+    );
+    filter: blur(6px);
+  }
+
+  .ios-button-ghost:hover::after {
+    opacity: 0.6;
+  }
+
+  .ios-button-ghost:active {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(255, 255, 255, 0.05) 100%
+    );
+  }
+
+  /* Dark mode adjustments for iOS */
+  .dark .ios-button-primary {
+    background: linear-gradient(
+      135deg,
+      rgba(20, 184, 166, 0.7) 0%,
+      rgba(13, 148, 136, 0.75) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    box-shadow:
+      0 8px 32px rgba(20, 184, 166, 0.4),
+      0 2px 8px rgba(0, 0, 0, 0.3),
+      inset 0 1px 2px rgba(255, 255, 255, 0.3),
+      inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .dark .ios-button-secondary {
+    background: linear-gradient(
+      135deg,
+      rgba(71, 85, 105, 0.5) 0%,
+      rgba(51, 65, 85, 0.55) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  }
+
+  .dark .ios-button-outline {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(255, 255, 255, 0.04) 100%
+    );
+    border: 1.5px solid rgba(255, 255, 255, 0.15) !important;
+  }
+
+  .dark .ios-button-ghost {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.03) 0%,
+      rgba(255, 255, 255, 0.01) 100%
+    );
+  }
+
+  /* Enhanced touch feedback for iOS */
+  .ios-button:active {
+    transform: scale(0.96) translateZ(0);
+    -webkit-transform: scale(0.96) translateZ(0);
+  }
+
+  /* Disabled state - Frosted over look */
+  .ios-button:disabled {
+    background: linear-gradient(
+      135deg,
+      rgba(148, 163, 184, 0.3) 0%,
+      rgba(148, 163, 184, 0.2) 100%
+    ) !important;
+    box-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.05),
+      inset 0 1px 2px rgba(255, 255, 255, 0.2) !important;
+    opacity: 0.5;
+  }
+
+  .ios-button:disabled::before {
+    opacity: 0.3;
+  }
+
+  /* Shimmer effect on long press (optional enhancement) */
+  @keyframes ios-shimmer {
+    0% {
+      background-position: -200% center;
+    }
+    100% {
+      background-position: 200% center;
+    }
+  }
+
+  .ios-button:active::before {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.4) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    background-size: 200% 100%;
+    animation: ios-shimmer 0.6s ease-out;
+  }
+}
