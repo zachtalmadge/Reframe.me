@@ -91,6 +91,11 @@ export default function Home() {
     triggerOnce: false,
   });
 
+  // Scroll to top on mount
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   // Detect mobile synchronously before any state initialization
   const isMobile = typeof window !== 'undefined' &&
     (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.innerWidth <= 768);
