@@ -12,6 +12,10 @@ import {
   ChevronLeft,
   ChevronRight,
   ChevronDown,
+  Users,
+  Search,
+  TrendingUp,
+  Anchor,
 } from "lucide-react";
 import Layout from "@/components/Layout";
 import { useInView } from "@/hooks/useInView";
@@ -301,7 +305,7 @@ export default function Home() {
                   }`}
                   style={{ transitionDelay: '200ms' }}
                 >
-                  Prepare to talk honestly<br className="hidden sm:inline"/> about your record.
+                  Prepare to talk honestly<br className="hidden sm:inline"/> about your record
                 </h1>
                 <p className={`text-lg md:text-xl text-teal-50 leading-relaxed max-w-3xl mx-auto transition-all duration-700 ease-out ${
                   heroMounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
@@ -416,6 +420,194 @@ export default function Home() {
           </div>
         </div>
 
+      </section>
+
+      {/* Why This Part of the Process Matters Section */}
+      <section
+        className="relative py-16 md:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden"
+        style={{
+          background: 'linear-gradient(135deg, #fdfcfb 0%, #f7f4ef 50%, #faf8f5 100%)',
+        }}
+        aria-labelledby="why-matters-heading"
+      >
+        {/* Diagonal stripe pattern overlay */}
+        <div
+          className="absolute inset-0 opacity-[0.03] dark:opacity-[0.08]"
+          aria-hidden="true"
+          style={{
+            backgroundImage: `repeating-linear-gradient(
+              45deg,
+              transparent,
+              transparent 35px,
+              rgba(100, 80, 60, 0.4) 35px,
+              rgba(100, 80, 60, 0.4) 70px
+            )`
+          }}
+        />
+
+        {/* Subtle geometric accent shapes */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+          <div
+            className="absolute top-20 right-[10%] w-64 h-64 rounded-full opacity-[0.04] dark:opacity-[0.06]"
+            style={{
+              background: 'radial-gradient(circle, rgba(245, 158, 11, 0.3) 0%, transparent 70%)'
+            }}
+          />
+          <div
+            className="absolute bottom-32 left-[15%] w-48 h-48 opacity-[0.04] dark:opacity-[0.06]"
+            style={{
+              background: 'radial-gradient(circle, rgba(161, 98, 7, 0.3) 0%, transparent 70%)',
+              transform: 'rotate(45deg)'
+            }}
+          />
+        </div>
+
+        {/* Subtle noise/grain texture overlay */}
+        <div
+          className="absolute inset-0 opacity-[0.015] dark:opacity-[0.025] mix-blend-overlay"
+          aria-hidden="true"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+            backgroundSize: '200px 200px'
+          }}
+        />
+
+        <div className="relative max-w-6xl mx-auto z-10">
+          {/* Section Header */}
+          <div className="text-center mb-16">
+            <h2
+              id="why-matters-heading"
+              className="text-3xl md:text-5xl font-bold text-foreground mb-4"
+              style={{ fontFamily: 'DM Sans, system-ui, sans-serif', letterSpacing: '-0.02em' }}
+            >
+              Why This Part of the Process Matters
+            </h2>
+            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed mb-8">
+              Reframe.me focuses on one of the hardest parts of the employment journey: what you say after an offer, during a background check, or when you get a pre-adverse action notice. These numbers show why that moment matters.
+            </p>
+
+      
+          </div>
+
+          {/* Stats Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-10">
+            {/* Card 1 - Normalizing */}
+            <Card className="group relative overflow-hidden border-2 border-teal-200/40 dark:border-teal-800/40 hover:border-teal-300/60 dark:hover:border-teal-700/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+              <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-teal-100/40 to-transparent dark:from-teal-900/20 rounded-bl-full" aria-hidden="true" />
+              <CardContent className="p-8 md:p-10 relative">
+                <div className="flex items-start gap-5 mb-6">
+                  <div className="flex-shrink-0 w-14 h-14 rounded-xl bg-gradient-to-br from-teal-500/20 to-teal-600/10 dark:from-teal-400/20 dark:to-teal-500/10 flex items-center justify-center">
+                    <Users className="w-7 h-7 text-teal-600 dark:text-teal-400" aria-hidden="true" />
+                  </div>
+                  <div className="flex-1">
+                    <div
+                      className="text-4xl md:text-5xl font-bold mb-3 bg-gradient-to-r from-teal-700 to-teal-600 dark:from-teal-400 dark:to-teal-300 bg-clip-text text-transparent"
+                      style={{ fontFamily: 'DM Sans, system-ui, sans-serif', letterSpacing: '-0.03em' }}
+                    >
+                      1 in 3
+                    </div>
+                    <h3 className="text-xl md:text-2xl font-bold text-foreground mb-4">
+                      You're not the only one.
+                    </h3>
+                  </div>
+                </div>
+                <p className="text-base text-muted-foreground leading-relaxed">
+                  In the U.S., an estimated 70–100 million people — about 1 in 3 adults — have an arrest or conviction record that can show up on a background check. Having a record is common, and many people share the same concerns about how it might affect their job search.
+                </p>
+              </CardContent>
+            </Card>
+
+            {/* Card 2 - Background checks */}
+            <Card className="group relative overflow-hidden border-2 border-slate-200/60 dark:border-slate-700/60 hover:border-slate-300/80 dark:hover:border-slate-600/80 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+              <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-slate-200/40 to-transparent dark:from-slate-800/40 rounded-bl-full" aria-hidden="true" />
+              <CardContent className="p-8 md:p-10 relative">
+                <div className="flex items-start gap-5 mb-6">
+                  <div className="flex-shrink-0 w-14 h-14 rounded-xl bg-gradient-to-br from-slate-500/20 to-slate-600/10 dark:from-slate-400/20 dark:to-slate-500/10 flex items-center justify-center">
+                    <Search className="w-7 h-7 text-slate-600 dark:text-slate-400" aria-hidden="true" />
+                  </div>
+                  <div className="flex-1">
+                    <div
+                      className="text-4xl md:text-5xl font-bold mb-3 bg-gradient-to-r from-slate-700 to-slate-600 dark:from-slate-300 dark:to-slate-400 bg-clip-text text-transparent"
+                      style={{ fontFamily: 'DM Sans, system-ui, sans-serif', letterSpacing: '-0.03em' }}
+                    >
+                      85–95%
+                    </div>
+                    <h3 className="text-xl md:text-2xl font-bold text-foreground mb-4">
+                      Background checks are almost universal.
+                    </h3>
+                  </div>
+                </div>
+                <p className="text-base text-muted-foreground leading-relaxed">
+                  Surveys of employers show that around 85–95% of U.S. companies use some form of pre-employment background screening. So if you're worried about what will come up after an offer, you're not overreacting — this is built into how most hiring works now.
+                </p>
+              </CardContent>
+            </Card>
+
+            {/* Card 3 - Employers willing */}
+            <Card className="group relative overflow-hidden border-2 border-orange-200/40 dark:border-orange-800/40 hover:border-orange-300/60 dark:hover:border-orange-700/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+              <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-orange-100/40 to-transparent dark:from-orange-900/20 rounded-bl-full" aria-hidden="true" />
+              <CardContent className="p-8 md:p-10 relative">
+                <div className="flex items-start gap-5 mb-6">
+                  <div className="flex-shrink-0 w-14 h-14 rounded-xl bg-gradient-to-br from-orange-500/20 to-orange-600/10 dark:from-orange-400/20 dark:to-orange-500/10 flex items-center justify-center">
+                    <TrendingUp className="w-7 h-7 text-orange-600 dark:text-orange-400" aria-hidden="true" />
+                  </div>
+                  <div className="flex-1">
+                    <div
+                      className="text-4xl md:text-5xl font-bold mb-3 bg-gradient-to-r from-orange-700 to-orange-600 dark:from-orange-400 dark:to-orange-300 bg-clip-text text-transparent"
+                      style={{ fontFamily: 'DM Sans, system-ui, sans-serif', letterSpacing: '-0.03em' }}
+                    >
+                      53%
+                    </div>
+                    <h3 className="text-xl md:text-2xl font-bold text-foreground mb-4">
+                      Many employers are willing to hire people with records.
+                    </h3>
+                  </div>
+                </div>
+                <p className="text-base text-muted-foreground leading-relaxed">
+                  In one national survey, 53% of HR professionals said they'd be willing to hire candidates with criminal records, up from 37% just a few years earlier. Other research finds that most managers say workers with records perform as well as or better than other employees once they're hired. With the right preparation, you still have a real shot. That openness doesn't automatically turn into a job—candidates still have to get through hard conversations about their record. That's the gap Reframe.me is built for.
+                </p>
+              </CardContent>
+            </Card>
+
+            {/* Card 4 - Stable work */}
+            <Card className="group relative overflow-hidden border-2 border-teal-200/40 dark:border-teal-800/40 hover:border-teal-300/60 dark:hover:border-teal-700/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+              <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-teal-100/40 to-transparent dark:from-teal-900/20 rounded-bl-full" aria-hidden="true" />
+              <CardContent className="p-8 md:p-10 relative">
+                <div className="flex items-start gap-5 mb-6">
+                  <div className="flex-shrink-0 w-14 h-14 rounded-xl bg-gradient-to-br from-teal-500/20 to-teal-600/10 dark:from-teal-400/20 dark:to-teal-500/10 flex items-center justify-center">
+                    <Anchor className="w-7 h-7 text-teal-600 dark:text-teal-400" aria-hidden="true" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2">
+                      Proven impact of stable work
+                    </h3>
+                    <div
+                      className="text-2xl md:text-3xl font-bold mb-3 bg-gradient-to-r from-teal-700 to-teal-600 dark:from-teal-400 dark:to-teal-300 bg-clip-text text-transparent"
+                      style={{ fontFamily: 'DM Sans, system-ui, sans-serif', letterSpacing: '-0.02em' }}
+                    >
+                      Lower recidivism, more stability.
+                    </div>
+                  </div>
+                </div>
+                <p className="text-base text-muted-foreground leading-relaxed">
+                  Studies consistently show that people returning from prison who get and keep steady jobs are significantly less likely to go back compared with those who stay unemployed. Employment isn't a magic fix—but it's one of the strongest factors linked to lower recidivism and more stability.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Disclaimer */}
+          <div className="max-w-4xl mx-auto space-y-4">
+            <div className="relative rounded-xl p-6 md:p-8 border-l-4 border-slate-300 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/30">
+              <p className="text-sm md:text-base text-muted-foreground leading-relaxed italic">
+                These are big-picture numbers, not promises. Reframe.me can't control employers' decisions—but it can help you feel more prepared and supported when you have to talk about your record or respond to a background check.
+              </p>
+            </div>
+            <p className="text-xs md:text-sm text-muted-foreground/70 text-center">
+              Sources include national surveys from SHRM, the Council of State Governments, and re-entry research organizations.
+            </p>
+          </div>
+        </div>
       </section>
 
       <section
