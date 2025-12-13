@@ -149,6 +149,28 @@ export default function Selection() {
                       {/* Divider */}
                       <div className="border-t border-orange-200/50 dark:border-orange-800/30" />
 
+                      {/* Question 1b - Follow-up */}
+                      <div className="space-y-2">
+                        <h4 className="text-sm md:text-base font-semibold text-foreground flex items-start gap-2">
+                          <span className="text-orange-600 dark:text-orange-500 flex-shrink-0">Q:</span>
+                          <span>When should I use my disclosure narrative?</span>
+                        </h4>
+                        <div className="pl-5 space-y-2.5 text-xs md:text-sm text-muted-foreground leading-relaxed text-left">
+                          <p>
+                            In most cases, it's best to wait until after you receive a job offer to discuss your record. During the interview process, focus on emphasizing your skills, experience, and what you bring to the role.
+                          </p>
+                          <p>
+                            Once you have an offer and a background check is pending, that's typically when you'd use one of your prepared narratives to provide context about your record.
+                          </p>
+                          <p>
+                            Having this prepared ahead of time means you won't be caught off guard trying to find the right words in a stressful moment.
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Divider */}
+                      <div className="border-t border-orange-200/50 dark:border-orange-800/30" />
+
                       {/* Question 2 */}
                       <div className="space-y-2">
                         <h4 className="text-sm md:text-base font-semibold text-foreground flex items-start gap-2">

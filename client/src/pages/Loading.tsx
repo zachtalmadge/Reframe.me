@@ -12,7 +12,7 @@ import {
   GenerationErrorType,
 } from "@/lib/formState";
 import { loadFormData, clearFormData } from "@/lib/formPersistence";
-import { saveResults, GenerationResult } from "@/lib/resultsPersistence";
+import { saveResults, loadResults, GenerationResult } from "@/lib/resultsPersistence";
 import { DisclaimerModal } from "@/components/disclaimer/DisclaimerModal";
 import { LeaveConfirmationModal } from "@/components/LeaveConfirmationModal";
 
@@ -121,11 +121,19 @@ export default function Loading() {
   }, [showQuotes, generationState.status]);
 
   const startGeneration = useCallback(async () => {
+    // Detect mobile
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+    console.log('[Loading] Starting generation', { tool, isMobile });
+
     const persistedData = loadFormData();
     if (!persistedData) {
+      console.error('[Loading] No persisted form data found, redirecting to form');
       navigate(`/form?tool=${tool}`);
       return;
     }
+
+    console.log('[Loading] Form data loaded successfully');
 
     setGenerationState((prev) => ({
       ...prev,
@@ -134,28 +142,57 @@ export default function Loading() {
     }));
 
     try {
-      // Detect mobile and use longer timeout
-      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
       const timeout = isMobile ? 90000 : 60000; // 90s mobile, 60s desktop
+      console.log('[Loading] Calling generateDocuments with timeout:', timeout);
 
       const result = await generateDocuments(tool, persistedData.formState, timeout);
+      console.log('[Loading] Generation result:', result.status);
 
       if (result.status === "total_fail") {
         throw new Error(result.errors[0]?.detail || "Failed to generate documents");
       }
 
+      console.log('[Loading] Saving results to sessionStorage');
       const saveResult = saveResults(result, tool);
       if (!saveResult.success) {
-        console.error('Failed to save results:', saveResult.error);
+        console.error('[Loading] Failed to save results:', saveResult.error);
         // Still continue to show disclaimer - data is in memory
+      } else {
+        console.log('[Loading] Results saved successfully');
       }
-      
+
+      // On mobile, add delay and verify save completed before proceeding
+      if (isMobile) {
+        console.log('[Loading] Mobile detected, waiting 150ms for storage stabilization');
+        await new Promise(resolve => setTimeout(resolve, 150));
+
+        // Verify the save actually worked
+        const verification = loadResults();
+        if (!verification) {
+          console.error('[Loading] Save verification FAILED on mobile, retrying save...');
+          saveResults(result, tool);
+          await new Promise(resolve => setTimeout(resolve, 100));
+
+          // Verify again
+          const secondVerification = loadResults();
+          if (!secondVerification) {
+            console.error('[Loading] Second save verification FAILED! Data may be lost.');
+          } else {
+            console.log('[Loading] Second save successful');
+          }
+        } else {
+          console.log('[Loading] Save verification successful');
+        }
+      }
+
+      console.log('[Loading] Setting success state and showing disclaimer');
       setGenerationState((prev) => ({
         ...prev,
         status: "success",
       }));
       setShowDisclaimer(true);
     } catch (err) {
+      console.error('[Loading] Generation error:', err);
       let errorType: GenerationErrorType = "unknown";
       
       if (err instanceof Error) {

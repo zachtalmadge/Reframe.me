@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -21,6 +21,7 @@ export function DisclaimerModal({ open, onContinue }: DisclaimerModalProps) {
   const [acknowledged, setAcknowledged] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hasScrolledToBottom, setHasScrolledToBottom] = useState(false);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const handleContinue = () => {
     if (acknowledged) {
@@ -38,6 +39,55 @@ export function DisclaimerModal({ open, onContinue }: DisclaimerModalProps) {
       setHasScrolledToBottom(true);
     }
   };
+
+  // Check if scrolling is needed when modal opens or content changes
+  useEffect(() => {
+    if (open) {
+      const checkScrollNeeded = () => {
+        const container = scrollContainerRef.current;
+        if (container) {
+          // If content fits entirely in viewport (no scrolling needed), enable checkbox
+          // Add a small threshold (10px) to account for rounding/padding differences
+          const scrollableHeight = container.scrollHeight - container.clientHeight;
+          const needsScroll = scrollableHeight > 10;
+
+          if (!needsScroll) {
+            setHasScrolledToBottom(true);
+          }
+        }
+      };
+
+      // Check multiple times to ensure content is fully rendered
+      // Animations and layout shifts can affect timing
+      const timeouts = [
+        setTimeout(checkScrollNeeded, 0),
+        setTimeout(checkScrollNeeded, 150),
+        setTimeout(checkScrollNeeded, 350),
+        setTimeout(checkScrollNeeded, 600),
+      ];
+
+      // Also use ResizeObserver to detect when layout stabilizes
+      let resizeObserver: ResizeObserver | null = null;
+      if (scrollContainerRef.current) {
+        resizeObserver = new ResizeObserver(() => {
+          checkScrollNeeded();
+        });
+        resizeObserver.observe(scrollContainerRef.current);
+      }
+
+      return () => {
+        timeouts.forEach(timeout => clearTimeout(timeout));
+        if (resizeObserver) {
+          resizeObserver.disconnect();
+        }
+      };
+    } else {
+      // Reset state when modal closes
+      setHasScrolledToBottom(false);
+      setAcknowledged(false);
+      setScrolled(false);
+    }
+  }, [open]);
 
   return (
     <AlertDialog open={open}>
@@ -140,6 +190,7 @@ export function DisclaimerModal({ open, onContinue }: DisclaimerModalProps) {
 
         {/* Scrollable Content */}
         <div
+          ref={scrollContainerRef}
           className="flex-1 min-h-0 overflow-y-auto px-8 relative"
           aria-label="Disclaimer content"
           data-testid="scroll-disclaimer-content"

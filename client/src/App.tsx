@@ -38,18 +38,26 @@ function AppInitializer({ children }: { children: React.ReactNode }) {
     if (hasInitialized.current) return;
     hasInitialized.current = true;
 
+    console.log('[AppInitializer] Running initialization on route:', location);
+
     // Protected routes where data should be preserved
     const protectedRoutes = ['/loading', '/results'];
     const isProtectedRoute = protectedRoutes.includes(location);
 
+    console.log('[AppInitializer] Is protected route:', isProtectedRoute);
+
     // Only clear data if NOT in generation flow
     if (!isProtectedRoute) {
+      console.log('[AppInitializer] Clearing form and results data');
       clearFormData();
       clearResults();
+    } else {
+      console.log('[AppInitializer] Skipping data clear (protected route)');
     }
 
     // Only redirect if not on home and not in protected flow
     if (location !== "/" && !isProtectedRoute) {
+      console.log('[AppInitializer] Redirecting to home from:', location);
       navigate("/", { replace: true });
     }
   }, [location, navigate]);
