@@ -2,7 +2,7 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, MessageSquare, FileText, Scale, Shield, Lightbulb, Users, AlertCircle, BookOpen, RefreshCw } from "lucide-react";
 import Layout from "@/components/Layout";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Accordion,
   AccordionContent,
@@ -235,6 +235,10 @@ const faqs = [
 
 export default function Faq() {
   const [openItem, setOpenItem] = useState<string>("");
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <Layout>

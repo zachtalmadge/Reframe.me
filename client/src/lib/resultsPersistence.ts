@@ -38,7 +38,11 @@ export function generateSessionId(): string {
 
 const RESULTS_KEY = "reflectme_results";
 
-export function saveResults(result: GenerationResult, tool: ToolType, sessionId?: string): void {
+export function saveResults(
+  result: GenerationResult,
+  tool: ToolType,
+  sessionId?: string
+): { success: boolean; error?: string } {
   try {
     const data: PersistedResults = {
       result,
@@ -46,9 +50,33 @@ export function saveResults(result: GenerationResult, tool: ToolType, sessionId?
       timestamp: Date.now(),
       sessionId: sessionId || generateSessionId(),
     };
-    sessionStorage.setItem(RESULTS_KEY, JSON.stringify(data));
+
+    const serialized = JSON.stringify(data);
+
+    // Check if sessionStorage is available
+    if (typeof sessionStorage === 'undefined') {
+      console.error('SessionStorage not available');
+      return { success: false, error: 'Storage not available' };
+    }
+
+    try {
+      sessionStorage.setItem(RESULTS_KEY, serialized);
+      return { success: true };
+    } catch (quotaError: any) {
+      if (quotaError.name === 'QuotaExceededError') {
+        console.error('Storage quota exceeded, clearing and retrying');
+        clearResults();
+        sessionStorage.setItem(RESULTS_KEY, serialized);
+        return { success: true };
+      }
+      throw quotaError;
+    }
   } catch (e) {
     console.error("Failed to save results:", e);
+    return {
+      success: false,
+      error: e instanceof Error ? e.message : 'Unknown error'
+    };
   }
 }
 

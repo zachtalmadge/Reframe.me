@@ -32,25 +32,41 @@ const motivationalQuotes = [
 
 async function generateDocuments(
   selection: ToolType,
-  formData: FormState
+  formData: FormState,
+  timeoutMs: number = 60000 // 60 seconds
 ): Promise<GenerationResult> {
-  const response = await fetch("/api/generate-documents", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      selection,
-      formData,
-    }),
-  });
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
-  if (!response.ok) {
-    const errorData = await response.json().catch(() => ({}));
-    throw new Error(errorData.errors?.[0]?.detail || `Server error: ${response.status}`);
+  try {
+    const response = await fetch("/api/generate-documents", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        selection,
+        formData,
+      }),
+      signal: controller.signal,
+    });
+
+    clearTimeout(timeoutId);
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.errors?.[0]?.detail || `Server error: ${response.status}`);
+    }
+
+    return response.json();
+  } catch (err: any) {
+    clearTimeout(timeoutId);
+
+    if (err.name === 'AbortError') {
+      throw new Error('Request timed out. Please check your connection and try again.');
+    }
+    throw err;
   }
-
-  return response.json();
 }
 
 export default function Loading() {
@@ -118,13 +134,21 @@ export default function Loading() {
     }));
 
     try {
-      const result = await generateDocuments(tool, persistedData.formState);
-      
+      // Detect mobile and use longer timeout
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      const timeout = isMobile ? 90000 : 60000; // 90s mobile, 60s desktop
+
+      const result = await generateDocuments(tool, persistedData.formState, timeout);
+
       if (result.status === "total_fail") {
         throw new Error(result.errors[0]?.detail || "Failed to generate documents");
       }
 
-      saveResults(result, tool);
+      const saveResult = saveResults(result, tool);
+      if (!saveResult.success) {
+        console.error('Failed to save results:', saveResult.error);
+        // Still continue to show disclaimer - data is in memory
+      }
       
       setGenerationState((prev) => ({
         ...prev,

@@ -20,6 +20,7 @@ export default function Donate() {
   const qrSectionRef = useRef<HTMLElement>(null);
   const transparencySectionRef = useRef<HTMLElement>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [heroMounted, setHeroMounted] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,6 +28,13 @@ export default function Donate() {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    requestAnimationFrame(() => {
+      setHeroMounted(true);
+    });
   }, []);
 
   const scrollToQR = () => {
@@ -193,16 +201,23 @@ export default function Donate() {
 
         <div className="relative max-w-5xl mx-auto px-6 sm:px-8 lg:px-12 text-center space-y-10">
           {/* Heart icon */}
-          <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-white/20 backdrop-blur-md shadow-2xl border-2 border-white/30">
+          <div
+            className={`inline-flex items-center justify-center w-24 h-24 rounded-full bg-white/20 backdrop-blur-md shadow-2xl border-2 border-white/30 transition-all duration-700 ease-out ${
+              heroMounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
+            }`}
+          >
             <Heart className="w-12 h-12 text-white" fill="white" />
           </div>
 
           <div className="space-y-8">
             <h1
-              className="display-font text-3xl md:text-5xl lg:text-7xl font-bold leading-tight text-white"
+              className={`display-font text-3xl md:text-5xl lg:text-7xl font-bold leading-tight text-white transition-all duration-700 ease-out ${
+                heroMounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              }`}
               style={{
                 textShadow: '0 4px 20px rgba(0,0,0,0.3), 0 0 40px rgba(255,255,255,0.2)',
                 letterSpacing: '-0.02em',
+                transitionDelay: '200ms',
               }}
             >
               Help more people find
@@ -212,42 +227,59 @@ export default function Donate() {
               about their past
             </h1>
 
-            <p className="text-xl md:text-2xl text-white/95 leading-relaxed max-w-3xl mx-auto font-medium">
+            <div
+              className={`flex justify-center pt-4 transition-all duration-700 ease-out ${
+                heroMounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              }`}
+              style={{ transitionDelay: '400ms' }}
+            >
+              <Button
+                onClick={scrollToQR}
+                size="lg"
+                className="group relative min-h-[64px] px-12 text-xl font-bold shadow-2xl transition-all duration-500 overflow-hidden"
+                style={{
+                  background: 'linear-gradient(135deg, #fb923c 0%, #f97316 100%)',
+                  color: 'white',
+                  borderRadius: '16px',
+                }}
+              >
+                <span className="relative z-10 flex items-center gap-3">
+                  Support Reframe.me
+                  <Heart className="w-6 h-6 transition-transform duration-300 group-hover:scale-125" />
+                </span>
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  style={{
+                    background: 'linear-gradient(135deg, #f97316 0%, #fb923c 100%)',
+                  }}
+                />
+              </Button>
+            </div>
+
+            <p
+              className={`text-xl md:text-2xl text-white/95 leading-relaxed max-w-3xl mx-auto font-medium transition-all duration-700 ease-out ${
+                heroMounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              }`}
+              style={{ transitionDelay: '600ms' }}
+            >
               Reframe.me is built to help people with records share their story in a way that's
               honest, safe, and focused on growth. Your support helps keep it free, privacy-first,
               and improving over time.
             </p>
-          </div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-6">
-            <Button
-              onClick={scrollToQR}
-              size="lg"
-              className="group relative min-h-[64px] px-12 text-xl font-bold shadow-2xl transition-all duration-500 overflow-hidden"
-              style={{
-                background: 'linear-gradient(135deg, #fb923c 0%, #f97316 100%)',
-                color: 'white',
-                borderRadius: '16px',
-              }}
+            <div
+              className={`flex justify-center pt-2 transition-all duration-700 ease-out ${
+                heroMounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              }`}
+              style={{ transitionDelay: '800ms' }}
             >
-              <span className="relative z-10 flex items-center gap-3">
-                Support Reframe.me
-                <Heart className="w-6 h-6 transition-transform duration-300 group-hover:scale-125" />
-              </span>
-              <div
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                style={{
-                  background: 'linear-gradient(135deg, #f97316 0%, #fb923c 100%)',
-                }}
-              />
-            </Button>
-
-            <button
-              onClick={scrollToTransparency}
-              className="text-white hover:text-white/80 font-semibold text-lg underline decoration-2 underline-offset-8 hover:underline-offset-4 transition-all duration-300"
-            >
-              How your support is used
-            </button>
+              <button
+                onClick={scrollToTransparency}
+                className="text-white hover:text-white/80 font-semibold text-lg underline decoration-2 underline-offset-8 hover:underline-offset-4 transition-all duration-300"
+              >
+                How your support is used
+              </button>
+            </div>
           </div>
         </div>
       </section>

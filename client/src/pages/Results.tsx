@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSearch, useLocation } from "wouter";
-import { Download, Home, AlertTriangle, BookOpen, MessageCircle, FileText } from "lucide-react";
+import { Download, Home, AlertTriangle, BookOpen, MessageCircle, FileText, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Layout from "@/components/Layout";
@@ -185,6 +185,8 @@ export default function Results() {
     skills_focused: null,
   });
   const [letterError, setLetterError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadAttempts, setLoadAttempts] = useState(0);
 
   const [exitModalOpen, setExitModalOpen] = useState(false);
   const [exitDestination, setExitDestination] = useState<"home" | "faq" | null>(null);
@@ -198,25 +200,54 @@ export default function Results() {
   } = useDocumentActions();
 
   useEffect(() => {
-    const persisted = loadResults();
-    if (!persisted) {
+    const MAX_ATTEMPTS = 5;
+    const RETRY_DELAY = 150; // ms
+
+    const loadWithRetry = async () => {
+      for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
+        try {
+          const persisted = loadResults();
+
+          if (persisted) {
+            // Success - set all data
+            setNarratives(persisted.result.narratives);
+            setResponseLetter(persisted.result.responseLetter);
+            setStatus(persisted.result.status);
+            setErrors(persisted.result.errors || []);
+            setSessionId(persisted.sessionId);
+
+            const counts = loadRegenerationCounts(persisted.sessionId);
+            setRegenCounts(counts);
+
+            if (persisted.tool === "responseLetter" ||
+                (persisted.tool === "both" &&
+                 persisted.result.narratives.length === 0 &&
+                 persisted.result.responseLetter)) {
+              setActiveTab("letter");
+            }
+
+            setIsLoading(false);
+            return;
+          }
+
+          // Retry with exponential backoff
+          setLoadAttempts(attempt + 1);
+          if (attempt < MAX_ATTEMPTS - 1) {
+            await new Promise(resolve =>
+              setTimeout(resolve, RETRY_DELAY * Math.pow(1.5, attempt))
+            );
+          }
+        } catch (e) {
+          console.error(`Load attempt ${attempt + 1} failed:`, e);
+        }
+      }
+
+      // All retries exhausted - redirect
+      console.error('Failed to load results after maximum attempts');
       navigate("/");
-      return;
-    }
+    };
 
-    setNarratives(persisted.result.narratives);
-    setResponseLetter(persisted.result.responseLetter);
-    setStatus(persisted.result.status);
-    setErrors(persisted.result.errors || []);
-    setSessionId(persisted.sessionId);
-
-    const counts = loadRegenerationCounts(persisted.sessionId);
-    setRegenCounts(counts);
-
-    if (persisted.tool === "responseLetter" || 
-        (persisted.tool === "both" && persisted.result.narratives.length === 0 && persisted.result.responseLetter)) {
-      setActiveTab("letter");
-    }
+    loadWithRetry();
   }, [navigate]);
 
   const showNarratives = tool === "narrative" || tool === "both";
@@ -375,6 +406,21 @@ export default function Results() {
 
     setIsLetterRegenerating(false);
   };
+
+  if (isLoading) {
+    return (
+      <Layout>
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="text-center space-y-4">
+            <Loader2 className="w-12 h-12 animate-spin mx-auto text-primary" />
+            <p className="text-muted-foreground">
+              Loading your results{loadAttempts > 0 ? ` (attempt ${loadAttempts + 1})` : ''}...
+            </p>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
 
   return (
     <Layout onLogoClick={handleLogoClick} onFaqClick={handleFaqClick}>
