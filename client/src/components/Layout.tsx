@@ -77,37 +77,85 @@ export default function Layout({ children, onLogoClick, onFaqClick }: LayoutProp
           opacity: 0.6;
         }
 
+        /* iOS Liquid Glass styling for FAQ button */
         .faq-button {
           position: relative;
-          background: linear-gradient(135deg, rgba(20, 184, 166, 0.08) 0%, rgba(14, 165, 233, 0.08) 100%);
-          border: 1px solid rgba(20, 184, 166, 0.15);
+          overflow: hidden;
+          border-radius: 1rem;
+          font-weight: 600;
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .faq-button::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          border-radius: inherit;
-          background: linear-gradient(135deg, rgba(20, 184, 166, 0.1) 0%, rgba(14, 165, 233, 0.15) 100%);
-          opacity: 0;
-          transition: opacity 0.3s ease;
+        /* Non-iOS fallback */
+        .faq-button {
+          background: linear-gradient(135deg, rgba(20, 184, 166, 0.08) 0%, rgba(14, 165, 233, 0.08) 100%);
+          border: 1px solid rgba(20, 184, 166, 0.15);
         }
 
         .faq-button:hover {
           background: linear-gradient(135deg, rgba(20, 184, 166, 0.12) 0%, rgba(14, 165, 233, 0.12) 100%);
           border-color: rgba(20, 184, 166, 0.3);
-          box-shadow: 0 2px 8px rgba(20, 184, 166, 0.15), 0 0 0 3px rgba(20, 184, 166, 0.05);
+          box-shadow: 0 2px 8px rgba(20, 184, 166, 0.15);
           transform: translateY(-1px);
         }
 
-        .faq-button:hover::before {
-          opacity: 1;
-        }
+        /* iOS Liquid Glass override */
+        @supports (-webkit-touch-callout: none) {
+          .faq-button {
+            background: linear-gradient(135deg, rgba(20, 184, 166, 0.15) 0%, rgba(14, 165, 233, 0.12) 100%);
+            border: 1.5px solid rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow:
+              0 4px 16px rgba(20, 184, 166, 0.2),
+              inset 0 1px 2px rgba(255, 255, 255, 0.6),
+              inset 0 -1px 2px rgba(0, 0, 0, 0.05);
+          }
 
-        .faq-button:active {
-          transform: translateY(0);
-          box-shadow: 0 1px 4px rgba(20, 184, 166, 0.1);
+          .faq-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(
+              180deg,
+              rgba(255, 255, 255, 0.4) 0%,
+              rgba(255, 255, 255, 0.1) 50%,
+              rgba(255, 255, 255, 0) 100%
+            );
+            border-radius: inherit;
+            pointer-events: none;
+            opacity: 0.8;
+            z-index: 1;
+          }
+
+          .faq-button::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: inherit;
+            background: radial-gradient(
+              circle at 50% 50%,
+              rgba(20, 184, 166, 0.4),
+              rgba(14, 165, 233, 0.3)
+            );
+            filter: blur(10px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: -1;
+          }
+
+          .faq-button:hover::after {
+            opacity: 1;
+          }
+
+          .faq-button:active {
+            transform: scale(0.96) translateZ(0);
+            -webkit-transform: scale(0.96) translateZ(0);
+          }
         }
 
         .horizon-line {
@@ -124,6 +172,16 @@ export default function Layout({ children, onLogoClick, onFaqClick }: LayoutProp
           animation: shimmer 8s ease-in-out infinite;
         }
 
+        /* iOS Liquid Glass styling for Donate button */
+        .donate-button {
+          position: relative;
+          overflow: hidden;
+          border-radius: 1rem;
+          font-weight: 600;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Non-iOS fallback */
         @keyframes gentle-pulse {
           0%, 100% {
             box-shadow: 0 2px 8px rgba(249, 115, 22, 0.25), 0 0 0 0 rgba(249, 115, 22, 0);
@@ -133,47 +191,105 @@ export default function Layout({ children, onLogoClick, onFaqClick }: LayoutProp
           }
         }
 
-        @keyframes subtle-shimmer {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-
         .donate-button {
-          position: relative;
-          overflow: hidden;
           animation: gentle-pulse 4s ease-in-out infinite;
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .donate-button::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(
-            120deg,
-            transparent 0%,
-            rgba(255, 255, 255, 0.15) 50%,
-            transparent 100%
-          );
-          background-size: 200% 100%;
-          animation: subtle-shimmer 3s ease-in-out infinite;
-          opacity: 0;
-          transition: opacity 0.3s ease;
         }
 
         .donate-button:hover {
           transform: translateY(-1px);
-          box-shadow: 0 4px 12px rgba(249, 115, 22, 0.35), 0 0 0 3px rgba(249, 115, 22, 0.1);
+          box-shadow: 0 4px 12px rgba(249, 115, 22, 0.35);
         }
 
-        .donate-button:hover::before {
-          opacity: 1;
-        }
+        /* iOS Liquid Glass override */
+        @supports (-webkit-touch-callout: none) {
+          .donate-button {
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.85) 0%, rgba(251, 146, 60, 0.9) 100%) !important;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow:
+              0 8px 32px rgba(249, 115, 22, 0.35),
+              0 2px 8px rgba(0, 0, 0, 0.15),
+              inset 0 1px 2px rgba(255, 255, 255, 0.4),
+              inset 0 -2px 4px rgba(0, 0, 0, 0.1);
+            animation: none;
+          }
 
-        .donate-button:active {
-          transform: translateY(0);
-          box-shadow: 0 2px 8px rgba(249, 115, 22, 0.25);
+          .donate-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(
+              180deg,
+              rgba(255, 255, 255, 0.4) 0%,
+              rgba(255, 255, 255, 0.1) 50%,
+              rgba(255, 255, 255, 0) 100%
+            );
+            border-radius: inherit;
+            pointer-events: none;
+            opacity: 0.8;
+            z-index: 1;
+          }
+
+          .donate-button::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: inherit;
+            background: radial-gradient(
+              circle at 50% 50%,
+              rgba(249, 115, 22, 0.6),
+              rgba(251, 146, 60, 0.4)
+            );
+            filter: blur(12px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: -1;
+          }
+
+          .donate-button:hover::after {
+            opacity: 1;
+          }
+
+          .donate-button:hover {
+            transform: translateY(-1px);
+          }
+
+          .donate-button:active {
+            transform: scale(0.96) translateZ(0);
+            -webkit-transform: scale(0.96) translateZ(0);
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.9) 0%, rgba(234, 88, 12, 0.95) 100%) !important;
+            box-shadow:
+              0 4px 16px rgba(249, 115, 22, 0.4),
+              0 1px 4px rgba(0, 0, 0, 0.2),
+              inset 0 1px 2px rgba(255, 255, 255, 0.3),
+              inset 0 -1px 2px rgba(0, 0, 0, 0.15);
+          }
+
+          /* Shimmer effect on active */
+          @keyframes ios-shimmer {
+            0% {
+              background-position: -200% center;
+            }
+            100% {
+              background-position: 200% center;
+            }
+          }
+
+          .donate-button:active::before {
+            background: linear-gradient(
+              90deg,
+              rgba(255, 255, 255, 0) 0%,
+              rgba(255, 255, 255, 0.4) 50%,
+              rgba(255, 255, 255, 0) 100%
+            );
+            background-size: 200% 100%;
+            animation: ios-shimmer 0.6s ease-out;
+          }
         }
       `}</style>
 
