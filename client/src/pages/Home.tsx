@@ -57,22 +57,23 @@ const stories = [
 
 const beforeAfterPairs = [
   {
-    before: "I freeze when employers ask about my record.",
-    after: "Now I have language that explains my past and what I've done since.",
+    before: "I just got a conditional offer and I'm worried about the background check.",
+    after: "Now I have language ready for if my record comes up in the hiring process.",
   },
   {
-    before: "I avoid applying because of my past.",
-    after: "I can explain my growth and the skills I've built.",
+    before: "I'm scared my past will cost me the job once they see my background.",
+    after: "I can explain what happened, what’s changed, and the skills I bring today.",
   },
   {
-    before: "I'm not sure how to respond to a pre-adverse letter.",
-    after: "I have a structured response ready in my own voice.",
+    before: "I'm not sure how to respond to a pre-adverse action notice.",
+    after: "I have a clear, structured response letter in my own voice.",
   },
   {
-    before: "I feel alone figuring this out.",
-    after: "I have talking points I can share with someone I trust.",
+    before: "I feel like I'm facing this process alone.",
+    after: "I have talking points I can practice and share with someone I trust.",
   },
 ];
+
 
 const BEFORE_DELAY = 200;
 const AFTER_DELAY = 800;
@@ -277,17 +278,58 @@ export default function Home() {
             <div className="relative text-center space-y-10">
               {/* Heading */}
               <div className="space-y-6">
+                {/* Eyebrow */}
+                <div
+                  className={`inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full backdrop-blur-md border border-white/30 transition-all duration-700 ease-out ${
+                    heroMounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
+                  }`}
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%)',
+                    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)'
+                  }}
+                >
+                  <div className="w-1.5 h-1.5 rounded-full bg-white/90 animate-pulse" aria-hidden="true" />
+                  <span className="text-xs md:text-sm font-semibold tracking-wide text-white/95 uppercase">
+                    Got a conditional offer, background check, or pre-adverse notice?
+                  </span>
+                </div>
+
                 <h1
                   id="hero-heading"
-                  className="hero-heading text-4xl md:text-6xl font-bold leading-tight text-white"
+                  className={`hero-heading text-4xl md:text-6xl font-bold leading-tight text-white transition-all duration-700 ease-out ${
+                    heroMounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                  }`}
+                  style={{ transitionDelay: '200ms' }}
                 >
-                  Prepare for Your<br/> Next Opportunity
+                  Prepare to talk honestly<br className="hidden sm:inline"/> about your record.
                 </h1>
-                <p className="text-lg md:text-xl text-teal-50 leading-relaxed max-w-3xl mx-auto">
+                <p className={`text-lg md:text-xl text-teal-50 leading-relaxed max-w-3xl mx-auto transition-all duration-700 ease-out ${
+                  heroMounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                }`}
+                style={{ transitionDelay: '400ms' }}
+                >
                   Your past is part of your story, <em className="font-medium">not the whole story</em>. Reframe.me helps
                   you share that story in a way that centers your growth and{" "}
                   <em className="font-medium">what you offer today</em>.
                 </p>
+              </div>
+
+                            {/* CTA Button */}
+              <div className="pt-6">
+                <Link href="/selection">
+                  <Button
+                    size="lg"
+                    className="group min-h-[56px] px-10 text-lg font-semibold transition-all duration-300 hover:scale-105"
+                    style={{
+                      background: 'linear-gradient(135deg, #f97316 0%, #fb923c 100%)',
+                      color: 'white'
+                    }}
+                    data-testid="button-get-started-hero"
+                  >
+                    Get Started
+                    <ArrowRight className="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
+                  </Button>
+                </Link>
               </div>
 
               {/* Before/After block - preserved functionality */}
@@ -357,7 +399,7 @@ export default function Home() {
               <div className="flex flex-wrap justify-center gap-4 md:gap-6 text-sm md:text-base pt-4">
                 <div className="flex items-center gap-2.5 bg-white/20 backdrop-blur-sm px-5 py-2.5 rounded-full border border-white/30">
                   <Clock className="w-4 h-4 text-white" aria-hidden="true" />
-                  <span className="font-medium text-white">Takes 5-10 minutes</span>
+                  <span className="font-medium text-white">Takes 10 - 20 minutes</span>
                 </div>
                 <div className="flex items-center gap-2.5 bg-white/20 backdrop-blur-sm px-5 py-2.5 rounded-full border border-white/30">
                   <Heart className="w-4 h-4 text-white" aria-hidden="true" />
@@ -365,23 +407,7 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* CTA Button */}
-              <div className="pt-6">
-                <Link href="/selection">
-                  <Button
-                    size="lg"
-                    className="group min-h-[56px] px-10 text-lg font-semibold transition-all duration-300 hover:scale-105"
-                    style={{
-                      background: 'linear-gradient(135deg, #f97316 0%, #fb923c 100%)',
-                      color: 'white'
-                    }}
-                    data-testid="button-get-started-hero"
-                  >
-                    Get Started
-                    <ArrowRight className="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
-                  </Button>
-                </Link>
-              </div>
+
 
               <p className="text-sm text-teal-100 font-medium">
                 No account required • Completely private • Your story, your way

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { FileText, Mail, ArrowLeft, ArrowRight, Files, Check, Shield, MessageSquare, ChevronDown } from "lucide-react";
@@ -52,6 +52,11 @@ export default function Selection() {
   const [selected, setSelected] = useState<ToolSelection>(null);
   const [hasMadeSelection, setHasMadeSelection] = useState(false);
   const [, navigate] = useLocation();
+
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleContinue = () => {
     if (selected) {
