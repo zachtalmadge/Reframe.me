@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useSearch, useLocation } from "wouter";
-import { Download, Home, AlertTriangle, BookOpen, MessageCircle, FileText, Loader2 } from "lucide-react";
+import { useSearch, useLocation, Link } from "wouter";
+import { Download, Home, AlertTriangle, BookOpen, MessageCircle, FileText, Loader2, Heart, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Layout from "@/components/Layout";
@@ -588,8 +588,165 @@ export default function Results() {
             </div>
           </div>
 
-          <ResultsGuidanceSection 
-            hasNarratives={hasNarratives} 
+          {/* Donation CTA Section */}
+          <section className="mt-12 mb-8">
+            <style>{`
+              @keyframes heart-pulse {
+                0%, 100% {
+                  transform: scale(1);
+                }
+                50% {
+                  transform: scale(1.15);
+                }
+              }
+
+              @keyframes float-gentle {
+                0%, 100% {
+                  transform: translateY(0px);
+                }
+                50% {
+                  transform: translateY(-8px);
+                }
+              }
+
+              @keyframes glow-pulse {
+                0%, 100% {
+                  opacity: 0.4;
+                }
+                50% {
+                  opacity: 0.7;
+                }
+              }
+
+              .heart-pulse {
+                animation: heart-pulse 2s ease-in-out infinite;
+              }
+
+              .float-gentle {
+                animation: float-gentle 3s ease-in-out infinite;
+              }
+
+              .glow-pulse {
+                animation: glow-pulse 3s ease-in-out infinite;
+              }
+
+              .donate-gradient {
+                background: linear-gradient(135deg,
+                  #fff7ed 0%,
+                  #ffedd5 25%,
+                  #fed7aa 50%,
+                  #fdba74 75%,
+                  #fb923c 100%
+                );
+                background-size: 200% 200%;
+                animation: gradient-shift 8s ease infinite;
+              }
+
+              @keyframes gradient-shift {
+                0%, 100% { background-position: 0% 50%; }
+                50% { background-position: 100% 50%; }
+              }
+
+              .donate-button-bg {
+                background: linear-gradient(135deg, #f97316 0%, #fb923c 50%, #fdba74 100%);
+                background-size: 200% 200%;
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+              }
+
+              .donate-button-bg:hover {
+                background-position: 100% 50%;
+                transform: translateY(-2px) scale(1.02);
+                box-shadow: 0 12px 32px rgba(249, 115, 22, 0.4), 0 0 0 4px rgba(249, 115, 22, 0.1);
+              }
+
+              .donate-button-bg:active {
+                transform: translateY(0px) scale(0.98);
+              }
+            `}</style>
+
+            <div className="relative overflow-hidden rounded-3xl border-2 border-orange-200 shadow-2xl">
+              {/* Background with gradient */}
+              <div className="donate-gradient absolute inset-0" />
+
+              {/* Decorative floating elements */}
+              <div className="absolute top-8 right-8 w-32 h-32 bg-orange-300/30 rounded-full blur-3xl glow-pulse" />
+              <div className="absolute bottom-8 left-8 w-40 h-40 bg-amber-300/20 rounded-full blur-3xl glow-pulse" style={{ animationDelay: '1s' }} />
+              <div className="absolute top-1/2 left-1/4 w-24 h-24 bg-orange-400/20 rounded-full blur-2xl float-gentle" />
+
+              {/* Content */}
+              <div className="relative px-6 py-12 md:px-12 md:py-16">
+                <div className="max-w-3xl mx-auto text-center space-y-8">
+                  {/* Heart icon with pulse */}
+                  <div className="inline-flex items-center justify-center">
+                    <div className="relative">
+                      {/* Glow ring */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-orange-400 to-amber-500 rounded-full blur-xl opacity-50 scale-110" />
+                      {/* Heart container */}
+                      <div className="relative w-20 h-20 rounded-full bg-gradient-to-br from-orange-500 to-amber-600 flex items-center justify-center shadow-2xl">
+                        <Heart className="w-10 h-10 text-white heart-pulse" fill="white" />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Heading */}
+                  <div className="space-y-4">
+                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
+                      <span className="italic" style={{ fontFamily: 'DM Sans, sans-serif', fontStyle: 'italic' }}>
+                        Did this help you?
+                      </span>
+                    </h2>
+                    <p className="text-xl md:text-2xl text-gray-800 leading-relaxed font-medium">
+                      Help us keep Reframe.me{' '}
+                      <span className="font-bold text-orange-700">free and private</span>{' '}
+                      for the next person.
+                    </p>
+                  </div>
+
+                  {/* Description */}
+                  <div className="max-w-2xl mx-auto">
+                    <p className="text-base md:text-lg text-gray-700 leading-relaxed">
+                      Your support covers AI costs, hosting, and development time—so people with records
+                      can keep using this tool without ads, tracking, or paywalls.
+                    </p>
+                  </div>
+
+                  {/* CTA Buttons */}
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+                    <Link href="/donate">
+                      <button
+                        className="donate-button-bg group relative px-10 py-5 rounded-2xl text-white font-bold text-lg shadow-xl overflow-hidden min-w-[240px]"
+                      >
+                        {/* Shimmer effect */}
+                        <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+
+                        <span className="relative flex items-center justify-center gap-3">
+                          <Heart className="w-5 h-5 transition-transform group-hover:scale-125" fill="currentColor" />
+                          Support Reframe.me
+                        </span>
+                      </button>
+                    </Link>
+                  </div>
+
+                  {/* Subtle reassurance */}
+                  <div className="pt-4">
+                    <p className="text-sm text-gray-600 italic">
+                      Whether you can donate or not, this tool is here for you.
+                    </p>
+                  </div>
+
+                  {/* Visual accent - sparkle decorations */}
+                  <div className="flex items-center justify-center gap-4 pt-2">
+                    <Sparkles className="w-5 h-5 text-orange-400/60" />
+                    <div className="h-px w-16 bg-gradient-to-r from-transparent via-orange-300 to-transparent" />
+                    <Sparkles className="w-5 h-5 text-orange-400/60" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <ResultsGuidanceSection
+            hasNarratives={hasNarratives}
             hasLetter={hasLetter}
             activeResultType={activeTab}
           />

@@ -64,7 +64,7 @@ export default function Layout({ children, onLogoClick, onFaqClick }: LayoutProp
         .logo-text::after {
           content: '';
           position: absolute;
-          bottom: -4px;
+          bottom: -2px;
           left: 0;
           right: 0;
           height: 2px;
@@ -73,8 +73,37 @@ export default function Layout({ children, onLogoClick, onFaqClick }: LayoutProp
           transition: opacity 0.4s ease;
         }
 
-        .logo-text:hover::after {
+        .group:hover .logo-text::after {
           opacity: 0.6;
+        }
+
+        /* Tagline styling */
+        .logo-tagline {
+          font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+          font-weight: 500;
+          font-size: 0.75rem;
+          letter-spacing: 0.02em;
+          color: #64748b;
+          opacity: 0.7;
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          margin-top: 4px;
+        }
+
+        .group:hover .logo-tagline {
+          opacity: 1;
+          color: #0d9488;
+          letter-spacing: 0.03em;
+        }
+
+        /* Accent bar hover effect */
+        .logo-accent {
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .group:hover .logo-accent {
+          height: 2.5rem;
+          opacity: 1;
+          box-shadow: 0 0 12px rgba(20, 184, 166, 0.3);
         }
 
         /* iOS Liquid Glass styling for FAQ button */
@@ -318,7 +347,7 @@ export default function Layout({ children, onLogoClick, onFaqClick }: LayoutProp
               <div className="flex items-center gap-3">
                 {/* Decorative accent mark */}
                 <div
-                  className="w-1 h-8 rounded-full bg-gradient-to-b from-teal-500 via-orange-400 to-teal-500 opacity-60 group-hover:opacity-100 transition-opacity duration-300"
+                  className="logo-accent w-1 h-8 rounded-full bg-gradient-to-b from-teal-500 via-orange-400 to-teal-500 opacity-60"
                   aria-hidden="true"
                 />
 
@@ -326,7 +355,9 @@ export default function Layout({ children, onLogoClick, onFaqClick }: LayoutProp
                   <span className="logo-text text-2xl md:text-3xl">
                     Reframe.me
                   </span>
-
+                  <span className="logo-tagline">
+                    Privacy-first disclosure support.
+                  </span>
                 </div>
               </div>
             </Link>
@@ -401,7 +432,7 @@ export default function Layout({ children, onLogoClick, onFaqClick }: LayoutProp
                     Reframe.me
                   </div>
                   <div className="text-xs text-gray-500 font-medium tracking-wider uppercase mt-0.5">
-                    New Opportunities
+                    Privacy-first disclosure support
                   </div>
                 </div>
               </div>
@@ -428,13 +459,21 @@ export default function Layout({ children, onLogoClick, onFaqClick }: LayoutProp
               </div>
 
               {/* Bottom info */}
-              <div className="text-center space-y-2">
+              <div className="text-center space-y-3">
                 <p className="text-xs text-gray-400 font-medium">
                   © {new Date().getFullYear()} Reframe.me • Your story matters
                 </p>
-                <p className="text-xs text-gray-400">
-                  This tool provides educational information only and is not legal advice.
-                </p>
+                <div className="flex items-center justify-center gap-3">
+                  <Link href="/terms-privacy">
+                    <button className="text-xs text-gray-500 hover:text-teal-600 transition-colors duration-200 underline-offset-4 hover:underline font-medium">
+                      Terms & Privacy
+                    </button>
+                  </Link>
+                  <span className="text-gray-300" aria-hidden="true">•</span>
+                  <p className="text-xs text-gray-400">
+                    Educational information only, not legal advice
+                  </p>
+                </div>
               </div>
             </div>
           </div>

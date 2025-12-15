@@ -81,7 +81,7 @@ const beforeAfterPairs = [
 
 const BEFORE_DELAY = 200;
 const AFTER_DELAY = 800;
-const VISIBLE_DURATION = 5000;  // ~5 seconds with both visible
+const VISIBLE_DURATION = 8000;  // ~8 seconds with both visible
 const GAP_DURATION = 1000;
 
 export default function Home() {
@@ -328,7 +328,7 @@ export default function Home() {
                 <Link href="/selection">
                   <Button
                     size="lg"
-                    className="group min-h-[56px] px-10 text-lg font-semibold transition-all duration-300 hover:scale-105"
+                    className="group min-h-[56px] px-10 text-lg font-semibold rounded-lg transition-all duration-300 hover:scale-105"
                     style={{
                       background: 'linear-gradient(135deg, #f97316 0%, #fb923c 100%)',
                       color: 'white'
@@ -425,6 +425,103 @@ export default function Home() {
           </div>
         </div>
 
+      </section>
+
+      {/* Is This For Me Section */}
+      <section
+        className="py-12 md:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-transparent via-orange-50/60 to-orange-100/40 dark:from-transparent dark:via-orange-950/20 dark:to-orange-900/10"
+        aria-labelledby="is-this-for-me-heading"
+        data-testid="section-is-this-for-me"
+      >
+        <div className="max-w-4xl mx-auto">
+          <div className="rounded-2xl border-2 border-orange-400/30 bg-gradient-to-br from-orange-50/80 to-orange-100/40 dark:from-orange-950/20 dark:to-orange-900/10 p-6 md:p-8 shadow-lg">
+            <button
+              type="button"
+              className="flex w-full items-center justify-between gap-4 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 focus-visible:ring-offset-2 rounded-lg p-3 -m-3 hover:bg-orange-100/30 dark:hover:bg-orange-900/20 transition-colors"
+              aria-expanded={isThisForMeOpen}
+              aria-controls="is-this-for-me-panel"
+              onClick={() => setIsThisForMeOpen((prev) => !prev)}
+              data-testid="button-is-this-for-me-toggle"
+            >
+              <div className="flex items-center gap-4">
+                <div className="inline-flex items-center rounded-full bg-orange-500/15 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-orange-700 dark:text-orange-400 border border-orange-400/30">
+                  Who this is for
+                </div>
+                <h2
+                  id="is-this-for-me-heading"
+                  className="text-xl md:text-2xl font-bold text-foreground"
+                >
+                  Is this for me?
+                </h2>
+              </div>
+              <ChevronDown
+                className={`w-6 h-6 text-orange-600 dark:text-orange-400 flex-shrink-0 transition-transform duration-300 ${
+                  isThisForMeOpen ? "rotate-180" : ""
+                }`}
+                aria-hidden="true"
+              />
+            </button>
+
+            <div
+              id="is-this-for-me-panel"
+              className={`overflow-hidden transition-all duration-300 ease-out ${
+                isThisForMeOpen
+                  ? "max-h-[600px] opacity-100 mt-6"
+                  : "max-h-0 opacity-0"
+              }`}
+            >
+              <div className="space-y-6 text-base text-muted-foreground pt-6 border-t-2 border-orange-400/20">
+                <p className="text-base md:text-lg text-foreground/80 leading-relaxed">
+                  Reframe.me is designed for people navigating job searches with a past record or justice involvement.
+                </p>
+
+                <div className="bg-white/60 dark:bg-slate-900/30 rounded-xl p-5 border border-orange-400/20">
+                  <p className="font-bold text-lg text-orange-700 dark:text-orange-400 mb-3">
+                    Reframe.me might help if:
+                  </p>
+                  <ul className="space-y-2.5 list-none">
+                    <li className="flex items-start gap-3">
+                      <span className="w-1.5 h-1.5 rounded-full bg-orange-500 mt-2.5 flex-shrink-0" aria-hidden="true" />
+                      <span className="text-foreground/80">You're applying for jobs after a conviction or justice involvement.</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="w-1.5 h-1.5 rounded-full bg-orange-500 mt-2.5 flex-shrink-0" aria-hidden="true" />
+                      <span className="text-foreground/80">You feel stuck on what to say when your background comes up in the hiring process.</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="w-1.5 h-1.5 rounded-full bg-orange-500 mt-2.5 flex-shrink-0" aria-hidden="true" />
+                      <span className="text-foreground/80">You've received (or are worried about) a pre-adverse action notice and don't know how to respond.</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <p className="text-base text-foreground/80 italic leading-relaxed bg-orange-100/40 dark:bg-orange-900/20 p-4 rounded-lg border-l-4 border-orange-400">
+                  Even if you came home recently or it's been years, it's okay to still be finding the words for your story.
+                </p>
+
+                <div className="bg-white/60 dark:bg-slate-900/30 rounded-xl p-5 border border-orange-400/20">
+                  <p className="font-bold text-lg text-orange-700 dark:text-orange-400 mb-3">
+                    This is not:
+                  </p>
+                  <ul className="space-y-2.5 list-none">
+                    <li className="flex items-start gap-3">
+                      <span className="w-1.5 h-1.5 rounded-full bg-orange-500/50 mt-2.5 flex-shrink-0" aria-hidden="true" />
+                      <span className="text-foreground/80">Legal advice or a substitute for speaking with a lawyer or legal aid.</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="w-1.5 h-1.5 rounded-full bg-orange-500/50 mt-2.5 flex-shrink-0" aria-hidden="true" />
+                      <span className="text-foreground/80">A guarantee that you will be hired or keep a job.</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="w-1.5 h-1.5 rounded-full bg-orange-500/50 mt-2.5 flex-shrink-0" aria-hidden="true" />
+                      <span className="text-foreground/80">A replacement for your own judgment or support from trusted people in your life.</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* Why This Part of the Process Matters Section */}
@@ -574,7 +671,7 @@ export default function Home() {
               </CardContent>
             </Card>
 
-            {/* Card 4 - Stable work */}
+            {/* Card 4 - Right prep */}
             <Card className="group relative overflow-hidden border-2 border-teal-200/40 dark:border-teal-800/40 hover:border-teal-300/60 dark:hover:border-teal-700/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
               <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-teal-100/40 to-transparent dark:from-teal-900/20 rounded-bl-full" aria-hidden="true" />
               <CardContent className="p-8 md:p-10 relative">
@@ -583,19 +680,13 @@ export default function Home() {
                     <Anchor className="w-7 h-7 text-teal-600 dark:text-teal-400" aria-hidden="true" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2">
-                      Proven impact of stable work
+                    <h3 className="text-lg md:text-xl font-bold text-foreground">
+                      With the right prep, you still have a real shot.
                     </h3>
-                    <div
-                      className="text-2xl md:text-3xl font-bold mb-3 bg-gradient-to-r from-teal-700 to-teal-600 dark:from-teal-400 dark:to-teal-300 bg-clip-text text-transparent"
-                      style={{ fontFamily: 'DM Sans, system-ui, sans-serif', letterSpacing: '-0.02em' }}
-                    >
-                      Lower recidivism, more stability.
-                    </div>
                   </div>
                 </div>
                 <p className="text-base text-muted-foreground leading-relaxed">
-                  Studies consistently show that people returning from prison who get and keep steady jobs are significantly less likely to go back compared with those who stay unemployed. Employment isn't a magic fix—but it's one of the strongest factors linked to lower recidivism and more stability.
+                  It's not just <em className="italic">whether</em> an employer runs a check—it's what happens when they ask about it. When your narratives and response letter are ready before you need them, you can respond calmly and keep moving forward. <strong className="font-bold text-foreground">That's the gap Reframe.me is built for.</strong>
                 </p>
               </CardContent>
             </Card>
@@ -610,6 +701,57 @@ export default function Home() {
             </div>
             <p className="text-xs md:text-sm text-muted-foreground/70 text-center">
               Sources include national surveys from SHRM, the Council of State Governments, and re-entry research organizations.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Donate CTA - After Why Matters Section */}
+      <section className="relative py-16 md:py-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-gradient-to-br from-slate-50 via-orange-50/30 to-teal-50/30">
+        {/* Subtle decorative background */}
+        <div className="absolute inset-0 opacity-40" aria-hidden="true">
+          <div className="absolute top-10 right-1/4 w-64 h-64 rounded-full bg-gradient-to-br from-orange-200/30 to-transparent blur-3xl" />
+          <div className="absolute bottom-10 left-1/4 w-64 h-64 rounded-full bg-gradient-to-br from-teal-200/30 to-transparent blur-3xl" />
+        </div>
+
+        <div className="relative max-w-3xl mx-auto">
+          <div className="rounded-3xl p-8 md:p-12 text-center relative overflow-hidden"
+            style={{
+              background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(240, 253, 250, 0.8) 100%)',
+              border: '2px solid rgba(20, 184, 166, 0.15)',
+              boxShadow: '0 10px 40px rgba(20, 184, 166, 0.08)',
+              backdropFilter: 'blur(10px)'
+            }}
+          >
+            {/* Decorative heart icon */}
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full mb-6 bg-gradient-to-br from-orange-100 to-teal-100 shadow-lg">
+              <Heart className="w-8 h-8 text-teal-600" fill="currentColor" aria-hidden="true" />
+            </div>
+
+            <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'DM Sans, system-ui, sans-serif', letterSpacing: '-0.02em' }}>
+              Help keep this tool free and accessible
+            </h3>
+
+            <p className="text-base md:text-lg text-gray-600 leading-relaxed mb-8 max-w-2xl mx-auto">
+              Every contribution helps cover the costs of keeping Reframe.me running—so more people can prepare for employment conversations with confidence, regardless of their ability to pay.
+            </p>
+
+            <Link href="/donate">
+              <Button
+                size="lg"
+                className="group relative px-8 py-6 text-base font-semibold rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-xl"
+                style={{
+                  background: 'linear-gradient(135deg, #f97316 0%, #fb923c 100%)',
+                  color: 'white'
+                }}
+              >
+                <Heart className="w-4 h-4 mr-2 transition-transform duration-300 group-hover:scale-110" aria-hidden="true" />
+                Support Reframe.me
+              </Button>
+            </Link>
+
+            <p className="text-xs text-gray-500 mt-4 italic">
+              Can't donate? You're still exactly who this tool is for.
             </p>
           </div>
         </div>
@@ -766,102 +908,6 @@ export default function Home() {
       </section>
 
       <section
-        className="py-12 md:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-transparent via-orange-50/60 to-orange-100/40 dark:from-transparent dark:via-orange-950/20 dark:to-orange-900/10"
-        aria-labelledby="is-this-for-me-heading"
-        data-testid="section-is-this-for-me"
-      >
-        <div className="max-w-4xl mx-auto">
-          <div className="rounded-2xl border-2 border-orange-400/30 bg-gradient-to-br from-orange-50/80 to-orange-100/40 dark:from-orange-950/20 dark:to-orange-900/10 p-6 md:p-8 shadow-lg">
-            <button
-              type="button"
-              className="flex w-full items-center justify-between gap-4 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 focus-visible:ring-offset-2 rounded-lg p-3 -m-3 hover:bg-orange-100/30 dark:hover:bg-orange-900/20 transition-colors"
-              aria-expanded={isThisForMeOpen}
-              aria-controls="is-this-for-me-panel"
-              onClick={() => setIsThisForMeOpen((prev) => !prev)}
-              data-testid="button-is-this-for-me-toggle"
-            >
-              <div className="flex items-center gap-4">
-                <div className="inline-flex items-center rounded-full bg-orange-500/15 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-orange-700 dark:text-orange-400 border border-orange-400/30">
-                  Who this is for
-                </div>
-                <h2
-                  id="is-this-for-me-heading"
-                  className="text-xl md:text-2xl font-bold text-foreground"
-                >
-                  Is this for me?
-                </h2>
-              </div>
-              <ChevronDown
-                className={`w-6 h-6 text-orange-600 dark:text-orange-400 flex-shrink-0 transition-transform duration-300 ${
-                  isThisForMeOpen ? "rotate-180" : ""
-                }`}
-                aria-hidden="true"
-              />
-            </button>
-
-            <div
-              id="is-this-for-me-panel"
-              className={`overflow-hidden transition-all duration-300 ease-out ${
-                isThisForMeOpen
-                  ? "max-h-[600px] opacity-100 mt-6"
-                  : "max-h-0 opacity-0"
-              }`}
-            >
-              <div className="space-y-6 text-base text-muted-foreground pt-6 border-t-2 border-orange-400/20">
-                <p className="text-base md:text-lg text-foreground/80 leading-relaxed">
-                  Reframe.me is designed for people navigating job searches with a past record or justice involvement.
-                </p>
-
-                <div className="bg-white/60 dark:bg-slate-900/30 rounded-xl p-5 border border-orange-400/20">
-                  <p className="font-bold text-lg text-orange-700 dark:text-orange-400 mb-3">
-                    Reframe.me might help if:
-                  </p>
-                  <ul className="space-y-2.5 list-none">
-                    <li className="flex items-start gap-3">
-                      <span className="w-1.5 h-1.5 rounded-full bg-orange-500 mt-2.5 flex-shrink-0" aria-hidden="true" />
-                      <span className="text-foreground/80">You're applying for jobs after a conviction or justice involvement.</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="w-1.5 h-1.5 rounded-full bg-orange-500 mt-2.5 flex-shrink-0" aria-hidden="true" />
-                      <span className="text-foreground/80">You feel stuck on what to say when your background comes up in the hiring process.</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="w-1.5 h-1.5 rounded-full bg-orange-500 mt-2.5 flex-shrink-0" aria-hidden="true" />
-                      <span className="text-foreground/80">You've received (or are worried about) a pre-adverse action notice and don't know how to respond.</span>
-                    </li>
-                  </ul>
-                </div>
-
-                <p className="text-base text-foreground/80 italic leading-relaxed bg-orange-100/40 dark:bg-orange-900/20 p-4 rounded-lg border-l-4 border-orange-400">
-                  Even if you came home recently or it's been years, it's okay to still be finding the words for your story.
-                </p>
-
-                <div className="bg-white/60 dark:bg-slate-900/30 rounded-xl p-5 border border-orange-400/20">
-                  <p className="font-bold text-lg text-orange-700 dark:text-orange-400 mb-3">
-                    This is not:
-                  </p>
-                  <ul className="space-y-2.5 list-none">
-                    <li className="flex items-start gap-3">
-                      <span className="w-1.5 h-1.5 rounded-full bg-orange-500/50 mt-2.5 flex-shrink-0" aria-hidden="true" />
-                      <span className="text-foreground/80">Legal advice or a substitute for speaking with a lawyer or legal aid.</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="w-1.5 h-1.5 rounded-full bg-orange-500/50 mt-2.5 flex-shrink-0" aria-hidden="true" />
-                      <span className="text-foreground/80">A guarantee that you will be hired or keep a job.</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="w-1.5 h-1.5 rounded-full bg-orange-500/50 mt-2.5 flex-shrink-0" aria-hidden="true" />
-                      <span className="text-foreground/80">A replacement for your own judgment or support from trusted people in your life.</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-            <section
         className="py-12 md:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-orange-100/40 via-primary/5 to-primary/10 dark:from-orange-900/10 dark:via-primary/5 dark:to-primary/10"
         aria-labelledby="stories-heading"
         data-testid="section-stories"
@@ -962,6 +1008,69 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Donate CTA - After Stories Section */}
+      <section className="relative py-16 md:py-20 px-4 sm:px-6 lg:px-8 overflow-hidden"
+        style={{
+          background: 'linear-gradient(135deg, #fef3e7 0%, #ecf9f8 50%, #fef3e7 100%)'
+        }}
+      >
+        {/* Decorative elements */}
+        <div className="absolute inset-0 opacity-30" aria-hidden="true">
+          <div className="absolute top-0 left-1/4 w-96 h-96 rounded-full bg-gradient-to-br from-teal-300/20 to-transparent blur-3xl" />
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 rounded-full bg-gradient-to-br from-orange-300/20 to-transparent blur-3xl" />
+        </div>
+
+        <div className="relative max-w-4xl mx-auto">
+          <div className="text-center space-y-8">
+            {/* Icon decoration */}
+            <div className="flex justify-center">
+              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-orange-100 to-teal-100 flex items-center justify-center shadow-lg">
+                <Heart className="w-10 h-10 text-orange-600" fill="currentColor" aria-hidden="true" />
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <h3 className="text-2xl md:text-3xl font-bold text-gray-900 italic" style={{ fontFamily: 'DM Sans, system-ui, sans-serif', letterSpacing: '-0.01em' }}>
+                Stories like these are why this exists
+              </h3>
+
+              <p className="text-base md:text-lg text-gray-700 leading-relaxed max-w-2xl mx-auto">
+                If this tool has helped you or someone you know, your support helps ensure it stays free and available for everyone navigating this journey.
+              </p>
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+              <Link href="/donate">
+                <Button
+                  size="lg"
+                  className="group relative px-8 py-6 text-base font-semibold rounded-lg transition-all duration-300 hover:scale-105"
+                  style={{
+                    background: 'linear-gradient(135deg, #f97316 0%, #fb923c 100%)',
+                    color: 'white',
+                    boxShadow: '0 4px 20px rgba(249, 115, 22, 0.3)'
+                  }}
+                >
+                  <Heart className="w-4 h-4 mr-2 transition-transform duration-300 group-hover:scale-110" fill="currentColor" aria-hidden="true" />
+                  Support This Work
+                </Button>
+              </Link>
+
+              <span className="text-sm text-gray-500">or</span>
+
+              <a
+                href="/donate"
+                className="text-sm font-medium text-teal-600 hover:text-teal-700 underline underline-offset-4 transition-colors duration-200"
+              >
+                Share with someone who needs it
+              </a>
+            </div>
+
+            <p className="text-xs text-gray-500 italic pt-2">
+              Every bit helps—but this tool is here for you whether you can give or not.
+            </p>
+          </div>
+        </div>
+      </section>
 
       <section
         ref={howItWorksRef as React.RefObject<HTMLElement>}
@@ -1077,7 +1186,7 @@ export default function Home() {
             <Link href="/selection">
               <Button
                 size="lg"
-                className="group w-full sm:w-auto min-h-[56px] px-12 text-xl font-semibold transition-all duration-300 hover:scale-105"
+                className="group w-full sm:w-auto min-h-[56px] px-12 text-xl font-semibold rounded-lg transition-all duration-300 hover:scale-105"
                 style={{
                   background: 'linear-gradient(135deg, #f97316 0%, #fb923c 100%)',
                   color: 'white'

@@ -55,16 +55,6 @@ export default function Donate() {
 
   const faqItems = [
     {
-      question: "Is this tax-deductible?",
-      answer:
-        "No. Reframe.me isn't a nonprofit. Your contribution is a voluntary way to support a tool you find valuable.",
-    },
-    {
-      question: "What if I can't donate?",
-      answer:
-        "That's completely okay. Reframe.me is meant to be helpful whether or not you're able to give. You're welcome here either way.",
-    },
-    {
       question: "Do you sell or share my information?",
       answer:
         "No. Donations don't change how your data is handled. The goal is to keep this tool as safe and respectful as possible for people with records.",
@@ -81,12 +71,6 @@ export default function Donate() {
       <div style={{ overflowX: 'hidden', width: '100%', position: 'relative' }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap');
-
-        /* Prevent horizontal scroll on the entire page */
-        html, body {
-          overflow-x: hidden !important;
-          max-width: 100vw !important;
-        }
 
         @keyframes shimmer-flow {
           0% { background-position: 0% 50%; }
@@ -284,6 +268,118 @@ export default function Donate() {
         </div>
       </section>
 
+      {/* QR Code Section - Stunning Visual */}
+      <section
+        ref={qrSectionRef}
+        className="relative py-24 md:py-32 px-6 sm:px-8 lg:px-12 scroll-mt-20 overflow-hidden"
+        style={{
+          background: 'linear-gradient(180deg, #ffffff 0%, #f0f9ff 50%, #ecfdf5 100%)',
+        }}
+      >
+        {/* Decorative background */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-20 left-10 w-72 h-72 organic-blob bg-teal-200/20 blur-3xl" />
+          <div className="absolute bottom-20 right-10 w-96 h-96 organic-blob bg-orange-200/20 blur-3xl" />
+        </div>
+
+        <div className="grain-overlay" />
+
+        <div className="relative max-w-5xl mx-auto">
+          <div className="text-center mb-16 px-4">
+            <div className="inline-block mb-4">
+              <div className="w-20 h-1 shimmer-gradient rounded-full mx-auto mb-8" />
+            </div>
+            <h2 className="display-font text-3xl sm:text-4xl md:text-6xl font-bold mb-6">
+              <span className="text-gradient-warm">Support Reframe.me</span> directly
+            </h2>
+            <p className="text-lg md:text-xl text-gray-700 leading-relaxed max-w-3xl mx-auto font-medium">
+              Right now, donations go straight to me (the creator) through Cash App or PayPal.
+              Contributions are voluntary and help cover the real costs of keeping Reframe.me running and improving.
+            </p>
+          </div>
+
+          {/* QR Code Cards - Stunning 3D Effect */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-4xl mx-auto mb-12">
+            {/* Cash App Card */}
+            <div className="qr-card">
+              <Card className="border-0 shadow-2xl overflow-hidden bg-gradient-to-br from-white to-green-50/50 backdrop-blur-sm">
+                <CardContent className="p-10 space-y-6">
+                  <div className="text-center">
+                    <div className="inline-flex px-6 py-3 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 shadow-lg">
+                      <span className="text-base font-bold text-white tracking-wide">Cash App</span>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-center relative">
+                    <div className="absolute inset-0 bg-gradient-to-br from-green-200 to-emerald-300 blur-2xl opacity-30 rounded-3xl transform scale-95" />
+                    <div className="relative p-4 bg-white rounded-2xl shadow-xl">
+                      <img
+                        src="/cashapp-qr.svg"
+                        alt="Cash App QR Code"
+                        className="w-56 h-56 rounded-xl"
+                      />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* PayPal Card */}
+            <div className="qr-card">
+              <Card className="border-0 shadow-2xl overflow-hidden bg-gradient-to-br from-white to-indigo-50/50 backdrop-blur-sm">
+                <CardContent className="p-10 space-y-6">
+                  <div className="text-center">
+                    <div className="inline-flex px-6 py-3 rounded-full bg-gradient-to-r from-indigo-500 to-blue-600 shadow-lg">
+                      <span className="text-base font-bold text-white tracking-wide">PayPal</span>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-center relative">
+                    <div className="absolute inset-0 bg-gradient-to-br from-indigo-200 to-blue-300 blur-2xl opacity-30 rounded-3xl transform scale-95" />
+                    <div className="relative p-4 bg-white rounded-2xl shadow-xl">
+                      <img
+                        src="/paypal-qr.jpeg"
+                        alt="PayPal QR Code"
+                        className="w-56 h-56 rounded-xl object-cover"
+                      />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+
+          {/* Unified Instructions */}
+          <div className="max-w-3xl mx-auto mb-16">
+            <div className="text-center p-8 rounded-2xl bg-white/80 backdrop-blur-sm shadow-lg border border-gray-100">
+              <p className="text-lg text-gray-700 leading-relaxed font-medium">
+                Open the corresponding app and scan this code to send a one-time contribution.
+                You can add <span className="font-bold text-teal-700">'Reframe.me support'</span> in the note if you'd like.
+              </p>
+            </div>
+          </div>
+
+          {/* Safety Notice - Enhanced */}
+          <div className="max-w-3xl mx-auto">
+            <div className="relative rounded-2xl border-2 border-orange-200 bg-gradient-to-br from-orange-50 to-amber-50/50 p-8 shadow-lg overflow-hidden">
+              <div className="absolute -right-10 -top-10 w-40 h-40 organic-blob bg-orange-200/30" />
+              <div className="relative flex items-start gap-4">
+                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center shadow-md">
+                  <Lock className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <p className="font-bold text-orange-900 mb-2 text-lg">Important safety note</p>
+                  <p className="text-base text-orange-800 leading-relaxed">
+                    Please don't include any personal or sensitive legal details in payment notes.
+                    Your story belongs in your documents, not in a payment memo.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Why Your Support Matters - Asymmetric Grid */}
       <section className="relative py-20 md:py-28 px-6 sm:px-8 lg:px-12 bg-gradient-to-br from-slate-50 via-white to-teal-50/30">
         <div className="grain-overlay" />
@@ -375,119 +471,6 @@ export default function Donate() {
         </div>
       </section>
 
-      {/* QR Code Section - Stunning Visual */}
-      <section
-        ref={qrSectionRef}
-        className="relative py-24 md:py-32 px-6 sm:px-8 lg:px-12 scroll-mt-20 overflow-hidden"
-        style={{
-          background: 'linear-gradient(180deg, #ffffff 0%, #f0f9ff 50%, #ecfdf5 100%)',
-        }}
-      >
-        {/* Decorative background */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 left-10 w-72 h-72 organic-blob bg-teal-200/20 blur-3xl" />
-          <div className="absolute bottom-20 right-10 w-96 h-96 organic-blob bg-orange-200/20 blur-3xl" />
-        </div>
-
-        <div className="grain-overlay" />
-
-        <div className="relative max-w-5xl mx-auto">
-          <div className="text-center mb-16 px-4">
-            <div className="inline-block mb-4">
-              <div className="w-20 h-1 shimmer-gradient rounded-full mx-auto mb-8" />
-            </div>
-            <h2 className="display-font text-3xl sm:text-4xl md:text-6xl font-bold mb-6">
-              <span className="text-gradient-warm">Support Reframe.me</span> directly
-            </h2>
-            <p className="text-lg md:text-xl text-gray-700 leading-relaxed max-w-3xl mx-auto font-medium">
-              Right now, donations go straight to me (the creator) through Cash App or PayPal.
-              This isn't a nonprofit or charity — contributions are voluntary, not tax-deductible, and
-              help cover the real costs of keeping Reframe.me running and improving.
-            </p>
-          </div>
-
-          {/* QR Code Cards - Stunning 3D Effect */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-4xl mx-auto mb-12">
-            {/* Cash App Card */}
-            <div className="qr-card">
-              <Card className="border-0 shadow-2xl overflow-hidden bg-gradient-to-br from-white to-green-50/50 backdrop-blur-sm">
-                <CardContent className="p-10 space-y-6">
-                  <div className="text-center">
-                    <div className="inline-flex px-6 py-3 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 shadow-lg">
-                      <span className="text-base font-bold text-white tracking-wide">Cash App</span>
-                    </div>
-                  </div>
-
-                  <div className="flex justify-center relative">
-                    <div className="absolute inset-0 bg-gradient-to-br from-green-200 to-emerald-300 blur-2xl opacity-30 rounded-3xl transform scale-95" />
-                    <div className="relative p-4 bg-white rounded-2xl shadow-xl">
-                      <img
-                        src="/cashapp-qr.svg"
-                        alt="Cash App QR Code"
-                        className="w-56 h-56 rounded-xl"
-                      />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* PayPal Card */}
-            <div className="qr-card">
-              <Card className="border-0 shadow-2xl overflow-hidden bg-gradient-to-br from-white to-indigo-50/50 backdrop-blur-sm">
-                <CardContent className="p-10 space-y-6">
-                  <div className="text-center">
-                    <div className="inline-flex px-6 py-3 rounded-full bg-gradient-to-r from-indigo-500 to-blue-600 shadow-lg">
-                      <span className="text-base font-bold text-white tracking-wide">PayPal</span>
-                    </div>
-                  </div>
-
-                  <div className="flex justify-center relative">
-                    <div className="absolute inset-0 bg-gradient-to-br from-indigo-200 to-blue-300 blur-2xl opacity-30 rounded-3xl transform scale-95" />
-                    <div className="relative p-4 bg-white rounded-2xl shadow-xl">
-                      <img
-                        src="/paypal-qr.jpeg"
-                        alt="PayPal QR Code"
-                        className="w-56 h-56 rounded-xl object-cover"
-                      />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-
-          {/* Unified Instructions */}
-          <div className="max-w-3xl mx-auto mb-16">
-            <div className="text-center p-8 rounded-2xl bg-white/80 backdrop-blur-sm shadow-lg border border-gray-100">
-              <p className="text-lg text-gray-700 leading-relaxed font-medium">
-                Open the corresponding app and scan this code to send a one-time contribution.
-                You can add <span className="font-bold text-teal-700">'Reframe.me support'</span> in the note if you'd like.
-              </p>
-            </div>
-          </div>
-
-          {/* Safety Notice - Enhanced */}
-          <div className="max-w-3xl mx-auto">
-            <div className="relative rounded-2xl border-2 border-orange-200 bg-gradient-to-br from-orange-50 to-amber-50/50 p-8 shadow-lg overflow-hidden">
-              <div className="absolute -right-10 -top-10 w-40 h-40 organic-blob bg-orange-200/30" />
-              <div className="relative flex items-start gap-4">
-                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center shadow-md">
-                  <Lock className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <p className="font-bold text-orange-900 mb-2 text-lg">Important safety note</p>
-                  <p className="text-base text-orange-800 leading-relaxed">
-                    Please don't include any personal or sensitive legal details in payment notes.
-                    Your story belongs in your documents, not in a payment memo.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Transparency Section - Editorial Style */}
       <section
         ref={transparencySectionRef}
@@ -552,8 +535,7 @@ export default function Donate() {
           >
             <div className="absolute top-0 right-0 w-64 h-64 organic-blob bg-teal-200/20 blur-3xl" />
             <p className="relative text-lg text-gray-800 leading-relaxed text-center font-semibold">
-              <span className="display-font text-xl font-bold text-teal-800">Reframe.me is not a registered nonprofit</span>, and
-              contributions are not tax-deductible. You're supporting a real person maintaining and improving
+              You're supporting a real person maintaining and improving
               a tool that's free for people with records to use.
             </p>
           </div>

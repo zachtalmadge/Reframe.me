@@ -51,6 +51,7 @@ const options: SelectionOption[] = [
 export default function Selection() {
   const [selected, setSelected] = useState<ToolSelection>(null);
   const [hasMadeSelection, setHasMadeSelection] = useState(false);
+  const [accordionValue, setAccordionValue] = useState<string>("");
   const [, navigate] = useLocation();
 
   // Scroll to top when component mounts
@@ -113,7 +114,13 @@ export default function Selection() {
 
             {/* Quick Answers Accordion - Consolidated */}
             <div className="pt-6 max-w-3xl mx-auto text-left">
-              <Accordion type="single" collapsible className="w-full">
+              <Accordion
+                type="single"
+                collapsible
+                className="w-full"
+                value={accordionValue}
+                onValueChange={setAccordionValue}
+              >
                 <AccordionItem
                   value="quick-answers"
                   className="border-2 border-orange-400/30 rounded-2xl px-5 md:px-6 bg-gradient-to-br from-orange-50/80 to-amber-50/60 dark:from-orange-950/30 dark:to-amber-900/20 hover:border-orange-400/50 transition-all duration-300 overflow-hidden shadow-sm hover:shadow-md"
@@ -195,6 +202,18 @@ export default function Selection() {
                             <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden="true" />
                           </button>
                         </Link>
+                      </div>
+
+                      {/* Close button for mobile */}
+                      <div className="pt-4 md:hidden">
+                        <button
+                          onClick={() => setAccordionValue("")}
+                          className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 text-white font-medium text-sm shadow-lg hover:shadow-xl active:scale-95 transition-all duration-200 flex items-center justify-center gap-2 backdrop-blur-xl"
+                          aria-label="Close quick answers"
+                        >
+                          <span>Close</span>
+                          <ChevronDown className="w-4 h-4 rotate-180" aria-hidden="true" />
+                        </button>
                       </div>
                     </div>
                   </AccordionContent>
