@@ -498,7 +498,7 @@ export default function Faq() {
               <Link href="/selection">
                 <Button
                   size="lg"
-                  className="group bg-white text-teal-700 hover:bg-teal-50 min-h-[56px] px-10 text-lg font-semibold shadow-2xl hover:shadow-xl transition-all duration-300 hover:scale-105"
+                  className="group bg-white text-teal-700 hover:bg-teal-50 min-h-[56px] mt-5 px-10 text-lg font-semibold shadow-2xl hover:shadow-xl transition-all duration-300 hover:scale-105"
                   data-testid="button-get-started-faq"
                 >
                   Begin Your Journey

@@ -957,7 +957,7 @@ export default function Home() {
               </div>
 
               <h3 className="text-3xl md:text-4xl font-bold mb-6 leading-tight" style={{ fontFamily: 'Fraunces, Georgia, serif', color: '#0f172a' }}>
-                That's all you get to explain your record when an employer asks.
+                That’s all you get to disclose when the background check comes up.
               </h3>
 
               <p className="text-lg leading-relaxed" style={{ fontFamily: 'Public Sans, sans-serif', color: '#475569' }}>
@@ -1481,7 +1481,7 @@ export default function Home() {
                 {/* CTA */}
                 <div className="pt-4">
                   <div className="inline-flex items-center gap-2 text-orange-300 font-semibold group-hover:gap-4 transition-all" style={{ fontFamily: 'Outfit, sans-serif' }}>
-                    <span>Turn fear into action</span>
+                    <span>Turn a scary letter into a grounded response</span>
                     <ArrowRight className="w-5 h-5" />
                   </div>
                 </div>
@@ -1642,7 +1642,7 @@ export default function Home() {
               className="text-4xl md:text-6xl font-bold text-white mb-6"
               style={{ fontFamily: 'DM Sans, system-ui, sans-serif', letterSpacing: '-0.03em' }}
             >
-              Stories of <span className="italic" style={{ fontFamily: 'Crimson Pro, Georgia, serif' }}>change</span>
+              Stories of <span className="italic" style={{ fontFamily: 'Crimson Pro, Georgia, serif' }}>Change</span>
             </h2>
             <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed">
               Anonymized snapshots of how people are using Reframe.me.
@@ -2266,7 +2266,7 @@ export default function Home() {
                 <Link href="/selection">
                   <Button
                     size="lg"
-                    className="group relative px-12 py-7 text-xl font-bold rounded-2xl transition-all duration-400 hover:scale-105 overflow-hidden"
+                    className="group relative px-12 py-7 mt-5 text-xl font-bold rounded-2xl transition-all duration-400 hover:scale-105 overflow-hidden"
                     style={{
                       background: 'linear-gradient(135deg, #f97316 0%, #fb923c 50%, #fbbf24 100%)',
                       color: 'white',
