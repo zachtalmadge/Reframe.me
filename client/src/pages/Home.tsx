@@ -429,10 +429,12 @@ export default function Home() {
 
       {/* Is This For Me Section */}
       <section
-        className="py-12 md:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-transparent via-orange-50/60 to-orange-100/40 dark:from-transparent dark:via-orange-950/20 dark:to-orange-900/10"
+        className="relative py-12 md:py-20 px-4 sm:px-6 lg:px-8 bg-white"
         aria-labelledby="is-this-for-me-heading"
         data-testid="section-is-this-for-me"
       >
+        {/* Subtle top border */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-200/50 to-transparent" aria-hidden="true" />
         <div className="max-w-4xl mx-auto">
           <div className="rounded-2xl border-2 border-orange-400/30 bg-gradient-to-br from-orange-50/80 to-orange-100/40 dark:from-orange-950/20 dark:to-orange-900/10 p-6 md:p-8 shadow-lg">
             <button
@@ -526,55 +528,13 @@ export default function Home() {
 
       {/* Why This Part of the Process Matters Section */}
       <section
-        className="relative py-16 md:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden"
-        style={{
-          background: 'linear-gradient(135deg, #fdfcfb 0%, #f7f4ef 50%, #faf8f5 100%)',
-        }}
+        className="relative py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-slate-50"
         aria-labelledby="why-matters-heading"
       >
-        {/* Diagonal stripe pattern overlay */}
-        <div
-          className="absolute inset-0 opacity-[0.03] dark:opacity-[0.08]"
-          aria-hidden="true"
-          style={{
-            backgroundImage: `repeating-linear-gradient(
-              45deg,
-              transparent,
-              transparent 35px,
-              rgba(100, 80, 60, 0.4) 35px,
-              rgba(100, 80, 60, 0.4) 70px
-            )`
-          }}
-        />
+        {/* Subtle top border */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-200/50 to-transparent" aria-hidden="true" />
 
-        {/* Subtle geometric accent shapes */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-          <div
-            className="absolute top-20 right-[10%] w-64 h-64 rounded-full opacity-[0.04] dark:opacity-[0.06]"
-            style={{
-              background: 'radial-gradient(circle, rgba(245, 158, 11, 0.3) 0%, transparent 70%)'
-            }}
-          />
-          <div
-            className="absolute bottom-32 left-[15%] w-48 h-48 opacity-[0.04] dark:opacity-[0.06]"
-            style={{
-              background: 'radial-gradient(circle, rgba(161, 98, 7, 0.3) 0%, transparent 70%)',
-              transform: 'rotate(45deg)'
-            }}
-          />
-        </div>
-
-        {/* Subtle noise/grain texture overlay */}
-        <div
-          className="absolute inset-0 opacity-[0.015] dark:opacity-[0.025] mix-blend-overlay"
-          aria-hidden="true"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-            backgroundSize: '200px 200px'
-          }}
-        />
-
-        <div className="relative max-w-6xl mx-auto z-10">
+        <div className="relative max-w-6xl mx-auto">
           {/* Section Header */}
           <div className="text-center mb-16">
             <h2
@@ -707,12 +667,9 @@ export default function Home() {
       </section>
 
       {/* Donate CTA - After Why Matters Section */}
-      <section className="relative py-16 md:py-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-gradient-to-br from-slate-50 via-orange-50/30 to-teal-50/30">
-        {/* Subtle decorative background */}
-        <div className="absolute inset-0 opacity-40" aria-hidden="true">
-          <div className="absolute top-10 right-1/4 w-64 h-64 rounded-full bg-gradient-to-br from-orange-200/30 to-transparent blur-3xl" />
-          <div className="absolute bottom-10 left-1/4 w-64 h-64 rounded-full bg-gradient-to-br from-teal-200/30 to-transparent blur-3xl" />
-        </div>
+      <section className="relative py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        {/* Subtle top border */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-200/50 to-transparent" aria-hidden="true" />
 
         <div className="relative max-w-3xl mx-auto">
           <div className="rounded-3xl p-8 md:p-12 text-center relative overflow-hidden"
@@ -758,9 +715,11 @@ export default function Home() {
       </section>
 
       <section
-        className="py-12 md:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-transparent via-slate-50 to-slate-100/50 dark:from-transparent dark:via-slate-900/50 dark:to-slate-800/30"
+        className="relative py-12 md:py-20 px-4 sm:px-6 lg:px-8 bg-slate-50"
         aria-labelledby="tools-heading"
       >
+        {/* Subtle top border */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-200/50 to-transparent" aria-hidden="true" />
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <h2
@@ -844,16 +803,14 @@ export default function Home() {
 
 
       <section
-        className="group relative py-16 md:py-24 overflow-hidden bg-gradient-to-br from-slate-100 via-slate-50 to-white dark:from-slate-800 dark:via-slate-900 dark:to-slate-950 border-y-2 border-slate-200/50 dark:border-slate-700/50 cursor-default"
+        className="relative py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-white"
         aria-labelledby="safe-space-heading"
         data-testid="section-safe-space"
-        tabIndex={0}
       >
-        {/* Decorative elements */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-slate-200/20 dark:bg-slate-700/20 rounded-bl-full transition-opacity duration-300 group-hover:opacity-100 opacity-70" aria-hidden="true" />
-        <div className="absolute bottom-0 left-0 w-48 h-48 bg-slate-300/10 dark:bg-slate-600/10 rounded-tr-full" aria-hidden="true" />
+        {/* Subtle top border */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-200/50 to-transparent" aria-hidden="true" />
 
-        <div className="relative w-full px-4 sm:px-6 lg:px-8">
+        <div className="relative w-full">
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col md:flex-row gap-10 items-center justify-center relative">
               <div className="flex-shrink-0">
@@ -908,10 +865,12 @@ export default function Home() {
       </section>
 
       <section
-        className="py-12 md:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-orange-100/40 via-primary/5 to-primary/10 dark:from-orange-900/10 dark:via-primary/5 dark:to-primary/10"
+        className="relative py-12 md:py-20 px-4 sm:px-6 lg:px-8 bg-slate-50"
         aria-labelledby="stories-heading"
         data-testid="section-stories"
       >
+        {/* Subtle top border */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-200/50 to-transparent" aria-hidden="true" />
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-10">
             <h2
@@ -1009,16 +968,9 @@ export default function Home() {
       </section>
 
       {/* Donate CTA - After Stories Section */}
-      <section className="relative py-16 md:py-20 px-4 sm:px-6 lg:px-8 overflow-hidden"
-        style={{
-          background: 'linear-gradient(135deg, #fef3e7 0%, #ecf9f8 50%, #fef3e7 100%)'
-        }}
-      >
-        {/* Decorative elements */}
-        <div className="absolute inset-0 opacity-30" aria-hidden="true">
-          <div className="absolute top-0 left-1/4 w-96 h-96 rounded-full bg-gradient-to-br from-teal-300/20 to-transparent blur-3xl" />
-          <div className="absolute bottom-0 right-1/4 w-96 h-96 rounded-full bg-gradient-to-br from-orange-300/20 to-transparent blur-3xl" />
-        </div>
+      <section className="relative py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        {/* Subtle top border */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-200/50 to-transparent" aria-hidden="true" />
 
         <div className="relative max-w-4xl mx-auto">
           <div className="text-center space-y-8">
@@ -1074,10 +1026,12 @@ export default function Home() {
 
       <section
         ref={howItWorksRef as React.RefObject<HTMLElement>}
-        className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-primary/10 via-slate-50 to-slate-100 dark:from-primary/10 dark:via-slate-900 dark:to-slate-800"
+        className="relative py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-slate-50"
         aria-labelledby="how-it-works-heading"
         data-testid="section-how-it-works"
       >
+        {/* Subtle top border */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-200/50 to-transparent" aria-hidden="true" />
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-14">
             <h2
