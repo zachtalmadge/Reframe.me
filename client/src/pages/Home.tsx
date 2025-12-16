@@ -309,9 +309,8 @@ export default function Home() {
               <div className="space-y-6">
                 {/* Eyebrow */}
                 <div
-                  className={`inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full backdrop-blur-md border transition-all duration-700 ease-out ${
-                    heroMounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
-                  }`}
+                  className={`inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full backdrop-blur-md border transition-all duration-700 ease-out ${heroMounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
+                    }`}
                   style={{
                     background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)',
                     borderColor: 'rgba(255, 255, 255, 0.2)',
@@ -333,23 +332,21 @@ export default function Home() {
 
                 <h1
                   id="hero-heading"
-                  className={`hero-heading text-4xl md:text-6xl font-bold leading-tight text-white transition-all duration-700 ease-out ${
-                    heroMounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-                  }`}
+                  className={`hero-heading text-4xl md:text-6xl font-bold leading-tight text-white transition-all duration-700 ease-out ${heroMounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                    }`}
                   style={{
                     transitionDelay: '200ms',
                     textShadow: '0 2px 30px rgba(0, 0, 0, 0.4), 0 0 60px rgba(20, 184, 166, 0.15)'
                   }}
                 >
-                  Prepare to talk confidently<br className="hidden sm:inline"/> about your record
+                  Prepare to talk confidently<br className="hidden sm:inline" /> about your record
                 </h1>
-                <p className={`text-lg md:text-xl text-white/90 leading-relaxed max-w-3xl mx-auto transition-all duration-700 ease-out ${
-                  heroMounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-                }`}
-                style={{
-                  transitionDelay: '400ms',
-                  textShadow: '0 2px 20px rgba(0, 0, 0, 0.3)'
-                }}
+                <p className={`text-lg md:text-xl text-white/90 leading-relaxed max-w-3xl mx-auto transition-all duration-700 ease-out ${heroMounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                  }`}
+                  style={{
+                    transitionDelay: '400ms',
+                    textShadow: '0 2px 20px rgba(0, 0, 0, 0.3)'
+                  }}
                 >
                   Your past is part of your story, <em className="font-medium text-white">not the whole story</em>. Reframe.me helps
                   you share that story in a way that centers your growth and{" "}
@@ -357,7 +354,7 @@ export default function Home() {
                 </p>
               </div>
 
-                            {/* CTA Button */}
+              {/* CTA Button */}
               <div className="pt-6">
                 <Link href="/selection">
                   <Button
@@ -420,9 +417,8 @@ export default function Home() {
                         aria-hidden={!isActive}
                       >
                         <div
-                          className={`relative text-lg md:text-xl text-white/70 italic motion-reduce:transition-none ${
-                            isMobile ? '' : 'transition-opacity duration-300'
-                          } ${isActive && showBefore ? "opacity-100" : "opacity-0"}`}
+                          className={`relative text-lg md:text-xl text-white/70 italic motion-reduce:transition-none ${isMobile ? '' : 'transition-opacity duration-300'
+                            } ${isActive && showBefore ? "opacity-100" : "opacity-0"}`}
                           style={isMobile ? {
                             willChange: isActive ? 'opacity' : 'auto',
                             transition: 'opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -440,13 +436,11 @@ export default function Home() {
                           <span className="text-white/70">"{pair.before}"</span>
                         </div>
                         <div
-                          className={`relative text-lg md:text-xl text-white font-medium motion-reduce:transition-none ${
-                            isMobile ? '' : 'transition-all duration-300'
-                          } ${
-                            isActive && showAfter
+                          className={`relative text-lg md:text-xl text-white font-medium motion-reduce:transition-none ${isMobile ? '' : 'transition-all duration-300'
+                            } ${isActive && showAfter
                               ? "opacity-100 translate-y-0"
                               : "opacity-0 translate-y-1"
-                          }`}
+                            }`}
                           style={isMobile ? {
                             willChange: isActive ? 'opacity, transform' : 'auto',
                             transition: 'opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -629,20 +623,18 @@ export default function Home() {
                   </p>
                 </div>
                 <ChevronDown
-                  className={`w-8 h-8 text-orange-600 flex-shrink-0 transition-all duration-500 ${
-                    isThisForMeOpen ? "rotate-180" : ""
-                  }`}
+                  className={`w-8 h-8 text-orange-600 flex-shrink-0 transition-all duration-500 ${isThisForMeOpen ? "rotate-180" : ""
+                    }`}
                   aria-hidden="true"
                 />
               </button>
 
               <div
                 id="is-this-for-me-panel"
-                className={`overflow-hidden transition-all duration-500 ease-out ${
-                  isThisForMeOpen
-                    ? "max-h-[800px] opacity-100"
-                    : "max-h-0 opacity-0"
-                }`}
+                className={`overflow-hidden transition-all duration-500 ease-out ${isThisForMeOpen
+                  ? "max-h-[800px] opacity-100"
+                  : "max-h-0 opacity-0"
+                  }`}
               >
                 <div className="px-8 md:px-10 pb-10 space-y-8">
                   {/* Divider */}
@@ -912,7 +904,18 @@ export default function Home() {
               </h3>
 
               <p className="text-lg leading-relaxed" style={{ fontFamily: 'Public Sans, sans-serif', color: '#475569' }}>
-                In one national survey, <strong style={{ color: '#ea580c' }}>53% of HR professionals</strong> said they'd be willing to hire candidates with criminal records, up from 37% just a few years earlier. Other research finds that most managers say workers with records perform as well as or better than other employees once they're hired. With the right preparation, you still have a real shot. That openness doesn't automatically turn into a job—candidates still have to get through hard conversations about their record. <strong style={{ color: '#0f172a' }}>That's the gap Reframe.me is built for.</strong>
+                In one national survey,{" "}
+                <strong style={{ color: "#ea580c" }}>53% of HR professionals</strong> said
+                they&apos;d be willing to hire candidates with criminal records, up from{" "}
+                <strong className="text-slate-900">37%</strong> just a few years earlier.
+                Other research finds that{" "}
+                <strong className="text-slate-900">
+                  most managers say workers with records perform as well as—or better than—
+                  other employees once they&apos;re hired
+                </strong>
+                . With the right preparation, you still have a real shot. That openness
+                doesn&apos;t automatically turn into a job—candidates still have to get through
+                hard conversations about their record.
               </p>
             </div>
 
@@ -958,7 +961,17 @@ export default function Home() {
               </h3>
 
               <p className="text-lg leading-relaxed" style={{ fontFamily: 'Public Sans, sans-serif', color: '#475569' }}>
-                It's not just <em className="italic">whether</em> an employer runs a check—it's what happens when they ask about it. When your narratives and response letter are ready before you need them, you can respond calmly and keep moving forward. <strong style={{ color: '#0f172a' }}>That's the gap Reframe.me is built for.</strong>
+                It’s not just <em>whether</em> an employer runs a check—it’s what happens when
+                they ask about it.{" "}
+                <strong className="text-slate-900">
+                  Preparation changes how you feel in the room.
+                </strong>{" "}
+                Instead of searching for the right words, you can answer with clarity and
+                confidence—and move the conversation back to your skills and fit.
+                <br /><br />
+                With narratives and a response letter ready before you need them, you have
+                employer-ready language you can use immediately and refine in your own voice.{" "}
+                <strong className="text-slate-900">That’s the gap Reframe.me is built for.</strong>
               </p>
             </div>
           </div>
@@ -1063,7 +1076,7 @@ export default function Home() {
                 {/* Ribbon vertical */}
                 <rect x="40" y="0" width="20" height="100" fill="url(#ribbonGrad)" />
                 {/* Ribbon horizontal */}
-                <rect x="0" y="25" width="100" height="15" fill="url(#ribbonGrad)" style={{animation: 'ribbon-wave 3s ease-in-out infinite'}} />
+                <rect x="0" y="25" width="100" height="15" fill="url(#ribbonGrad)" style={{ animation: 'ribbon-wave 3s ease-in-out infinite' }} />
                 {/* Box */}
                 <rect x="15" y="40" width="70" height="50" rx="4" fill="url(#boxGrad)" />
                 {/* Box lid */}
@@ -1684,9 +1697,8 @@ export default function Home() {
                     return (
                       <div
                         key={index}
-                        className={`absolute inset-0 flex flex-col justify-center transition-opacity duration-700 ${
-                          isActive ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'
-                        }`}
+                        className={`absolute inset-0 flex flex-col justify-center transition-opacity duration-700 ${isActive ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'
+                          }`}
                         role="group"
                         aria-roledescription="slide"
                         aria-label={`${index + 1} of ${stories.length}`}
@@ -1694,9 +1706,8 @@ export default function Home() {
                       >
                         {/* Quote text */}
                         <blockquote
-                          className={`story-quote text-2xl md:text-4xl lg:text-5xl leading-tight md:leading-tight lg:leading-tight text-white font-light italic mb-10 md:mb-12 relative ${
-                            prefersReducedMotion ? '' : ''
-                          }`}
+                          className={`story-quote text-2xl md:text-4xl lg:text-5xl leading-tight md:leading-tight lg:leading-tight text-white font-light italic mb-10 md:mb-12 relative ${prefersReducedMotion ? '' : ''
+                            }`}
                           style={{
                             textShadow: '0 2px 20px rgba(0, 0, 0, 0.3)',
                             letterSpacing: '-0.01em',
@@ -1769,11 +1780,10 @@ export default function Home() {
                   <button
                     key={index}
                     onClick={() => goToStory(index)}
-                    className={`rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 ${
-                      index === storyIndex
-                        ? 'w-12 h-3'
-                        : 'w-3 h-3 hover:scale-125'
-                    }`}
+                    className={`rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 ${index === storyIndex
+                      ? 'w-12 h-3'
+                      : 'w-3 h-3 hover:scale-125'
+                      }`}
                     style={{
                       background: index === storyIndex
                         ? 'linear-gradient(90deg, #14b8a6 0%, #f97316 100%)'
@@ -2038,11 +2048,10 @@ export default function Home() {
                 {howItWorksSteps.map((step, index) => (
                   <div
                     key={step.title}
-                    className={`step-card-hover transition-all duration-700 ${
-                      howItWorksInView
-                        ? "opacity-100 translate-y-0"
-                        : "opacity-0 translate-y-12"
-                    }`}
+                    className={`step-card-hover transition-all duration-700 ${howItWorksInView
+                      ? "opacity-100 translate-y-0"
+                      : "opacity-0 translate-y-12"
+                      }`}
                     style={{
                       transitionDelay: howItWorksInView ? `${index * 200}ms` : "0ms",
                     }}
@@ -2064,8 +2073,8 @@ export default function Home() {
                           background: index === 0
                             ? 'linear-gradient(135deg, rgba(20, 184, 166, 0.05) 0%, transparent 100%)'
                             : index === 1
-                            ? 'linear-gradient(135deg, rgba(13, 148, 136, 0.05) 0%, transparent 100%)'
-                            : 'linear-gradient(135deg, rgba(249, 115, 22, 0.05) 0%, transparent 100%)'
+                              ? 'linear-gradient(135deg, rgba(13, 148, 136, 0.05) 0%, transparent 100%)'
+                              : 'linear-gradient(135deg, rgba(249, 115, 22, 0.05) 0%, transparent 100%)'
                         }}
                       />
 
@@ -2077,15 +2086,14 @@ export default function Home() {
                             background: index === 0
                               ? 'linear-gradient(135deg, #14b8a6 0%, #0d9488 100%)'
                               : index === 1
-                              ? 'linear-gradient(135deg, #0d9488 0%, #0ea5a1 100%)'
-                              : 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
-                            boxShadow: `0 10px 30px ${
-                              index === 0
-                                ? 'rgba(20, 184, 166, 0.4)'
-                                : index === 1
+                                ? 'linear-gradient(135deg, #0d9488 0%, #0ea5a1 100%)'
+                                : 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
+                            boxShadow: `0 10px 30px ${index === 0
+                              ? 'rgba(20, 184, 166, 0.4)'
+                              : index === 1
                                 ? 'rgba(13, 148, 136, 0.4)'
                                 : 'rgba(249, 115, 22, 0.4)'
-                            }`
+                              }`
                           }}
                         >
                           <span className="text-3xl font-bold text-white" style={{ fontFamily: 'Cabinet Grotesk, system-ui, sans-serif' }}>
@@ -2099,8 +2107,8 @@ export default function Home() {
                             background: index === 0
                               ? 'radial-gradient(circle, rgba(20, 184, 166, 0.2) 0%, transparent 70%)'
                               : index === 1
-                              ? 'radial-gradient(circle, rgba(13, 148, 136, 0.2) 0%, transparent 70%)'
-                              : 'radial-gradient(circle, rgba(249, 115, 22, 0.2) 0%, transparent 70%)',
+                                ? 'radial-gradient(circle, rgba(13, 148, 136, 0.2) 0%, transparent 70%)'
+                                : 'radial-gradient(circle, rgba(249, 115, 22, 0.2) 0%, transparent 70%)',
                             transform: 'scale(2)',
                             filter: 'blur(20px)'
                           }}
@@ -2141,11 +2149,10 @@ export default function Home() {
               {howItWorksSteps.map((step, index) => (
                 <div
                   key={step.title}
-                  className={`transition-all duration-700 ${
-                    howItWorksInView
-                      ? "opacity-100 translate-y-0"
-                      : "opacity-0 translate-y-12"
-                  }`}
+                  className={`transition-all duration-700 ${howItWorksInView
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-12"
+                    }`}
                   style={{
                     transitionDelay: howItWorksInView ? `${index * 200}ms` : "0ms",
                   }}
@@ -2167,15 +2174,14 @@ export default function Home() {
                           background: index === 0
                             ? 'linear-gradient(135deg, #14b8a6 0%, #0d9488 100%)'
                             : index === 1
-                            ? 'linear-gradient(135deg, #0d9488 0%, #0ea5a1 100%)'
-                            : 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
-                          boxShadow: `0 10px 30px ${
-                            index === 0
-                              ? 'rgba(20, 184, 166, 0.4)'
-                              : index === 1
+                              ? 'linear-gradient(135deg, #0d9488 0%, #0ea5a1 100%)'
+                              : 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
+                          boxShadow: `0 10px 30px ${index === 0
+                            ? 'rgba(20, 184, 166, 0.4)'
+                            : index === 1
                               ? 'rgba(13, 148, 136, 0.4)'
                               : 'rgba(249, 115, 22, 0.4)'
-                          }`
+                            }`
                         }}
                       >
                         <span className="text-2xl font-bold text-white" style={{ fontFamily: 'Cabinet Grotesk, system-ui, sans-serif' }}>
