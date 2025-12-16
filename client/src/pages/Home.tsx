@@ -511,106 +511,7 @@ export default function Home() {
 
       </section>
 
-      {/* Is This For Me Section */}
-      <section
-        className="relative py-12 md:py-20 px-4 sm:px-6 lg:px-8 bg-white"
-        aria-labelledby="is-this-for-me-heading"
-        data-testid="section-is-this-for-me"
-      >
-        {/* Subtle top border */}
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-200/50 to-transparent" aria-hidden="true" />
-        <div className="max-w-4xl mx-auto">
-          <div className="rounded-2xl border-2 border-orange-400/30 bg-gradient-to-br from-orange-50/80 to-orange-100/40 dark:from-orange-950/20 dark:to-orange-900/10 p-6 md:p-8 shadow-lg">
-            <button
-              type="button"
-              className="flex w-full items-center justify-between gap-4 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 focus-visible:ring-offset-2 rounded-lg p-3 -m-3 hover:bg-orange-100/30 dark:hover:bg-orange-900/20 transition-colors"
-              aria-expanded={isThisForMeOpen}
-              aria-controls="is-this-for-me-panel"
-              onClick={() => setIsThisForMeOpen((prev) => !prev)}
-              data-testid="button-is-this-for-me-toggle"
-            >
-              <div className="flex items-center gap-4">
-                <div className="inline-flex items-center rounded-full bg-orange-500/15 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-orange-700 dark:text-orange-400 border border-orange-400/30">
-                  Who this is for
-                </div>
-                <h2
-                  id="is-this-for-me-heading"
-                  className="text-xl md:text-2xl font-bold text-foreground"
-                >
-                  Is this for me?
-                </h2>
-              </div>
-              <ChevronDown
-                className={`w-6 h-6 text-orange-600 dark:text-orange-400 flex-shrink-0 transition-transform duration-300 ${
-                  isThisForMeOpen ? "rotate-180" : ""
-                }`}
-                aria-hidden="true"
-              />
-            </button>
-
-            <div
-              id="is-this-for-me-panel"
-              className={`overflow-hidden transition-all duration-300 ease-out ${
-                isThisForMeOpen
-                  ? "max-h-[600px] opacity-100 mt-6"
-                  : "max-h-0 opacity-0"
-              }`}
-            >
-              <div className="space-y-6 text-base text-muted-foreground pt-6 border-t-2 border-orange-400/20">
-                <p className="text-base md:text-lg text-foreground/80 leading-relaxed">
-                  Reframe.me is designed for people navigating job searches with a past record or justice involvement.
-                </p>
-
-                <div className="bg-white/60 dark:bg-slate-900/30 rounded-xl p-5 border border-orange-400/20">
-                  <p className="font-bold text-lg text-orange-700 dark:text-orange-400 mb-3">
-                    Reframe.me might help if:
-                  </p>
-                  <ul className="space-y-2.5 list-none">
-                    <li className="flex items-start gap-3">
-                      <span className="w-1.5 h-1.5 rounded-full bg-orange-500 mt-2.5 flex-shrink-0" aria-hidden="true" />
-                      <span className="text-foreground/80">You're applying for jobs after a conviction or justice involvement.</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="w-1.5 h-1.5 rounded-full bg-orange-500 mt-2.5 flex-shrink-0" aria-hidden="true" />
-                      <span className="text-foreground/80">You feel stuck on what to say when your background comes up in the hiring process.</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="w-1.5 h-1.5 rounded-full bg-orange-500 mt-2.5 flex-shrink-0" aria-hidden="true" />
-                      <span className="text-foreground/80">You've received (or are worried about) a pre-adverse action notice and don't know how to respond.</span>
-                    </li>
-                  </ul>
-                </div>
-
-                <p className="text-base text-foreground/80 italic leading-relaxed bg-orange-100/40 dark:bg-orange-900/20 p-4 rounded-lg border-l-4 border-orange-400">
-                  Even if you came home recently or it's been years, it's okay to still be finding the words for your story.
-                </p>
-
-                <div className="bg-white/60 dark:bg-slate-900/30 rounded-xl p-5 border border-orange-400/20">
-                  <p className="font-bold text-lg text-orange-700 dark:text-orange-400 mb-3">
-                    This is not:
-                  </p>
-                  <ul className="space-y-2.5 list-none">
-                    <li className="flex items-start gap-3">
-                      <span className="w-1.5 h-1.5 rounded-full bg-orange-500/50 mt-2.5 flex-shrink-0" aria-hidden="true" />
-                      <span className="text-foreground/80">Legal advice or a substitute for speaking with a lawyer or legal aid.</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="w-1.5 h-1.5 rounded-full bg-orange-500/50 mt-2.5 flex-shrink-0" aria-hidden="true" />
-                      <span className="text-foreground/80">A guarantee that you will be hired or keep a job.</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="w-1.5 h-1.5 rounded-full bg-orange-500/50 mt-2.5 flex-shrink-0" aria-hidden="true" />
-                      <span className="text-foreground/80">A replacement for your own judgment or support from trusted people in your life.</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Why This Part of the Process Matters Section */}
+      {/* Why This Part of the Process Matters Section (with Is This For Me) */}
       <section
         className="relative py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-slate-50"
         aria-labelledby="why-matters-heading"
@@ -619,6 +520,96 @@ export default function Home() {
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-200/50 to-transparent" aria-hidden="true" />
 
         <div className="relative max-w-6xl mx-auto">
+          {/* Is This For Me - Integrated */}
+          <div className="max-w-4xl mx-auto mb-16" data-testid="section-is-this-for-me">
+            <div className="rounded-2xl border-2 border-orange-400/30 bg-gradient-to-br from-orange-50/80 to-orange-100/40 dark:from-orange-950/20 dark:to-orange-900/10 p-6 md:p-8 shadow-lg">
+              <button
+                type="button"
+                className="flex w-full items-center justify-between gap-4 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 focus-visible:ring-offset-2 rounded-lg p-3 -m-3 hover:bg-orange-100/30 dark:hover:bg-orange-900/20 transition-colors"
+                aria-expanded={isThisForMeOpen}
+                aria-controls="is-this-for-me-panel"
+                onClick={() => setIsThisForMeOpen((prev) => !prev)}
+                data-testid="button-is-this-for-me-toggle"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="inline-flex items-center rounded-full bg-orange-500/15 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-orange-700 dark:text-orange-400 border border-orange-400/30">
+                    Who this is for
+                  </div>
+                  <h2
+                    id="is-this-for-me-heading"
+                    className="text-xl md:text-2xl font-bold text-foreground"
+                  >
+                    Is this for me?
+                  </h2>
+                </div>
+                <ChevronDown
+                  className={`w-6 h-6 text-orange-600 dark:text-orange-400 flex-shrink-0 transition-transform duration-300 ${
+                    isThisForMeOpen ? "rotate-180" : ""
+                  }`}
+                  aria-hidden="true"
+                />
+              </button>
+
+              <div
+                id="is-this-for-me-panel"
+                className={`overflow-hidden transition-all duration-300 ease-out ${
+                  isThisForMeOpen
+                    ? "max-h-[600px] opacity-100 mt-6"
+                    : "max-h-0 opacity-0"
+                }`}
+              >
+                <div className="space-y-6 text-base text-muted-foreground pt-6 border-t-2 border-orange-400/20">
+                  <p className="text-base md:text-lg text-foreground/80 leading-relaxed">
+                    Reframe.me is designed for people navigating job searches with a past record or justice involvement.
+                  </p>
+
+                  <div className="bg-white/60 dark:bg-slate-900/30 rounded-xl p-5 border border-orange-400/20">
+                    <p className="font-bold text-lg text-orange-700 dark:text-orange-400 mb-3">
+                      Reframe.me might help if:
+                    </p>
+                    <ul className="space-y-2.5 list-none">
+                      <li className="flex items-start gap-3">
+                        <span className="w-1.5 h-1.5 rounded-full bg-orange-500 mt-2.5 flex-shrink-0" aria-hidden="true" />
+                        <span className="text-foreground/80">You're applying for jobs after a conviction or justice involvement.</span>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <span className="w-1.5 h-1.5 rounded-full bg-orange-500 mt-2.5 flex-shrink-0" aria-hidden="true" />
+                        <span className="text-foreground/80">You feel stuck on what to say when your background comes up in the hiring process.</span>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <span className="w-1.5 h-1.5 rounded-full bg-orange-500 mt-2.5 flex-shrink-0" aria-hidden="true" />
+                        <span className="text-foreground/80">You've received (or are worried about) a pre-adverse action notice and don't know how to respond.</span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <p className="text-base text-foreground/80 italic leading-relaxed bg-orange-100/40 dark:bg-orange-900/20 p-4 rounded-lg border-l-4 border-orange-400">
+                    Even if you came home recently or it's been years, it's okay to still be finding the words for your story.
+                  </p>
+
+                  <div className="bg-white/60 dark:bg-slate-900/30 rounded-xl p-5 border border-orange-400/20">
+                    <p className="font-bold text-lg text-orange-700 dark:text-orange-400 mb-3">
+                      This is not:
+                    </p>
+                    <ul className="space-y-2.5 list-none">
+                      <li className="flex items-start gap-3">
+                        <span className="w-1.5 h-1.5 rounded-full bg-orange-500/50 mt-2.5 flex-shrink-0" aria-hidden="true" />
+                        <span className="text-foreground/80">Legal advice or a substitute for speaking with a lawyer or legal aid.</span>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <span className="w-1.5 h-1.5 rounded-full bg-orange-500/50 mt-2.5 flex-shrink-0" aria-hidden="true" />
+                        <span className="text-foreground/80">A guarantee that you will be hired or keep a job.</span>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <span className="w-1.5 h-1.5 rounded-full bg-orange-500/50 mt-2.5 flex-shrink-0" aria-hidden="true" />
+                        <span className="text-foreground/80">A replacement for your own judgment or support from trusted people in your life.</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           {/* Section Header */}
           <div className="text-center mb-16">
             <h2
