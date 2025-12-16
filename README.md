@@ -4,6 +4,25 @@
 
 Reframe.me is a free, privacy-focused web application that helps people with criminal backgrounds create professional disclosure narratives and pre-adverse action response letters for job applications.
 
+**Status**: Live at [reframeme.app](https://reframeme.app) and actively maintained. See [CLAUDE.md](./CLAUDE.md) for detailed development status.
+
+## 📑 Table of Contents
+
+- [What It Does](#-what-it-does)
+- [Recent Updates](#-recent-updates)
+- [Getting Started](#-getting-started)
+- [Features](#-features)
+- [Tech Stack](#️-tech-stack)
+- [Prerequisites](#-prerequisites)
+- [Environment Variables](#-environment-variables)
+- [Project Structure](#-project-structure)
+- [Privacy & Security](#-privacy--security)
+- [Deployment](#-deployment)
+- [Development](#-development)
+- [Design Philosophy](#-design-philosophy)
+- [Contributing](#-contributing)
+- [Support & Troubleshooting](#-support--troubleshooting)
+
 ## 🎯 What It Does
 
 **Five Disclosure Narratives**
@@ -18,11 +37,21 @@ Reframe.me is a free, privacy-focused web application that helps people with cri
 - Uses the OIL framework (Ownership, Impact, Lessons Learned)
 - Can incorporate resume and job posting for tailored responses
 
+## ✨ Recent Updates
+
+- **Modern Design System**: iOS 26-inspired UI with glass morphism effects
+- **Enhanced Mobile Experience**: Optimized navigation with responsive glass navbar
+- **Improved Error Handling**: Silent retry functionality for better reliability
+- **Donate Integration**: Support options integrated throughout the experience
+- **Live Application**: Currently deployed and accessible at [reframeme.app](https://reframeme.app)
+
 ## 🚀 Getting Started
 
-### Quick Start
+**Live Application**: Visit [reframeme.app](https://reframeme.app) to use the application.
 
-See [QUICKSTART.md](./QUICKSTART.md) for the fastest way to get up and running locally.
+### Local Development Setup
+
+For developers who want to contribute or run locally, see [QUICKSTART.md](./QUICKSTART.md) for setup instructions.
 
 **TL;DR:**
 ```bash
@@ -33,10 +62,20 @@ npm run db:push
 npm run dev
 ```
 
-### Detailed Guides
+### Developer Guides
 
 - **[Local Development Guide](./LOCAL_DEVELOPMENT.md)** - Complete setup instructions
-- **[Vercel Deployment Guide](./VERCEL_DEPLOYMENT.md)** - Production deployment steps
+- **[Vercel Deployment Guide](./VERCEL_DEPLOYMENT.md)** - Deployment configuration reference
+- **[CLAUDE.md](./CLAUDE.md)** - Development status and setup progress
+
+## ⚡ Features
+
+- **AI-Powered Content Generation**: Uses GPT-4o-mini to create personalized narratives
+- **Privacy-First**: No account required, no data stored on servers
+- **Mobile Optimized**: Responsive design with modern glass morphism UI
+- **Regeneration Options**: Customize any narrative or letter with one click
+- **Multi-Step Form**: Intuitive 9-step process for gathering context
+- **Local Storage**: Form data persists in browser for convenience
 
 ## 🛠️ Tech Stack
 
@@ -46,7 +85,7 @@ npm run dev
 - **AI**: OpenAI API (GPT-4o-mini)
 - **UI Components**: Radix UI, shadcn/ui
 - **Build Tool**: Vite
-- **Deployment**: Vercel-ready
+- **Hosting**: Vercel
 
 ## 📋 Prerequisites
 
@@ -94,15 +133,11 @@ reframe.me/
 - **Session-based** - Results cleared when user closes browser
 - **Secure by default** - Environment variables for sensitive data
 
-## 🚢 Deployment
+## 🌐 Deployment
 
-This project is configured for deployment on Vercel. See [VERCEL_DEPLOYMENT.md](./VERCEL_DEPLOYMENT.md) for detailed instructions.
+The application is currently **live at [reframeme.app](https://reframeme.app)**.
 
-### Quick Deploy to Vercel
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fyourusername%2Freframe.me)
-
-**Important**: You must configure environment variables in Vercel before the app will work.
+For deployment configuration details and architecture information, see [VERCEL_DEPLOYMENT.md](./VERCEL_DEPLOYMENT.md).
 
 ## 🧪 Development
 
@@ -125,11 +160,12 @@ npm run db:push      # Push database schema changes
 
 ## 🎨 Design Philosophy
 
-Reframe.me follows a calming, accessible design approach:
-- **Calming Clarity**: No visual clutter
+Reframe.me follows a calming, accessible design approach with modern aesthetics:
+- **Calming Clarity**: No visual clutter, clean interfaces
 - **Dignified Simplicity**: Professional yet approachable
 - **Progressive Confidence**: Clear steps and gentle guidance
 - **Accessibility-First**: High contrast, readable text, clear focus states
+- **Modern Design**: iOS 26-inspired glass morphism, smooth animations, responsive layouts
 
 See [design_guidelines.md](./design_guidelines.md) for complete design specifications.
 
@@ -153,12 +189,14 @@ MIT License - See LICENSE file for details
 
 Built to support justice-involved individuals in their journey toward meaningful employment.
 
-## 📞 Support
+## 📞 Support & Troubleshooting
 
 For issues or questions:
-- Open an issue on GitHub
-- Review the documentation in `/docs`
-- Check environment variable configuration
+- **Using the App**: Visit [reframeme.app](https://reframeme.app) - no setup required
+- **Local Development Help**: See [CLAUDE.md](./CLAUDE.md) for detailed development status and troubleshooting
+- **Quick Setup**: Check [QUICKSTART.md](./QUICKSTART.md) for fast local development setup
+- **Environment Issues**: Review `.env.example` and ensure all variables are set
+- **Report Issues**: Open an issue on GitHub with detailed error messages
 
 ---
 
