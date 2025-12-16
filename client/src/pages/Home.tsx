@@ -16,6 +16,7 @@ import {
   Search,
   TrendingUp,
   Anchor,
+  Target,
 } from "lucide-react";
 import Layout from "@/components/Layout";
 import { useInView } from "@/hooks/useInView";
@@ -259,25 +260,38 @@ export default function Home() {
       <section
         className="relative py-16 md:py-24 overflow-hidden"
         style={{
-          background: 'linear-gradient(135deg, #0d9488 0%, #14b8a6 50%, #0891b2 100%)'
+          background: 'linear-gradient(135deg, #064e3b 0%, #0d9488 25%, #134e4a 50%, #9a3412 75%, #7c2d12 100%)'
         }}
         aria-labelledby="hero-heading"
       >
-        {/* Shimmer overlay */}
-        <div className="absolute inset-0 gradient-shimmer-hero opacity-30" aria-hidden="true" />
-
-        {/* Decorative background orbs */}
+        {/* Atmospheric background effects */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          {/* Radial glow - top right - Teal */}
           <div
-            className="absolute top-20 right-1/4 w-[400px] h-[400px] rounded-full opacity-20 blur-3xl"
+            className="absolute -top-40 -right-40 w-[500px] h-[500px] opacity-30 blur-3xl"
             style={{
-              background: 'radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%)'
+              background: 'radial-gradient(circle, #14b8a6 0%, transparent 70%)',
             }}
           />
+          {/* Radial glow - bottom left - Orange */}
           <div
-            className="absolute bottom-40 left-1/4 w-[350px] h-[350px] rounded-full opacity-20 blur-3xl"
+            className="absolute -bottom-40 -left-40 w-[600px] h-[600px] opacity-30 blur-3xl"
             style={{
-              background: 'radial-gradient(circle, rgba(249, 115, 22, 0.3) 0%, transparent 70%)'
+              background: 'radial-gradient(circle, #f97316 0%, transparent 70%)',
+            }}
+          />
+          {/* Center ambient light - mixed */}
+          <div
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] opacity-15 blur-3xl"
+            style={{
+              background: 'radial-gradient(circle, #14b8a6 0%, #f97316 50%, transparent 70%)',
+            }}
+          />
+          {/* Grain texture overlay */}
+          <div
+            className="absolute inset-0 opacity-[0.02]"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
             }}
           />
         </div>
@@ -289,16 +303,24 @@ export default function Home() {
               <div className="space-y-6">
                 {/* Eyebrow */}
                 <div
-                  className={`inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full backdrop-blur-md border border-white/30 transition-all duration-700 ease-out ${
+                  className={`inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full backdrop-blur-md border transition-all duration-700 ease-out ${
                     heroMounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
                   }`}
                   style={{
-                    background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%)',
-                    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)'
+                    background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)',
+                    borderColor: 'rgba(255, 255, 255, 0.2)',
+                    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
                   }}
                 >
-                  <div className="w-1.5 h-1.5 rounded-full bg-white/90 animate-pulse" aria-hidden="true" />
-                  <span className="text-xs md:text-sm font-semibold tracking-wide text-white/95 uppercase">
+                  <div
+                    className="w-1.5 h-1.5 rounded-full animate-pulse"
+                    aria-hidden="true"
+                    style={{
+                      background: 'linear-gradient(135deg, #14b8a6 0%, #f97316 100%)',
+                      boxShadow: '0 0 8px rgba(20, 184, 166, 0.6)'
+                    }}
+                  />
+                  <span className="text-xs md:text-sm font-semibold tracking-wide text-white uppercase">
                     Got a conditional offer, background check, or pre-adverse notice?
                   </span>
                 </div>
@@ -308,18 +330,24 @@ export default function Home() {
                   className={`hero-heading text-4xl md:text-6xl font-bold leading-tight text-white transition-all duration-700 ease-out ${
                     heroMounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                   }`}
-                  style={{ transitionDelay: '200ms' }}
+                  style={{
+                    transitionDelay: '200ms',
+                    textShadow: '0 2px 30px rgba(0, 0, 0, 0.4), 0 0 60px rgba(20, 184, 166, 0.15)'
+                  }}
                 >
                   Prepare to talk confidently<br className="hidden sm:inline"/> about your record
                 </h1>
-                <p className={`text-lg md:text-xl text-teal-50 leading-relaxed max-w-3xl mx-auto transition-all duration-700 ease-out ${
+                <p className={`text-lg md:text-xl text-white/90 leading-relaxed max-w-3xl mx-auto transition-all duration-700 ease-out ${
                   heroMounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                 }`}
-                style={{ transitionDelay: '400ms' }}
+                style={{
+                  transitionDelay: '400ms',
+                  textShadow: '0 2px 20px rgba(0, 0, 0, 0.3)'
+                }}
                 >
-                  Your past is part of your story, <em className="font-medium">not the whole story</em>. Reframe.me helps
+                  Your past is part of your story, <em className="font-medium text-white">not the whole story</em>. Reframe.me helps
                   you share that story in a way that centers your growth and{" "}
-                  <em className="font-medium">what you offer today</em>.
+                  <em className="font-medium text-white">what you offer today</em>.
                 </p>
               </div>
 
@@ -328,29 +356,53 @@ export default function Home() {
                 <Link href="/selection">
                   <Button
                     size="lg"
-                    className="group min-h-[56px] px-10 text-lg font-semibold rounded-lg transition-all duration-300 hover:scale-105"
+                    className="group relative min-h-[64px] px-12 text-xl font-bold rounded-2xl transition-all duration-300 hover:scale-105 overflow-hidden"
                     style={{
                       background: 'linear-gradient(135deg, #f97316 0%, #fb923c 100%)',
-                      color: 'white'
+                      color: 'white',
+                      boxShadow: '0 10px 40px rgba(249, 115, 22, 0.5), 0 0 80px rgba(249, 115, 22, 0.2)'
                     }}
                     data-testid="button-get-started-hero"
                   >
-                    Get Started
-                    <ArrowRight className="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
+                    <span className="relative z-10 flex items-center gap-3">
+                      Get Started
+                      <ArrowRight className="w-6 h-6 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
+                    </span>
+                    {/* Shine effect on hover */}
+                    <div
+                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                      style={{
+                        background: 'linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%)',
+                      }}
+                    />
                   </Button>
                 </Link>
               </div>
 
               {/* Before/After block - preserved functionality */}
               <div
-                className="max-w-3xl mx-auto rounded-3xl p-8 md:p-12 backdrop-blur-sm relative"
+                className="max-w-3xl mx-auto rounded-3xl p-8 md:p-12 backdrop-blur-md relative overflow-hidden"
                 style={{
-                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 253, 250, 0.95) 100%)',
-                  border: '2px solid rgba(255, 255, 255, 0.5)',
-                  boxShadow: '0 20px 60px rgba(0, 0, 0, 0.2)'
+                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.12) 100%)',
+                  border: '1px solid rgba(255, 255, 255, 0.15)',
+                  boxShadow: '0 25px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
                 }}
                 data-testid="before-after-block"
               >
+                {/* Decorative top accent */}
+                <div
+                  className="absolute top-0 left-0 right-0 h-px"
+                  style={{
+                    background: 'linear-gradient(90deg, transparent 0%, rgba(20, 184, 166, 0.5) 50%, transparent 100%)',
+                  }}
+                />
+                {/* Decorative bottom accent */}
+                <div
+                  className="absolute bottom-0 left-0 right-0 h-px"
+                  style={{
+                    background: 'linear-gradient(90deg, transparent 0%, rgba(249, 115, 22, 0.5) 50%, transparent 100%)',
+                  }}
+                />
                 <div className="grid" style={{ gridTemplateRows: '1fr', gridTemplateColumns: '1fr' }}>
                   {beforeAfterPairs.map((pair, index) => {
                     const isActive = index === currentPairIndex;
@@ -362,7 +414,7 @@ export default function Home() {
                         aria-hidden={!isActive}
                       >
                         <div
-                          className={`text-lg md:text-xl text-gray-600 italic motion-reduce:transition-none ${
+                          className={`relative text-lg md:text-xl text-white/70 italic motion-reduce:transition-none ${
                             isMobile ? '' : 'transition-opacity duration-300'
                           } ${isActive && showBefore ? "opacity-100" : "opacity-0"}`}
                           style={isMobile ? {
@@ -371,15 +423,18 @@ export default function Home() {
                             backfaceVisibility: 'hidden',
                             WebkitBackfaceVisibility: 'hidden',
                             WebkitFontSmoothing: 'antialiased',
-                          } : undefined}
+                            textShadow: '0 1px 10px rgba(0, 0, 0, 0.3)',
+                          } : {
+                            textShadow: '0 1px 10px rgba(0, 0, 0, 0.3)',
+                          }}
                         >
-                          <span className="font-semibold text-gray-700 not-italic block mb-2">
+                          <span className="font-semibold text-white/90 not-italic block mb-2">
                             Before:
                           </span>
-                          <span className="text-gray-600">"{pair.before}"</span>
+                          <span className="text-white/70">"{pair.before}"</span>
                         </div>
                         <div
-                          className={`text-lg md:text-xl text-gray-900 font-medium motion-reduce:transition-none ${
+                          className={`relative text-lg md:text-xl text-white font-medium motion-reduce:transition-none ${
                             isMobile ? '' : 'transition-all duration-300'
                           } ${
                             isActive && showAfter
@@ -393,10 +448,25 @@ export default function Home() {
                             backfaceVisibility: 'hidden',
                             WebkitBackfaceVisibility: 'hidden',
                             WebkitFontSmoothing: 'antialiased',
-                          } : undefined}
+                            textShadow: '0 2px 15px rgba(0, 0, 0, 0.3)',
+                          } : {
+                            textShadow: '0 2px 15px rgba(0, 0, 0, 0.3)',
+                          }}
                         >
-                          <span className="text-teal-700 font-semibold block mb-2">After:</span>
-                          <span className="text-gray-900">"{pair.after}"</span>
+                          <span
+                            className="font-bold block mb-2 relative"
+                            style={{
+                              background: 'linear-gradient(135deg, #2dd4bf 0%, #22d3ee 30%, #fb923c 70%, #f97316 100%)',
+                              WebkitBackgroundClip: 'text',
+                              WebkitTextFillColor: 'transparent',
+                              backgroundClip: 'text',
+                              filter: 'brightness(1.2) saturate(1.3)',
+                              fontSize: '1.05em',
+                            }}
+                          >
+                            After:
+                          </span>
+                          <span className="text-white">"{pair.after}"</span>
                         </div>
                       </div>
                     );
@@ -406,19 +476,33 @@ export default function Home() {
 
               {/* Feature badges */}
               <div className="flex flex-wrap justify-center gap-4 md:gap-6 text-sm md:text-base pt-4">
-                <div className="flex items-center gap-2.5 bg-white/20 backdrop-blur-sm px-5 py-2.5 rounded-full border border-white/30">
-                  <Clock className="w-4 h-4 text-white" aria-hidden="true" />
+                <div
+                  className="flex items-center gap-2.5 backdrop-blur-md px-5 py-2.5 rounded-full border"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)',
+                    borderColor: 'rgba(255, 255, 255, 0.2)',
+                    boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
+                  }}
+                >
+                  <Clock className="w-4 h-4 text-teal-300" aria-hidden="true" />
                   <span className="font-medium text-white">Takes 10 - 20 minutes</span>
                 </div>
-                <div className="flex items-center gap-2.5 bg-white/20 backdrop-blur-sm px-5 py-2.5 rounded-full border border-white/30">
-                  <Heart className="w-4 h-4 text-white" aria-hidden="true" />
+                <div
+                  className="flex items-center gap-2.5 backdrop-blur-md px-5 py-2.5 rounded-full border"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)',
+                    borderColor: 'rgba(255, 255, 255, 0.2)',
+                    boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
+                  }}
+                >
+                  <Heart className="w-4 h-4 text-orange-300" aria-hidden="true" />
                   <span className="font-medium text-white">Free to use</span>
                 </div>
               </div>
 
 
 
-              <p className="text-sm text-teal-100 font-medium">
+              <p className="text-sm text-white/80 font-medium">
                 No account required • Completely private • Your story, your way
               </p>
             </div>
@@ -631,17 +715,23 @@ export default function Home() {
               </CardContent>
             </Card>
 
-            {/* Card 4 - Right prep */}
-            <Card className="group relative overflow-hidden border-2 border-teal-200/40 dark:border-teal-800/40 hover:border-teal-300/60 dark:hover:border-teal-700/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
-              <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-teal-100/40 to-transparent dark:from-teal-900/20 rounded-bl-full" aria-hidden="true" />
+            {/* Card 4 - One Shot */}
+            <Card className="group relative overflow-hidden border-2 border-purple-200/40 dark:border-purple-800/40 hover:border-purple-300/60 dark:hover:border-purple-700/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+              <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-purple-100/40 to-transparent dark:from-purple-900/20 rounded-bl-full" aria-hidden="true" />
               <CardContent className="p-8 md:p-10 relative">
                 <div className="flex items-start gap-5 mb-6">
-                  <div className="flex-shrink-0 w-14 h-14 rounded-xl bg-gradient-to-br from-teal-500/20 to-teal-600/10 dark:from-teal-400/20 dark:to-teal-500/10 flex items-center justify-center">
-                    <Anchor className="w-7 h-7 text-teal-600 dark:text-teal-400" aria-hidden="true" />
+                  <div className="flex-shrink-0 w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-600/10 dark:from-purple-400/20 dark:to-purple-500/10 flex items-center justify-center">
+                    <Target className="w-7 h-7 text-purple-600 dark:text-purple-400" aria-hidden="true" />
                   </div>
-                  <div className="flex-1">
-                    <h3 className="text-lg md:text-xl font-bold text-foreground">
-                      With the right prep, you still have a real shot.
+                  <div className="flex-1 space-y-2">
+                    <div
+                      className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-700 to-purple-600 dark:from-purple-400 dark:to-purple-300 bg-clip-text text-transparent"
+                      style={{ fontFamily: 'DM Sans, system-ui, sans-serif', letterSpacing: '-0.03em' }}
+                    >
+                      1 Shot
+                    </div>
+                    <h3 className="text-xl md:text-2xl font-bold text-foreground/90 leading-tight">
+                      That's all you get to explain your record when an employer asks.
                     </h3>
                   </div>
                 </div>
@@ -720,7 +810,7 @@ export default function Home() {
       >
         {/* Subtle top border */}
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-200/50 to-transparent" aria-hidden="true" />
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <h2
               id="tools-heading"
@@ -733,7 +823,8 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Card 1: 5 Disclosure Narratives */}
             <Card
               className="group relative border-2 border-primary/20 shadow-lg cursor-default transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-2xl hover:border-primary/40 focus-within:-translate-y-2 focus-within:shadow-2xl focus-within:border-primary/40 motion-reduce:transition-none motion-reduce:hover:translate-y-0 overflow-hidden"
               tabIndex={0}
@@ -767,6 +858,7 @@ export default function Home() {
               </CardContent>
             </Card>
 
+            {/* Card 2: Pre-Adverse Action Response */}
             <Card
               className="group relative border-2 border-chart-2/20 shadow-lg cursor-default transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-2xl hover:border-chart-2/40 focus-within:-translate-y-2 focus-within:shadow-2xl focus-within:border-chart-2/40 motion-reduce:transition-none motion-reduce:hover:translate-y-0 overflow-hidden"
               tabIndex={0}
@@ -796,142 +888,269 @@ export default function Home() {
                 </div>
               </CardContent>
             </Card>
-          </div>
-        </div>
-      </section>
 
-
-
-      <section
-        className="relative py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-white"
-        aria-labelledby="safe-space-heading"
-        data-testid="section-safe-space"
-      >
-        {/* Subtle top border */}
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-200/50 to-transparent" aria-hidden="true" />
-
-        <div className="relative w-full">
-          <div className="max-w-7xl mx-auto">
-            <div className="flex flex-col md:flex-row gap-10 items-center justify-center relative">
-              <div className="flex-shrink-0">
-                <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-600 flex items-center justify-center transition-transform duration-300 ease-out group-hover:scale-110 group-hover:rotate-3 group-focus-within:scale-110 group-focus-within:rotate-3 motion-reduce:group-hover:scale-100 motion-reduce:group-hover:rotate-0 shadow-xl">
-                  <Shield className="w-10 h-10 text-slate-700 dark:text-slate-200" aria-hidden="true" />
+            {/* Card 3: Judgement-Free Privacy */}
+            <Card
+              className="group relative border-2 border-slate-300/40 shadow-lg cursor-default transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-2xl hover:border-slate-400/60 focus-within:-translate-y-2 focus-within:shadow-2xl focus-within:border-slate-400/60 motion-reduce:transition-none motion-reduce:hover:translate-y-0 overflow-hidden"
+              tabIndex={0}
+              data-testid="card-privacy"
+            >
+              <div className="absolute top-0 right-0 w-32 h-32 bg-slate-200/30 rounded-bl-full" aria-hidden="true" />
+              <CardContent className="p-8 md:p-10 space-y-5 relative">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-slate-300/30 to-slate-400/20 flex items-center justify-center transition-transform duration-300 ease-out group-hover:scale-110 group-hover:rotate-3 group-focus-within:scale-110 group-focus-within:rotate-3 motion-reduce:group-hover:scale-100 motion-reduce:group-hover:rotate-0 shadow-md">
+                  <Shield
+                    className="w-8 h-8 text-slate-600"
+                    aria-hidden="true"
+                  />
                 </div>
-              </div>
-              <div className="space-y-5 flex-1 md:text-left text-center max-w-3xl">
                 <div className="space-y-3">
-                  <h2
-                    id="safe-space-heading"
-                    className="relative inline-block text-2xl md:text-3xl font-bold text-slate-900 dark:text-slate-100 overflow-hidden"
-                  >
-                    <span className="relative z-10">A judgement-free space, built for your privacy.</span>
-                    <span
-                      aria-hidden="true"
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/90 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out motion-reduce:hidden dark:via-white/60"
-                    />
-                  </h2>
-                  <p className="text-base md:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
-                    We don't store what you write in this session. You decide
-                    what to share, and you can close this tab at any time.
+                  <h3 className="text-2xl font-bold text-foreground">
+                    A judgement-free space, built for your privacy.
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed text-base">
+                    We don't store what you write in this session. You decide what to share, and you can close this tab at any time.
                   </p>
+                  <ul className="space-y-2.5 pt-2">
+                    <li className="flex items-center gap-2.5 text-sm text-muted-foreground">
+                      <span className="w-1.5 h-1.5 rounded-full bg-slate-500 flex-shrink-0" aria-hidden="true" />
+                      <span className="font-medium">No account required.</span>
+                    </li>
+                    <li className="flex items-center gap-2.5 text-sm text-muted-foreground">
+                      <span className="w-1.5 h-1.5 rounded-full bg-slate-500 flex-shrink-0" aria-hidden="true" />
+                      <span className="font-medium">No tracking of your answers.</span>
+                    </li>
+                    <li className="flex items-center gap-2.5 text-sm text-muted-foreground">
+                      <span className="w-1.5 h-1.5 rounded-full bg-slate-500 flex-shrink-0" aria-hidden="true" />
+                      <span className="font-medium">You decide what to keep, copy, or delete.</span>
+                    </li>
+                  </ul>
                 </div>
-                <ul className="flex flex-col gap-3 text-sm text-slate-700 dark:text-slate-300 md:mx-0 mx-auto max-w-md">
-                  <li className="flex items-center gap-2.5">
-                    <span
-                      className="w-2 h-2 rounded-full bg-slate-600 dark:bg-slate-400 flex-shrink-0"
-                      aria-hidden="true"
-                    />
-                    <span className="font-medium">No account required.</span>
-                  </li>
-                  <li className="flex items-center gap-2.5">
-                    <span
-                      className="w-2 h-2 rounded-full bg-slate-600 dark:bg-slate-400 flex-shrink-0"
-                      aria-hidden="true"
-                    />
-                    <span className="font-medium">No tracking of your answers.</span>
-                  </li>
-                  <li className="flex items-center gap-2.5">
-                    <span
-                      className="w-2 h-2 rounded-full bg-slate-600 dark:bg-slate-400 flex-shrink-0"
-                      aria-hidden="true"
-                    />
-                    <span className="font-medium">You decide what to keep, copy, or delete.</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
 
+
+
       <section
-        className="relative py-12 md:py-20 px-4 sm:px-6 lg:px-8 bg-slate-50"
+        className="relative py-20 md:py-32 px-4 sm:px-6 lg:px-8 overflow-hidden"
+        style={{
+          background: 'linear-gradient(135deg, #064e3b 0%, #0d9488 25%, #134e4a 50%, #9a3412 75%, #7c2d12 100%)'
+        }}
         aria-labelledby="stories-heading"
         data-testid="section-stories"
       >
-        {/* Subtle top border */}
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-200/50 to-transparent" aria-hidden="true" />
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-10">
+        {/* Atmospheric background effects */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {/* Radial glow - top left */}
+          <div
+            className="absolute -top-40 -left-40 w-96 h-96 opacity-30 blur-3xl"
+            style={{
+              background: 'radial-gradient(circle, #14b8a6 0%, transparent 70%)',
+            }}
+          />
+          {/* Radial glow - bottom right */}
+          <div
+            className="absolute -bottom-40 -right-40 w-[500px] h-[500px] opacity-30 blur-3xl"
+            style={{
+              background: 'radial-gradient(circle, #f97316 0%, transparent 70%)',
+            }}
+          />
+          {/* Center ambient light - teal/orange mix */}
+          <div
+            className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] opacity-15 blur-3xl"
+            style={{
+              background: 'radial-gradient(circle, #14b8a6 0%, #f97316 50%, transparent 70%)',
+            }}
+          />
+          {/* Grain texture overlay */}
+          <div
+            className="absolute inset-0 opacity-[0.02]"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+            }}
+          />
+        </div>
+
+        <style>{`
+          @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400;1,600&display=swap');
+
+          @keyframes story-fade-in {
+            from {
+              opacity: 0;
+              transform: translateY(20px) scale(0.98);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0) scale(1);
+            }
+          }
+
+          @keyframes ambient-glow {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+          }
+
+          .story-quote {
+            font-family: 'Crimson Pro', Georgia, serif;
+            animation: story-fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          }
+
+          .ambient-orb {
+            animation: ambient-glow 4s ease-in-out infinite;
+          }
+        `}</style>
+
+        <div className="relative max-w-6xl mx-auto">
+          {/* Section Header */}
+          <div className="text-center mb-16 md:mb-24">
+            <div className="inline-block mb-6">
+              <div
+                className="h-1 w-20 rounded-full mx-auto mb-8"
+                style={{
+                  background: 'linear-gradient(90deg, #14b8a6 0%, #f97316 100%)',
+                }}
+              />
+            </div>
             <h2
               id="stories-heading"
-              className="text-3xl md:text-4xl font-bold text-foreground mb-3"
+              className="text-4xl md:text-6xl font-bold text-white mb-6"
+              style={{ fontFamily: 'DM Sans, system-ui, sans-serif', letterSpacing: '-0.03em' }}
             >
-              Stories of change
+              Stories of <span className="italic" style={{ fontFamily: 'Crimson Pro, Georgia, serif' }}>change</span>
             </h2>
-            <p className="text-lg text-muted-foreground">
+            <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed">
               Anonymized snapshots of how people are using Reframe.me.
             </p>
           </div>
 
+          {/* Story Showcase */}
           <div
-            className="relative max-w-2xl mx-auto"
+            className="relative max-w-5xl mx-auto"
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
           >
+            {/* Main story container */}
             <div
-              className="relative rounded-2xl border-2 border-primary/20 bg-gradient-to-br from-card to-muted/30 p-8 md:p-12 min-h-[180px] flex flex-col justify-center shadow-lg"
+              className="relative rounded-3xl overflow-hidden"
+              style={{
+                background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.08) 100%)',
+                backdropFilter: 'blur(20px)',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                boxShadow: '0 25px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+              }}
               role="region"
               aria-roledescription="carousel"
               aria-label="Stories of change"
             >
-              <div className="absolute top-4 right-4 text-6xl text-primary/10 font-serif" aria-hidden="true">"</div>
+              {/* Decorative top accent */}
               <div
-                key={storyIndex}
-                className={`text-center relative z-10 ${
-                  prefersReducedMotion ? "" : "animate-fade-in"
-                }`}
-                role="group"
-                aria-roledescription="slide"
-                aria-label={`${storyIndex + 1} of ${stories.length}`}
-              >
-                <p className="text-lg md:text-xl text-foreground leading-relaxed italic font-light">
-                  "{stories[storyIndex].quote}"
-                </p>
-                <div className="mt-6 flex items-center justify-center gap-2">
-                  <div className="w-8 h-0.5 bg-primary/30" aria-hidden="true" />
-                  <p className="text-sm font-medium text-muted-foreground">
-                    {stories[storyIndex].role}
-                  </p>
-                  <div className="w-8 h-0.5 bg-primary/30" aria-hidden="true" />
+                className="absolute top-0 left-0 right-0 h-px"
+                style={{
+                  background: 'linear-gradient(90deg, transparent 0%, rgba(20, 184, 166, 0.5) 50%, transparent 100%)',
+                }}
+              />
+
+              {/* Story content */}
+              <div className="relative px-8 py-16 md:px-16 md:py-24">
+                {/* Decorative quote mark - large */}
+                <div
+                  className="absolute top-12 left-8 md:left-12 text-9xl md:text-[12rem] leading-none opacity-10 pointer-events-none select-none"
+                  style={{
+                    fontFamily: 'Crimson Pro, Georgia, serif',
+                    color: '#14b8a6',
+                  }}
+                  aria-hidden="true"
+                >
+                  "
+                </div>
+
+                {/* Story content with stacked positioning */}
+                <div className="relative" style={{ minHeight: '280px' }}>
+                  {stories.map((story, index) => {
+                    const isActive = index === storyIndex;
+                    return (
+                      <div
+                        key={index}
+                        className={`absolute inset-0 flex flex-col justify-center transition-opacity duration-700 ${
+                          isActive ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'
+                        }`}
+                        role="group"
+                        aria-roledescription="slide"
+                        aria-label={`${index + 1} of ${stories.length}`}
+                        aria-hidden={!isActive}
+                      >
+                        {/* Quote text */}
+                        <blockquote
+                          className={`story-quote text-2xl md:text-4xl lg:text-5xl leading-tight md:leading-tight lg:leading-tight text-white font-light italic mb-10 md:mb-12 relative ${
+                            prefersReducedMotion ? '' : ''
+                          }`}
+                          style={{
+                            textShadow: '0 2px 20px rgba(0, 0, 0, 0.3)',
+                            letterSpacing: '-0.01em',
+                          }}
+                        >
+                          {story.quote}
+                        </blockquote>
+
+                        {/* Attribution */}
+                        <div className="flex items-center gap-4 relative">
+                          <div
+                            className="h-px flex-1 max-w-[80px]"
+                            style={{
+                              background: 'linear-gradient(90deg, rgba(249, 115, 22, 0.6) 0%, transparent 100%)',
+                            }}
+                          />
+                          <p
+                            className="text-sm md:text-base font-medium tracking-wide uppercase text-slate-300"
+                            style={{ letterSpacing: '0.1em' }}
+                          >
+                            {story.role}
+                          </p>
+                          <div
+                            className="h-px flex-1 max-w-[80px]"
+                            style={{
+                              background: 'linear-gradient(90deg, transparent 0%, rgba(249, 115, 22, 0.6) 100%)',
+                            }}
+                          />
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
+
+              {/* Decorative bottom accent */}
+              <div
+                className="absolute bottom-0 left-0 right-0 h-px"
+                style={{
+                  background: 'linear-gradient(90deg, transparent 0%, rgba(249, 115, 22, 0.5) 50%, transparent 100%)',
+                }}
+              />
             </div>
 
-            <div className="flex items-center justify-center gap-6 mt-8">
-              <Button
-                variant="outline"
-                size="icon"
+            {/* Navigation Controls */}
+            <div className="flex items-center justify-center gap-8 mt-12">
+              {/* Previous button */}
+              <button
                 onClick={prevStory}
                 aria-label="Previous story"
                 data-testid="button-story-prev"
-                className="rounded-full border-2 hover:border-primary/40 hover:bg-primary/5"
+                className="group relative w-14 h-14 rounded-full transition-all duration-300 hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)',
+                  backdropFilter: 'blur(10px)',
+                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',
+                }}
               >
-                <ChevronLeft className="w-5 h-5" aria-hidden="true" />
-              </Button>
+                <ChevronLeft className="w-6 h-6 text-white mx-auto transition-transform duration-300 group-hover:-translate-x-0.5" aria-hidden="true" />
+              </button>
 
+              {/* Dots navigation */}
               <div
-                className="flex items-center gap-2.5"
+                className="flex items-center gap-3"
                 role="tablist"
                 aria-label="Story slides"
               >
@@ -939,11 +1158,19 @@ export default function Home() {
                   <button
                     key={index}
                     onClick={() => goToStory(index)}
-                    className={`rounded-full transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${
+                    className={`rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 ${
                       index === storyIndex
-                        ? "bg-primary w-8 h-2.5"
-                        : "bg-muted-foreground/30 hover:bg-muted-foreground/50 w-2.5 h-2.5"
+                        ? 'w-12 h-3'
+                        : 'w-3 h-3 hover:scale-125'
                     }`}
+                    style={{
+                      background: index === storyIndex
+                        ? 'linear-gradient(90deg, #14b8a6 0%, #f97316 100%)'
+                        : 'rgba(255, 255, 255, 0.3)',
+                      boxShadow: index === storyIndex
+                        ? '0 0 20px rgba(20, 184, 166, 0.5)'
+                        : 'none',
+                    }}
                     role="tab"
                     aria-selected={index === storyIndex}
                     aria-label={`Go to story ${index + 1}`}
@@ -952,74 +1179,117 @@ export default function Home() {
                 ))}
               </div>
 
-              <Button
-                variant="outline"
-                size="icon"
+              {/* Next button */}
+              <button
                 onClick={nextStory}
                 aria-label="Next story"
                 data-testid="button-story-next"
-                className="rounded-full border-2 hover:border-primary/40 hover:bg-primary/5"
+                className="group relative w-14 h-14 rounded-full transition-all duration-300 hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)',
+                  backdropFilter: 'blur(10px)',
+                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',
+                }}
               >
-                <ChevronRight className="w-5 h-5" aria-hidden="true" />
-              </Button>
+                <ChevronRight className="w-6 h-6 text-white mx-auto transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true" />
+              </button>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* Donate CTA - After Stories Section */}
-      <section className="relative py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-white">
-        {/* Subtle top border */}
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-200/50 to-transparent" aria-hidden="true" />
-
-        <div className="relative max-w-4xl mx-auto">
-          <div className="text-center space-y-8">
-            {/* Icon decoration */}
-            <div className="flex justify-center">
-              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-orange-100 to-teal-100 flex items-center justify-center shadow-lg">
-                <Heart className="w-10 h-10 text-orange-600" fill="currentColor" aria-hidden="true" />
-              </div>
+          {/* Integrated Donate CTA */}
+          <div className="max-w-4xl mx-auto mt-20 md:mt-28">
+            {/* Divider */}
+            <div className="text-center mb-16">
+              <div
+                className="inline-block h-px w-48 rounded-full"
+                style={{
+                  background: 'linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%)',
+                }}
+              />
             </div>
 
-            <div className="space-y-4">
-              <h3 className="text-2xl md:text-3xl font-bold text-gray-900 italic" style={{ fontFamily: 'DM Sans, system-ui, sans-serif', letterSpacing: '-0.01em' }}>
+            {/* CTA Content */}
+            <div className="text-center space-y-10">
+              {/* Icon decoration */}
+              <div className="flex justify-center">
+                <div
+                  className="w-20 h-20 rounded-full flex items-center justify-center shadow-2xl relative"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(249, 115, 22, 0.2) 0%, rgba(20, 184, 166, 0.2) 100%)',
+                    backdropFilter: 'blur(20px)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                  }}
+                >
+                  {/* Glow effect */}
+                  <div
+                    className="absolute inset-0 rounded-full opacity-50 blur-xl"
+                    style={{
+                      background: 'linear-gradient(135deg, #f97316 0%, #14b8a6 100%)',
+                    }}
+                  />
+                  <Heart className="w-10 h-10 text-white relative z-10" fill="white" aria-hidden="true" />
+                </div>
+              </div>
+
+              {/* Heading */}
+              <h3
+                className="text-3xl md:text-5xl font-bold text-white italic leading-tight"
+                style={{
+                  fontFamily: 'Crimson Pro, Georgia, serif',
+                  textShadow: '0 2px 30px rgba(0, 0, 0, 0.3)',
+                  letterSpacing: '-0.01em',
+                }}
+              >
                 Stories like these are why this exists
               </h3>
 
-              <p className="text-base md:text-lg text-gray-700 leading-relaxed max-w-2xl mx-auto">
+              {/* Description */}
+              <p className="text-lg md:text-xl text-white/90 leading-relaxed max-w-2xl mx-auto font-light">
                 If this tool has helped you or someone you know, your support helps ensure it stays free and available for everyone navigating this journey.
               </p>
-            </div>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-              <Link href="/donate">
-                <Button
-                  size="lg"
-                  className="group relative px-8 py-6 text-base font-semibold rounded-lg transition-all duration-300 hover:scale-105"
-                  style={{
-                    background: 'linear-gradient(135deg, #f97316 0%, #fb923c 100%)',
-                    color: 'white',
-                    boxShadow: '0 4px 20px rgba(249, 115, 22, 0.3)'
-                  }}
+              {/* CTA Buttons */}
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6">
+                <Link href="/donate">
+                  <Button
+                    size="lg"
+                    className="group relative px-10 py-7 text-lg font-bold rounded-2xl transition-all duration-300 hover:scale-105 overflow-hidden"
+                    style={{
+                      background: 'linear-gradient(135deg, #f97316 0%, #fb923c 100%)',
+                      color: 'white',
+                      boxShadow: '0 10px 40px rgba(249, 115, 22, 0.4), 0 0 60px rgba(249, 115, 22, 0.2)',
+                    }}
+                  >
+                    <span className="relative z-10 flex items-center gap-3">
+                      <Heart className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" fill="currentColor" aria-hidden="true" />
+                      Support This Work
+                    </span>
+                    {/* Shine effect on hover */}
+                    <div
+                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                      style={{
+                        background: 'linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%)',
+                      }}
+                    />
+                  </Button>
+                </Link>
+
+                <span className="text-sm text-white/60 font-medium">or</span>
+
+                <a
+                  href="/donate"
+                  className="text-base font-semibold text-teal-300 hover:text-teal-200 underline underline-offset-4 decoration-2 hover:underline-offset-8 transition-all duration-300"
                 >
-                  <Heart className="w-4 h-4 mr-2 transition-transform duration-300 group-hover:scale-110" fill="currentColor" aria-hidden="true" />
-                  Support This Work
-                </Button>
-              </Link>
+                  Share with someone who needs it
+                </a>
+              </div>
 
-              <span className="text-sm text-gray-500">or</span>
-
-              <a
-                href="/donate"
-                className="text-sm font-medium text-teal-600 hover:text-teal-700 underline underline-offset-4 transition-colors duration-200"
-              >
-                Share with someone who needs it
-              </a>
+              {/* Note */}
+              <p className="text-sm text-white/60 italic pt-4 font-light">
+                Every bit helps—but this tool is here for you whether you can give or not.
+              </p>
             </div>
-
-            <p className="text-xs text-gray-500 italic pt-2">
-              Every bit helps—but this tool is here for you whether you can give or not.
-            </p>
           </div>
         </div>
       </section>
