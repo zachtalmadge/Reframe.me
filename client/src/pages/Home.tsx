@@ -913,8 +913,7 @@ export default function Home() {
                   most managers say workers with records perform as well as—or better than—
                   other employees once they&apos;re hired
                 </strong>
-                . With the right preparation, you still have a real shot. That openness
-                doesn&apos;t automatically turn into a job—candidates still have to get through
+                . That openness doesn&apos;t automatically turn into a job—candidates still have to get through
                 hard conversations about their record.
               </p>
             </div>
