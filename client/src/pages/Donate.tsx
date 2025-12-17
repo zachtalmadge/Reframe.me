@@ -17,7 +17,7 @@ import Layout from "@/components/Layout";
 
 export default function Donate() {
   const [showBackToTop, setShowBackToTop] = useState(false);
-  const qrSectionRef = useRef<HTMLElement>(null);
+  const qrSectionRef = useRef<HTMLSection>(null);
   const transparencySectionRef = useRef<HTMLElement>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [heroMounted, setHeroMounted] = useState(false);
@@ -70,12 +70,38 @@ export default function Donate() {
     <Layout>
       <div style={{ overflowX: 'hidden', width: '100%', position: 'relative' }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Work+Sans:wght@400;500;600;700;800&display=swap');
 
         @keyframes shimmer-flow {
           0% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
           100% { background-position: 0% 50%; }
+        }
+
+        @keyframes float-organic {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          33% { transform: translate(15px, -20px) scale(1.05); }
+          66% { transform: translate(-10px, 10px) scale(0.95); }
+        }
+
+        @keyframes fade-in-up {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .editorial-display {
+          font-family: 'Playfair Display', Georgia, serif;
+          letter-spacing: -0.02em;
+        }
+
+        .editorial-sans {
+          font-family: 'Work Sans', system-ui, sans-serif;
         }
 
         .display-font {
@@ -100,55 +126,37 @@ export default function Donate() {
             #14b8a6 75%,
             #0d9488 100%
           );
-          background-size: 300% 300%;
-          animation: shimmer-flow 8s ease infinite;
-        }
-
-        .text-gradient-warm {
-          background: linear-gradient(135deg, #0d9488 0%, #f97316 100%);
-          -webkit-background-clip: text;
-          background-clip: text;
-          -webkit-text-fill-color: transparent;
-          padding-right: 4px;
-          display: inline-block;
+          background-size: 200% 200%;
+          animation: shimmer-flow 8s ease-in-out infinite;
         }
 
         .organic-blob {
-          border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+          animation: float-organic 20s ease-in-out infinite;
+          border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
         }
 
-        .card-3d {
-          transform-style: preserve-3d;
-          transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-
-        .card-3d:hover {
-          transform: translateY(-12px) rotateX(2deg) rotateY(2deg);
-        }
-
-        .qr-card {
-          position: relative;
-          transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-
-        .qr-card::before {
-          content: '';
+        .section-number {
+          font-family: 'Playfair Display', Georgia, serif;
+          font-weight: 900;
+          font-size: 8rem;
+          line-height: 0.8;
+          opacity: 0.08;
           position: absolute;
-          inset: -4px;
-          background: linear-gradient(135deg, #14b8a6, #f97316);
-          border-radius: inherit;
-          opacity: 0;
-          transition: opacity 0.5s ease;
-          z-index: -1;
-          filter: blur(20px);
+          z-index: 0;
         }
 
-        .qr-card:hover::before {
-          opacity: 0.6;
+        .card-magazine {
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .qr-card:hover {
+        .card-magazine:hover {
           transform: translateY(-8px) scale(1.02);
+        }
+
+        @media (max-width: 768px) {
+          .section-number {
+            font-size: 4rem;
+          }
         }
       `}</style>
 
@@ -270,307 +278,191 @@ export default function Donate() {
         </div>
       </section>
 
-      {/* Payment Section - Mobile-First Responsive */}
+      {/* Section 01: Payment */}
       <section
         ref={qrSectionRef}
-        className="relative py-24 md:py-32 px-6 sm:px-8 lg:px-12 scroll-mt-20 overflow-hidden"
+        className="relative py-24 md:py-36 px-6 sm:px-8 lg:px-12 scroll-mt-20 overflow-hidden"
         style={{
-          background: 'linear-gradient(180deg, #ffffff 0%, #f0f9ff 50%, #ecfdf5 100%)',
+          background: 'linear-gradient(160deg, #fef9f3 0%, #fff9ed 50%, #fef3e2 100%)'
         }}
       >
-        {/* Decorative background */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 left-10 w-72 h-72 organic-blob bg-teal-200/20 blur-3xl" />
-          <div className="absolute bottom-20 right-10 w-96 h-96 organic-blob bg-orange-200/20 blur-3xl" />
-        </div>
-
         <div className="grain-overlay" />
 
-        <div className="relative max-w-5xl mx-auto">
-          <div className="text-center mb-16 px-4">
-            <div className="inline-block mb-4">
-              <div className="w-20 h-1 shimmer-gradient rounded-full mx-auto mb-8" />
-            </div>
-            <h2 className="display-font text-3xl sm:text-4xl md:text-6xl font-bold mb-6" style={{ paddingBottom: '0.25rem' }}>
-              Support Reframe.me <span className="text-gradient-warm">directly</span>
+        {/* Section number */}
+        <div className="section-number top-12 left-8 md:left-16 editorial-display text-orange-900/10">01</div>
+
+        <div className="relative max-w-6xl mx-auto">
+          {/* Header */}
+          <div className="max-w-4xl mb-20">
+            <div className="h-1 w-24 bg-gradient-to-r from-orange-600 to-transparent mb-8" />
+            <h2 className="editorial-display text-4xl md:text-6xl lg:text-7xl font-bold mb-8 text-gray-900 leading-tight">
+              Support <span className="italic text-orange-600">directly</span>
             </h2>
-            <p className="text-lg md:text-xl text-gray-700 leading-relaxed max-w-3xl mx-auto font-medium">
+            <p className="editorial-sans text-xl md:text-2xl text-gray-700 leading-relaxed font-medium max-w-3xl">
               Right now, donations go straight to me (the creator) through Cash App or PayPal.
               Contributions are voluntary and help cover the real costs of keeping Reframe.me running and improving.
             </p>
           </div>
 
-          {/* Mobile: Big Buttons (< 768px) */}
-          <div className="block md:hidden space-y-6 max-w-md mx-auto mb-12">
-            {/* Cash App Button */}
+          {/* Mobile: Big Buttons */}
+          <div className="block md:hidden space-y-6 max-w-md mx-auto mb-16">
+            {/* Cash App */}
             <a
               href="https://cash.app/$ztalmadge"
               target="_blank"
               rel="noopener noreferrer"
-              className="group block w-full"
+              className="block"
             >
-              <Card className="border-0 shadow-2xl overflow-hidden bg-gradient-to-br from-white to-green-50/50 backdrop-blur-sm hover:shadow-3xl transition-all duration-500 hover:-translate-y-2">
-                <CardContent className="p-8 space-y-6">
-                  <div className="text-center">
-                    <div className="inline-flex px-6 py-3 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 shadow-lg mb-4">
-                      <span className="text-base font-bold text-white tracking-wide">Cash App</span>
-                    </div>
-                  </div>
-
-                  <div className="relative">
-                    <Button
-                      size="lg"
-                      className="w-full min-h-[72px] text-xl font-bold shadow-xl transition-all duration-500"
-                      style={{
-                        background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-                        color: 'white',
-                        borderRadius: '16px',
-                      }}
-                    >
-                      <span className="flex items-center justify-center gap-3">
-                        Open Cash App
-                        <Heart className="w-6 h-6 transition-transform duration-300 group-hover:scale-125" />
-                      </span>
-                    </Button>
-                  </div>
-
-                  <p className="text-center text-sm text-gray-600 font-medium">
-                    Tap to open Cash App and contribute any amount
-                  </p>
-                </CardContent>
-              </Card>
+              <div className="card-magazine relative rounded-3xl p-8 shadow-2xl" style={{
+                background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+              }}>
+                <div className="flex items-center justify-between mb-6">
+                  <span className="editorial-sans text-sm font-bold tracking-wider uppercase text-white/80">Cash App</span>
+                  <Heart className="w-6 h-6 text-white/80" />
+                </div>
+                <p className="editorial-display text-3xl font-bold text-white mb-2">
+                  Tap to open
+                </p>
+                <p className="editorial-sans text-white/90 text-base">
+                  Contribute any amount
+                </p>
+              </div>
             </a>
 
-            {/* PayPal Button */}
+            {/* PayPal */}
             <a
               href="https://paypal.me/steezyzjt"
               target="_blank"
               rel="noopener noreferrer"
-              className="group block w-full"
+              className="block"
             >
-              <Card className="border-0 shadow-2xl overflow-hidden bg-gradient-to-br from-white to-indigo-50/50 backdrop-blur-sm hover:shadow-3xl transition-all duration-500 hover:-translate-y-2">
-                <CardContent className="p-8 space-y-6">
-                  <div className="text-center">
-                    <div className="inline-flex px-6 py-3 rounded-full bg-gradient-to-r from-indigo-500 to-blue-600 shadow-lg mb-4">
-                      <span className="text-base font-bold text-white tracking-wide">PayPal</span>
-                    </div>
-                  </div>
-
-                  <div className="relative">
-                    <Button
-                      size="lg"
-                      className="w-full min-h-[72px] text-xl font-bold shadow-xl transition-all duration-500"
-                      style={{
-                        background: 'linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)',
-                        color: 'white',
-                        borderRadius: '16px',
-                      }}
-                    >
-                      <span className="flex items-center justify-center gap-3">
-                        Open PayPal
-                        <Heart className="w-6 h-6 transition-transform duration-300 group-hover:scale-125" />
-                      </span>
-                    </Button>
-                  </div>
-
-                  <p className="text-center text-sm text-gray-600 font-medium">
-                    Tap to open PayPal and contribute any amount
-                  </p>
-                </CardContent>
-              </Card>
+              <div className="card-magazine relative rounded-3xl p-8 shadow-2xl" style={{
+                background: 'linear-gradient(135deg, #0070ba 0%, #003087 100%)',
+              }}>
+                <div className="flex items-center justify-between mb-6">
+                  <span className="editorial-sans text-sm font-bold tracking-wider uppercase text-white/80">PayPal</span>
+                  <Heart className="w-6 h-6 text-white/80" />
+                </div>
+                <p className="editorial-display text-3xl font-bold text-white mb-2">
+                  Tap to open
+                </p>
+                <p className="editorial-sans text-white/90 text-base">
+                  Contribute any amount
+                </p>
+              </div>
             </a>
           </div>
 
-          {/* Desktop: QR Codes + Links (>= 768px) */}
-          <div className="hidden md:grid md:grid-cols-2 gap-10 max-w-4xl mx-auto mb-12">
+          {/* Desktop: QR Codes */}
+          <div className="hidden md:grid grid-cols-2 gap-12 mb-20">
             {/* Cash App Card */}
-            <div className="qr-card">
-              <Card className="border-0 shadow-2xl overflow-hidden bg-gradient-to-br from-white to-green-50/50 backdrop-blur-sm">
-                <CardContent className="p-10 space-y-6">
-                  <div className="text-center">
-                    <div className="inline-flex px-6 py-3 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 shadow-lg">
-                      <span className="text-base font-bold text-white tracking-wide">Cash App</span>
-                    </div>
+            <div className="card-magazine relative rounded-3xl overflow-hidden shadow-2xl" style={{
+              background: 'linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%)',
+              border: '3px solid #10b981'
+            }}>
+              <div className="p-10 space-y-8">
+                <div className="flex items-center justify-between">
+                  <h3 className="editorial-display text-3xl font-bold text-gray-900">Cash App</h3>
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{
+                    background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)'
+                  }}>
+                    <Heart className="w-6 h-6 text-white" fill="white" />
                   </div>
+                </div>
 
-                  <div className="flex justify-center relative">
-                    <div className="absolute inset-0 bg-gradient-to-br from-green-200 to-emerald-300 blur-2xl opacity-30 rounded-3xl transform scale-95" />
-                    <div className="relative p-4 bg-white rounded-2xl shadow-xl">
-                      <img
-                        src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://cash.app/$ztalmadge"
-                        alt="Cash App QR Code"
-                        className="w-56 h-56 rounded-xl"
-                      />
-                    </div>
+                <div className="flex justify-center">
+                  <div className="relative p-4 bg-white rounded-2xl shadow-xl">
+                    <img
+                      src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://cash.app/$ztalmadge"
+                      alt="Cash App QR Code"
+                      className="w-56 h-56 rounded-xl"
+                    />
                   </div>
+                </div>
 
-                  <div className="text-center pt-2">
-                    <a
-                      href="https://cash.app/$ztalmadge"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-lg font-bold text-green-700 hover:text-green-600 underline decoration-2 underline-offset-4 hover:underline-offset-8 transition-all duration-300"
-                    >
-                      Open CashApp
-                      <span className="text-xl">→</span>
-                    </a>
-                  </div>
-                </CardContent>
-              </Card>
+                <a
+                  href="https://cash.app/$ztalmadge"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-center"
+                >
+                  <span className="editorial-sans text-lg font-bold inline-flex items-center gap-2 transition-all duration-300 hover:gap-4" style={{ color: '#059669' }}>
+                    Open Cash App
+                    <span className="text-2xl">→</span>
+                  </span>
+                </a>
+              </div>
             </div>
 
             {/* PayPal Card */}
-            <div className="qr-card">
-              <Card className="border-0 shadow-2xl overflow-hidden bg-gradient-to-br from-white to-indigo-50/50 backdrop-blur-sm">
-                <CardContent className="p-10 space-y-6">
-                  <div className="text-center">
-                    <div className="inline-flex px-6 py-3 rounded-full bg-gradient-to-r from-indigo-500 to-blue-600 shadow-lg">
-                      <span className="text-base font-bold text-white tracking-wide">PayPal</span>
-                    </div>
+            <div className="card-magazine relative rounded-3xl overflow-hidden shadow-2xl" style={{
+              background: 'linear-gradient(135deg, #ffffff 0%, #eff6ff 100%)',
+              border: '3px solid #0070ba'
+            }}>
+              <div className="p-10 space-y-8">
+                <div className="flex items-center justify-between">
+                  <h3 className="editorial-display text-3xl font-bold text-gray-900">PayPal</h3>
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{
+                    background: 'linear-gradient(135deg, #0070ba 0%, #003087 100%)'
+                  }}>
+                    <Heart className="w-6 h-6 text-white" fill="white" />
                   </div>
+                </div>
 
-                  <div className="flex justify-center relative">
-                    <div className="absolute inset-0 bg-gradient-to-br from-indigo-200 to-blue-300 blur-2xl opacity-30 rounded-3xl transform scale-95" />
-                    <div className="relative p-4 bg-white rounded-2xl shadow-xl">
-                      <img
-                        src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://paypal.me/steezyzjt"
-                        alt="PayPal QR Code"
-                        className="w-56 h-56 rounded-xl"
-                      />
-                    </div>
+                <div className="flex justify-center">
+                  <div className="relative p-4 bg-white rounded-2xl shadow-xl">
+                    <img
+                      src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://paypal.me/steezyzjt"
+                      alt="PayPal QR Code"
+                      className="w-56 h-56 rounded-xl"
+                    />
                   </div>
+                </div>
 
-                  <div className="text-center pt-2">
-                    <a
-                      href="https://paypal.me/steezyzjt"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-lg font-bold text-indigo-700 hover:text-indigo-600 underline decoration-2 underline-offset-4 hover:underline-offset-8 transition-all duration-300"
-                    >
-                      Open PayPal
-                      <span className="text-xl">→</span>
-                    </a>
-                  </div>
-                </CardContent>
-              </Card>
+                <a
+                  href="https://paypal.me/steezyzjt"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-center"
+                >
+                  <span className="editorial-sans text-lg font-bold inline-flex items-center gap-2 transition-all duration-300 hover:gap-4" style={{ color: '#003087' }}>
+                    Open PayPal
+                    <span className="text-2xl">→</span>
+                  </span>
+                </a>
+              </div>
             </div>
           </div>
 
-          {/* Unified Instructions - Desktop Only */}
-          <div className="hidden md:block max-w-3xl mx-auto mb-16">
-            <div className="text-center p-8 rounded-2xl bg-white/80 backdrop-blur-sm shadow-lg border border-gray-100">
-              <p className="text-lg text-gray-700 leading-relaxed font-medium">
+          {/* Instructions - Desktop Only */}
+          <div className="hidden md:block mb-16">
+            <div className="rounded-2xl p-8 text-center" style={{
+              background: 'rgba(255, 255, 255, 0.6)',
+              border: '2px solid rgba(120, 53, 15, 0.1)'
+            }}>
+              <p className="editorial-sans text-lg text-gray-700 leading-relaxed font-medium">
                 Scan the QR code with your phone or click the link to send a one-time contribution.
-                You can add <span className="font-bold text-teal-700">'Reframe.me support'</span> in the note if you'd like.
+                You can add <span className="font-bold text-orange-700">'Reframe.me support'</span> in the note if you'd like.
               </p>
             </div>
           </div>
 
-          {/* Safety Notice - Enhanced */}
-          <div className="max-w-3xl mx-auto">
-            <div className="relative rounded-2xl border-2 border-orange-200 bg-gradient-to-br from-orange-50 to-amber-50/50 p-8 shadow-lg overflow-hidden">
-              <div className="absolute -right-10 -top-10 w-40 h-40 organic-blob bg-orange-200/30" />
-              <div className="relative flex items-start gap-4">
-                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center shadow-md">
-                  <Lock className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <p className="font-bold text-orange-900 mb-2 text-lg">Important safety note</p>
-                  <p className="text-base text-orange-800 leading-relaxed">
-                    Please don't include any personal or sensitive legal details in payment notes.
-                    Your story belongs in your documents, not in a payment memo.
-                  </p>
-                </div>
+          {/* Safety Notice */}
+          <div className="relative rounded-2xl overflow-hidden p-8 md:p-10 shadow-xl" style={{
+            background: 'linear-gradient(135deg, #fff7ed 0%, #fed7aa 100%)',
+            border: '2px solid #f97316'
+          }}>
+            <div className="flex items-start gap-6">
+              <div className="flex-shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg" style={{
+                background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)'
+              }}>
+                <Lock className="w-7 h-7 text-white" />
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Why Your Support Matters - Asymmetric Grid */}
-      <section className="relative py-20 md:py-28 px-6 sm:px-8 lg:px-12 bg-gradient-to-br from-slate-50 via-white to-teal-50/30">
-        <div className="grain-overlay" />
-
-        <div className="relative max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <div className="inline-block mb-4">
-              <div className="w-16 h-1 shimmer-gradient rounded-full mx-auto mb-6" />
-            </div>
-            <h2 className="display-font text-4xl md:text-5xl font-bold text-gray-900 mb-6" style={{ paddingBottom: '0.25rem' }}>
-              Your support helps to
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-            {/* Card 1 - Larger */}
-            <Card className="card-3d border-0 shadow-xl md:row-span-1 overflow-hidden bg-gradient-to-br from-teal-50 to-teal-100/50">
-              <CardContent className="p-8 relative">
-                <div className="absolute -right-8 -top-8 w-32 h-32 organic-blob bg-teal-200/30" />
-                <div className="relative space-y-4">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-teal-500 to-teal-600 flex items-center justify-center shadow-lg">
-                    <Sparkles className="w-8 h-8 text-white" />
-                  </div>
-                  <p className="text-lg font-semibold text-gray-800 leading-relaxed">
-                    Cover AI and hosting costs so people can generate narratives and letters for free
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Card 2 */}
-            <Card className="card-3d border-0 shadow-xl overflow-hidden bg-gradient-to-br from-orange-50 to-orange-100/50">
-              <CardContent className="p-8 relative">
-                <div className="absolute -left-8 -bottom-8 w-32 h-32 organic-blob bg-orange-200/30" />
-                <div className="relative space-y-4">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center shadow-lg">
-                    <Shield className="w-8 h-8 text-white" />
-                  </div>
-                  <p className="text-lg font-semibold text-gray-800 leading-relaxed">
-                    Keep Reframe.me privacy-first and account-free
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Card 3 */}
-            <Card className="card-3d border-0 shadow-xl overflow-hidden bg-gradient-to-br from-teal-50 to-cyan-100/50">
-              <CardContent className="p-8 relative">
-                <div className="absolute -right-12 -bottom-12 w-40 h-40 organic-blob bg-cyan-200/30" />
-                <div className="relative space-y-4">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-500 to-teal-600 flex items-center justify-center shadow-lg">
-                    <MessageSquare className="w-8 h-8 text-white" />
-                  </div>
-                  <p className="text-lg font-semibold text-gray-800 leading-relaxed">
-                    Improve prompts, wording, and features with feedback from job seekers and re-entry coaches
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Card 4 */}
-            <Card className="card-3d border-0 shadow-xl overflow-hidden bg-gradient-to-br from-orange-50 to-amber-100/50">
-              <CardContent className="p-8 relative">
-                <div className="absolute -left-8 -top-8 w-32 h-32 organic-blob bg-amber-200/30" />
-                <div className="relative space-y-4">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-lg">
-                    <Users className="w-8 h-8 text-white" />
-                  </div>
-                  <p className="text-lg font-semibold text-gray-800 leading-relaxed">
-                    Make it easier for organizations to use this tool with their clients
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="text-center mt-16">
-            <div className="inline-block relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-teal-100 via-orange-100 to-teal-100 blur-xl opacity-60" />
-              <div className="relative px-10 py-6 rounded-3xl bg-white shadow-xl border-2 border-teal-100">
-                <p className="display-font text-2xl font-semibold text-gray-800 italic">
-                  Whether you can donate or not,
-                  <br />
-                  <span className="text-gradient-warm">this tool is here for you.</span>
+              <div>
+                <p className="editorial-sans text-lg font-bold text-orange-900 mb-3">Important safety note</p>
+                <p className="editorial-sans text-base text-orange-800 leading-relaxed font-medium">
+                  Please don't include any personal or sensitive legal details in payment notes.
+                  Your story belongs in your documents, not in a payment memo.
                 </p>
               </div>
             </div>
@@ -578,87 +470,164 @@ export default function Donate() {
         </div>
       </section>
 
-      {/* Transparency Section - Editorial Style */}
-      <section
-        ref={transparencySectionRef}
-        className="relative py-24 md:py-32 px-6 sm:px-8 lg:px-12 scroll-mt-20 overflow-hidden"
-        style={{
-          background: 'linear-gradient(135deg, #fafaf9 0%, #f5f5f4 50%, #fafaf9 100%)',
-        }}
-      >
+      {/* Section 02: Why Your Support Matters */}
+      <section className="relative py-24 md:py-36 px-6 sm:px-8 lg:px-12 overflow-hidden" style={{
+        background: 'linear-gradient(160deg, #f0fdfa 0%, #ccfbf1 50%, #f0fdfa 100%)'
+      }}>
         <div className="grain-overlay" />
+        <div className="section-number top-12 right-8 md:right-16 editorial-display text-teal-900/10">02</div>
 
-        <div className="relative max-w-5xl mx-auto">
-          <div className="text-center mb-16 px-4">
-            <div className="w-16 h-1 shimmer-gradient rounded-full mx-auto mb-8" />
-            <h2 className="display-font text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-6" style={{ paddingBottom: '0.25rem' }}>
-              How your support is <span className="text-gradient-warm italic">used</span>
+        <div className="relative max-w-6xl mx-auto">
+          <div className="max-w-4xl mb-20">
+            <div className="h-1 w-24 bg-gradient-to-r from-teal-600 to-transparent mb-8" />
+            <h2 className="editorial-display text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 leading-tight mb-12">
+              Your support <span className="italic text-teal-600">helps to</span>
             </h2>
           </div>
 
-          <div className="space-y-6 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
             {[
               {
-                title: "AI and infrastructure costs",
-                desc: "LLM subscription and tokens for generating narratives and letters, plus hosting and basic infrastructure.",
-                color: "teal",
+                icon: Sparkles,
+                text: "Cover AI and hosting costs so people can generate narratives and letters for free",
+                color: "#0d9488",
+                bg: "linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%)"
               },
               {
-                title: "Ongoing development",
-                desc: "Time spent improving prompts, fixing bugs, polishing the UI, and responding to feedback from people using the tool in real hiring situations.",
-                color: "orange",
+                icon: Shield,
+                text: "Keep Reframe.me privacy-first and account-free",
+                color: "#f97316",
+                bg: "linear-gradient(135deg, #fff7ed 0%, #fed7aa 100%)"
               },
               {
-                title: "Creator time & sustainability",
-                desc: "A portion supports my time working on Reframe.me so this project can keep going instead of burning out.",
-                color: "cyan",
+                icon: MessageSquare,
+                text: "Improve prompts, wording, and features with feedback from job seekers and re-entry coaches",
+                color: "#0891b2",
+                bg: "linear-gradient(135deg, #ecfeff 0%, #cffafe 100%)"
               },
+              {
+                icon: Users,
+                text: "Make it easier for organizations to use this tool with their clients",
+                color: "#ea580c",
+                bg: "linear-gradient(135deg, #ffedd5 0%, #fed7aa 100%)"
+              }
             ].map((item, i) => (
               <div
                 key={i}
-                className="relative rounded-2xl border-2 bg-white p-8 shadow-lg transition-all duration-500 hover:shadow-2xl hover:-translate-y-1 overflow-hidden group"
-                style={{
-                  borderColor: item.color === 'teal' ? '#14b8a6' : item.color === 'orange' ? '#f97316' : '#06b6d4',
-                }}
+                className="card-magazine relative rounded-3xl p-8 md:p-10 shadow-xl overflow-hidden"
+                style={{ background: item.bg }}
               >
-                <div className="absolute -right-16 -bottom-16 w-48 h-48 organic-blob opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{
-                    background: `radial-gradient(circle, ${item.color === 'teal' ? '#14b8a650' : item.color === 'orange' ? '#f9731650' : '#06b6d450'} 0%, transparent 70%)`,
-                  }}
-                />
-                <div className="relative">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-3 display-font">{item.title}</h3>
-                  <p className="text-base text-gray-600 leading-relaxed">{item.desc}</p>
+                <div className="relative z-10 flex items-start gap-6">
+                  <div className="flex-shrink-0 w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg" style={{
+                    background: item.color
+                  }}>
+                    <item.icon className="w-8 h-8 text-white" />
+                  </div>
+                  <p className="editorial-sans text-lg md:text-xl font-semibold text-gray-900 leading-relaxed pt-2">
+                    {item.text}
+                  </p>
                 </div>
               </div>
             ))}
           </div>
 
-          <div className="relative mt-16 p-8 rounded-3xl overflow-hidden shadow-2xl"
-            style={{
-              background: 'linear-gradient(135deg, #ecfdf5 0%, #f0fdfa 100%)',
-              border: '3px solid #14b8a6',
-            }}
-          >
-            <div className="absolute top-0 right-0 w-64 h-64 organic-blob bg-teal-200/20 blur-3xl" />
-            <p className="relative text-lg text-gray-800 leading-relaxed text-center font-semibold">
-              You're supporting a real person maintaining and improving
-              a tool that's free for people with records to use.
-            </p>
+          <div className="text-center">
+            <div className="inline-block relative rounded-3xl p-10 md:p-12 shadow-2xl" style={{
+              background: 'linear-gradient(135deg, #ffffff 0%, #f0fdfa 100%)',
+              border: '3px solid #0d9488'
+            }}>
+              <p className="editorial-display text-2xl md:text-3xl font-bold text-gray-900 italic leading-relaxed">
+                Whether you can donate or not,
+                <br className="hidden md:block" />
+                <span className="text-teal-600"> this tool is here for you.</span>
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Why This Work Matters - Testimonial with Impact */}
-      <section className="relative py-24 md:py-32 px-6 sm:px-8 lg:px-12 overflow-hidden bg-gradient-to-br from-orange-50 via-teal-50 to-orange-50">
+      {/* Section 03: Transparency */}
+      <section
+        ref={transparencySectionRef}
+        className="relative py-24 md:py-36 px-6 sm:px-8 lg:px-12 scroll-mt-20 overflow-hidden"
+        style={{
+          background: 'linear-gradient(160deg, #fafaf9 0%, #f5f5f4 100%)'
+        }}
+      >
         <div className="grain-overlay" />
+        <div className="section-number top-12 left-8 md:left-16 editorial-display text-stone-900/10">03</div>
+
+        <div className="relative max-w-6xl mx-auto">
+          <div className="max-w-4xl mb-20">
+            <div className="h-1 w-24 bg-gradient-to-r from-stone-600 to-transparent mb-8" />
+            <h2 className="editorial-display text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 leading-tight">
+              How your support <span className="italic text-orange-600">is used</span>
+            </h2>
+          </div>
+
+          <div className="space-y-6 mb-16">
+            {[
+              {
+                title: "AI and infrastructure costs",
+                desc: "LLM subscription and tokens for generating narratives and letters, plus hosting and basic infrastructure.",
+                color: "#0d9488",
+                bg: "linear-gradient(135deg, #f0fdfa 0%, #ffffff 100%)"
+              },
+              {
+                title: "Ongoing development",
+                desc: "Time spent improving prompts, fixing bugs, polishing the UI, and responding to feedback from people using the tool in real hiring situations.",
+                color: "#f97316",
+                bg: "linear-gradient(135deg, #fff7ed 0%, #ffffff 100%)"
+              },
+              {
+                title: "Creator time & sustainability",
+                desc: "A portion supports my time working on Reframe.me so this project can keep going instead of burning out.",
+                color: "#0891b2",
+                bg: "linear-gradient(135deg, #ecfeff 0%, #ffffff 100%)"
+              }
+            ].map((item, i) => (
+              <div
+                key={i}
+                className="card-magazine relative rounded-3xl p-8 md:p-10 shadow-xl"
+                style={{
+                  background: item.bg,
+                  borderLeft: `6px solid ${item.color}`
+                }}
+              >
+                <h3 className="editorial-display text-2xl md:text-3xl font-bold text-gray-900 mb-4">{item.title}</h3>
+                <p className="editorial-sans text-base md:text-lg text-gray-700 leading-relaxed font-medium">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="relative rounded-3xl p-10 md:p-12 shadow-2xl overflow-hidden" style={{
+            background: 'linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%)',
+            border: '3px solid #0d9488'
+          }}>
+            <div className="relative z-10 text-center">
+              <p className="editorial-sans text-xl md:text-2xl text-gray-900 leading-relaxed font-bold">
+                You're supporting a real person maintaining and improving
+                a tool that's free for people with records to use.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Section 04: Why This Matters */}
+      <section className="relative py-24 md:py-36 px-6 sm:px-8 lg:px-12 overflow-hidden" style={{
+        background: 'linear-gradient(160deg, #fff7ed 0%, #ffedd5 50%, #fff7ed 100%)'
+      }}>
+        <div className="grain-overlay" />
+        <div className="section-number top-12 right-8 md:right-16 editorial-display text-orange-900/10">04</div>
 
         <div className="relative max-w-5xl mx-auto">
-          <div className="text-center mb-12 px-4">
-            <h2 className="display-font text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-8" style={{ paddingBottom: '0.25rem' }}>
-              Why this work <span className="text-gradient-warm italic">matters</span>
+          <div className="max-w-4xl mb-16">
+            <div className="h-1 w-24 bg-gradient-to-r from-orange-600 to-transparent mb-8" />
+            <h2 className="editorial-display text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 leading-tight mb-12">
+              Why this work <span className="italic text-orange-600">matters</span>
             </h2>
-            <p className="text-xl md:text-2xl text-gray-700 leading-relaxed max-w-3xl mx-auto font-medium">
+            <p className="editorial-sans text-xl md:text-2xl text-gray-700 leading-relaxed font-medium">
               Talking about a record with an employer can be one of the hardest parts of a job search.
               Many people don't have a lawyer, career coach, or mentor to help them find the words.
               Reframe.me gives them a starting point — language they can edit, practice, and make their
@@ -666,96 +635,112 @@ export default function Donate() {
             </p>
           </div>
 
-          <div className="relative mt-16 p-12 md:p-16 rounded-3xl shadow-2xl overflow-hidden"
-            style={{
-              background: 'linear-gradient(135deg, #ffffff 0%, #f0fdfa 100%)',
-              border: '3px solid #14b8a6',
-            }}
-          >
-            <div className="absolute top-8 left-8 text-9xl display-font text-teal-200/40 leading-none pointer-events-none" style={{ fontStyle: 'italic' }}>"</div>
-            <div className="absolute bottom-8 right-8 text-9xl display-font text-teal-200/40 leading-none pointer-events-none rotate-180" style={{ fontStyle: 'italic' }}>"</div>
-            <div className="absolute -right-20 -top-20 w-64 h-64 organic-blob bg-teal-200/20 blur-3xl" />
-            <div className="relative z-10">
-              <p className="display-font text-2xl md:text-3xl italic text-gray-800 leading-relaxed text-center mb-6">
+          <div className="relative rounded-3xl p-12 md:p-16 shadow-2xl overflow-hidden" style={{
+            background: 'linear-gradient(135deg, #ffffff 0%, #f0fdfa 100%)',
+            border: '4px solid #0d9488'
+          }}>
+            <div className="absolute top-8 left-8 editorial-display text-8xl md:text-9xl text-teal-200/30 leading-none pointer-events-none">"</div>
+            <div className="absolute bottom-8 right-8 editorial-display text-8xl md:text-9xl text-teal-200/30 leading-none pointer-events-none rotate-180">"</div>
+
+            <div className="relative z-10 text-center space-y-8">
+              <p className="editorial-display text-2xl md:text-3xl lg:text-4xl italic text-gray-900 leading-relaxed">
                 "My client said this was the first time they saw their story written in a way that
                 didn't shame them. It helped them feel ready to respond instead of shutting down."
               </p>
-              <div className="flex items-center justify-center gap-3">
-                <div className="w-12 h-0.5 bg-teal-400" />
-                <p className="text-base font-semibold text-teal-700 tracking-wide">
+              <div className="flex items-center justify-center gap-4">
+                <div className="h-px w-16 bg-teal-400" />
+                <p className="editorial-sans text-base md:text-lg font-bold text-teal-700 tracking-wide uppercase">
                   Re-entry coach, anonymized
                 </p>
-                <div className="w-12 h-0.5 bg-teal-400" />
+                <div className="h-px w-16 bg-teal-400" />
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Privacy & Data Reassurance */}
-      <section className="relative py-20 md:py-28 px-6 sm:px-8 lg:px-12 bg-white">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12 px-4">
-            <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-teal-500 to-teal-600 mb-8 shadow-xl">
+      {/* Section 05: Privacy Reassurance */}
+      <section className="relative py-24 md:py-36 px-6 sm:px-8 lg:px-12 overflow-hidden" style={{
+        background: 'linear-gradient(160deg, #f0fdfa 0%, #ccfbf1 100%)'
+      }}>
+        <div className="grain-overlay" />
+        <div className="section-number top-12 left-8 md:left-16 editorial-display text-teal-900/10">05</div>
+
+        <div className="relative max-w-5xl mx-auto">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl mb-8 shadow-2xl" style={{
+              background: 'linear-gradient(135deg, #0d9488 0%, #0f766e 100%)'
+            }}>
               <Lock className="w-10 h-10 text-white" />
             </div>
-            <h2 className="display-font text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4" style={{ paddingBottom: '0.25rem' }}>
-              Your data and your donation are <span className="text-gradient-warm italic">separate</span>
+            <h2 className="editorial-display text-4xl md:text-6xl font-bold text-gray-900 leading-tight mb-4">
+              Your data and your donation <br className="hidden md:block" />
+              are <span className="italic text-teal-600">separate</span>
             </h2>
           </div>
 
-          <div className="space-y-5 max-w-2xl mx-auto mb-12">
+          <div className="space-y-6 mb-12 max-w-3xl mx-auto">
             {[
               "Reframe.me does not tie your donation to your narrative or letter content.",
               "The app is designed to avoid long-term storage of sensitive answers.",
-              "Payment info stays with the payment platform; the tool itself doesn't track your card or bank details.",
+              "Payment info stays with the payment platform; the tool itself doesn't track your card or bank details."
             ].map((text, i) => (
-              <div key={i} className="flex items-start gap-4 p-4 rounded-xl hover:bg-teal-50/50 transition-colors">
-                <div className="w-3 h-3 rounded-full bg-gradient-to-br from-teal-500 to-teal-600 mt-2 flex-shrink-0 shadow-md" />
-                <p className="text-lg text-gray-700 leading-relaxed font-medium">{text}</p>
+              <div key={i} className="flex items-start gap-6 p-6 rounded-2xl transition-all duration-300 hover:bg-white/60">
+                <div className="flex-shrink-0 w-3 h-3 rounded-full mt-2.5 shadow-md" style={{
+                  background: 'linear-gradient(135deg, #0d9488 0%, #0f766e 100%)'
+                }} />
+                <p className="editorial-sans text-lg md:text-xl text-gray-800 leading-relaxed font-medium">{text}</p>
               </div>
             ))}
           </div>
 
-          <div className="relative p-8 rounded-2xl overflow-hidden shadow-xl"
-            style={{
-              background: 'linear-gradient(135deg, #ecfdf5 0%, #f0fdfa 100%)',
-              border: '2px solid #14b8a6',
-            }}
-          >
-            <div className="absolute -right-12 -bottom-12 w-48 h-48 organic-blob bg-teal-200/20" />
-            <p className="relative text-lg font-bold text-center text-teal-900">
+          <div className="relative rounded-3xl p-10 md:p-12 shadow-2xl" style={{
+            background: 'linear-gradient(135deg, #ffffff 0%, #f0fdfa 100%)',
+            border: '3px solid #0d9488'
+          }}>
+            <p className="editorial-sans text-xl md:text-2xl font-bold text-center text-teal-900 leading-relaxed">
               Donations support the tool — not data collection. What you type into Reframe.me is not linked to your contribution.
             </p>
           </div>
         </div>
       </section>
 
-      {/* FAQ Section - Modern Accordion */}
-      <section className="relative py-20 md:py-28 px-6 sm:px-8 lg:px-12 bg-gradient-to-b from-slate-50 to-white">
-        <div className="relative max-w-3xl mx-auto">
-          <div className="text-center mb-14 px-4">
-            <div className="w-16 h-1 shimmer-gradient rounded-full mx-auto mb-8" />
-            <h2 className="display-font text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4" style={{ paddingBottom: '0.25rem' }}>
-              Questions & <span className="text-gradient-warm italic">Answers</span>
+      {/* Section 06: FAQ */}
+      <section className="relative py-24 md:py-36 px-6 sm:px-8 lg:px-12 overflow-hidden" style={{
+        background: 'linear-gradient(160deg, #fafaf9 0%, #e7e5e4 100%)'
+      }}>
+        <div className="grain-overlay" />
+        <div className="section-number top-12 right-8 md:right-16 editorial-display text-stone-900/10">06</div>
+
+        <div className="relative max-w-4xl mx-auto">
+          <div className="text-center mb-16">
+            <div className="h-1 w-24 bg-gradient-to-r from-stone-600 to-transparent mb-8 mx-auto" />
+            <h2 className="editorial-display text-4xl md:text-6xl font-bold text-gray-900 leading-tight">
+              Questions & <span className="italic text-orange-600">Answers</span>
             </h2>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-6">
             {faqItems.map((item, index) => (
               <div
                 key={index}
-                className="rounded-2xl border-2 border-gray-200 bg-white overflow-hidden shadow-md hover:shadow-xl transition-all duration-300"
+                className="rounded-2xl overflow-hidden shadow-xl"
+                style={{
+                  background: '#ffffff',
+                  border: '2px solid #e7e5e4'
+                }}
               >
                 <button
                   onClick={() => toggleFaq(index)}
-                  className="w-full flex items-center justify-between p-7 text-left hover:bg-gray-50 transition-colors group"
+                  className="w-full flex items-center justify-between p-8 text-left hover:bg-stone-50 transition-colors group"
                   aria-expanded={openFaq === index}
                 >
-                  <span className="text-xl font-bold text-gray-900 pr-4 display-font">{item.question}</span>
-                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-teal-500 to-teal-600 flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow">
+                  <span className="editorial-display text-xl md:text-2xl font-bold text-gray-900 pr-6">{item.question}</span>
+                  <div className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center shadow-md transition-all duration-300" style={{
+                    background: openFaq === index ? 'linear-gradient(135deg, #0d9488 0%, #0f766e 100%)' : 'linear-gradient(135deg, #d6d3d1 0%, #a8a29e 100%)'
+                  }}>
                     <ChevronDown
-                      className={`w-5 h-5 text-white transition-transform duration-300 ${
+                      className={`w-6 h-6 text-white transition-transform duration-300 ${
                         openFaq === index ? "rotate-180" : ""
                       }`}
                     />
@@ -766,8 +751,8 @@ export default function Donate() {
                     openFaq === index ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
                   } overflow-hidden`}
                 >
-                  <div className="px-7 pb-7 pt-2 bg-gradient-to-br from-teal-50/30 to-transparent">
-                    <p className="text-lg text-gray-700 leading-relaxed">{item.answer}</p>
+                  <div className="px-8 pb-8 pt-2">
+                    <p className="editorial-sans text-lg md:text-xl text-gray-700 leading-relaxed">{item.answer}</p>
                   </div>
                 </div>
               </div>
@@ -776,16 +761,20 @@ export default function Donate() {
         </div>
       </section>
 
-      {/* Other Ways to Support */}
-      <section className="relative py-20 md:py-28 px-6 sm:px-8 lg:px-12 overflow-hidden bg-gradient-to-br from-orange-50 via-teal-50 to-orange-50">
+      {/* Section 07: Other Ways to Support */}
+      <section className="relative py-24 md:py-36 px-6 sm:px-8 lg:px-12 overflow-hidden" style={{
+        background: 'linear-gradient(160deg, #fff7ed 0%, #fed7aa 50%, #fff7ed 100%)'
+      }}>
         <div className="grain-overlay" />
+        <div className="section-number top-12 left-8 md:left-16 editorial-display text-orange-900/10">07</div>
 
-        <div className="relative max-w-5xl mx-auto">
-          <div className="text-center mb-14 px-4">
-            <h2 className="display-font text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-6" style={{ paddingBottom: '0.25rem' }}>
-              Other ways to <span className="text-gradient-warm italic">support</span>
+        <div className="relative max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <div className="h-1 w-24 bg-gradient-to-r from-orange-600 to-transparent mb-8 mx-auto" />
+            <h2 className="editorial-display text-4xl md:text-6xl font-bold text-gray-900 leading-tight mb-6">
+              Other ways to <span className="italic text-orange-600">support</span>
             </h2>
-            <p className="text-xl text-gray-600 font-medium">For folks who can't give money</p>
+            <p className="editorial-sans text-xl md:text-2xl text-gray-700 font-semibold">For folks who can't give money</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -793,67 +782,66 @@ export default function Donate() {
               {
                 icon: Share2,
                 text: "Share Reframe.me with a re-entry coach, legal aid group, or workforce program.",
-                color: "teal",
+                color: "#0d9488",
+                bg: "linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%)"
               },
               {
                 icon: MessageSquare,
                 text: "Send feedback about what's confusing or what would make this more helpful.",
-                color: "orange",
+                color: "#f97316",
+                bg: "linear-gradient(135deg, #fff7ed 0%, #fed7aa 100%)"
               },
               {
                 icon: Briefcase,
                 text: "If you work in hiring, consider how fair-chance practices and tools like this can be part of your process.",
-                color: "cyan",
-              },
+                color: "#0891b2",
+                bg: "linear-gradient(135deg, #ecfeff 0%, #cffafe 100%)"
+              }
             ].map((item, i) => (
-              <Card
+              <div
                 key={i}
-                className="card-3d border-0 shadow-xl overflow-hidden bg-white hover:shadow-2xl"
+                className="card-magazine relative rounded-3xl p-8 md:p-10 shadow-xl overflow-hidden"
+                style={{ background: item.bg }}
               >
-                <CardContent className="p-8 text-center space-y-6 relative">
-                  <div className={`absolute -right-8 -bottom-8 w-32 h-32 organic-blob opacity-20`}
-                    style={{
-                      background: `radial-gradient(circle, ${item.color === 'teal' ? '#14b8a6' : item.color === 'orange' ? '#f97316' : '#06b6d4'} 0%, transparent 70%)`,
-                    }}
-                  />
-                  <div className="relative inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br shadow-lg"
-                    style={{
-                      background: item.color === 'teal' ? 'linear-gradient(135deg, #14b8a6, #0d9488)' : item.color === 'orange' ? 'linear-gradient(135deg, #f97316, #fb923c)' : 'linear-gradient(135deg, #06b6d4, #0891b2)',
-                    }}
-                  >
+                <div className="text-center space-y-6">
+                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl shadow-lg" style={{
+                    background: item.color
+                  }}>
                     <item.icon className="w-8 h-8 text-white" />
                   </div>
-                  <p className="relative text-base text-gray-700 leading-relaxed font-medium">{item.text}</p>
-                </CardContent>
-              </Card>
+                  <p className="editorial-sans text-base md:text-lg text-gray-800 leading-relaxed font-semibold">{item.text}</p>
+                </div>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Closing CTA - Emotional Impact */}
-      <section className="relative py-24 md:py-32 px-6 sm:px-8 lg:px-12 overflow-hidden bg-gradient-to-br from-white via-teal-50/30 to-orange-50/30">
+      {/* Closing CTA */}
+      <section className="relative py-24 md:py-36 px-6 sm:px-8 lg:px-12 overflow-hidden" style={{
+        background: 'linear-gradient(160deg, #f0fdfa 0%, #fff7ed 50%, #f0fdfa 100%)'
+      }}>
         <div className="grain-overlay" />
 
-        <div className="relative max-w-4xl mx-auto text-center space-y-12">
-          <p className="display-font text-3xl md:text-4xl italic text-gray-800 leading-relaxed">
+        <div className="relative max-w-5xl mx-auto text-center space-y-12">
+          <p className="editorial-display text-3xl md:text-4xl lg:text-5xl italic text-gray-900 leading-relaxed">
             If Reframe.me has helped you or someone you care about and you're in a position to give,
-            <span className="text-gradient-warm font-bold"> thank you</span>. If you're not able to donate, you're still exactly who this tool is for.
+            <span className="font-bold text-orange-600"> thank you</span>. If you're not able to donate, you're still exactly who this tool is for.
           </p>
 
           <Button
             onClick={scrollToQR}
             size="lg"
-            className="group relative min-h-[64px] px-14 text-xl font-bold shadow-2xl transition-all duration-500"
+            className="group relative min-h-[72px] px-16 text-xl md:text-2xl font-bold shadow-2xl transition-all duration-500"
             style={{
               background: 'linear-gradient(135deg, #fb923c 0%, #f97316 100%)',
               color: 'white',
-              borderRadius: '16px',
+              borderRadius: '20px',
             }}
           >
-            <span className="relative z-10 flex items-center gap-3">
+            <span className="relative z-10 flex items-center gap-4">
               Support Reframe.me
-              <Heart className="w-6 h-6 transition-transform duration-300 group-hover:scale-125" fill="white" />
+              <Heart className="w-7 h-7 transition-transform duration-300 group-hover:scale-125" fill="white" />
             </span>
           </Button>
         </div>
@@ -863,7 +851,10 @@ export default function Donate() {
       {showBackToTop && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 w-16 h-16 rounded-full shadow-2xl hover:shadow-3xl hover:scale-110 transition-all duration-300 z-50 flex items-center justify-center shimmer-gradient"
+          className="fixed bottom-8 right-8 w-16 h-16 rounded-full shadow-2xl hover:shadow-3xl hover:scale-110 transition-all duration-300 z-50 flex items-center justify-center"
+          style={{
+            background: 'linear-gradient(135deg, #0d9488 0%, #0f766e 100%)'
+          }}
           aria-label="Back to top"
         >
           <ArrowUp className="w-7 h-7 text-white" />
