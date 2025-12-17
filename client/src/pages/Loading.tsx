@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { useSearch, useLocation } from "wouter";
-import { Loader2, AlertCircle, ArrowLeft, RefreshCw } from "lucide-react";
+import { AlertCircle, ArrowLeft, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/Layout";
 import {
@@ -95,7 +95,7 @@ export default function Loading() {
 
     const timer = setTimeout(() => {
       setIsMessageVisible(false);
-      
+
       setTimeout(() => {
         setMessageIndex((prev) => prev + 1);
         setIsMessageVisible(true);
@@ -110,7 +110,7 @@ export default function Loading() {
 
     const timer = setInterval(() => {
       setIsQuoteVisible(false);
-      
+
       setTimeout(() => {
         setQuoteIndex((prev) => (prev + 1) % motivationalQuotes.length);
         setIsQuoteVisible(true);
@@ -302,74 +302,163 @@ export default function Loading() {
   if (generationState.status === "error") {
     return (
       <Layout onLogoClick={handleLogoClick} onFaqClick={handleFaqClick}>
+        <style>{`
+          @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Nunito:wght@400;600;700;800&display=swap');
+
+          .error-serif {
+            font-family: 'Libre Baskerville', Georgia, serif;
+            letter-spacing: -0.01em;
+          }
+
+          .error-sans {
+            font-family: 'Nunito', system-ui, sans-serif;
+          }
+
+          @keyframes error-float {
+            0%, 100% {
+              transform: translateY(0px);
+            }
+            50% {
+              transform: translateY(-8px);
+            }
+          }
+
+          @keyframes error-pulse-glow {
+            0%, 100% {
+              box-shadow: 0 0 20px rgba(220, 38, 38, 0.3);
+            }
+            50% {
+              box-shadow: 0 0 40px rgba(220, 38, 38, 0.5);
+            }
+          }
+        `}</style>
+
         <section
-          className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 min-h-screen bg-gradient-to-b from-red-50/50 via-slate-50 to-slate-100/50 dark:from-red-950/20 dark:via-slate-900 dark:to-slate-800 relative overflow-hidden"
+          className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 min-h-screen relative overflow-hidden"
+          style={{
+            background: 'linear-gradient(135deg, #fef3f2 0%, #fefaf8 50%, #fef2f2 100%)'
+          }}
           aria-labelledby="error-heading"
         >
-          {/* Animated background elements */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-red-500/5 rounded-full blur-3xl animate-pulse" />
-            <div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-red-500/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
-          </div>
+          {/* Organic background texture */}
+          <div className="absolute inset-0 opacity-[0.03]" style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23dc2626' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+          }} />
 
-          <div className="max-w-lg mx-auto text-center space-y-8 relative z-10">
-            <div className="relative w-24 h-24 mx-auto">
-              <div className="absolute inset-0 bg-destructive/20 rounded-full animate-ping" />
-              <div className="relative w-24 h-24 rounded-full bg-gradient-to-br from-destructive/20 to-destructive/10 flex items-center justify-center shadow-xl ring-4 ring-destructive/20">
-                <AlertCircle
-                  className="w-12 h-12 text-destructive"
-                  aria-hidden="true"
-                />
+          {/* Floating accent shapes */}
+          <div className="absolute top-10 left-10 w-32 h-32 rounded-full opacity-10" style={{
+            background: 'radial-gradient(circle, #dc2626 0%, transparent 70%)',
+            animation: 'error-float 6s ease-in-out infinite'
+          }} />
+          <div className="absolute bottom-20 right-20 w-48 h-48 rounded-full opacity-10" style={{
+            background: 'radial-gradient(circle, #ea580c 0%, transparent 70%)',
+            animation: 'error-float 8s ease-in-out infinite',
+            animationDelay: '1s'
+          }} />
+
+          <div className="max-w-2xl mx-auto text-center space-y-10 relative z-10">
+            {/* Error icon with organic treatment */}
+            <div className="relative inline-block" style={{ animation: 'error-pulse-glow 3s ease-in-out infinite' }}>
+              <div className="relative">
+                {/* Layered backgrounds for depth */}
+                <div className="absolute inset-0 bg-red-100 rounded-full blur-xl opacity-60" />
+                <div className="absolute inset-0 bg-red-200 rounded-full blur-lg opacity-40" style={{ transform: 'scale(0.85)' }} />
+
+                {/* Main icon container */}
+                <div className="relative w-28 h-28 rounded-full flex items-center justify-center" style={{
+                  background: 'linear-gradient(135deg, #fca5a5 0%, #dc2626 100%)',
+                  boxShadow: '0 10px 40px rgba(220, 38, 38, 0.25), inset 0 -2px 10px rgba(0,0,0,0.1)'
+                }}>
+                  <AlertCircle className="w-16 h-16 text-white" strokeWidth={2.5} aria-hidden="true" />
+                </div>
               </div>
             </div>
 
-            <div className="space-y-4">
+            {/* Heading with editorial styling */}
+            <div className="space-y-5">
               <h1
                 id="error-heading"
-                className="text-3xl md:text-4xl font-bold text-foreground"
+                className="error-serif text-3xl md:text-5xl font-bold"
+                style={{
+                  color: '#7c2d12',
+                  lineHeight: '1.15'
+                }}
               >
-                We couldn't generate your documents right now
+                Something didn't work
               </h1>
+              <div className="w-16 h-1 mx-auto rounded-full" style={{
+                background: 'linear-gradient(90deg, transparent 0%, #dc2626 50%, transparent 100%)'
+              }} />
               <p
-                className="text-lg md:text-xl text-muted-foreground"
+                className="error-sans text-lg md:text-xl font-semibold"
+                style={{ color: '#9a3412' }}
                 data-testid="text-error-message"
               >
                 {generationState.error?.message}
               </p>
             </div>
 
-            <div className="bg-gradient-to-br from-muted/50 to-muted/30 rounded-2xl p-6 border-2 border-border/50 shadow-lg">
-              <p className="text-base text-muted-foreground font-medium">
-                Nothing you entered was lost. Your information is safely saved.
+            {/* Reassurance card with texture */}
+            <div className="relative rounded-3xl overflow-hidden p-8" style={{
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(254,243,199,0.8) 100%)',
+              border: '2px solid rgba(217, 119, 6, 0.15)',
+              boxShadow: '0 8px 32px rgba(217, 119, 6, 0.08)'
+            }}>
+              <div className="absolute inset-0 opacity-5" style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h40v40H0V0zm20 2.5a17.5 17.5 0 1 0 0 35 17.5 17.5 0 0 0 0-35z' fill='%23d97706' fill-opacity='1' fill-rule='evenodd'/%3E%3C/svg%3E")`
+              }} />
+
+              <p className="error-sans text-base md:text-lg font-bold relative z-10" style={{ color: '#78350f' }}>
+                Your information is safe
+              </p>
+              <p className="error-sans text-sm md:text-base mt-2 relative z-10" style={{ color: '#92400e' }}>
+                Nothing you entered was lost. Everything is saved.
               </p>
             </div>
 
+            {/* Action buttons with warmth */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
               <Button
                 onClick={handleRetry}
                 size="lg"
-                className="group shadow-lg hover:shadow-xl transition-all"
+                className="group error-sans font-bold text-base px-8 py-6 rounded-2xl transition-all duration-300"
+                style={{
+                  background: 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)',
+                  boxShadow: '0 4px 20px rgba(220, 38, 38, 0.3)',
+                  border: 'none'
+                }}
                 data-testid="button-retry"
               >
-                <RefreshCw className="w-5 h-5 mr-2 group-hover:rotate-180 transition-transform duration-500" aria-hidden="true" />
+                <RefreshCw className="w-5 h-5 mr-2 group-hover:rotate-180 transition-transform duration-700" aria-hidden="true" />
                 Try Again
               </Button>
               <Button
                 variant="outline"
                 size="lg"
                 onClick={handleGoBack}
-                className="group border-2"
+                className="group error-sans font-bold text-base px-8 py-6 rounded-2xl transition-all duration-300"
+                style={{
+                  borderWidth: '2px',
+                  borderColor: '#dc2626',
+                  color: '#dc2626',
+                  background: 'transparent'
+                }}
                 data-testid="button-go-back"
               >
-                <ArrowLeft className="w-5 h-5 mr-2 transition-transform duration-200 group-hover:-translate-x-1" aria-hidden="true" />
-                Go back to form
+                <ArrowLeft className="w-5 h-5 mr-2 transition-transform duration-300 group-hover:-translate-x-1" aria-hidden="true" />
+                Back to Form
               </Button>
             </div>
 
             {generationState.retryCount > 2 && (
-              <p className="text-sm text-muted-foreground pt-4 bg-amber-50 dark:bg-amber-950/20 p-4 rounded-lg border border-amber-200 dark:border-amber-800">
-                Still having trouble? Please try again later or contact support if the issue persists.
-              </p>
+              <div className="rounded-2xl p-6 mt-6" style={{
+                background: 'rgba(254, 243, 199, 0.4)',
+                border: '1.5px solid rgba(217, 119, 6, 0.3)'
+              }}>
+                <p className="error-sans text-sm font-semibold" style={{ color: '#92400e' }}>
+                  Still having trouble? Please try again later or contact support if the issue persists.
+                </p>
+              </div>
             )}
           </div>
         </section>
@@ -384,175 +473,348 @@ export default function Loading() {
 
   return (
     <Layout onLogoClick={handleLogoClick} onFaqClick={handleFaqClick}>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Nunito:wght@400;600;700;800&display=swap');
+
+        .loading-serif {
+          font-family: 'Libre Baskerville', Georgia, serif;
+          letter-spacing: -0.01em;
+        }
+
+        .loading-sans {
+          font-family: 'Nunito', system-ui, sans-serif;
+        }
+
+        @keyframes breathe-in-out {
+          0%, 100% {
+            transform: scale(1);
+            opacity: 0.6;
+          }
+          50% {
+            transform: scale(1.15);
+            opacity: 0.85;
+          }
+        }
+
+        @keyframes ink-spread {
+          0% {
+            transform: scale(0.3);
+            opacity: 0.8;
+          }
+          50% {
+            opacity: 0.4;
+          }
+          100% {
+            transform: scale(2);
+            opacity: 0;
+          }
+        }
+
+        @keyframes ripple-soft {
+          0% {
+            transform: scale(0.95);
+            opacity: 0;
+          }
+          30% {
+            opacity: 0.5;
+          }
+          100% {
+            transform: scale(1.8);
+            opacity: 0;
+          }
+        }
+
+        @keyframes float-gentle {
+          0%, 100% {
+            transform: translate(0, 0) rotate(0deg);
+          }
+          25% {
+            transform: translate(10px, -10px) rotate(5deg);
+          }
+          50% {
+            transform: translate(-5px, -20px) rotate(-3deg);
+          }
+          75% {
+            transform: translate(-10px, -10px) rotate(2deg);
+          }
+        }
+
+        @keyframes page-turn {
+          0% {
+            transform: perspective(1000px) rotateY(-5deg);
+          }
+          100% {
+            transform: perspective(1000px) rotateY(5deg);
+          }
+        }
+
+        .ink-blob {
+          position: absolute;
+          border-radius: 50%;
+          animation: ink-spread 8s ease-out infinite;
+        }
+
+        .ink-blob:nth-child(1) {
+          top: 20%;
+          left: 15%;
+          width: 200px;
+          height: 200px;
+          background: radial-gradient(circle, rgba(13, 148, 136, 0.12) 0%, transparent 70%);
+          animation-delay: 0s;
+        }
+
+        .ink-blob:nth-child(2) {
+          bottom: 30%;
+          right: 20%;
+          width: 250px;
+          height: 250px;
+          background: radial-gradient(circle, rgba(249, 115, 22, 0.1) 0%, transparent 70%);
+          animation-delay: 3s;
+        }
+
+        .ink-blob:nth-child(3) {
+          top: 50%;
+          left: 50%;
+          width: 180px;
+          height: 180px;
+          background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, transparent 70%);
+          animation-delay: 6s;
+        }
+
+        .breathing-circle {
+          animation: breathe-in-out 7s ease-in-out infinite;
+        }
+
+        .ripple-ring {
+          animation: ripple-soft 5s ease-out infinite;
+        }
+      `}</style>
+
       <section
-        className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 min-h-screen relative overflow-hidden bg-gradient-to-b from-teal-50/30 via-white to-orange-50/20"
+        className="py-12 md:py-20 px-4 sm:px-6 lg:px-8 min-h-screen relative overflow-hidden"
+        style={{
+          background: 'linear-gradient(165deg, #fdfcfb 0%, #fef9f3 30%, #fef6ee 60%, #fefaf8 100%)'
+        }}
         aria-labelledby="loading-heading"
       >
-        <style>{`
-          @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
+        {/* Paper texture overlay */}
+        <div className="absolute inset-0 opacity-[0.015]" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E")`,
+          backgroundRepeat: 'repeat'
+        }} />
 
-          .loading-heading {
-            font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
-            letter-spacing: -0.03em;
-          }
-
-          @keyframes gentle-pulse {
-            0%, 100% {
-              transform: scale(1);
-              opacity: 0.5;
-            }
-            50% {
-              transform: scale(1.08);
-              opacity: 0.7;
-            }
-          }
-
-          @keyframes soft-breathe {
-            0%, 100% {
-              transform: scale(1);
-              opacity: 0.7;
-            }
-            50% {
-              transform: scale(1.05);
-              opacity: 0.9;
-            }
-          }
-
-          @keyframes ripple {
-            0% {
-              transform: scale(0.8);
-              opacity: 0.6;
-            }
-            70% {
-              transform: scale(1.8);
-              opacity: 0.15;
-            }
-            100% {
-              transform: scale(2.2);
-              opacity: 0;
-            }
-          }
-
-          @keyframes fade-in-out {
-            0%, 100% { opacity: 0.15; }
-            50% { opacity: 0.05; }
-          }
-        `}</style>
-
-        {/* Subtle background accent - single calm orb */}
+        {/* Animated ink blobs */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-3xl"
-            style={{
-              background: 'radial-gradient(circle, rgba(13, 148, 136, 0.08) 0%, transparent 70%)',
-              animation: 'fade-in-out 8s ease-in-out infinite'
-            }}
-          />
+          <div className="ink-blob" />
+          <div className="ink-blob" />
+          <div className="ink-blob" />
         </div>
 
-        <div className="max-w-2xl mx-auto text-center space-y-12 relative z-10">
-          {/* Simplified calm loader - concentric breathing circles */}
-          <div className="relative w-32 h-32 mx-auto">
-            {/* Outer ripple rings - like sonar */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div
-                className="w-full h-full rounded-full border-2 border-teal-300"
-                style={{
-                  animation: 'ripple 6s ease-out infinite'
-                }}
-              />
-            </div>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div
-                className="w-full h-full rounded-full border-2 border-teal-300"
-                style={{
-                  animation: 'ripple 6s ease-out infinite 2s'
-                }}
-              />
-            </div>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div
-                className="w-full h-full rounded-full border-2 border-teal-300"
-                style={{
-                  animation: 'ripple 6s ease-out infinite 4s'
-                }}
-              />
-            </div>
+        <div className="max-w-3xl mx-auto relative z-10">
+          {/* Main loading visualization - organic breathing orbs */}
+          <div className="flex items-center justify-center mb-16 md:mb-20 pt-8">
+            <div className="relative w-48 h-48 md:w-56 md:h-56">
+              {/* Outer ripple rings */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="ripple-ring w-full h-full rounded-full border-2"
+                  style={{
+                    borderColor: 'rgba(13, 148, 136, 0.2)',
+                    animationDelay: '0s'
+                  }}
+                />
+              </div>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="ripple-ring w-full h-full rounded-full border-2"
+                  style={{
+                    borderColor: 'rgba(13, 148, 136, 0.2)',
+                    animationDelay: '1.7s'
+                  }}
+                />
+              </div>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="ripple-ring w-full h-full rounded-full border-2"
+                  style={{
+                    borderColor: 'rgba(249, 115, 22, 0.15)',
+                    animationDelay: '3.4s'
+                  }}
+                />
+              </div>
 
-            {/* Central breathing circle */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div
-                className="w-20 h-20 rounded-full bg-gradient-to-br from-teal-400/40 to-teal-500/40 backdrop-blur-sm flex items-center justify-center shadow-lg"
-                style={{
-                  animation: 'soft-breathe 5s ease-in-out infinite'
-                }}
-              >
-                <div className="w-12 h-12 rounded-full bg-white/60 flex items-center justify-center">
-                  <div className="w-3 h-3 rounded-full bg-teal-500"
+              {/* Central breathing orb */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="breathing-circle w-32 h-32 md:w-40 md:h-40 rounded-full flex items-center justify-center"
+                  style={{
+                    background: 'radial-gradient(circle, rgba(13, 148, 136, 0.25) 0%, rgba(13, 148, 136, 0.08) 60%, transparent 100%)',
+                    boxShadow: '0 0 60px rgba(13, 148, 136, 0.15), inset 0 0 30px rgba(255, 255, 255, 0.5)'
+                  }}
+                >
+                  <div className="w-20 h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center"
                     style={{
-                      animation: 'gentle-pulse 3s ease-in-out infinite'
+                      background: 'linear-gradient(135deg, rgba(249, 115, 22, 0.3) 0%, rgba(13, 148, 136, 0.25) 100%)',
+                      backdropFilter: 'blur(8px)',
+                      boxShadow: 'inset 0 2px 8px rgba(255, 255, 255, 0.6)'
                     }}
-                  />
+                  >
+                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-full"
+                      style={{
+                        background: 'radial-gradient(circle, #14b8a6 0%, #0d9488 100%)',
+                        boxShadow: '0 4px 16px rgba(13, 148, 136, 0.4)',
+                        animation: 'breathe-in-out 4s ease-in-out infinite'
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="space-y-6">
-            <h1
-              id="loading-heading"
-              className="loading-heading text-3xl md:text-4xl font-bold text-gray-800"
-            >
-              Generating Your Documents
-            </h1>
-            <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-8 border border-teal-100/50 shadow-sm">
-              <p
-                className={`text-lg md:text-xl text-gray-700 transition-opacity duration-500 ${
-                  isMessageVisible ? "opacity-100" : "opacity-0"
-                }`}
-                data-testid="text-loading-message"
-                aria-live="polite"
+          {/* Content area with editorial spacing */}
+          <div className="space-y-12 md:space-y-14">
+            {/* Main heading */}
+            <div className="text-center space-y-6">
+              <h1
+                id="loading-heading"
+                className="loading-serif text-3xl md:text-5xl lg:text-6xl font-bold"
+                style={{
+                  color: '#0f766e',
+                  lineHeight: '1.1',
+                  textShadow: '0 2px 4px rgba(13, 148, 136, 0.1)'
+                }}
               >
-                {loadingMessages[messageIndex]}
-              </p>
-            </div>
-          </div>
+                Crafting your{' '}
+                <span style={{
+                  background: 'linear-gradient(135deg, #0d9488 0%, #f97316 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text'
+                }}>
+                  story
+                </span>
+              </h1>
 
-          <div
-            className={`transition-all duration-700 ease-in-out overflow-hidden ${
-              showQuotes ? "max-h-80 opacity-100" : "max-h-0 opacity-0"
-            }`}
-            aria-hidden="true"
-          >
-            <div className="bg-gradient-to-br from-white/80 to-teal-50/40 backdrop-blur-sm rounded-2xl p-10 border border-teal-100/30 shadow-sm">
-              <div className="relative space-y-6">
-                <div className="w-12 h-px bg-gradient-to-r from-transparent via-teal-300 to-transparent mx-auto" />
-                <p
-                  className={`text-lg md:text-xl text-gray-700 leading-relaxed transition-opacity duration-500 ${
-                    isQuoteVisible ? "opacity-100" : "opacity-0"
-                  }`}
-                  style={{ fontFamily: "'DM Sans', system-ui, -apple-system, sans-serif" }}
-                  data-testid="text-motivational-quote"
-                >
-                  {motivationalQuotes[quoteIndex].text}
-                </p>
-                <p
-                  className={`text-sm text-gray-500 font-medium transition-opacity duration-500 ${
-                    isQuoteVisible ? "opacity-100" : "opacity-0"
-                  }`}
-                  data-testid="text-quote-author"
-                >
-                  — {motivationalQuotes[quoteIndex].author}
-                </p>
-                <div className="w-12 h-px bg-gradient-to-r from-transparent via-teal-300 to-transparent mx-auto" />
+              {/* Decorative divider */}
+              <div className="flex items-center justify-center gap-3">
+                <div className="w-12 h-px"
+                  style={{
+                    background: 'linear-gradient(90deg, transparent 0%, #0d9488 100%)'
+                  }}
+                />
+                <div className="w-2 h-2 rounded-full"
+                  style={{ background: '#f97316' }}
+                />
+                <div className="w-12 h-px"
+                  style={{
+                    background: 'linear-gradient(90deg, #0d9488 0%, transparent 100%)'
+                  }}
+                />
               </div>
             </div>
-          </div>
 
-          <div className="pt-2">
-            <p className="text-sm text-gray-500">
-              This usually takes just a few seconds
-            </p>
+            {/* Status message card */}
+            <div className="relative rounded-3xl overflow-hidden"
+              style={{
+                background: 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(254,252,232,0.6) 100%)',
+                border: '1.5px solid rgba(13, 148, 136, 0.15)',
+                boxShadow: '0 8px 32px rgba(13, 148, 136, 0.08), inset 0 1px 0 rgba(255,255,255,0.8)'
+              }}
+            >
+              {/* Subtle pattern overlay */}
+              <div className="absolute inset-0 opacity-[0.03]"
+                style={{
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230d9488' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+                }}
+              />
+
+              <div className="relative z-10 p-10 md:p-12">
+                <p
+                  className={`loading-sans text-xl md:text-2xl font-bold text-center transition-all duration-700 ${
+                    isMessageVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                  }`}
+                  style={{
+                    color: '#115e59'
+                  }}
+                  data-testid="text-loading-message"
+                  aria-live="polite"
+                >
+                  {loadingMessages[messageIndex]}
+                </p>
+              </div>
+            </div>
+
+            {/* Motivational quotes section */}
+            <div
+              className={`transition-all duration-700 ease-in-out ${
+                showQuotes ? "max-h-96 opacity-100" : "max-h-0 opacity-0 overflow-hidden"
+              }`}
+              aria-hidden="true"
+            >
+              <div className="relative rounded-3xl overflow-hidden p-10 md:p-14"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(254,252,232,0.5) 0%, rgba(255,255,255,0.8) 50%, rgba(254,243,199,0.4) 100%)',
+                  border: '1.5px solid rgba(249, 115, 22, 0.12)',
+                  boxShadow: '0 12px 40px rgba(249, 115, 22, 0.08)'
+                }}
+              >
+                {/* Quote marks decoration */}
+                <div className="absolute top-6 left-6 text-6xl md:text-7xl opacity-10 loading-serif"
+                  style={{ color: '#ea580c' }}
+                >
+                  "
+                </div>
+
+                <div className="relative space-y-8">
+                  <div className="w-20 h-0.5 mx-auto rounded-full"
+                    style={{
+                      background: 'linear-gradient(90deg, transparent 0%, #f97316 50%, transparent 100%)'
+                    }}
+                  />
+
+                  <blockquote
+                    className={`loading-serif italic text-xl md:text-2xl lg:text-3xl leading-relaxed text-center transition-all duration-700 ${
+                      isQuoteVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+                    }`}
+                    style={{
+                      color: '#78350f',
+                      lineHeight: '1.6'
+                    }}
+                    data-testid="text-motivational-quote"
+                  >
+                    {motivationalQuotes[quoteIndex].text}
+                  </blockquote>
+
+                  <p
+                    className={`loading-sans text-base md:text-lg font-bold text-center transition-all duration-700 ${
+                      isQuoteVisible ? "opacity-100" : "opacity-0"
+                    }`}
+                    style={{
+                      color: '#92400e',
+                      letterSpacing: '0.05em'
+                    }}
+                    data-testid="text-quote-author"
+                  >
+                    — {motivationalQuotes[quoteIndex].author}
+                  </p>
+
+                  <div className="w-20 h-0.5 mx-auto rounded-full"
+                    style={{
+                      background: 'linear-gradient(90deg, transparent 0%, #f97316 50%, transparent 100%)'
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Subtle timing note */}
+            <div className="text-center pt-4">
+              <p className="loading-sans text-sm font-semibold tracking-wide"
+                style={{
+                  color: '#64748b',
+                  opacity: 0.7
+                }}
+              >
+                This usually takes just a few moments
+              </p>
+            </div>
           </div>
         </div>
       </section>
