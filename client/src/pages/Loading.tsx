@@ -770,16 +770,17 @@ export default function Loading() {
                   />
 
                   <blockquote
-                    className={`loading-serif italic text-xl md:text-2xl lg:text-3xl leading-relaxed text-center transition-all duration-700 ${
+                    className={`loading-serif italic text-xl md:text-2xl lg:text-3xl leading-relaxed text-center transition-all duration-700 flex items-center justify-center ${
                       isQuoteVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
                     }`}
                     style={{
                       color: '#78350f',
-                      lineHeight: '1.6'
+                      lineHeight: '1.6',
+                      minHeight: '140px'
                     }}
                     data-testid="text-motivational-quote"
                   >
-                    {motivationalQuotes[quoteIndex].text}
+                    <span>{motivationalQuotes[quoteIndex].text}</span>
                   </blockquote>
 
                   <p
