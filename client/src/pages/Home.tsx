@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -110,6 +110,7 @@ export default function Home() {
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [isThisForMeOpen, setIsThisForMeOpen] = useState(false);
   const [animationReady, setAnimationReady] = useState(false);
+  const isThisForMeRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const prefersReduced = window.matchMedia?.(
@@ -225,6 +226,19 @@ export default function Home() {
 
   const nextStory = () => {
     setStoryIndex((prev) => (prev + 1) % stories.length);
+  };
+
+  const handleCloseIsThisForMe = () => {
+    setIsThisForMeOpen(false);
+    // Scroll to top of section smoothly on mobile
+    if (isThisForMeRef.current && window.innerWidth <= 768) {
+      setTimeout(() => {
+        isThisForMeRef.current?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }, 100);
+    }
   };
 
   return (
@@ -569,7 +583,7 @@ export default function Home() {
 
         <div className="relative max-w-7xl mx-auto">
           {/* Is This For Me - Premium Treatment */}
-          <div className="max-w-5xl mx-auto mb-24" data-testid="section-is-this-for-me">
+          <div ref={isThisForMeRef} className="max-w-5xl mx-auto mb-24" data-testid="section-is-this-for-me">
             <div
               className="relative rounded-3xl overflow-hidden backdrop-blur-md"
               style={{
@@ -737,7 +751,7 @@ export default function Home() {
 
                   {/* Close button for mobile */}
                   <button
-                    onClick={() => setIsThisForMeOpen((prev) => !prev)}
+                    onClick={handleCloseIsThisForMe}
                     className="md:hidden w-full rounded-xl py-4 px-6 flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-[0.98]"
                     style={{
                       background: 'linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, rgba(249, 115, 22, 0.1) 100%)',
