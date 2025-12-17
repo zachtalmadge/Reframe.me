@@ -322,7 +322,7 @@ export default function Layout({ children, onLogoClick, onFaqClick }: LayoutProp
         }
       `}</style>
 
-      <header className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-xl border-b border-transparent relative">
+      <header className="sticky top-0 z-[100] w-full bg-white/80 backdrop-blur-xl border-b border-transparent relative">
         {/* Horizon gradient line */}
         <div className="absolute bottom-0 left-0 right-0 h-px horizon-line" aria-hidden="true" />
 

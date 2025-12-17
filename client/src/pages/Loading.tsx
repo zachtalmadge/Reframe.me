@@ -142,30 +142,34 @@ export default function Loading() {
     }));
 
     /**
-     * WORKAROUND: Automatic silent retry on mobile
+     * WORKAROUND: Automatic silent retry on all devices
      *
-     * Problem: On mobile browsers (especially iOS Safari), document generation fails on first
-     * attempt but succeeds on second attempt. Root cause appears to be race condition with
-     * sessionStorage writes or network/API initialization timing issues on mobile.
+     * Problem: Document generation fails on first attempt but succeeds on second attempt.
+     * This happens on:
+     * - Mobile browsers (especially iOS Safari) - sessionStorage writes or network/API initialization timing
+     * - Desktop on first load after deployment - serverless cold start / OpenAI client initialization
      *
-     * Solution: Automatically retry once on mobile without showing error to user. This makes
-     * the failure invisible - user sees continuous loading animation while we retry in background.
+     * Solution: Automatically retry once without showing error to user. This makes the failure
+     * invisible - user sees continuous loading animation while we retry in background.
      *
-     * TODO: Remove this workaround once root cause is identified and fixed. Possible fixes:
-     * - Investigate sessionStorage write delays on mobile Safari
-     * - Check for API/network initialization issues on mobile
+     * Root causes:
+     * - Server side: OpenAI client lazy initialization on cold start (first request after deploy)
+     * - Client side: sessionStorage timing issues on mobile Safari
+     *
+     * TODO: Fix root causes:
+     * - Server: Pre-warm OpenAI client on server startup instead of lazy loading
+     * - Client: Investigate sessionStorage write delays and consider alternative storage
      * - Review AppInitializer timing and route protection logic
-     * - Consider using alternative storage mechanism that doesn't have mobile timing issues
      *
-     * To test if this is still needed: Set maxAttempts to 1 for mobile and test on iPhone Safari
+     * To test if still needed: Set maxAttempts to 1 and test on fresh deployment
      */
-    const maxAttempts = isMobile ? 2 : 1;
+    const maxAttempts = 2; // Apply retry to all devices for cold-start resilience
     let lastError: Error | null = null;
 
     for (let attempt = 1; attempt <= maxAttempts; attempt++) {
       try {
         if (attempt > 1) {
-          console.log(`[Loading] WORKAROUND: Silent retry attempt ${attempt}/${maxAttempts} on mobile`);
+          console.log(`[Loading] WORKAROUND: Silent retry attempt ${attempt}/${maxAttempts} (cold-start protection)`);
           // Small delay before retry to let any timing issues resolve
           await new Promise(resolve => setTimeout(resolve, 200));
         }

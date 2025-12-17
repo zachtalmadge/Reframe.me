@@ -230,9 +230,9 @@ export default function Home() {
   return (
     <Layout>
       <style>{`
-        /* Prevent horizontal scroll globally */
+        /* Prevent horizontal scroll - using clip instead of hidden to preserve sticky */
         body, html {
-          overflow-x: hidden;
+          overflow-x: clip;
           max-width: 100vw;
         }
 
