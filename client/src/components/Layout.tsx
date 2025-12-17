@@ -561,7 +561,7 @@ export default function Layout({ children, onLogoClick, onFaqClick }: LayoutProp
                   <div className="flex items-start gap-3">
                     <div
                       className="w-1.5 h-1.5 rounded-full mt-2"
-                      style={{ background: '#14b8a6' }}
+                      style={{ background: '#8b5cf6' }}
                       aria-hidden="true"
                     />
                     <div>
