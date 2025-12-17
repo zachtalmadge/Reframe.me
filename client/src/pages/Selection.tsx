@@ -27,7 +27,7 @@ const options: SelectionOption[] = [
     id: "narrative",
     title: "Disclosure Narratives",
     description: "Five personalized approaches to discuss your background with confidence and clarity.",
-    detail: "Perfect for interviews, applications, and conversations with potential employers",
+    detail: "Perfect for after you recieve an offer with potential employers",
     icon: FileText,
     accentColor: "teal",
     number: "01",
