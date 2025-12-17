@@ -258,7 +258,7 @@ export default function Home() {
         }
 
         .hero-heading {
-          font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+          font-family: 'Fraunces', Georgia, serif;
           letter-spacing: -0.03em;
         }
       `}</style>
@@ -781,19 +781,19 @@ export default function Home() {
             >
               {/* Icon */}
               <div
-                className="absolute top-8 right-8 w-20 h-20 rounded-2xl flex items-center justify-center"
+                className="absolute top-6 right-6 md:top-8 md:right-8 w-14 h-14 md:w-20 md:h-20 rounded-2xl flex items-center justify-center"
                 style={{
                   background: 'linear-gradient(135deg, #14b8a6 0%, #0d9488 100%)',
                   boxShadow: '0 10px 30px rgba(20, 184, 166, 0.3)',
                   animation: 'pulse-glow 3s ease-in-out infinite'
                 }}
               >
-                <Users className="w-10 h-10 text-white" aria-hidden="true" />
+                <Users className="w-7 h-7 md:w-10 md:h-10 text-white" aria-hidden="true" />
               </div>
 
               {/* Big Number */}
               <div
-                className="text-8xl md:text-9xl font-bold mb-6"
+                className="text-6xl md:text-9xl font-bold mb-6"
                 style={{
                   fontFamily: 'Fraunces, Georgia, serif',
                   background: 'linear-gradient(135deg, #0d9488 0%, #14b8a6 100%)',
@@ -827,19 +827,19 @@ export default function Home() {
             >
               {/* Icon */}
               <div
-                className="absolute top-8 right-8 w-20 h-20 rounded-2xl flex items-center justify-center"
+                className="absolute top-6 right-6 md:top-8 md:right-8 w-14 h-14 md:w-20 md:h-20 rounded-2xl flex items-center justify-center"
                 style={{
                   background: 'linear-gradient(135deg, #64748b 0%, #475569 100%)',
                   boxShadow: '0 10px 30px rgba(100, 116, 139, 0.3)',
                   animation: 'pulse-glow 3s ease-in-out infinite 0.5s'
                 }}
               >
-                <Search className="w-10 h-10 text-white" aria-hidden="true" />
+                <Search className="w-7 h-7 md:w-10 md:h-10 text-white" aria-hidden="true" />
               </div>
 
               {/* Big Number */}
               <div
-                className="text-7xl md:text-8xl font-bold mb-6"
+                className="text-5xl md:text-8xl font-bold mb-6"
                 style={{
                   fontFamily: 'Fraunces, Georgia, serif',
                   background: 'linear-gradient(135deg, #475569 0%, #64748b 100%)',
@@ -929,19 +929,19 @@ export default function Home() {
             >
               {/* Icon */}
               <div
-                className="absolute top-8 right-8 w-20 h-20 rounded-2xl flex items-center justify-center"
+                className="absolute top-6 right-6 md:top-8 md:right-8 w-14 h-14 md:w-20 md:h-20 rounded-2xl flex items-center justify-center"
                 style={{
                   background: 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)',
                   boxShadow: '0 10px 30px rgba(139, 92, 246, 0.3)',
                   animation: 'pulse-glow 3s ease-in-out infinite 1.5s'
                 }}
               >
-                <Target className="w-10 h-10 text-white" aria-hidden="true" />
+                <Target className="w-7 h-7 md:w-10 md:h-10 text-white" aria-hidden="true" />
               </div>
 
               {/* Big Number */}
               <div
-                className="text-8xl md:text-9xl font-bold mb-6"
+                className="text-6xl md:text-9xl font-bold mb-6"
                 style={{
                   fontFamily: 'Fraunces, Georgia, serif',
                   background: 'linear-gradient(135deg, #7c3aed 0%, #8b5cf6 100%)',
@@ -999,49 +999,26 @@ export default function Home() {
       {/* Donate CTA - Gift Giving Theme */}
       <section className="relative py-20 md:py-28 px-4 sm:px-6 lg:px-8 overflow-x-hidden overflow-y-visible"
         style={{
-          background: 'linear-gradient(135deg, #fff5f5 0%, #fff1f2 25%, #fef3c7 50%, #fef2f2 75%, #fce7f3 100%)'
+          background: 'linear-gradient(165deg, #f8fafc 0%, #e0f2fe 25%, #f0fdfa 50%, #fef3c7 75%, #fef2f2 100%)'
         }}
       >
         <style>{`
           @import url('https://fonts.googleapis.com/css2?family=Literata:ital,wght@0,400;0,600;0,700;1,400&display=swap');
-
-          @keyframes sparkle {
-            0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
-            50% { opacity: 1; transform: scale(1) rotate(180deg); }
-          }
-
-          @keyframes float-gift {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
-          }
-
-          @keyframes ribbon-wave {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-3px) rotate(2deg); }
-          }
-
-          .sparkle {
-            animation: sparkle 3s ease-in-out infinite;
-          }
-
-          .gift-float {
-            animation: float-gift 4s ease-in-out infinite;
-          }
         `}</style>
 
-        {/* Decorative elements */}
+        {/* Atmospheric background layers - extended from previous section */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {/* Warm glows */}
+          {/* Organic blob shapes - brand colors */}
           <div
-            className="absolute top-0 left-0 w-[500px] h-[500px] opacity-20 blur-3xl"
+            className="absolute top-0 right-0 w-[600px] h-[600px] opacity-20 blur-3xl"
             style={{
-              background: 'radial-gradient(circle, #fb7185 0%, transparent 70%)'
+              background: 'radial-gradient(circle, #14b8a6 0%, transparent 70%)'
             }}
           />
           <div
-            className="absolute bottom-0 right-0 w-[600px] h-[600px] opacity-20 blur-3xl"
+            className="absolute bottom-0 left-0 w-[500px] h-[500px] opacity-20 blur-3xl"
             style={{
-              background: 'radial-gradient(circle, #fbbf24 0%, transparent 70%)'
+              background: 'radial-gradient(circle, #f97316 0%, transparent 70%)'
             }}
           />
           <div
@@ -1050,99 +1027,47 @@ export default function Home() {
               background: 'radial-gradient(circle, #f472b6 0%, transparent 70%)'
             }}
           />
-
-          {/* Sparkles */}
-          {[...Array(8)].map((_, i) => (
-            <div
-              key={i}
-              className="sparkle absolute w-2 h-2 rounded-full"
-              style={{
-                background: 'linear-gradient(135deg, #fbbf24 0%, #fb923c 100%)',
-                top: `${20 + i * 8}%`,
-                left: `${5 + (i * 10) % 80}%`,
-                animationDelay: `${i * 0.4}s`,
-                boxShadow: '0 0 10px rgba(251, 191, 36, 0.6)'
-              }}
-            />
-          ))}
         </div>
 
         <div className="relative max-w-5xl mx-auto">
           <div className="relative">
-            {/* Gift Box Illustration (SVG) */}
-            <div className="absolute -top-20 left-1/2 -translate-x-1/2 gift-float hidden md:block">
-              <svg width="100" height="100" viewBox="0 0 100 100" fill="none" className="filter drop-shadow-xl">
-                {/* Ribbon vertical */}
-                <rect x="40" y="0" width="20" height="100" fill="url(#ribbonGrad)" />
-                {/* Ribbon horizontal */}
-                <rect x="0" y="25" width="100" height="15" fill="url(#ribbonGrad)" style={{ animation: 'ribbon-wave 3s ease-in-out infinite' }} />
-                {/* Box */}
-                <rect x="15" y="40" width="70" height="50" rx="4" fill="url(#boxGrad)" />
-                {/* Box lid */}
-                <rect x="10" y="35" width="80" height="12" rx="2" fill="url(#lidGrad)" />
-                {/* Bow */}
-                <circle cx="50" cy="32" r="8" fill="url(#bowGrad)" />
-                <circle cx="38" cy="32" r="6" fill="url(#bowGrad)" opacity="0.9" />
-                <circle cx="62" cy="32" r="6" fill="url(#bowGrad)" opacity="0.9" />
-
-                <defs>
-                  <linearGradient id="ribbonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#f97316" />
-                    <stop offset="100%" stopColor="#fb923c" />
-                  </linearGradient>
-                  <linearGradient id="boxGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#fef3c7" />
-                    <stop offset="100%" stopColor="#fde68a" />
-                  </linearGradient>
-                  <linearGradient id="lidGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#fbbf24" />
-                    <stop offset="100%" stopColor="#f59e0b" />
-                  </linearGradient>
-                  <linearGradient id="bowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#fb7185" />
-                    <stop offset="100%" stopColor="#f43f5e" />
-                  </linearGradient>
-                </defs>
-              </svg>
-            </div>
-
             {/* Main content card */}
             <div
               className="relative rounded-3xl p-10 md:p-16 text-center overflow-hidden"
               style={{
-                background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 251, 235, 0.9) 50%, rgba(254, 242, 242, 0.95) 100%)',
-                border: '3px solid rgba(251, 191, 36, 0.3)',
-                boxShadow: '0 25px 70px rgba(251, 146, 60, 0.2), inset 0 2px 0 rgba(255, 255, 255, 0.9)'
+                background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 253, 250, 0.9) 50%, rgba(254, 243, 199, 0.95) 100%)',
+                border: '3px solid rgba(20, 184, 166, 0.3)',
+                boxShadow: '0 25px 70px rgba(20, 184, 166, 0.15), inset 0 2px 0 rgba(255, 255, 255, 0.9)'
               }}
             >
-              {/* Decorative corner ribbons */}
+              {/* Decorative corner accents */}
               <div
-                className="absolute top-0 left-0 w-20 h-20 opacity-30"
+                className="absolute top-0 left-0 w-20 h-20 opacity-20"
                 style={{
-                  background: 'linear-gradient(135deg, #fb923c 0%, transparent 100%)'
+                  background: 'linear-gradient(135deg, #14b8a6 0%, transparent 100%)'
                 }}
               />
               <div
-                className="absolute bottom-0 right-0 w-24 h-24 opacity-30"
+                className="absolute bottom-0 right-0 w-24 h-24 opacity-20"
                 style={{
-                  background: 'linear-gradient(-45deg, #f472b6 0%, transparent 100%)'
+                  background: 'linear-gradient(-45deg, #f97316 0%, transparent 100%)'
                 }}
               />
 
               {/* Heart icon with glow */}
               <div className="relative inline-block mb-8">
                 <div
-                  className="absolute inset-0 rounded-full blur-2xl opacity-60"
+                  className="absolute inset-0 rounded-full blur-2xl opacity-50"
                   style={{
-                    background: 'radial-gradient(circle, #fb7185 0%, transparent 70%)',
+                    background: 'radial-gradient(circle, #f97316 0%, transparent 70%)',
                     transform: 'scale(1.5)'
                   }}
                 />
                 <div
                   className="relative w-20 h-20 rounded-full flex items-center justify-center"
                   style={{
-                    background: 'linear-gradient(135deg, #fb7185 0%, #f43f5e 100%)',
-                    boxShadow: '0 10px 30px rgba(251, 113, 133, 0.4)'
+                    background: 'linear-gradient(135deg, #f97316 0%, #fb923c 100%)',
+                    boxShadow: '0 10px 30px rgba(249, 115, 22, 0.4)'
                   }}
                 >
                   <Heart className="w-10 h-10 text-white" fill="currentColor" aria-hidden="true" />
@@ -1154,7 +1079,7 @@ export default function Home() {
                 className="text-3xl md:text-5xl font-bold mb-6 leading-tight"
                 style={{
                   fontFamily: 'Literata, Georgia, serif',
-                  background: 'linear-gradient(135deg, #be123c 0%, #fb7185 50%, #f97316 100%)',
+                  background: 'linear-gradient(135deg, #0d9488 0%, #14b8a6 50%, #f97316 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   backgroundClip: 'text',
@@ -1165,7 +1090,7 @@ export default function Home() {
               </h3>
 
               {/* Subtitle */}
-              <p className="text-xl md:text-2xl leading-relaxed mb-10 max-w-3xl mx-auto" style={{ fontFamily: 'Public Sans, sans-serif', color: '#78350f' }}>
+              <p className="text-xl md:text-2xl leading-relaxed mb-10 max-w-3xl mx-auto" style={{ fontFamily: 'Public Sans, sans-serif', color: '#0f766e' }}>
                 Every contribution helps cover the costs of keeping Reframe.me running—so more people can prepare for employment conversations with confidence, regardless of their ability to pay.
               </p>
 
@@ -1173,11 +1098,11 @@ export default function Home() {
               <div
                 className="max-w-2xl mx-auto mb-10 p-6 rounded-2xl"
                 style={{
-                  background: 'linear-gradient(135deg, rgba(254, 243, 199, 0.5) 0%, rgba(253, 230, 138, 0.3) 100%)',
-                  border: '2px dashed rgba(251, 191, 36, 0.4)'
+                  background: 'linear-gradient(135deg, rgba(240, 253, 250, 0.6) 0%, rgba(204, 251, 241, 0.4) 100%)',
+                  border: '2px dashed rgba(20, 184, 166, 0.4)'
                 }}
               >
-                <p className="text-lg italic leading-relaxed" style={{ fontFamily: 'Literata, Georgia, serif', color: '#92400e' }}>
+                <p className="text-lg italic leading-relaxed" style={{ fontFamily: 'Literata, Georgia, serif', color: '#115e59' }}>
                   Your support is a gift that keeps on giving—helping others find their words, prepare their story, and move forward with confidence.
                 </p>
               </div>
@@ -1186,7 +1111,7 @@ export default function Home() {
               <Link href="/donate">
                 <Button
                   size="lg"
-                  className="group relative px-12 py-7 text-xl font-bold rounded-2xl transition-all duration-400 hover:scale-105 overflow-hidden"
+                  className="group relative px-6 py-5 md:px-12 md:py-7 text-base md:text-xl font-bold rounded-2xl transition-all duration-400 hover:scale-105 overflow-hidden"
                   style={{
                     background: 'linear-gradient(135deg, #f97316 0%, #fb923c 50%, #fbbf24 100%)',
                     color: 'white',
@@ -1194,8 +1119,8 @@ export default function Home() {
                     fontFamily: 'Public Sans, sans-serif'
                   }}
                 >
-                  <span className="relative z-10 flex items-center gap-3">
-                    <Heart className="w-6 h-6 transition-transform duration-300 group-hover:scale-110" fill="currentColor" aria-hidden="true" />
+                  <span className="relative z-10 flex items-center gap-2 md:gap-3">
+                    <Heart className="w-5 h-5 md:w-6 md:h-6 transition-transform duration-300 group-hover:scale-110" fill="currentColor" aria-hidden="true" />
                     Give the Gift of Preparation
                   </span>
                   {/* Shimmer effect */}
@@ -1211,15 +1136,15 @@ export default function Home() {
               </Link>
 
               {/* Compassionate note */}
-              <p className="text-base text-gray-600 mt-8 italic" style={{ fontFamily: 'Public Sans, sans-serif' }}>
-                Can't donate? <strong style={{ color: '#92400e', fontWeight: 600 }}>You're still exactly who this tool is for.</strong>
+              <p className="text-base mt-8 italic" style={{ fontFamily: 'Public Sans, sans-serif', color: '#475569' }}>
+                Can't donate? <strong style={{ color: '#0d9488', fontWeight: 600 }}>You're still exactly who this tool is for.</strong>
               </p>
 
               {/* Decorative divider */}
               <div className="mt-8 flex items-center justify-center gap-2">
-                <div className="h-px w-16 bg-gradient-to-r from-transparent to-orange-300" />
-                <Heart className="w-4 h-4 text-rose-400" fill="currentColor" aria-hidden="true" />
-                <div className="h-px w-16 bg-gradient-to-l from-transparent to-orange-300" />
+                <div className="h-px w-16" style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(20, 184, 166, 0.5) 100%)' }} />
+                <Heart className="w-4 h-4 text-orange-500" fill="currentColor" aria-hidden="true" />
+                <div className="h-px w-16" style={{ background: 'linear-gradient(90deg, rgba(249, 115, 22, 0.5) 0%, transparent 100%)' }} />
               </div>
             </div>
           </div>
@@ -1238,9 +1163,43 @@ export default function Home() {
         className="relative py-20 md:py-32 px-4 sm:px-6 lg:px-8 overflow-x-hidden overflow-y-visible"
         aria-labelledby="tools-heading"
         style={{
-          background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #0d9488 50%, #134e4a 75%, #0f172a 100%)'
+          background: '#0a0f1a'
         }}
       >
+        {/* Layered atmospheric background */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {/* Base mesh gradient */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background: `
+                radial-gradient(ellipse 80% 50% at 50% 0%, rgba(20, 184, 166, 0.15), transparent),
+                radial-gradient(ellipse 60% 40% at 0% 50%, rgba(14, 165, 233, 0.08), transparent),
+                radial-gradient(ellipse 60% 40% at 100% 50%, rgba(249, 115, 22, 0.06), transparent)
+              `
+            }}
+          />
+
+          {/* Noise texture overlay */}
+          <div
+            className="absolute inset-0 opacity-[0.015]"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+            }}
+          />
+
+          {/* Subtle grid pattern */}
+          <div
+            className="absolute inset-0 opacity-[0.03]"
+            style={{
+              backgroundImage: `
+                linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px)
+              `,
+              backgroundSize: '100px 100px'
+            }}
+          />
+        </div>
         <style>{`
           @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
 
@@ -1559,39 +1518,43 @@ export default function Home() {
       <section
         className="relative py-20 md:py-32 px-4 sm:px-6 lg:px-8 overflow-x-hidden overflow-y-visible"
         style={{
-          background: 'linear-gradient(135deg, #064e3b 0%, #0d9488 25%, #134e4a 50%, #9a3412 75%, #7c2d12 100%)'
+          background: '#0a0f1a'
         }}
         aria-labelledby="stories-heading"
         data-testid="section-stories"
       >
-        {/* Atmospheric background effects */}
+        {/* Layered atmospheric background - evolved from previous section */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {/* Radial glow - top left */}
+          {/* Base mesh gradient - teal to orange flow */}
           <div
-            className="absolute -top-40 -left-40 w-96 h-96 opacity-30 blur-3xl"
+            className="absolute inset-0"
             style={{
-              background: 'radial-gradient(circle, #14b8a6 0%, transparent 70%)',
+              background: `
+                radial-gradient(ellipse 70% 50% at 50% 0%, rgba(20, 184, 166, 0.12), transparent),
+                radial-gradient(ellipse 80% 60% at 20% 50%, rgba(20, 184, 166, 0.10), transparent),
+                radial-gradient(ellipse 70% 50% at 80% 60%, rgba(249, 115, 22, 0.15), transparent),
+                radial-gradient(ellipse 60% 40% at 50% 100%, rgba(249, 115, 22, 0.08), transparent)
+              `
             }}
           />
-          {/* Radial glow - bottom right */}
+
+          {/* Noise texture overlay */}
           <div
-            className="absolute -bottom-40 -right-40 w-[500px] h-[500px] opacity-30 blur-3xl"
-            style={{
-              background: 'radial-gradient(circle, #f97316 0%, transparent 70%)',
-            }}
-          />
-          {/* Center ambient light - teal/orange mix */}
-          <div
-            className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] opacity-15 blur-3xl"
-            style={{
-              background: 'radial-gradient(circle, #14b8a6 0%, #f97316 50%, transparent 70%)',
-            }}
-          />
-          {/* Grain texture overlay */}
-          <div
-            className="absolute inset-0 opacity-[0.02]"
+            className="absolute inset-0 opacity-[0.015]"
             style={{
               backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+            }}
+          />
+
+          {/* Subtle grid pattern */}
+          <div
+            className="absolute inset-0 opacity-[0.03]"
+            style={{
+              backgroundImage: `
+                linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px)
+              `,
+              backgroundSize: '100px 100px'
             }}
           />
         </div>
@@ -1625,7 +1588,7 @@ export default function Home() {
           }
         `}</style>
 
-        <div className="relative max-w-6xl mx-auto">
+        <div className="relative max-w-7xl mx-auto">
           {/* Section Header */}
           <div className="text-center mb-16 md:mb-24">
             <div className="inline-block mb-6">
@@ -1641,32 +1604,34 @@ export default function Home() {
               className="text-4xl md:text-6xl font-bold text-white mb-6"
               style={{ fontFamily: 'DM Sans, system-ui, sans-serif', letterSpacing: '-0.03em' }}
             >
-              Stories of <span className="italic" style={{ fontFamily: 'Crimson Pro, Georgia, serif' }}>Change</span>
+             <span className="italic" style={{ fontFamily: 'Crimson Pro, Georgia, serif' }}>Testimonials</span>
             </h2>
             <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed">
               Anonymized snapshots of how people are using Reframe.me.
             </p>
           </div>
 
-          {/* Story Showcase */}
-          <div
-            className="relative max-w-5xl mx-auto"
-            onMouseEnter={() => setIsPaused(true)}
-            onMouseLeave={() => setIsPaused(false)}
-          >
-            {/* Main story container */}
+          {/* Two Column Layout - Story Showcase + Donate CTA */}
+          <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
+            {/* LEFT COLUMN: Story Showcase */}
             <div
-              className="relative rounded-3xl overflow-hidden"
-              style={{
-                background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.08) 100%)',
-                backdropFilter: 'blur(20px)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
-                boxShadow: '0 25px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
-              }}
-              role="region"
-              aria-roledescription="carousel"
-              aria-label="Stories of change"
+              className="relative"
+              onMouseEnter={() => setIsPaused(true)}
+              onMouseLeave={() => setIsPaused(false)}
             >
+              {/* Main story container */}
+              <div
+                className="relative rounded-3xl overflow-hidden"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.08) 100%)',
+                  backdropFilter: 'blur(20px)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  boxShadow: '0 25px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+                }}
+                role="region"
+                aria-roledescription="carousel"
+                aria-label="Stories of change"
+              >
               {/* Decorative top accent */}
               <div
                 className="absolute top-0 left-0 right-0 h-px"
@@ -1815,73 +1780,78 @@ export default function Home() {
                 <ChevronRight className="w-6 h-6 text-white mx-auto transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true" />
               </button>
             </div>
-          </div>
-
-          {/* Integrated Donate CTA */}
-          <div className="max-w-4xl mx-auto mt-20 md:mt-28">
-            {/* Divider */}
-            <div className="text-center mb-16">
-              <div
-                className="inline-block h-px w-48 rounded-full"
-                style={{
-                  background: 'linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%)',
-                }}
-              />
             </div>
 
-            {/* CTA Content */}
-            <div className="text-center space-y-10">
-              {/* Icon decoration */}
-              <div className="flex justify-center">
+            {/* RIGHT COLUMN: Donate CTA */}
+            <div className="flex flex-col justify-center items-center text-center space-y-8 px-4 md:px-6">
+              {/* Decorative element - floating heart orb */}
+              <div className="relative self-center">
                 <div
-                  className="w-20 h-20 rounded-full flex items-center justify-center shadow-2xl relative"
+                  className="w-24 h-24 rounded-full flex items-center justify-center shadow-2xl relative group transition-transform duration-500 hover:scale-110"
                   style={{
-                    background: 'linear-gradient(135deg, rgba(249, 115, 22, 0.2) 0%, rgba(20, 184, 166, 0.2) 100%)',
+                    background: 'linear-gradient(135deg, rgba(249, 115, 22, 0.15) 0%, rgba(20, 184, 166, 0.15) 100%)',
                     backdropFilter: 'blur(20px)',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    border: '1px solid rgba(255, 255, 255, 0.25)',
                   }}
                 >
-                  {/* Glow effect */}
+                  {/* Animated glow effect */}
                   <div
-                    className="absolute inset-0 rounded-full opacity-50 blur-xl"
+                    className="absolute inset-0 rounded-full opacity-40 blur-2xl transition-opacity duration-500 group-hover:opacity-70"
                     style={{
                       background: 'linear-gradient(135deg, #f97316 0%, #14b8a6 100%)',
                     }}
                   />
-                  <Heart className="w-10 h-10 text-white relative z-10" fill="white" aria-hidden="true" />
+                  {/* Pulsing ring */}
+                  <div
+                    className="absolute inset-0 rounded-full animate-ping opacity-20"
+                    style={{
+                      background: 'linear-gradient(135deg, #f97316 0%, #14b8a6 100%)',
+                      animationDuration: '3s',
+                    }}
+                  />
+                  <Heart
+                    className="w-11 h-11 text-white relative z-10 transition-transform duration-300 group-hover:scale-110"
+                    fill="white"
+                    aria-hidden="true"
+                  />
                 </div>
               </div>
 
-              {/* Heading */}
+              {/* Heading with elegant typography */}
               <h3
-                className="text-3xl md:text-5xl font-bold text-white italic leading-tight"
+                className="text-3xl md:text-4xl lg:text-5xl font-bold text-white italic leading-tight max-w-lg"
                 style={{
                   fontFamily: 'Crimson Pro, Georgia, serif',
-                  textShadow: '0 2px 30px rgba(0, 0, 0, 0.3)',
-                  letterSpacing: '-0.01em',
+                  textShadow: '0 2px 30px rgba(0, 0, 0, 0.4), 0 4px 60px rgba(249, 115, 22, 0.2)',
+                  letterSpacing: '-0.02em',
                 }}
               >
                 Stories like these are why this exists
               </h3>
 
-              {/* Description */}
-              <p className="text-lg md:text-xl text-white/90 leading-relaxed max-w-2xl mx-auto font-light">
+              {/* Description with balanced spacing */}
+              <p
+                className="text-base md:text-lg lg:text-xl text-white/85 leading-relaxed max-w-md font-light"
+                style={{
+                  textShadow: '0 1px 2px rgba(0, 0, 0, 0.3)',
+                }}
+              >
                 If this tool has helped you or someone you know, your support helps ensure it stays free and available for everyone navigating this journey.
               </p>
 
               {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2 w-full md:w-auto">
                 <Link href="/donate">
                   <Button
                     size="lg"
-                    className="group relative px-10 py-7 text-lg font-bold rounded-2xl transition-all duration-300 hover:scale-105 overflow-hidden"
+                    className="group relative px-10 py-7 text-lg font-bold rounded-2xl transition-all duration-300 hover:scale-105 active:scale-95 overflow-hidden w-full sm:w-auto"
                     style={{
                       background: 'linear-gradient(135deg, #f97316 0%, #fb923c 100%)',
                       color: 'white',
                       boxShadow: '0 10px 40px rgba(249, 115, 22, 0.4), 0 0 60px rgba(249, 115, 22, 0.2)',
                     }}
                   >
-                    <span className="relative z-10 flex items-center gap-3">
+                    <span className="relative z-10 flex items-center gap-3 justify-center">
                       <Heart className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" fill="currentColor" aria-hidden="true" />
                       Support This Work
                     </span>
@@ -1889,24 +1859,29 @@ export default function Home() {
                     <div
                       className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                       style={{
-                        background: 'linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%)',
+                        background: 'linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.25) 50%, transparent 100%)',
                       }}
                     />
                   </Button>
                 </Link>
 
-                <span className="text-sm text-white/60 font-medium">or</span>
+                <span className="text-sm text-white/50 font-medium tracking-wider">or</span>
 
                 <a
                   href="/donate"
-                  className="text-base font-semibold text-teal-300 hover:text-teal-200 underline underline-offset-4 decoration-2 hover:underline-offset-8 transition-all duration-300"
+                  className="text-base font-semibold text-teal-300 hover:text-teal-200 underline underline-offset-4 decoration-2 hover:underline-offset-8 transition-all duration-300 hover:decoration-teal-400"
                 >
                   Share with someone who needs it
                 </a>
               </div>
 
-              {/* Note */}
-              <p className="text-sm text-white/60 italic pt-4 font-light">
+              {/* Note with subtle styling */}
+              <p
+                className="text-sm text-white/50 italic pt-2 font-light max-w-sm"
+                style={{
+                  textShadow: '0 1px 2px rgba(0, 0, 0, 0.2)',
+                }}
+              >
                 Every bit helps—but this tool is here for you whether you can give or not.
               </p>
             </div>
@@ -2018,11 +1993,11 @@ export default function Home() {
                 <defs>
                   <linearGradient id="lineGradient1" x1="0%" y1="0%" x2="100%" y2="0%">
                     <stop offset="0%" stopColor="#14b8a6" stopOpacity="0.6" />
-                    <stop offset="100%" stopColor="#0d9488" stopOpacity="0.8" />
+                    <stop offset="100%" stopColor="#f97316" stopOpacity="0.8" />
                   </linearGradient>
                   <linearGradient id="lineGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="#0d9488" stopOpacity="0.8" />
-                    <stop offset="100%" stopColor="#f97316" stopOpacity="0.8" />
+                    <stop offset="0%" stopColor="#f97316" stopOpacity="0.8" />
+                    <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0.8" />
                   </linearGradient>
                 </defs>
                 <path
@@ -2058,11 +2033,12 @@ export default function Home() {
                   >
                     {/* Card */}
                     <div
-                      className="relative rounded-3xl p-8 md:p-10 overflow-hidden group"
+                      className="relative rounded-3xl p-8 md:p-10 overflow-hidden group h-full"
                       style={{
                         background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.8) 100%)',
                         border: '2px solid rgba(0, 0, 0, 0.05)',
-                        boxShadow: '0 20px 60px rgba(0, 0, 0, 0.1)'
+                        boxShadow: '0 20px 60px rgba(0, 0, 0, 0.1)',
+                        minHeight: '380px'
                       }}
                     >
                       {/* Gradient overlay on hover */}
@@ -2072,8 +2048,8 @@ export default function Home() {
                           background: index === 0
                             ? 'linear-gradient(135deg, rgba(20, 184, 166, 0.05) 0%, transparent 100%)'
                             : index === 1
-                              ? 'linear-gradient(135deg, rgba(13, 148, 136, 0.05) 0%, transparent 100%)'
-                              : 'linear-gradient(135deg, rgba(249, 115, 22, 0.05) 0%, transparent 100%)'
+                              ? 'linear-gradient(135deg, rgba(249, 115, 22, 0.05) 0%, transparent 100%)'
+                              : 'linear-gradient(135deg, rgba(139, 92, 246, 0.05) 0%, transparent 100%)'
                         }}
                       />
 
@@ -2085,13 +2061,13 @@ export default function Home() {
                             background: index === 0
                               ? 'linear-gradient(135deg, #14b8a6 0%, #0d9488 100%)'
                               : index === 1
-                                ? 'linear-gradient(135deg, #0d9488 0%, #0ea5a1 100%)'
-                                : 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
+                                ? 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)'
+                                : 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)',
                             boxShadow: `0 10px 30px ${index === 0
                               ? 'rgba(20, 184, 166, 0.4)'
                               : index === 1
-                                ? 'rgba(13, 148, 136, 0.4)'
-                                : 'rgba(249, 115, 22, 0.4)'
+                                ? 'rgba(249, 115, 22, 0.4)'
+                                : 'rgba(139, 92, 246, 0.4)'
                               }`
                           }}
                         >
@@ -2106,8 +2082,8 @@ export default function Home() {
                             background: index === 0
                               ? 'radial-gradient(circle, rgba(20, 184, 166, 0.2) 0%, transparent 70%)'
                               : index === 1
-                                ? 'radial-gradient(circle, rgba(13, 148, 136, 0.2) 0%, transparent 70%)'
-                                : 'radial-gradient(circle, rgba(249, 115, 22, 0.2) 0%, transparent 70%)',
+                                ? 'radial-gradient(circle, rgba(249, 115, 22, 0.2) 0%, transparent 70%)'
+                                : 'radial-gradient(circle, rgba(139, 92, 246, 0.2) 0%, transparent 70%)',
                             transform: 'scale(2)',
                             filter: 'blur(20px)'
                           }}
@@ -2134,7 +2110,7 @@ export default function Home() {
                       {/* Arrow hint */}
                       {index < 2 && (
                         <div className="absolute -right-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity hidden lg:block">
-                          <ArrowRight className="w-6 h-6" style={{ color: index === 0 ? '#0d9488' : '#f97316' }} />
+                          <ArrowRight className="w-6 h-6" style={{ color: index === 0 ? '#f97316' : '#8b5cf6' }} />
                         </div>
                       )}
                     </div>
@@ -2173,13 +2149,13 @@ export default function Home() {
                           background: index === 0
                             ? 'linear-gradient(135deg, #14b8a6 0%, #0d9488 100%)'
                             : index === 1
-                              ? 'linear-gradient(135deg, #0d9488 0%, #0ea5a1 100%)'
-                              : 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
+                              ? 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)'
+                              : 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)',
                           boxShadow: `0 10px 30px ${index === 0
                             ? 'rgba(20, 184, 166, 0.4)'
                             : index === 1
-                              ? 'rgba(13, 148, 136, 0.4)'
-                              : 'rgba(249, 115, 22, 0.4)'
+                              ? 'rgba(249, 115, 22, 0.4)'
+                              : 'rgba(139, 92, 246, 0.4)'
                             }`
                         }}
                       >
@@ -2210,7 +2186,7 @@ export default function Home() {
                   {/* Connector for mobile */}
                   {index < 2 && (
                     <div className="flex justify-center py-4">
-                      <div className="w-1 h-8 rounded-full" style={{ background: index === 0 ? 'linear-gradient(to bottom, #14b8a6, #0d9488)' : 'linear-gradient(to bottom, #0d9488, #f97316)' }} />
+                      <div className="w-1 h-8 rounded-full" style={{ background: index === 0 ? 'linear-gradient(to bottom, #14b8a6, #f97316)' : 'linear-gradient(to bottom, #f97316, #8b5cf6)' }} />
                     </div>
                   )}
                 </div>
@@ -2265,7 +2241,7 @@ export default function Home() {
                 <Link href="/selection">
                   <Button
                     size="lg"
-                    className="group relative px-12 py-7 mt-5 text-xl font-bold rounded-2xl transition-all duration-400 hover:scale-105 overflow-hidden"
+                    className="group relative px-6 py-5 md:px-12 md:py-7 mt-5 text-base md:text-xl font-bold rounded-2xl transition-all duration-400 hover:scale-105 overflow-hidden"
                     style={{
                       background: 'linear-gradient(135deg, #f97316 0%, #fb923c 50%, #fbbf24 100%)',
                       color: 'white',
@@ -2274,9 +2250,9 @@ export default function Home() {
                     }}
                     data-testid="button-get-started"
                   >
-                    <span className="relative z-10 flex items-center gap-3">
+                    <span className="relative z-10 flex items-center gap-2 md:gap-3">
                       Start Reframing Today
-                      <ArrowRight className="w-6 h-6 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
+                      <ArrowRight className="w-5 h-5 md:w-6 md:h-6 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
                     </span>
                     {/* Shimmer effect */}
                     <div
