@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
-import { FileText, Mail, ArrowLeft, ArrowRight, Files, Check, Shield, MessageSquare, ChevronDown } from "lucide-react";
+import { FileText, Mail, ArrowLeft, ArrowRight, Files, Check, Shield, MessageSquare, ChevronDown, Sparkles } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
@@ -16,35 +16,39 @@ interface SelectionOption {
   id: ToolSelection;
   title: string;
   description: string;
+  detail: string;
   icon: typeof FileText;
-  iconBgClass: string;
-  iconColorClass: string;
+  accentColor: string;
+  number: string;
 }
 
 const options: SelectionOption[] = [
   {
     id: "narrative",
     title: "Disclosure Narratives",
-    description: "Generate five personalized ways to discuss your background during interviews or on job applications.",
+    description: "Five personalized approaches to discuss your background with confidence and clarity.",
+    detail: "Perfect for interviews, applications, and conversations with potential employers",
     icon: FileText,
-    iconBgClass: "bg-primary/10",
-    iconColorClass: "text-primary",
+    accentColor: "teal",
+    number: "01",
   },
   {
     id: "responseLetter",
     title: "Response Letter",
-    description: "Create a professional response to a pre-adverse action notice from a potential employer.",
+    description: "A professional response to pre-adverse action notices that highlights your growth.",
+    detail: "Addresses background check concerns while showcasing your transformation",
     icon: Mail,
-    iconBgClass: "bg-chart-2/10",
-    iconColorClass: "text-chart-2",
+    accentColor: "orange",
+    number: "02",
   },
   {
     id: "both",
-    title: "Both Documents",
-    description: "Get both the disclosure narratives and the response letter to be fully prepared for your job search.",
+    title: "Complete Package",
+    description: "Everything you need to navigate the employment process with full preparation.",
+    detail: "Both narratives and response letter for comprehensive readiness",
     icon: Files,
-    iconBgClass: "bg-primary/10",
-    iconColorClass: "text-primary",
+    accentColor: "purple",
+    number: "03",
   },
 ];
 
@@ -52,6 +56,7 @@ export default function Selection() {
   const [selected, setSelected] = useState<ToolSelection>(null);
   const [hasMadeSelection, setHasMadeSelection] = useState(false);
   const [accordionValue, setAccordionValue] = useState<string>("");
+  const [hoveredCard, setHoveredCard] = useState<ToolSelection>(null);
   const [, navigate] = useLocation();
 
   // Scroll to top when component mounts
@@ -82,17 +87,56 @@ export default function Selection() {
 
   return (
     <Layout>
+      {/* Custom CSS for animations */}
+      <style>{`
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes slideInRight {
+          from {
+            opacity: 0;
+            transform: translateX(-30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+
+        .animate-fade-in-up {
+          animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .animate-slide-in-right {
+          animation: slideInRight 0.5s ease-out forwards;
+        }
+
+        .stagger-1 { animation-delay: 0.1s; }
+        .stagger-2 { animation-delay: 0.2s; }
+        .stagger-3 { animation-delay: 0.3s; }
+        .stagger-4 { animation-delay: 0.4s; }
+      `}</style>
+
       <section
-        className="py-8 md:py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-primary/5 via-slate-50 to-primary/10 dark:from-primary/10 dark:via-slate-900 dark:to-primary/5"
+        className="min-h-screen py-8 md:py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-50 via-white to-teal-50/30 dark:from-slate-900 dark:via-slate-800 dark:to-teal-950/20"
         aria-labelledby="selection-heading"
       >
-        <div className="max-w-4xl mx-auto">
-          <div className="mb-8">
+        <div className="max-w-6xl mx-auto">
+          {/* Back Button */}
+          <div className="mb-12 md:mb-16 opacity-0 animate-fade-in-up">
             <Link href="/">
               <Button
                 variant="ghost"
                 size="sm"
-                className="text-muted-foreground hover:text-foreground hover:bg-primary/5 transition-all duration-200 group"
+                className="text-muted-foreground hover:text-foreground hover:bg-primary/5 transition-all duration-200 group -ml-2"
                 data-testid="button-back-home"
               >
                 <ArrowLeft className="w-4 h-4 mr-2 transition-transform duration-200 group-hover:-translate-x-1" aria-hidden="true" />
@@ -101,20 +145,32 @@ export default function Selection() {
             </Link>
           </div>
 
-          <div className="text-center space-y-5 mb-10 md:mb-14">
-            <h1
-              id="selection-heading"
-              className="text-4xl md:text-5xl font-bold leading-tight text-foreground"
-              style={{ fontFamily: 'Fraunces, Georgia, serif', paddingBottom: '0.25rem' }}
-            >
-              What would you like to create?
-            </h1>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-              Choose the tool that best fits your current needs. You can always come back and use the other one later.
-            </p>
+          {/* Hero Section - Editorial Style */}
+          <div className="mb-16 md:mb-24 max-w-4xl">
+            <div className="flex items-start gap-4 md:gap-6 mb-6 opacity-0 animate-fade-in-up stagger-1">
+              <div className="flex-shrink-0 w-1 h-16 md:h-20 bg-gradient-to-b from-teal-500 to-orange-500 rounded-full" aria-hidden="true" />
+              <div>
+                <div className="text-xs md:text-sm font-semibold tracking-wider text-teal-600 dark:text-teal-400 uppercase mb-3 md:mb-4">
+                  Begin Your Journey
+                </div>
+                <h1
+                  id="selection-heading"
+                  className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[0.95] text-foreground mb-4 md:mb-6"
+                  style={{ fontFamily: 'Fraunces, Georgia, serif' }}
+                >
+                  What would you
+                  <br />
+                  like to create<span className="text-teal-500">?</span>
+                </h1>
+                <p className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl leading-relaxed">
+                  Choose the tool that aligns with your current needs. Each path is designed
+                  to help you move forward with confidence and clarity.
+                </p>
+              </div>
+            </div>
 
-            {/* Quick Answers Accordion - Consolidated */}
-            <div className="pt-6 max-w-3xl mx-auto text-left">
+            {/* Quick Answers - Refined Design */}
+            <div className="mt-10 md:mt-12 opacity-0 animate-fade-in-up stagger-2">
               <Accordion
                 type="single"
                 collapsible
@@ -124,19 +180,24 @@ export default function Selection() {
               >
                 <AccordionItem
                   value="quick-answers"
-                  className="border-2 border-orange-400/30 rounded-2xl px-5 md:px-6 bg-gradient-to-br from-orange-50/80 to-amber-50/60 dark:from-orange-950/30 dark:to-amber-900/20 hover:border-orange-400/50 transition-all duration-300 overflow-hidden shadow-sm hover:shadow-md"
+                  className="border-l-4 border-orange-500 rounded-r-2xl px-6 md:px-8 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm hover:bg-white dark:hover:bg-slate-800 transition-all duration-300 overflow-hidden shadow-lg hover:shadow-xl"
                 >
-                  <AccordionTrigger className="hover:no-underline py-4 group">
-                    <div className="flex items-center gap-3 text-left w-full">
-                      <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-gradient-to-br from-orange-500/20 to-amber-500/15 flex items-center justify-center group-hover:from-orange-500/30 group-hover:to-amber-500/25 transition-all duration-300">
-                        <MessageSquare className="w-5 h-5 text-orange-600 dark:text-orange-500" aria-hidden="true" />
+                  <AccordionTrigger className="hover:no-underline py-5 group">
+                    <div className="flex items-center gap-4 text-left w-full">
+                      <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center shadow-md group-hover:shadow-lg transition-all duration-300 group-hover:scale-105">
+                        <MessageSquare className="w-5 h-5 text-white" aria-hidden="true" />
                       </div>
-                      <h3 className="text-sm md:text-base font-semibold text-orange-900 dark:text-orange-200 group-hover:text-orange-700 dark:group-hover:text-orange-300 transition-colors duration-300">
-                        Quick answers before you choose
-                      </h3>
+                      <div className="flex-1">
+                        <h3 className="text-sm md:text-base font-bold text-foreground">
+                          Have questions before you decide?
+                        </h3>
+                        <p className="text-xs md:text-sm text-muted-foreground mt-0.5">
+                          Quick answers to help guide your choice
+                        </p>
+                      </div>
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="px-12 md:px-14 pb-5 pt-2 text-left">
+                  <AccordionContent className="px-14 md:px-16 pb-6 pt-2 text-left">
                     <div className="space-y-6">
                       {/* Question 1 */}
                       <div className="space-y-2">
@@ -223,14 +284,62 @@ export default function Selection() {
             </div>
           </div>
 
+          {/* Options Grid - Editorial Magazine Style */}
           <div
             role="radiogroup"
             aria-label="Select document type"
-            className="space-y-5"
+            className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 mb-16"
           >
-            {options.map((option) => {
+            {options.map((option, index) => {
               const isSelected = selected === option.id;
+              const isHovered = hoveredCard === option.id;
               const Icon = option.icon;
+              const isTeal = option.accentColor === "teal";
+              const isOrange = option.accentColor === "orange";
+              const isPurple = option.accentColor === "purple";
+
+              // Get color values
+              const getBorderColor = () => {
+                if (isTeal) return 'rgb(20 184 166)';
+                if (isOrange) return 'rgb(249 115 22)';
+                if (isPurple) return 'rgb(139 92 246)';
+              };
+
+              const getRingColor = () => {
+                if (isTeal) return 'focus-visible:ring-teal-500';
+                if (isOrange) return 'focus-visible:ring-orange-500';
+                if (isPurple) return 'focus-visible:ring-purple-500';
+              };
+
+              const getGradientBg = () => {
+                if (isTeal) return 'bg-gradient-to-br from-teal-50/80 via-teal-50/40 to-transparent dark:from-teal-950/30 dark:via-teal-950/15 dark:to-transparent';
+                if (isOrange) return 'bg-gradient-to-br from-orange-50/80 via-orange-50/40 to-transparent dark:from-orange-950/30 dark:via-orange-950/15 dark:to-transparent';
+                if (isPurple) return 'bg-gradient-to-br from-purple-50/80 via-purple-50/40 to-transparent dark:from-purple-950/30 dark:via-purple-950/15 dark:to-transparent';
+              };
+
+              const getTextColor = () => {
+                if (isTeal) return 'text-teal-500/30';
+                if (isOrange) return 'text-orange-500/30';
+                if (isPurple) return 'text-purple-500/30';
+              };
+
+              const getBgColor = () => {
+                if (isTeal) return 'bg-teal-500';
+                if (isOrange) return 'bg-orange-500';
+                if (isPurple) return 'bg-purple-500';
+              };
+
+              const getIconGradient = () => {
+                if (isTeal) return 'bg-gradient-to-br from-teal-500 to-teal-600';
+                if (isOrange) return 'bg-gradient-to-br from-orange-500 to-orange-600';
+                if (isPurple) return 'bg-gradient-to-br from-purple-500 to-purple-600';
+              };
+
+              const getAccentBarColor = () => {
+                if (isTeal) return 'bg-teal-500';
+                if (isOrange) return 'bg-orange-500';
+                if (isPurple) return 'bg-purple-500';
+              };
 
               return (
                 <button
@@ -240,111 +349,184 @@ export default function Selection() {
                   aria-checked={isSelected}
                   onClick={() => handleSelect(option.id)}
                   onKeyDown={(e) => handleKeyDown(e, option.id)}
+                  onMouseEnter={() => setHoveredCard(option.id)}
+                  onMouseLeave={() => setHoveredCard(null)}
                   className={`
-                    group relative w-full text-left rounded-2xl p-6 md:p-8 transition-all duration-300 ease-out
-                    border-2 bg-card overflow-hidden
-                    focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2
+                    group relative text-left rounded-3xl p-8 md:p-10 transition-all duration-500 ease-out
+                    bg-white dark:bg-slate-800 overflow-hidden
+                    focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
+                    opacity-0 animate-fade-in-up stagger-${index + 3}
                     ${isSelected
-                      ? "border-primary bg-gradient-to-br from-primary/10 to-primary/5 shadow-xl scale-[1.02] -translate-y-1"
-                      : "border-border/50 hover:border-primary/40 hover:shadow-lg hover:-translate-y-1 hover:scale-[1.01]"
+                      ? `shadow-2xl scale-105 -translate-y-2 ${getRingColor()}`
+                      : "shadow-lg hover:shadow-2xl hover:-translate-y-1 hover:scale-102 focus-visible:ring-teal-500"
                     }
                   `}
                   data-testid={`option-${option.id}`}
+                  style={{
+                    borderTop: isSelected
+                      ? `6px solid ${getBorderColor()}`
+                      : '6px solid transparent',
+                  }}
                 >
-                  {/* Decorative corner element */}
-                  <div className={`absolute top-0 right-0 w-32 h-32 rounded-bl-full transition-opacity duration-300 ${
-                    isSelected ? 'opacity-100' : 'opacity-0 group-hover:opacity-50'
-                  } ${option.id === 'responseLetter' ? 'bg-chart-2/10' : 'bg-primary/10'}`} aria-hidden="true" />
+                  {/* Background gradient overlay */}
+                  <div
+                    className={`
+                      absolute inset-0 transition-opacity duration-500
+                      ${isSelected ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}
+                      ${getGradientBg()}
+                    `}
+                    aria-hidden="true"
+                  />
 
-                  {/* Shimmer effect on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out" aria-hidden="true" />
+                  {/* Decorative number */}
+                  <div className="relative z-10 mb-8">
+                    <div className="flex items-start justify-between mb-6">
+                      <div className={`
+                        text-7xl md:text-8xl font-black leading-none tracking-tighter transition-all duration-500
+                        ${isSelected || isHovered
+                          ? getTextColor()
+                          : 'text-slate-200 dark:text-slate-700'
+                        }
+                      `}
+                        style={{ fontFamily: 'Fraunces, Georgia, serif' }}
+                      >
+                        {option.number}
+                      </div>
 
-                  <div className="flex items-start gap-5 relative z-10">
-                    <div className={`
-                      w-16 h-16 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-md
-                      transition-all duration-300 ease-out
-                      ${isSelected
-                        ? 'scale-110 rotate-3'
-                        : 'group-hover:scale-105 group-hover:rotate-2'
-                      }
-                      ${option.id === 'responseLetter'
-                        ? 'bg-gradient-to-br from-chart-2/20 to-chart-2/10'
-                        : 'bg-gradient-to-br from-primary/20 to-primary/10'
-                      }
-                    `}>
-                      <Icon className={`w-8 h-8 ${option.iconColorClass}`} aria-hidden="true" />
+                      {/* Selection indicator */}
+                      <div className={`
+                        w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0
+                        transition-all duration-500 ease-out
+                        ${isSelected
+                          ? `${getBgColor()} scale-110 shadow-lg`
+                          : 'bg-slate-100 dark:bg-slate-700 group-hover:scale-105 group-hover:bg-slate-200 dark:group-hover:bg-slate-600'
+                        }
+                      `}>
+                        {isSelected && (
+                          <Check className="w-6 h-6 text-white animate-in zoom-in duration-200" aria-hidden="true" />
+                        )}
+                      </div>
                     </div>
 
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between gap-4">
-                        <h2 className="text-xl md:text-2xl font-bold text-foreground">
-                          {option.title}
-                        </h2>
-                        <div className={`
-                          w-7 h-7 rounded-full border-2 flex items-center justify-center flex-shrink-0
-                          transition-all duration-300 ease-out shadow-sm
-                          ${isSelected
-                            ? "border-primary bg-primary scale-110"
-                            : "border-muted-foreground/30 group-hover:border-primary/50 group-hover:scale-105"
-                          }
-                        `}>
-                          {isSelected && (
-                            <Check className="w-5 h-5 text-primary-foreground animate-in zoom-in duration-200" aria-hidden="true" />
-                          )}
-                        </div>
-                      </div>
-                      <p className="mt-2 text-base text-muted-foreground leading-relaxed">
+                    {/* Icon */}
+                    <div className={`
+                      inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-6
+                      transition-all duration-500 shadow-md
+                      ${isSelected || isHovered
+                        ? `${getIconGradient()} scale-110 rotate-3 shadow-xl`
+                        : 'bg-slate-100 dark:bg-slate-700 group-hover:scale-105 group-hover:rotate-2'
+                      }
+                    `}>
+                      <Icon className={`
+                        w-8 h-8 transition-colors duration-500
+                        ${isSelected || isHovered
+                          ? 'text-white'
+                          : 'text-slate-600 dark:text-slate-300'
+                        }
+                      `} aria-hidden="true" />
+                    </div>
+
+                    {/* Content */}
+                    <div className="space-y-3">
+                      <h2
+                        className="text-2xl md:text-3xl font-bold text-foreground leading-tight"
+                        style={{ fontFamily: 'Fraunces, Georgia, serif' }}
+                      >
+                        {option.title}
+                      </h2>
+                      <p className="text-base text-foreground/80 leading-relaxed font-medium">
                         {option.description}
+                      </p>
+                      <p className="text-sm text-muted-foreground leading-relaxed">
+                        {option.detail}
                       </p>
                     </div>
                   </div>
+
+                  {/* Accent bar at bottom */}
+                  <div
+                    className={`
+                      absolute bottom-0 left-0 right-0 h-1 transition-all duration-500
+                      ${isSelected
+                        ? `${getAccentBarColor()} opacity-100`
+                        : 'bg-slate-200 dark:bg-slate-700 opacity-0 group-hover:opacity-100'
+                      }
+                    `}
+                    aria-hidden="true"
+                  />
                 </button>
               );
             })}
           </div>
 
-          <div className="mt-10 md:mt-14 space-y-5">
+          {/* CTA Section - Editorial Style */}
+          <div className="max-w-2xl mx-auto space-y-8">
+            {/* Continue Button */}
             <Button
               size="lg"
-              className="group relative w-full min-h-[56px] text-xl font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-xl"
+              className={`
+                group relative w-full min-h-[64px] md:min-h-[72px] text-lg md:text-xl font-bold rounded-2xl
+                shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden
+                disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:shadow-xl
+                ${selected ? 'scale-100' : 'scale-95'}
+              `}
               disabled={!selected}
               onClick={handleContinue}
               data-testid="button-continue"
+              style={{
+                background: selected
+                  ? 'linear-gradient(135deg, rgb(20 184 166) 0%, rgb(13 148 136) 100%)'
+                  : undefined
+              }}
             >
-              {/* Animated gradient background on hover */}
-              <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/90 to-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-hidden="true" />
+              {/* Animated shine effect on hover */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out" aria-hidden="true" />
 
-              <span className="relative z-10 flex items-center justify-center">
-                Continue
-                <ArrowRight className="w-6 h-6 ml-2 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
+              <span className="relative z-10 flex items-center justify-center gap-3">
+                <span style={{ fontFamily: 'Fraunces, Georgia, serif' }}>
+                  {selected ? 'Continue to Form' : 'Select an Option to Continue'}
+                </span>
+                {selected && (
+                  <ArrowRight className="w-6 h-6 transition-transform duration-500 group-hover:translate-x-2" aria-hidden="true" />
+                )}
               </span>
             </Button>
 
+            {/* Privacy Notice - Refined */}
             <div
               className={`
-                rounded-xl border-2 px-5 py-4 transition-all duration-500 shadow-sm
-                border-amber-400/50 bg-gradient-to-br from-amber-50 to-amber-100/50 dark:from-amber-950/30 dark:to-amber-900/20
+                rounded-2xl border-l-4 px-6 md:px-8 py-5 transition-all duration-700 shadow-md
+                border-amber-500 bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm
                 ${hasMadeSelection
                   ? "opacity-100 translate-y-0"
-                  : "opacity-0 -translate-y-2 pointer-events-none h-0 p-0 m-0 overflow-hidden border-0"
+                  : "opacity-0 -translate-y-4 pointer-events-none h-0 p-0 m-0 overflow-hidden border-0"
                 }
               `}
               data-testid="alert-privacy-warning"
             >
-              <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-lg bg-amber-200/50 dark:bg-amber-800/30 flex items-center justify-center flex-shrink-0">
-                  <Shield className="w-5 h-5 text-amber-700 dark:text-amber-400" aria-hidden="true" />
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center flex-shrink-0 shadow-md">
+                  <Shield className="w-6 h-6 text-white" aria-hidden="true" />
                 </div>
-                <p className="text-sm text-amber-900 dark:text-amber-200 leading-relaxed">
-                  <span className="font-semibold">We take your privacy seriously.</span>{" "}
-                  If you refresh the page at any point, your information will be cleared and you'll need to start over.
-                </p>
+                <div className="flex-1 space-y-1">
+                  <h3 className="text-sm md:text-base font-bold text-foreground">
+                    Your Privacy Matters
+                  </h3>
+                  <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">
+                    If you refresh the page, your information will be cleared and you'll need to start over.
+                    We don't store your data after your session ends.
+                  </p>
+                </div>
               </div>
             </div>
 
-            <p className="text-center text-base text-muted-foreground font-medium">
-              Your information stays private and is not stored after your session.
-            </p>
+            {/* Bottom tagline */}
+            <div className="text-center pt-4">
+              <p className="text-sm md:text-base text-muted-foreground flex items-center justify-center gap-2">
+                <Sparkles className="w-4 h-4 text-teal-500" aria-hidden="true" />
+                <span className="font-medium">Private, secure, and completely confidential</span>
+              </p>
+            </div>
           </div>
 
         </div>

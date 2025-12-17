@@ -632,7 +632,7 @@ export default function Home() {
               <div
                 id="is-this-for-me-panel"
                 className={`overflow-hidden transition-all duration-500 ease-out ${isThisForMeOpen
-                  ? "max-h-[800px] opacity-100"
+                  ? "max-h-[1600px] md:max-h-[900px] opacity-100"
                   : "max-h-0 opacity-0"
                   }`}
               >
@@ -734,6 +734,22 @@ export default function Home() {
                       </li>
                     </ul>
                   </div>
+
+                  {/* Close button for mobile */}
+                  <button
+                    onClick={() => setIsThisForMeOpen((prev) => !prev)}
+                    className="md:hidden w-full rounded-xl py-4 px-6 flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                    style={{
+                      background: 'linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, rgba(249, 115, 22, 0.1) 100%)',
+                      border: '1px solid rgba(251, 191, 36, 0.3)'
+                    }}
+                    aria-label="Close section"
+                  >
+                    <span className="text-base font-semibold" style={{ fontFamily: 'Public Sans, sans-serif', color: '#ea580c' }}>
+                      Close
+                    </span>
+                    <ChevronDown className="w-5 h-5 text-orange-600 rotate-180" />
+                  </button>
                 </div>
               </div>
             </div>

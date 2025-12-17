@@ -17,9 +17,14 @@
 - Use for primary CTAs, active states, links, and key UI elements
 - Conveys trust, clarity, and forward movement
 
-**Secondary: Orange** (#F97316 or similar)  
+**Secondary: Orange** (#F97316 or similar)
 - Use sparingly for accents, highlights, and secondary actions
 - Provides warmth and optimism without overwhelming
+
+**Tertiary: Purple** (#8b5cf6 and #7c3aed)
+- Use for special features, premium options, and accent elements
+- Provides creativity, innovation, and a sense of completeness
+- Particularly effective for "both/complete package" offerings
 
 **Neutrals: Warm Grays**
 - Background: Very light warm gray (#FAFAF9)
