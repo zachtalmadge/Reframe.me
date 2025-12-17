@@ -79,7 +79,7 @@ export default function Donate() {
         }
 
         .display-font {
-          font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+          font-family: 'Fraunces', Georgia, serif;
           letter-spacing: -0.02em;
         }
 
@@ -195,13 +195,15 @@ export default function Donate() {
 
           <div className="space-y-8">
             <h1
-              className={`display-font text-3xl md:text-5xl lg:text-7xl font-bold leading-tight text-white transition-all duration-700 ease-out ${
+              className={`display-font text-3xl md:text-5xl lg:text-7xl font-bold text-white transition-all duration-700 ease-out ${
                 heroMounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
               }`}
               style={{
                 textShadow: '0 4px 20px rgba(0,0,0,0.3), 0 0 40px rgba(255,255,255,0.2)',
                 letterSpacing: '-0.02em',
                 transitionDelay: '200ms',
+                lineHeight: '1.4',
+                paddingBottom: '0.5rem'
               }}
             >
               Help more people find
@@ -289,8 +291,8 @@ export default function Donate() {
             <div className="inline-block mb-4">
               <div className="w-20 h-1 shimmer-gradient rounded-full mx-auto mb-8" />
             </div>
-            <h2 className="display-font text-3xl sm:text-4xl md:text-6xl font-bold mb-6">
-              <span className="text-gradient-warm">Support Reframe.me</span> directly
+            <h2 className="display-font text-3xl sm:text-4xl md:text-6xl font-bold mb-6" style={{ paddingBottom: '0.25rem' }}>
+              Support Reframe.me <span className="text-gradient-warm">directly</span>
             </h2>
             <p className="text-lg md:text-xl text-gray-700 leading-relaxed max-w-3xl mx-auto font-medium">
               Right now, donations go straight to me (the creator) through Cash App or PayPal.
@@ -494,7 +496,7 @@ export default function Donate() {
             <div className="inline-block mb-4">
               <div className="w-16 h-1 shimmer-gradient rounded-full mx-auto mb-6" />
             </div>
-            <h2 className="display-font text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            <h2 className="display-font text-4xl md:text-5xl font-bold text-gray-900 mb-6" style={{ paddingBottom: '0.25rem' }}>
               Your support helps to
             </h2>
           </div>
@@ -589,7 +591,7 @@ export default function Donate() {
         <div className="relative max-w-5xl mx-auto">
           <div className="text-center mb-16 px-4">
             <div className="w-16 h-1 shimmer-gradient rounded-full mx-auto mb-8" />
-            <h2 className="display-font text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            <h2 className="display-font text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-6" style={{ paddingBottom: '0.25rem' }}>
               How your support is <span className="text-gradient-warm italic">used</span>
             </h2>
           </div>
@@ -653,7 +655,7 @@ export default function Donate() {
 
         <div className="relative max-w-5xl mx-auto">
           <div className="text-center mb-12 px-4">
-            <h2 className="display-font text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-8">
+            <h2 className="display-font text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-8" style={{ paddingBottom: '0.25rem' }}>
               Why this work <span className="text-gradient-warm italic">matters</span>
             </h2>
             <p className="text-xl md:text-2xl text-gray-700 leading-relaxed max-w-3xl mx-auto font-medium">
@@ -697,7 +699,7 @@ export default function Donate() {
             <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-teal-500 to-teal-600 mb-8 shadow-xl">
               <Lock className="w-10 h-10 text-white" />
             </div>
-            <h2 className="display-font text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            <h2 className="display-font text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4" style={{ paddingBottom: '0.25rem' }}>
               Your data and your donation are <span className="text-gradient-warm italic">separate</span>
             </h2>
           </div>
@@ -734,7 +736,7 @@ export default function Donate() {
         <div className="relative max-w-3xl mx-auto">
           <div className="text-center mb-14 px-4">
             <div className="w-16 h-1 shimmer-gradient rounded-full mx-auto mb-8" />
-            <h2 className="display-font text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            <h2 className="display-font text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4" style={{ paddingBottom: '0.25rem' }}>
               Questions & <span className="text-gradient-warm italic">Answers</span>
             </h2>
           </div>
@@ -780,7 +782,7 @@ export default function Donate() {
 
         <div className="relative max-w-5xl mx-auto">
           <div className="text-center mb-14 px-4">
-            <h2 className="display-font text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            <h2 className="display-font text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-6" style={{ paddingBottom: '0.25rem' }}>
               Other ways to <span className="text-gradient-warm italic">support</span>
             </h2>
             <p className="text-xl text-gray-600 font-medium">For folks who can't give money</p>

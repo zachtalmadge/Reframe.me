@@ -105,6 +105,7 @@ export default function Selection() {
             <h1
               id="selection-heading"
               className="text-4xl md:text-5xl font-bold leading-tight text-foreground"
+              style={{ fontFamily: 'Fraunces, Georgia, serif', paddingBottom: '0.25rem' }}
             >
               What would you like to create?
             </h1>

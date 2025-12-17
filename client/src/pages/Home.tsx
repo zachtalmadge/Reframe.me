@@ -1076,14 +1076,15 @@ export default function Home() {
 
               {/* Heading */}
               <h3
-                className="text-3xl md:text-5xl font-bold mb-6 leading-tight"
+                className="text-3xl md:text-5xl font-bold mb-8 leading-snug md:leading-tight"
                 style={{
-                  fontFamily: 'Literata, Georgia, serif',
+                  fontFamily: 'Fraunces, Georgia, serif',
                   background: 'linear-gradient(135deg, #0d9488 0%, #14b8a6 50%, #f97316 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   backgroundClip: 'text',
-                  letterSpacing: '-0.02em'
+                  letterSpacing: '-0.02em',
+                  paddingBottom: '0.25rem'
                 }}
               >
                 Help keep this tool free and accessible
@@ -1163,7 +1164,7 @@ export default function Home() {
         className="relative py-20 md:py-32 px-4 sm:px-6 lg:px-8 overflow-x-hidden overflow-y-visible"
         aria-labelledby="tools-heading"
         style={{
-          background: '#0a0f1a'
+          background: 'linear-gradient(135deg, #064e3b 0%, #0d9488 25%, #134e4a 50%, #9a3412 75%, #7c2d12 100%)'
         }}
       >
         {/* Layered atmospheric background */}
@@ -1283,7 +1284,7 @@ export default function Home() {
               id="tools-heading"
               className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 text-white"
               style={{
-                fontFamily: 'Outfit, sans-serif',
+                fontFamily: 'Fraunces, Georgia, serif',
                 letterSpacing: '-0.03em'
               }}
             >
@@ -1518,95 +1519,105 @@ export default function Home() {
       <section
         className="relative py-20 md:py-32 px-4 sm:px-6 lg:px-8 overflow-x-hidden overflow-y-visible"
         style={{
-          background: '#0a0f1a'
+          background: '#ffffff'
         }}
         aria-labelledby="stories-heading"
         data-testid="section-stories"
       >
-        {/* Layered atmospheric background - evolved from previous section */}
+        {/* Geometric decorative elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {/* Base mesh gradient - teal to orange flow */}
+          {/* Large teal circle - top right */}
           <div
-            className="absolute inset-0"
+            className="absolute -top-32 -right-32 w-96 h-96 rounded-full opacity-5"
             style={{
-              background: `
-                radial-gradient(ellipse 70% 50% at 50% 0%, rgba(20, 184, 166, 0.12), transparent),
-                radial-gradient(ellipse 80% 60% at 20% 50%, rgba(20, 184, 166, 0.10), transparent),
-                radial-gradient(ellipse 70% 50% at 80% 60%, rgba(249, 115, 22, 0.15), transparent),
-                radial-gradient(ellipse 60% 40% at 50% 100%, rgba(249, 115, 22, 0.08), transparent)
-              `
+              background: '#14b8a6'
             }}
           />
-
-          {/* Noise texture overlay */}
+          {/* Orange square - bottom left */}
           <div
-            className="absolute inset-0 opacity-[0.015]"
+            className="absolute -bottom-24 -left-24 w-80 h-80 rotate-12 opacity-5"
             style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-            }}
-          />
-
-          {/* Subtle grid pattern */}
-          <div
-            className="absolute inset-0 opacity-[0.03]"
-            style={{
-              backgroundImage: `
-                linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px)
-              `,
-              backgroundSize: '100px 100px'
+              background: '#f97316'
             }}
           />
         </div>
 
         <style>{`
-          @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400;1,600&display=swap');
+          @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;700&display=swap');
 
-          @keyframes story-fade-in {
+          @keyframes testimonial-slide-in {
             from {
               opacity: 0;
-              transform: translateY(20px) scale(0.98);
+              transform: translateY(30px);
             }
             to {
               opacity: 1;
-              transform: translateY(0) scale(1);
+              transform: translateY(0);
             }
           }
 
-          @keyframes ambient-glow {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 0.6; }
+          @keyframes float-gentle {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
           }
 
-          .story-quote {
-            font-family: 'Crimson Pro', Georgia, serif;
-            animation: story-fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          .testimonial-quote {
+            font-family: 'DM Serif Display', Georgia, serif;
+            animation: testimonial-slide-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
           }
 
-          .ambient-orb {
-            animation: ambient-glow 4s ease-in-out infinite;
+          .float-icon {
+            animation: float-gentle 3s ease-in-out infinite;
           }
         `}</style>
 
         <div className="relative max-w-7xl mx-auto">
           {/* Section Header */}
           <div className="text-center mb-16 md:mb-24">
-            <div className="inline-block mb-6">
+            {/* Decorative element above title */}
+            <div className="inline-flex items-center gap-4 mb-10">
               <div
-                className="h-1 w-20 rounded-full mx-auto mb-8"
+                className="h-1 w-16 rounded-full"
                 style={{
-                  background: 'linear-gradient(90deg, #14b8a6 0%, #f97316 100%)',
+                  background: '#14b8a6',
+                }}
+              />
+              <div
+                className="w-3 h-3 rounded-full"
+                style={{
+                  background: '#f97316',
+                }}
+              />
+              <div
+                className="h-1 w-16 rounded-full"
+                style={{
+                  background: '#14b8a6',
                 }}
               />
             </div>
+
             <h2
               id="stories-heading"
-              className="text-4xl md:text-6xl font-bold text-white mb-6"
-              style={{ fontFamily: 'DM Sans, system-ui, sans-serif', letterSpacing: '-0.03em' }}
+              className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8"
+              style={{
+                fontFamily: 'DM Serif Display, Georgia, serif',
+                letterSpacing: '-0.03em',
+                background: 'linear-gradient(135deg, #0d9488 0%, #14b8a6 50%, #f97316 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+              }}
             >
-             <span className="italic" style={{ fontFamily: 'Crimson Pro, Georgia, serif' }}>Testimonials</span>
+             <span className="italic">Testimonials</span>
             </h2>
-            <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed">
+
+            <p
+              className="text-lg md:text-xl max-w-2xl mx-auto leading-relaxed font-medium"
+              style={{
+                fontFamily: 'DM Sans, sans-serif',
+                color: '#475569'
+              }}
+            >
               Anonymized snapshots of how people are using Reframe.me.
             </p>
           </div>
@@ -1623,31 +1634,30 @@ export default function Home() {
               <div
                 className="relative rounded-3xl overflow-hidden"
                 style={{
-                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.08) 100%)',
-                  backdropFilter: 'blur(20px)',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
-                  boxShadow: '0 25px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+                  background: '#ffffff',
+                  border: '4px solid #14b8a6',
+                  boxShadow: '0 30px 80px rgba(20, 184, 166, 0.2), 0 10px 30px rgba(0, 0, 0, 0.1)',
                 }}
                 role="region"
                 aria-roledescription="carousel"
                 aria-label="Stories of change"
               >
-              {/* Decorative top accent */}
+              {/* Decorative top color bar */}
               <div
-                className="absolute top-0 left-0 right-0 h-px"
+                className="absolute top-0 left-0 right-0 h-2"
                 style={{
-                  background: 'linear-gradient(90deg, transparent 0%, rgba(20, 184, 166, 0.5) 50%, transparent 100%)',
+                  background: 'linear-gradient(90deg, #14b8a6 0%, #f97316 100%)',
                 }}
               />
 
               {/* Story content */}
               <div className="relative px-8 py-16 md:px-16 md:py-24">
-                {/* Decorative quote mark - large */}
+                {/* Decorative quote mark - large and bold */}
                 <div
-                  className="absolute top-12 left-8 md:left-12 text-9xl md:text-[12rem] leading-none opacity-10 pointer-events-none select-none"
+                  className="absolute top-8 left-6 md:left-10 text-[10rem] md:text-[16rem] leading-none opacity-15 pointer-events-none select-none font-bold"
                   style={{
-                    fontFamily: 'Crimson Pro, Georgia, serif',
-                    color: '#14b8a6',
+                    fontFamily: 'DM Serif Display, Georgia, serif',
+                    color: '#f97316',
                   }}
                   aria-hidden="true"
                 >
@@ -1670,11 +1680,11 @@ export default function Home() {
                       >
                         {/* Quote text */}
                         <blockquote
-                          className={`story-quote text-2xl md:text-4xl lg:text-5xl leading-tight md:leading-tight lg:leading-tight text-white font-light italic mb-10 md:mb-12 relative ${prefersReducedMotion ? '' : ''
+                          className={`testimonial-quote text-2xl md:text-4xl lg:text-5xl leading-tight md:leading-tight lg:leading-tight font-normal italic mb-10 md:mb-12 relative ${prefersReducedMotion ? '' : ''
                             }`}
                           style={{
-                            textShadow: '0 2px 20px rgba(0, 0, 0, 0.3)',
-                            letterSpacing: '-0.01em',
+                            color: '#0f172a',
+                            letterSpacing: '-0.02em',
                           }}
                         >
                           {story.quote}
@@ -1683,21 +1693,24 @@ export default function Home() {
                         {/* Attribution */}
                         <div className="flex items-center gap-4 relative">
                           <div
-                            className="h-px flex-1 max-w-[80px]"
+                            className="h-1 flex-1 max-w-[60px] rounded-full"
                             style={{
-                              background: 'linear-gradient(90deg, rgba(249, 115, 22, 0.6) 0%, transparent 100%)',
+                              background: '#14b8a6',
                             }}
                           />
                           <p
-                            className="text-sm md:text-base font-medium tracking-wide uppercase text-slate-300"
-                            style={{ letterSpacing: '0.1em' }}
+                            className="text-sm md:text-base font-bold tracking-wider uppercase"
+                            style={{
+                              letterSpacing: '0.15em',
+                              color: '#0d9488'
+                            }}
                           >
                             {story.role}
                           </p>
                           <div
-                            className="h-px flex-1 max-w-[80px]"
+                            className="h-1 flex-1 max-w-[60px] rounded-full"
                             style={{
-                              background: 'linear-gradient(90deg, transparent 0%, rgba(249, 115, 22, 0.6) 100%)',
+                              background: '#f97316',
                             }}
                           />
                         </div>
@@ -1707,11 +1720,11 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Decorative bottom accent */}
+              {/* Decorative bottom color bar */}
               <div
-                className="absolute bottom-0 left-0 right-0 h-px"
+                className="absolute bottom-0 left-0 right-0 h-2"
                 style={{
-                  background: 'linear-gradient(90deg, transparent 0%, rgba(249, 115, 22, 0.5) 50%, transparent 100%)',
+                  background: 'linear-gradient(90deg, #f97316 0%, #14b8a6 100%)',
                 }}
               />
             </div>
@@ -1723,15 +1736,13 @@ export default function Home() {
                 onClick={prevStory}
                 aria-label="Previous story"
                 data-testid="button-story-prev"
-                className="group relative w-14 h-14 rounded-full transition-all duration-300 hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+                className="group relative w-14 h-14 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                 style={{
-                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)',
-                  backdropFilter: 'blur(10px)',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',
+                  background: '#14b8a6',
+                  boxShadow: '0 6px 24px rgba(20, 184, 166, 0.3)',
                 }}
               >
-                <ChevronLeft className="w-6 h-6 text-white mx-auto transition-transform duration-300 group-hover:-translate-x-0.5" aria-hidden="true" />
+                <ChevronLeft className="w-6 h-6 text-white mx-auto transition-transform duration-300 group-hover:-translate-x-1" aria-hidden="true" />
               </button>
 
               {/* Dots navigation */}
@@ -1744,16 +1755,16 @@ export default function Home() {
                   <button
                     key={index}
                     onClick={() => goToStory(index)}
-                    className={`rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 ${index === storyIndex
+                    className={`rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white ${index === storyIndex
                       ? 'w-12 h-3'
-                      : 'w-3 h-3 hover:scale-125'
+                      : 'w-3 h-3 hover:scale-150'
                       }`}
                     style={{
                       background: index === storyIndex
                         ? 'linear-gradient(90deg, #14b8a6 0%, #f97316 100%)'
-                        : 'rgba(255, 255, 255, 0.3)',
+                        : '#cbd5e1',
                       boxShadow: index === storyIndex
-                        ? '0 0 20px rgba(20, 184, 166, 0.5)'
+                        ? '0 4px 16px rgba(20, 184, 166, 0.4)'
                         : 'none',
                     }}
                     role="tab"
@@ -1769,71 +1780,58 @@ export default function Home() {
                 onClick={nextStory}
                 aria-label="Next story"
                 data-testid="button-story-next"
-                className="group relative w-14 h-14 rounded-full transition-all duration-300 hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+                className="group relative w-14 h-14 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                 style={{
-                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)',
-                  backdropFilter: 'blur(10px)',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',
+                  background: '#f97316',
+                  boxShadow: '0 6px 24px rgba(249, 115, 22, 0.3)',
                 }}
               >
-                <ChevronRight className="w-6 h-6 text-white mx-auto transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true" />
+                <ChevronRight className="w-6 h-6 text-white mx-auto transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
               </button>
             </div>
             </div>
 
             {/* RIGHT COLUMN: Donate CTA */}
             <div className="flex flex-col justify-center items-center text-center space-y-8 px-4 md:px-6">
-              {/* Decorative element - floating heart orb */}
-              <div className="relative self-center">
+              {/* Decorative element - bold geometric heart */}
+              <div className="relative self-center float-icon">
                 <div
-                  className="w-24 h-24 rounded-full flex items-center justify-center shadow-2xl relative group transition-transform duration-500 hover:scale-110"
+                  className="w-28 h-28 rounded-2xl flex items-center justify-center relative group transition-all duration-500 hover:scale-110 hover:rotate-6"
                   style={{
-                    background: 'linear-gradient(135deg, rgba(249, 115, 22, 0.15) 0%, rgba(20, 184, 166, 0.15) 100%)',
-                    backdropFilter: 'blur(20px)',
-                    border: '1px solid rgba(255, 255, 255, 0.25)',
+                    background: 'linear-gradient(135deg, #f97316 0%, #fb923c 100%)',
+                    boxShadow: '0 20px 50px rgba(249, 115, 22, 0.4), 0 10px 20px rgba(249, 115, 22, 0.2)',
                   }}
                 >
-                  {/* Animated glow effect */}
+                  {/* Inner border effect */}
                   <div
-                    className="absolute inset-0 rounded-full opacity-40 blur-2xl transition-opacity duration-500 group-hover:opacity-70"
-                    style={{
-                      background: 'linear-gradient(135deg, #f97316 0%, #14b8a6 100%)',
-                    }}
-                  />
-                  {/* Pulsing ring */}
-                  <div
-                    className="absolute inset-0 rounded-full animate-ping opacity-20"
-                    style={{
-                      background: 'linear-gradient(135deg, #f97316 0%, #14b8a6 100%)',
-                      animationDuration: '3s',
-                    }}
+                    className="absolute inset-2 rounded-xl border-2 border-white/30"
                   />
                   <Heart
-                    className="w-11 h-11 text-white relative z-10 transition-transform duration-300 group-hover:scale-110"
+                    className="w-14 h-14 text-white relative z-10 transition-transform duration-300 group-hover:scale-110"
                     fill="white"
                     aria-hidden="true"
                   />
                 </div>
               </div>
 
-              {/* Heading with elegant typography */}
+              {/* Heading with bold typography */}
               <h3
-                className="text-3xl md:text-4xl lg:text-5xl font-bold text-white italic leading-tight max-w-lg"
+                className="text-3xl md:text-4xl lg:text-5xl font-bold italic leading-tight max-w-lg"
                 style={{
-                  fontFamily: 'Crimson Pro, Georgia, serif',
-                  textShadow: '0 2px 30px rgba(0, 0, 0, 0.4), 0 4px 60px rgba(249, 115, 22, 0.2)',
+                  fontFamily: 'DM Serif Display, Georgia, serif',
+                  color: '#0f172a',
                   letterSpacing: '-0.02em',
                 }}
               >
                 Stories like these are why this exists
               </h3>
 
-              {/* Description with balanced spacing */}
+              {/* Description with strong contrast */}
               <p
-                className="text-base md:text-lg lg:text-xl text-white/85 leading-relaxed max-w-md font-light"
+                className="text-base md:text-lg lg:text-xl leading-relaxed max-w-md font-medium"
                 style={{
-                  textShadow: '0 1px 2px rgba(0, 0, 0, 0.3)',
+                  fontFamily: 'DM Sans, sans-serif',
+                  color: '#475569',
                 }}
               >
                 If this tool has helped you or someone you know, your support helps ensure it stays free and available for everyone navigating this journey.
@@ -1844,42 +1842,48 @@ export default function Home() {
                 <Link href="/donate">
                   <Button
                     size="lg"
-                    className="group relative px-10 py-7 text-lg font-bold rounded-2xl transition-all duration-300 hover:scale-105 active:scale-95 overflow-hidden w-full sm:w-auto"
+                    className="group relative px-10 py-7 text-lg font-bold rounded-2xl transition-all duration-300 hover:scale-105 hover:-rotate-1 active:scale-95 overflow-hidden w-full sm:w-auto"
                     style={{
                       background: 'linear-gradient(135deg, #f97316 0%, #fb923c 100%)',
                       color: 'white',
-                      boxShadow: '0 10px 40px rgba(249, 115, 22, 0.4), 0 0 60px rgba(249, 115, 22, 0.2)',
+                      boxShadow: '0 12px 40px rgba(249, 115, 22, 0.4)',
+                      fontFamily: 'DM Sans, sans-serif',
                     }}
                   >
                     <span className="relative z-10 flex items-center gap-3 justify-center">
-                      <Heart className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" fill="currentColor" aria-hidden="true" />
+                      <Heart className="w-5 h-5 transition-transform duration-300 group-hover:scale-125" fill="currentColor" aria-hidden="true" />
                       Support This Work
                     </span>
                     {/* Shine effect on hover */}
                     <div
                       className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                       style={{
-                        background: 'linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.25) 50%, transparent 100%)',
+                        background: 'linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%)',
                       }}
                     />
                   </Button>
                 </Link>
 
-                <span className="text-sm text-white/50 font-medium tracking-wider">or</span>
+                <span className="text-sm font-bold tracking-wider uppercase" style={{ color: '#94a3b8' }}>or</span>
 
                 <a
                   href="/donate"
-                  className="text-base font-semibold text-teal-300 hover:text-teal-200 underline underline-offset-4 decoration-2 hover:underline-offset-8 transition-all duration-300 hover:decoration-teal-400"
+                  className="text-base font-bold underline underline-offset-4 decoration-2 hover:underline-offset-8 transition-all duration-300"
+                  style={{
+                    color: '#14b8a6',
+                    fontFamily: 'DM Sans, sans-serif',
+                  }}
                 >
                   Share with someone who needs it
                 </a>
               </div>
 
-              {/* Note with subtle styling */}
+              {/* Note with clear typography */}
               <p
-                className="text-sm text-white/50 italic pt-2 font-light max-w-sm"
+                className="text-sm italic pt-2 font-medium max-w-sm"
                 style={{
-                  textShadow: '0 1px 2px rgba(0, 0, 0, 0.2)',
+                  fontFamily: 'DM Sans, sans-serif',
+                  color: '#64748b',
                 }}
               >
                 Every bit helps—but this tool is here for you whether you can give or not.
@@ -1969,7 +1973,7 @@ export default function Home() {
               id="how-it-works-heading"
               className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6"
               style={{
-                fontFamily: 'Cabinet Grotesk, system-ui, sans-serif',
+                fontFamily: 'Fraunces, Georgia, serif',
                 background: 'linear-gradient(135deg, #0f172a 0%, #0d9488 50%, #ea580c 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
