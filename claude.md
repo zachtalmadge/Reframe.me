@@ -1,6 +1,6 @@
 # Reframe.me - Development Status
 
-**Last Updated**: 2025-12-16
+**Last Updated**: 2025-12-17
 
 ## 📊 Current State
 
@@ -13,7 +13,7 @@ Reframe.me is a web application that helps justice-involved individuals prepare 
 - **Frontend**: React 18 + TypeScript + Tailwind CSS + Wouter (routing)
 - **Backend**: Express.js + TypeScript
 - **Database**: PostgreSQL + Drizzle ORM
-- **AI**: OpenAI API (GPT-4o-mini)
+- **AI**: OpenAI API (GPT-5.2)
 - **Build**: Vite + esbuild
 - **Target Deployment**: Vercel
 

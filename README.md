@@ -70,7 +70,7 @@ npm run dev
 
 ## ⚡ Features
 
-- **AI-Powered Content Generation**: Uses GPT-4o-mini to create personalized narratives
+- **AI-Powered Content Generation**: Uses GPT-5.2 to create personalized narratives
 - **Privacy-First**: No account required, no data stored on servers
 - **Mobile Optimized**: Responsive design with modern glass morphism UI
 - **Regeneration Options**: Customize any narrative or letter with one click
@@ -82,7 +82,7 @@ npm run dev
 - **Frontend**: React 18, TypeScript, Tailwind CSS, Wouter (routing)
 - **Backend**: Express.js, TypeScript
 - **Database**: PostgreSQL, Drizzle ORM
-- **AI**: OpenAI API (GPT-4o-mini)
+- **AI**: OpenAI API (GPT-5.2)
 - **UI Components**: Radix UI, shadcn/ui
 - **Build Tool**: Vite
 - **Hosting**: Vercel

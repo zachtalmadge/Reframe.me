@@ -155,7 +155,7 @@ export default function Selection() {
                 </div>
                 <h1
                   id="selection-heading"
-                  className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[0.95] text-foreground mb-4 md:mb-6"
+                  className="text-4xl md:text-7xl lg:text-8xl font-bold leading-[0.95] text-foreground mb-4 md:mb-6"
                   style={{ fontFamily: 'Fraunces, Georgia, serif' }}
                 >
                   What would you

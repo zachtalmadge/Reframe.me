@@ -304,7 +304,7 @@ export default function Donate() {
           <div className="block md:hidden space-y-6 max-w-md mx-auto mb-12">
             {/* Cash App Button */}
             <a
-              href="https://cash.app/$ztalmadge/25"
+              href="https://cash.app/$ztalmadge"
               target="_blank"
               rel="noopener noreferrer"
               className="group block w-full"
@@ -335,7 +335,7 @@ export default function Donate() {
                   </div>
 
                   <p className="text-center text-sm text-gray-600 font-medium">
-                    Tap to open Cash App and contribute $25
+                    Tap to open Cash App and contribute any amount
                   </p>
                 </CardContent>
               </Card>
@@ -343,7 +343,7 @@ export default function Donate() {
 
             {/* PayPal Button */}
             <a
-              href="https://paypal.me/steezyzjt/25"
+              href="https://paypal.me/steezyzjt"
               target="_blank"
               rel="noopener noreferrer"
               className="group block w-full"
@@ -374,7 +374,7 @@ export default function Donate() {
                   </div>
 
                   <p className="text-center text-sm text-gray-600 font-medium">
-                    Tap to open PayPal and contribute $25
+                    Tap to open PayPal and contribute any amount
                   </p>
                 </CardContent>
               </Card>
@@ -397,7 +397,7 @@ export default function Donate() {
                     <div className="absolute inset-0 bg-gradient-to-br from-green-200 to-emerald-300 blur-2xl opacity-30 rounded-3xl transform scale-95" />
                     <div className="relative p-4 bg-white rounded-2xl shadow-xl">
                       <img
-                        src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://cash.app/$ztalmadge/25"
+                        src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://cash.app/$ztalmadge"
                         alt="Cash App QR Code"
                         className="w-56 h-56 rounded-xl"
                       />
@@ -406,7 +406,7 @@ export default function Donate() {
 
                   <div className="text-center pt-2">
                     <a
-                      href="https://cash.app/$ztalmadge/25"
+                      href="https://cash.app/$ztalmadge"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 text-lg font-bold text-green-700 hover:text-green-600 underline decoration-2 underline-offset-4 hover:underline-offset-8 transition-all duration-300"
@@ -433,7 +433,7 @@ export default function Donate() {
                     <div className="absolute inset-0 bg-gradient-to-br from-indigo-200 to-blue-300 blur-2xl opacity-30 rounded-3xl transform scale-95" />
                     <div className="relative p-4 bg-white rounded-2xl shadow-xl">
                       <img
-                        src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://paypal.me/steezyzjt/25"
+                        src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://paypal.me/steezyzjt"
                         alt="PayPal QR Code"
                         className="w-56 h-56 rounded-xl"
                       />
@@ -442,7 +442,7 @@ export default function Donate() {
 
                   <div className="text-center pt-2">
                     <a
-                      href="https://paypal.me/steezyzjt/25"
+                      href="https://paypal.me/steezyzjt"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 text-lg font-bold text-indigo-700 hover:text-indigo-600 underline decoration-2 underline-offset-4 hover:underline-offset-8 transition-all duration-300"

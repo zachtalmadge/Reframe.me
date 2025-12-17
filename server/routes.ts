@@ -224,7 +224,7 @@ Guidance for how to use this information:
 Generate narratives that are authentic, professional, and help the individual present their background in the most favorable light while remaining honest.`;
 
   const response = await getOpenAI().chat.completions.create({
-    model: "gpt-4o-mini",
+    model: "gpt-5.2",
     messages: [
       { role: "system", content: systemPrompt },
       { role: "user", content: userPrompt }
@@ -246,8 +246,6 @@ Generate narratives that are authentic, professional, and help the individual pr
     content: n.content,
   }));
 }
-
-
 
 
 type NarrativeType = "justice_focused_org" | "general_employer" | "minimal_disclosure" | "transformation_focused" | "skills_focused";
@@ -392,7 +390,7 @@ Guidance for how to use this information:
 Generate a narrative that is authentic, professional, and helps the individual present their background in the most favorable light while remaining honest. Create a fresh version that differs from any previous iterations.`;
 
   const response = await getOpenAI().chat.completions.create({
-    model: "gpt-4o-mini",
+    model: "gpt-5.2",
     messages: [
       { role: "system", content: systemPrompt },
       { role: "user", content: userPrompt }
@@ -416,10 +414,6 @@ Generate a narrative that is authentic, professional, and helps the individual p
     content: parsed.narrative.content,
   };
 }
-
-
-
-
 
 
 async function generateResponseLetter(formData: FormData): Promise<ResponseLetter> {
@@ -582,7 +576,7 @@ Additional guidance for this letter:
 Generate a professional, compelling letter that acknowledges the background check findings, reflects accountability and growth, handles the relevance of the record to the job in an honest way according to the clarifying relevance setting, reinforces the candidate’s fit for the role, and respectfully asks the employer to reconsider.`;
 
   const response = await getOpenAI().chat.completions.create({
-    model: "gpt-4o-mini",
+    model: "gpt-5.2",
     messages: [
       { role: "system", content: systemPrompt },
       { role: "user", content: userPrompt }
@@ -603,8 +597,6 @@ Generate a professional, compelling letter that acknowledges the background chec
     content: parsed.letter.content,
   };
 }
-
-
 
 
 export async function registerRoutes(
