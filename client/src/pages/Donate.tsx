@@ -723,19 +723,19 @@ export default function Donate() {
               {
                 title: "Creator time & sustainability",
                 desc: "A portion supports my time working on Reframe.me so this project can keep going instead of burning out.",
-                color: "cyan",
+                color: "purple",
               },
             ].map((item, i) => (
               <div
                 key={i}
                 className="relative rounded-2xl border-2 bg-white p-8 shadow-lg transition-all duration-500 hover:shadow-2xl hover:-translate-y-1 overflow-hidden group"
                 style={{
-                  borderColor: item.color === 'teal' ? '#14b8a6' : item.color === 'orange' ? '#f97316' : '#06b6d4',
+                  borderColor: item.color === 'teal' ? '#14b8a6' : item.color === 'orange' ? '#f97316' : item.color === 'purple' ? '#8b5cf6' : '#06b6d4',
                 }}
               >
                 <div className="absolute -right-16 -bottom-16 w-48 h-48 organic-blob opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                   style={{
-                    background: `radial-gradient(circle, ${item.color === 'teal' ? '#14b8a650' : item.color === 'orange' ? '#f9731650' : '#06b6d450'} 0%, transparent 70%)`,
+                    background: `radial-gradient(circle, ${item.color === 'teal' ? '#14b8a650' : item.color === 'orange' ? '#f9731650' : item.color === 'purple' ? '#8b5cf650' : '#06b6d450'} 0%, transparent 70%)`,
                   }}
                 />
                 <div className="relative">
