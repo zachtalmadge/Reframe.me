@@ -915,7 +915,7 @@ export default function Donate() {
               {
                 icon: Briefcase,
                 text: "If you work in hiring, consider how fair-chance practices and tools like this can be part of your process.",
-                color: "cyan",
+                color: "purple",
               },
             ].map((item, i) => (
               <Card
@@ -925,12 +925,12 @@ export default function Donate() {
                 <CardContent className="p-8 text-center space-y-6 relative">
                   <div className={`absolute -right-8 -bottom-8 w-32 h-32 organic-blob opacity-20`}
                     style={{
-                      background: `radial-gradient(circle, ${item.color === 'teal' ? '#14b8a6' : item.color === 'orange' ? '#f97316' : '#06b6d4'} 0%, transparent 70%)`,
+                      background: `radial-gradient(circle, ${item.color === 'teal' ? '#14b8a6' : item.color === 'orange' ? '#f97316' : item.color === 'purple' ? '#8b5cf6' : '#06b6d4'} 0%, transparent 70%)`,
                     }}
                   />
                   <div className="relative inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br shadow-lg"
                     style={{
-                      background: item.color === 'teal' ? 'linear-gradient(135deg, #14b8a6, #0d9488)' : item.color === 'orange' ? 'linear-gradient(135deg, #f97316, #fb923c)' : 'linear-gradient(135deg, #06b6d4, #0891b2)',
+                      background: item.color === 'teal' ? 'linear-gradient(135deg, #14b8a6, #0d9488)' : item.color === 'orange' ? 'linear-gradient(135deg, #f97316, #fb923c)' : item.color === 'purple' ? 'linear-gradient(135deg, #8b5cf6, #7c3aed)' : 'linear-gradient(135deg, #06b6d4, #0891b2)',
                     }}
                   >
                     <item.icon className="w-8 h-8 text-white" />
