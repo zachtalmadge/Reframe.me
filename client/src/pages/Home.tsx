@@ -277,6 +277,7 @@ export default function Home() {
         }
       `}</style>
 
+      {/* Hero Section */}
       <section
         className="relative py-16 md:py-24 overflow-x-hidden overflow-y-visible"
         style={{
@@ -524,6 +525,7 @@ export default function Home() {
         </div>
 
       </section>
+      {/* End Hero Section*/}
 
       {/* Why This Part of the Process Matters Section (with Is This For Me) */}
       <section
@@ -1025,8 +1027,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+      {/* End Why This Part of the Process Matters Section (with Is This For Me) */}
 
-      {/* Donate CTA - Gift Giving Theme */}
+      {/* Donate CTA */}
       <section className="relative py-20 md:py-28 px-4 sm:px-6 lg:px-8 overflow-hidden dot-pattern dark:dot-pattern-dark"
       >
         <style>{`
@@ -1178,6 +1181,7 @@ export default function Home() {
           }
         `}</style>
       </section>
+      {/* End Donate CTA */}
 
       {/* What We Offer - Bento Grid */}
       <section
@@ -1533,9 +1537,10 @@ export default function Home() {
           </div>
         </div>
       </section>
+      {/* End What We Offer - Bento Grid */}
 
 
-
+      {/* Testimonials and Donate CTA */}
       <section
         className="relative py-20 md:py-32 px-4 sm:px-6 lg:px-8 overflow-x-hidden overflow-y-visible"
         style={{
@@ -1912,6 +1917,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      {/* End Testimonials and Donate CTA */}
 
       {/* How It Works - Modern Process Flow */}
       <section
@@ -2300,6 +2306,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      {/* End How It Works - Modern Process Flow */}
 
     </Layout>
   );

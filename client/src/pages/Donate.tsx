@@ -69,6 +69,8 @@ export default function Donate() {
   return (
     <Layout>
       <div style={{ overflowX: 'hidden', width: '100%', position: 'relative' }}>
+
+       {/* Style block */} 
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap');
 
@@ -263,8 +265,10 @@ export default function Donate() {
           }
         }
       `}</style>
+       {/* End Style block */} 
 
-      {/* Hero Section - Dramatic */}
+
+      {/* Hero Section */}
       <section
         className="relative py-24 md:py-32 overflow-hidden"
         style={{
@@ -381,8 +385,10 @@ export default function Donate() {
           </div>
         </div>
       </section>
+      {/* End Hero Section */}
 
-      {/* Payment Section - Mobile-First Responsive */}
+
+      {/* Payment Section */}
       <section
         ref={qrSectionRef}
         className="relative py-24 md:py-32 px-6 sm:px-8 lg:px-12 scroll-mt-20 overflow-hidden"
@@ -598,6 +604,8 @@ export default function Donate() {
           </div>
         </div>
       </section>
+      {/* End Payment Section */}
+
 
       {/* Why Your Support Matters - Asymmetric Grid */}
       <section className="relative py-20 md:py-28 px-6 sm:px-8 lg:px-12 bg-gradient-to-br from-slate-50 via-white to-teal-50/30">
@@ -689,6 +697,8 @@ export default function Donate() {
           </div>
         </div>
       </section>
+      {/* End Why Your Support Matters - Asymmetric Grid */}
+
 
       {/* Transparency Section - Editorial Style */}
       <section
@@ -760,6 +770,8 @@ export default function Donate() {
           </div>
         </div>
       </section>
+      {/* End Transparency Section - Editorial Style */}
+
 
       {/* Why This Work Matters - Testimonial with Impact */}
       <section className="relative py-24 md:py-32 px-6 sm:px-8 lg:px-12 overflow-hidden bg-gradient-to-br from-orange-50 via-teal-50 to-orange-50">
@@ -803,6 +815,8 @@ export default function Donate() {
           </div>
         </div>
       </section>
+      {/* End Why This Work Matters - Testimonial with Impact */}
+
 
       {/* Privacy & Data Reassurance */}
       <section className="relative py-20 md:py-28 px-6 sm:px-8 lg:px-12 bg-white">
@@ -842,6 +856,8 @@ export default function Donate() {
           </div>
         </div>
       </section>
+      {/* End Privacy & Data Reassurance */}
+
 
       {/* FAQ Section - Modern Accordion */}
       <section className="relative py-20 md:py-28 px-6 sm:px-8 lg:px-12 bg-gradient-to-b from-slate-50 to-white">
@@ -887,6 +903,8 @@ export default function Donate() {
           </div>
         </div>
       </section>
+      {/* End FAQ Section - Modern Accordion */}
+
 
       {/* Other Ways to Support */}
       <section className="relative py-20 md:py-28 px-6 sm:px-8 lg:px-12 overflow-hidden bg-gradient-to-br from-orange-50 via-teal-50 to-orange-50">
@@ -942,6 +960,8 @@ export default function Donate() {
           </div>
         </div>
       </section>
+      {/* End Other Ways to Support */}
+
 
       {/* Closing CTA - Emotional Impact */}
       <section className="relative py-24 md:py-32 px-6 sm:px-8 lg:px-12 overflow-hidden bg-gradient-to-br from-white via-teal-50/30 to-orange-50/30">
@@ -970,6 +990,8 @@ export default function Donate() {
           </Button>
         </div>
       </section>
+      {/* End Closing CTA - Emotional Impact */}
+
 
       {/* Back to Top Button */}
       {showBackToTop && (
@@ -981,7 +1003,11 @@ export default function Donate() {
           <ArrowUp className="w-7 h-7 text-white" />
         </button>
       )}
+      {/* End Back to Top Button */}
+
       </div>
+      {/* End overflow div line 71 */}
+      
     </Layout>
   );
 }
