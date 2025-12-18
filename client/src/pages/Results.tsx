@@ -100,16 +100,16 @@ function ResultsGuidanceSection({
         )}
 
         {showLetterGuidance && (
-          <div className="paper-card rounded-2xl p-6 md:p-8 border border-chart-2/20 space-y-6 font-manrope">
+          <div className="paper-card rounded-2xl p-6 md:p-8 border border-primary/20 space-y-6 font-manrope">
             <h3 className="text-xl font-bold text-foreground flex items-center gap-3 font-fraunces">
-              <div className="w-10 h-10 rounded-xl bg-chart-2/10 flex items-center justify-center ring-1 ring-chart-2/20">
-                <FileText className="w-5 h-5 text-chart-2" aria-hidden="true" />
+              <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center ring-1 ring-primary/20">
+                <FileText className="w-5 h-5 text-primary" aria-hidden="true" />
               </div>
               Before you send your letter
             </h3>
             <ul className="space-y-3 text-sm text-muted-foreground">
-              <li className="flex gap-4 p-4 rounded-xl bg-chart-2/5 border border-chart-2/10">
-                <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-chart-2 text-white text-sm font-bold flex items-center justify-center">
+              <li className="flex gap-4 p-4 rounded-xl bg-primary/5 border border-primary/10">
+                <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-primary text-primary-foreground text-sm font-bold flex items-center justify-center">
                   1
                 </span>
                 <span>
@@ -117,32 +117,32 @@ function ResultsGuidanceSection({
                   If you like this letter but want to say more or adjust the wording, copy it into a word-processing document or another AI tool and add your own details in your voice.
                 </span>
               </li>
-              <li className="flex gap-4 p-4 rounded-xl bg-chart-2/5 border border-chart-2/10">
-                <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-chart-2 text-white text-sm font-bold flex items-center justify-center">
+              <li className="flex gap-4 p-4 rounded-xl bg-primary/5 border border-primary/10">
+                <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-primary text-primary-foreground text-sm font-bold flex items-center justify-center">
                   2
                 </span>
                 <span>
                   <strong className="text-foreground font-semibold">Check for accuracy.</strong> Review dates, names, charges, and employer details. Small errors can undermine your message.
                 </span>
               </li>
-              <li className="flex gap-4 p-4 rounded-xl bg-chart-2/5 border border-chart-2/10">
-                <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-chart-2 text-white text-sm font-bold flex items-center justify-center">
+              <li className="flex gap-4 p-4 rounded-xl bg-primary/5 border border-primary/10">
+                <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-primary text-primary-foreground text-sm font-bold flex items-center justify-center">
                   3
                 </span>
                 <span>
                   <strong className="text-foreground font-semibold">Make sure it feels honest.</strong> If anything doesn't sit right with you, edit it. You should feel comfortable with every word.
                 </span>
               </li>
-              <li className="flex gap-4 p-4 rounded-xl bg-chart-2/5 border border-chart-2/10">
-                <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-chart-2 text-white text-sm font-bold flex items-center justify-center">
+              <li className="flex gap-4 p-4 rounded-xl bg-primary/5 border border-primary/10">
+                <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-primary text-primary-foreground text-sm font-bold flex items-center justify-center">
                   4
                 </span>
                 <span>
                   <strong className="text-foreground font-semibold">Get a second opinion if you can.</strong> Consider sharing it with a trusted friend, reentry counselor, or legal aid organization before sending.
                 </span>
               </li>
-              <li className="flex gap-4 p-4 rounded-xl bg-chart-2/5 border border-chart-2/10">
-                <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-chart-2 text-white text-sm font-bold flex items-center justify-center">
+              <li className="flex gap-4 p-4 rounded-xl bg-primary/5 border border-primary/10">
+                <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-primary text-primary-foreground text-sm font-bold flex items-center justify-center">
                   5
                 </span>
                 <span>
@@ -150,8 +150,8 @@ function ResultsGuidanceSection({
                 </span>
               </li>
             </ul>
-            <div className="pt-4 border-t border-chart-2/10">
-              <p className="text-sm text-foreground/70 italic pl-4 border-l-2 border-chart-2/40">
+            <div className="pt-4 border-t border-primary/10">
+              <p className="text-sm text-foreground/70 italic pl-4 border-l-2 border-primary/40">
                 This letter is a tool to help you respond thoughtfully. You deserve to be heard, and taking time to get it right is a sign of strength.
               </p>
             </div>
@@ -552,30 +552,65 @@ export default function Results() {
         <div className="absolute bottom-0 right-0 w-32 h-32 border-r-2 border-b-2 border-chart-2/10 pointer-events-none" />
 
         <div className="max-w-3xl mx-auto space-y-8 relative z-10">
-          {/* Disclaimer Card - Refined */}
-          <div className="paper-card rounded-2xl border border-amber-200 dark:border-amber-800/30 bg-amber-50/80 dark:bg-amber-950/20 backdrop-blur-sm animate-fadeInUp opacity-0">
-            <div className="p-6">
-              <div className="flex gap-4">
-                <div className="flex-shrink-0">
-                  <div className="w-12 h-12 rounded-xl bg-white dark:bg-amber-900/30 flex items-center justify-center ring-1 ring-amber-200 dark:ring-amber-800/50">
-                    <AlertTriangle
-                      className="w-6 h-6 text-amber-600 dark:text-amber-400"
-                      aria-hidden="true"
-                    />
+          {/* Disclaimer Card - Refined & Dignified */}
+          <div className="relative animate-fadeInUp opacity-0" style={{ animationDelay: '100ms' }}>
+            {/* Subtle elevation shadow */}
+            <div className="absolute -inset-0.5 bg-gradient-to-br from-amber-200 via-orange-100 to-amber-200 dark:from-amber-900/40 dark:via-orange-900/40 dark:to-amber-900/40 rounded-2xl blur-sm opacity-50" />
+
+            {/* Main card with refined border treatment */}
+            <div className="relative rounded-2xl border-l-4 border-amber-600 dark:border-amber-500 bg-gradient-to-br from-white via-amber-50/50 to-orange-50/30 dark:from-gray-900 dark:via-amber-950/30 dark:to-orange-950/20 shadow-xl overflow-hidden">
+
+              {/* Subtle grain texture for depth */}
+              <div className="absolute inset-0 opacity-[0.015] dark:opacity-[0.03] pointer-events-none" style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`
+              }} />
+
+              {/* Top accent line */}
+              <div className="h-0.5 bg-gradient-to-r from-transparent via-amber-400 to-transparent" />
+
+              <div className="relative p-6 md:p-8">
+                <div className="flex gap-5">
+                  {/* Elegant icon treatment */}
+                  <div className="flex-shrink-0">
+                    <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-100 to-orange-100 dark:from-amber-900/40 dark:to-orange-900/40 flex items-center justify-center border border-amber-300/50 dark:border-amber-700/50 shadow-inner">
+                      <AlertTriangle
+                        className="w-7 h-7 text-amber-700 dark:text-amber-400"
+                        aria-hidden="true"
+                        strokeWidth={2}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Content with refined hierarchy */}
+                  <div className="flex-1 space-y-3 font-manrope">
+                    <div className="space-y-1.5">
+                      {/* Subtle label */}
+                      <div className="flex items-center gap-2">
+                        <div className="h-px flex-1 bg-gradient-to-r from-amber-300 to-transparent dark:from-amber-700 dark:to-transparent max-w-[60px]" />
+                        <span className="text-xs font-semibold text-amber-700 dark:text-amber-400 uppercase tracking-wider">
+                          Please Note
+                        </span>
+                      </div>
+
+                      {/* Heading with elegant serif */}
+                      <h2 className="text-xl md:text-2xl font-bold text-amber-900 dark:text-amber-100 tracking-tight" style={{ fontFamily: 'Fraunces, Georgia, serif', letterSpacing: '-0.01em' }}>
+                        Important Disclaimer
+                      </h2>
+                    </div>
+
+                    {/* Body text with comfortable reading size */}
+                    <p className="text-sm md:text-base text-amber-900/90 dark:text-amber-100/90 leading-relaxed">
+                      These documents are personalized tools to help you prepare
+                      for employment conversations. They are <span className="font-semibold border-b-2 border-amber-500/40 dark:border-amber-400/40">not legal advice</span>.
+                      Please review and customize them to reflect your personal
+                      situation before using them with potential employers.
+                    </p>
                   </div>
                 </div>
-                <div className="space-y-2 font-manrope">
-                  <h2 className="text-lg font-bold text-amber-900 dark:text-amber-200 tracking-tight">
-                    Important Disclaimer
-                  </h2>
-                  <p className="text-sm text-amber-800 dark:text-amber-300 leading-relaxed">
-                    These documents are personalized tools to help you prepare
-                    for employment conversations. They are not legal advice.
-                    Please review and customize them to reflect your personal
-                    situation before using them with potential employers.
-                  </p>
-                </div>
               </div>
+
+              {/* Subtle bottom border */}
+              <div className="h-px bg-gradient-to-r from-transparent via-amber-300 dark:via-amber-700 to-transparent" />
             </div>
           </div>
 

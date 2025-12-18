@@ -27,10 +27,13 @@ export function DocumentSwitcher({
       data-testid="document-switcher"
     >
       {/* Sliding background indicator */}
-      <div 
-        className={`absolute inset-y-1 w-[calc(50%-2px)] rounded-full bg-primary shadow-sm transition-transform duration-300 ease-out ${
+      <div
+        className={`absolute inset-y-1 w-[calc(50%-2px)] rounded-full shadow-sm transition-transform duration-300 ease-out ${
           isNarratives ? "translate-x-0 left-1" : "translate-x-full left-0"
         }`}
+        style={{
+          background: 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)'
+        }}
         aria-hidden="true"
       />
       
@@ -40,8 +43,8 @@ export function DocumentSwitcher({
         aria-selected={isNarratives}
         aria-controls="section-narratives"
         className={`relative z-10 flex-1 py-2 px-4 text-sm font-medium rounded-full transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
-          isNarratives 
-            ? "text-primary-foreground" 
+          isNarratives
+            ? "text-white"
             : "text-muted-foreground hover:text-foreground"
         }`}
         onClick={() => onTabChange("narratives")}
@@ -56,8 +59,8 @@ export function DocumentSwitcher({
         aria-selected={!isNarratives}
         aria-controls="section-letter"
         className={`relative z-10 flex-1 py-2 px-4 text-sm font-medium rounded-full transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
-          !isNarratives 
-            ? "text-primary-foreground" 
+          !isNarratives
+            ? "text-white"
             : "text-muted-foreground hover:text-foreground"
         }`}
         onClick={() => onTabChange("letter")}
