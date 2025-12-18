@@ -313,7 +313,33 @@ export function Step1Background({
 
         <div className="space-y-4">
           <Label className="text-base font-medium">Release Date</Label>
-          <div className="grid grid-cols-2 gap-4">
+
+          {/* Native month picker for mobile (iOS/Android) */}
+          <div className="md:hidden">
+            <Input
+              type="month"
+              id="release-date-mobile"
+              value={state.releaseMonth && state.releaseYear
+                ? `${state.releaseYear}-${state.releaseMonth.padStart(2, '0')}`
+                : ''
+              }
+              onChange={(e) => {
+                const value = e.target.value; // Format: YYYY-MM
+                if (value) {
+                  const [year, month] = value.split('-');
+                  dispatch({ type: "SET_FIELD", field: "releaseYear", value: year });
+                  dispatch({ type: "SET_FIELD", field: "releaseMonth", value: String(parseInt(month)) });
+                }
+              }}
+              max={`${currentYear}-12`}
+              min={`${currentYear - 49}-01`}
+              className="w-full"
+              data-testid="input-release-date-mobile"
+            />
+          </div>
+
+          {/* Desktop select dropdowns */}
+          <div className="hidden md:grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="release-month" className="sr-only">
                 Month
