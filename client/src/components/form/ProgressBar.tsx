@@ -43,7 +43,7 @@ export function ProgressBar({
         </div>
         {stepTitle && (
           <span
-            className="text-xs font-semibold text-primary truncate bg-primary/10 px-4 py-2 rounded-full border border-primary/20 shadow-sm font-manrope"
+            className="hidden md:inline text-xs font-semibold text-primary truncate bg-primary/10 px-4 py-2 rounded-full border border-primary/20 shadow-sm font-manrope"
             data-testid="text-step-title"
           >
             {stepTitle}

@@ -70,9 +70,23 @@ export default function Donate() {
     <Layout>
       <div style={{ overflowX: 'hidden', width: '100%', position: 'relative' }}>
 
-       {/* Style block */} 
+       {/* Style block */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap');
+
+        /* Dot pattern background */
+        .dot-pattern {
+          background-color: #FAFAF9;
+          background-image: radial-gradient(circle, #0D9488 0.5px, transparent 0.5px);
+          background-size: 24px 24px;
+          background-position: 0 0, 12px 12px;
+        }
+
+        .dot-pattern-dark {
+          background-color: #0f172a;
+          background-image: radial-gradient(circle, rgba(13, 148, 136, 0.15) 0.5px, transparent 0.5px);
+          background-size: 24px 24px;
+        }
 
         @keyframes shimmer-flow {
           0% { background-position: 0% 50%; }
@@ -391,10 +405,7 @@ export default function Donate() {
       {/* Payment Section */}
       <section
         ref={qrSectionRef}
-        className="relative py-24 md:py-32 px-6 sm:px-8 lg:px-12 scroll-mt-20 overflow-hidden"
-        style={{
-          background: 'linear-gradient(180deg, #ffffff 0%, #f0f9ff 50%, #ecfdf5 100%)',
-        }}
+        className="relative py-24 md:py-32 px-6 sm:px-8 lg:px-12 scroll-mt-20 overflow-hidden dot-pattern dark:dot-pattern-dark"
       >
         {/* Decorative background */}
         <div className="absolute inset-0 overflow-hidden">
@@ -608,7 +619,7 @@ export default function Donate() {
 
 
       {/* Why Your Support Matters - Asymmetric Grid */}
-      <section className="relative py-20 md:py-28 px-6 sm:px-8 lg:px-12 bg-gradient-to-br from-slate-50 via-white to-teal-50/30">
+      <section className="relative py-20 md:py-28 px-6 sm:px-8 lg:px-12 dot-pattern dark:dot-pattern-dark">
         <div className="grain-overlay" />
 
         <div className="relative max-w-6xl mx-auto">
@@ -703,10 +714,7 @@ export default function Donate() {
       {/* Transparency Section - Editorial Style */}
       <section
         ref={transparencySectionRef}
-        className="relative py-24 md:py-32 px-6 sm:px-8 lg:px-12 scroll-mt-20 overflow-hidden"
-        style={{
-          background: 'linear-gradient(135deg, #fafaf9 0%, #f5f5f4 50%, #fafaf9 100%)',
-        }}
+        className="relative py-24 md:py-32 px-6 sm:px-8 lg:px-12 scroll-mt-20 overflow-hidden dot-pattern dark:dot-pattern-dark"
       >
         <div className="grain-overlay" />
 
@@ -774,7 +782,7 @@ export default function Donate() {
 
 
       {/* Why This Work Matters - Testimonial with Impact */}
-      <section className="relative py-24 md:py-32 px-6 sm:px-8 lg:px-12 overflow-hidden bg-gradient-to-br from-orange-50 via-teal-50 to-orange-50">
+      <section className="relative py-24 md:py-32 px-6 sm:px-8 lg:px-12 overflow-hidden dot-pattern dark:dot-pattern-dark">
         <div className="grain-overlay" />
 
         <div className="relative max-w-5xl mx-auto">
@@ -819,7 +827,7 @@ export default function Donate() {
 
 
       {/* Privacy & Data Reassurance */}
-      <section className="relative py-20 md:py-28 px-6 sm:px-8 lg:px-12 bg-white">
+      <section className="relative py-20 md:py-28 px-6 sm:px-8 lg:px-12 dot-pattern dark:dot-pattern-dark">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12 px-4">
             <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-teal-500 to-teal-600 mb-8 shadow-xl">
@@ -860,7 +868,7 @@ export default function Donate() {
 
 
       {/* FAQ Section - Modern Accordion */}
-      <section className="relative py-20 md:py-28 px-6 sm:px-8 lg:px-12 bg-gradient-to-b from-slate-50 to-white">
+      <section className="relative py-20 md:py-28 px-6 sm:px-8 lg:px-12 dot-pattern dark:dot-pattern-dark">
         <div className="relative max-w-3xl mx-auto">
           <div className="text-center mb-14 px-4">
             <div className="w-16 h-1 shimmer-gradient rounded-full mx-auto mb-8" />
@@ -907,7 +915,7 @@ export default function Donate() {
 
 
       {/* Other Ways to Support */}
-      <section className="relative py-20 md:py-28 px-6 sm:px-8 lg:px-12 overflow-hidden bg-gradient-to-br from-orange-50 via-teal-50 to-orange-50">
+      <section className="relative py-20 md:py-28 px-6 sm:px-8 lg:px-12 overflow-hidden dot-pattern dark:dot-pattern-dark">
         <div className="grain-overlay" />
 
         <div className="relative max-w-5xl mx-auto">
@@ -964,12 +972,12 @@ export default function Donate() {
 
 
       {/* Closing CTA - Emotional Impact */}
-      <section className="relative py-24 md:py-32 px-6 sm:px-8 lg:px-12 overflow-hidden bg-gradient-to-br from-white via-teal-50/30 to-orange-50/30">
+      <section className="relative py-24 md:py-32 px-6 sm:px-8 lg:px-12 overflow-hidden dot-pattern dark:dot-pattern-dark">
         <div className="grain-overlay" />
 
         <div className="relative max-w-4xl mx-auto text-center space-y-12">
           <p className="display-font text-3xl md:text-4xl italic text-gray-800 leading-relaxed">
-            If Reframe.me has helped you or someone you care about and you're in a position to give,
+            If Reframe.me has helped you or someone you care about and you're in a position to give,{' '} 
             <span className="text-gradient-warm font-bold"> thank you</span>. If you're not able to donate, you're still exactly who this tool is for.
           </p>
 

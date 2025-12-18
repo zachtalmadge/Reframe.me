@@ -2150,7 +2150,7 @@ export default function Home() {
             </div>
 
             {/* Mobile - Vertical Stack */}
-            <div className="lg:hidden space-y-8">
+            <div className="lg:hidden space-y-4">
               {howItWorksSteps.map((step, index) => (
                 <div
                   key={step.title}
@@ -2215,7 +2215,7 @@ export default function Home() {
 
                   {/* Connector for mobile */}
                   {index < 2 && (
-                    <div className="flex justify-center py-4">
+                    <div className="flex justify-center py-2">
                       <div className="w-1 h-8 rounded-full" style={{ background: index === 0 ? 'linear-gradient(to bottom, #14b8a6, #f97316)' : 'linear-gradient(to bottom, #f97316, #8b5cf6)' }} />
                     </div>
                   )}
