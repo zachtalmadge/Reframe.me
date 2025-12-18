@@ -89,6 +89,30 @@ export default function Selection() {
     <Layout>
       {/* Custom CSS for animations */}
       <style>{`
+        /* Dot pattern background */
+        .dot-pattern {
+          background-color: #FAFAF9;
+          background-image: radial-gradient(circle, #0D9488 0.5px, transparent 0.5px);
+          background-size: 24px 24px;
+          background-position: 0 0, 12px 12px;
+        }
+
+        .dot-pattern-dark {
+          background-color: #0f172a;
+          background-image: radial-gradient(circle, rgba(13, 148, 136, 0.15) 0.5px, transparent 0.5px);
+          background-size: 24px 24px;
+        }
+
+        /* Paper texture overlay */
+        .paper-texture::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+          pointer-events: none;
+          opacity: 0.4;
+        }
+
         @keyframes fadeInUp {
           from {
             opacity: 0;
@@ -112,24 +136,30 @@ export default function Selection() {
         }
 
         .animate-fade-in-up {
-          animation: fadeInUp 0.6s ease-out forwards;
+          animation: fadeInUp 0.8s ease-out forwards;
         }
 
         .animate-slide-in-right {
-          animation: slideInRight 0.5s ease-out forwards;
+          animation: slideInRight 0.7s ease-out forwards;
         }
 
-        .stagger-1 { animation-delay: 0.1s; }
-        .stagger-2 { animation-delay: 0.2s; }
-        .stagger-3 { animation-delay: 0.3s; }
-        .stagger-4 { animation-delay: 0.4s; }
+        .stagger-1 { animation-delay: 0.3s; }
+        .stagger-2 { animation-delay: 0.5s; }
+        .stagger-3 { animation-delay: 0.7s; }
+        .stagger-4 { animation-delay: 0.9s; }
       `}</style>
 
       <section
-        className="min-h-screen py-8 md:py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-50 via-white to-teal-50/30 dark:from-slate-900 dark:via-slate-800 dark:to-teal-950/20"
+        className="min-h-screen py-8 md:py-16 px-4 sm:px-6 lg:px-8 dot-pattern dark:dot-pattern-dark relative overflow-hidden"
         aria-labelledby="selection-heading"
       >
-        <div className="max-w-6xl mx-auto">
+        {/* Paper texture overlay */}
+        <div className="paper-texture absolute inset-0 pointer-events-none" />
+
+        {/* Subtle decorative corner accents */}
+        <div className="absolute top-0 left-0 w-32 h-32 border-l-2 border-t-2 border-primary/10 pointer-events-none" />
+        <div className="absolute bottom-0 right-0 w-32 h-32 border-r-2 border-b-2 border-chart-2/10 pointer-events-none" />
+        <div className="max-w-6xl mx-auto relative z-10">
           {/* Back Button */}
           <div className="mb-12 md:mb-16 opacity-0 animate-fade-in-up">
             <Link href="/">
@@ -355,7 +385,7 @@ export default function Selection() {
                     group relative text-left rounded-3xl p-8 md:p-10 transition-all duration-500 ease-out
                     bg-white dark:bg-slate-800 overflow-hidden
                     focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
-                    opacity-0 animate-fade-in-up stagger-${index + 3}
+                    opacity-0 animate-fade-in-up stagger-${index + 1}
                     ${isSelected
                       ? `shadow-2xl scale-105 -translate-y-2 ${getRingColor()}`
                       : "shadow-lg hover:shadow-2xl hover:-translate-y-1 hover:scale-102 focus-visible:ring-teal-500"

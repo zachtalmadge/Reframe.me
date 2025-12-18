@@ -209,7 +209,7 @@ export function FormWizard({ tool, onComplete, initialState }: FormWizardProps) 
         stepTitle={stepTitle}
       />
 
-      <div className="min-h-[400px] bg-card/30 rounded-2xl p-6 md:p-8 border border-border/50 shadow-sm">
+      <div className="min-h-[400px] bg-white dark:bg-slate-800 rounded-2xl p-6 md:p-8 border-2 border-primary/20 shadow-md">
         {renderStep()}
       </div>
 
@@ -218,7 +218,7 @@ export function FormWizard({ tool, onComplete, initialState }: FormWizardProps) 
           type="button"
           variant="outline"
           onClick={handleBack}
-          className="group hover:bg-muted/50 border-2"
+          className="group bg-white dark:bg-slate-800 hover:bg-gray-50 dark:hover:bg-slate-700 border-2 shadow-sm"
           data-testid="button-form-back"
         >
           <ArrowLeft className="w-4 h-4 mr-2 transition-transform duration-200 group-hover:-translate-x-1" aria-hidden="true" />
@@ -244,12 +244,12 @@ export function FormWizard({ tool, onComplete, initialState }: FormWizardProps) 
       </div>
 
       <div
-        className={`rounded-xl border-2 border-chart-2/30 bg-gradient-to-br from-chart-2/5 to-chart-2/10 p-4 transition-all duration-500 ${
+        className={`rounded-xl border-2 border-chart-2/30 bg-orange-50 dark:bg-orange-950/30 p-4 transition-all duration-500 ${
           showEmotionalMessage ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"
         }`}
         data-testid="text-emotional-checkin"
       >
-        <p className="text-sm text-center text-chart-2 dark:text-chart-2/90 leading-relaxed">
+        <p className="text-sm text-center text-chart-2 dark:text-orange-300 leading-relaxed font-manrope">
           <span className="font-semibold">A gentle reminder:</span> Talking about your past and your record can feel heavy. It's okay to pause, take a break, or talk this through with someone you trust.
         </p>
       </div>

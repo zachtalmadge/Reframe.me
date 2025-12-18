@@ -25,12 +25,12 @@ import {
   NarrativeType,
 } from "@/lib/regenerationPersistence";
 
-function ResultsGuidanceSection({ 
-  hasNarratives, 
-  hasLetter, 
-  activeResultType 
-}: { 
-  hasNarratives: boolean; 
+function ResultsGuidanceSection({
+  hasNarratives,
+  hasLetter,
+  activeResultType
+}: {
+  hasNarratives: boolean;
   hasLetter: boolean;
   activeResultType: "narratives" | "letter";
 }) {
@@ -41,19 +41,19 @@ function ResultsGuidanceSection({
 
   return (
     <section
-      className="mt-10 pt-10 border-t-2 border-border/50"
+      className="animate-fadeInUp delay-400 opacity-0"
       aria-labelledby="guidance-heading"
       data-testid="section-guidance"
     >
-      <div className="space-y-8">
-        <div className="text-center space-y-3 bg-gradient-to-r from-primary/5 via-transparent to-primary/5 py-6 rounded-2xl">
+      <div className="space-y-6">
+        <div className="text-center space-y-3 py-4">
           <h2
             id="guidance-heading"
-            className="text-2xl sm:text-3xl font-bold text-foreground"
+            className="text-2xl sm:text-3xl font-bold text-foreground font-fraunces tracking-tight accent-line pb-4"
           >
             How to use what you just created
           </h2>
-          <p className="text-base text-muted-foreground">
+          <p className="text-sm md:text-base text-muted-foreground font-manrope max-w-2xl mx-auto">
             A few ideas to help you put these materials to work.
           </p>
         </div>
@@ -65,94 +65,97 @@ function ResultsGuidanceSection({
             aria-labelledby="guidance-heading"
             data-testid="guidance-narratives"
           >
-            <div className="bg-gradient-to-br from-primary/5 to-primary/10 rounded-2xl p-6 md:p-8 border-2 border-primary/20 shadow-lg space-y-5">
-              <h3 className="text-lg font-bold text-foreground flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center">
+            <div className="paper-card rounded-2xl p-6 md:p-8 border border-primary/20 space-y-6 font-manrope">
+              <h3 className="text-xl font-bold text-foreground flex items-center gap-3 font-fraunces">
+                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center ring-1 ring-primary/20">
                   <MessageCircle className="w-5 h-5 text-primary" aria-hidden="true" />
                 </div>
                 Getting comfortable with your narratives
               </h3>
-              <ul className="space-y-4 text-sm text-muted-foreground">
-                <li className="flex gap-4 bg-white/60 dark:bg-slate-900/40 p-4 rounded-xl">
-                  <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground text-sm font-bold flex items-center justify-center shadow-md">1</span>
-                  <span><strong className="text-foreground">Practice out loud.</strong> Reading silently is different from speaking. Try saying one version a few times until it feels natural.</span>
+              <ul className="space-y-3 text-sm text-muted-foreground">
+                <li className="flex gap-4 p-4 rounded-xl bg-primary/5 border border-primary/10">
+                  <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-primary text-primary-foreground text-sm font-bold flex items-center justify-center">1</span>
+                  <span><strong className="text-foreground font-semibold">Practice out loud.</strong> Reading silently is different from speaking. Try saying one version a few times until it feels natural.</span>
                 </li>
-                <li className="flex gap-4 bg-white/60 dark:bg-slate-900/40 p-4 rounded-xl">
-                  <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground text-sm font-bold flex items-center justify-center shadow-md">2</span>
-                  <span><strong className="text-foreground">Pick your anchor sentences.</strong> You don't need to memorize everything. Choose 1-2 sentences that feel most true to you.</span>
+                <li className="flex gap-4 p-4 rounded-xl bg-primary/5 border border-primary/10">
+                  <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-primary text-primary-foreground text-sm font-bold flex items-center justify-center">2</span>
+                  <span><strong className="text-foreground font-semibold">Pick your anchor sentences.</strong> You don't need to memorize everything. Choose 1-2 sentences that feel most true to you.</span>
                 </li>
-                <li className="flex gap-4 bg-white/60 dark:bg-slate-900/40 p-4 rounded-xl">
-                  <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground text-sm font-bold flex items-center justify-center shadow-md">3</span>
-                  <span><strong className="text-foreground">Make it your own.</strong> Edit the wording so it sounds like you. These are starting points, not scripts.</span>
+                <li className="flex gap-4 p-4 rounded-xl bg-primary/5 border border-primary/10">
+                  <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-primary text-primary-foreground text-sm font-bold flex items-center justify-center">3</span>
+                  <span><strong className="text-foreground font-semibold">Make it your own.</strong> Edit the wording so it sounds like you. These are starting points, not scripts.</span>
                 </li>
-                <li className="flex gap-4 bg-white/60 dark:bg-slate-900/40 p-4 rounded-xl">
-                  <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground text-sm font-bold flex items-center justify-center shadow-md">4</span>
-                  <span><strong className="text-foreground">Share with someone you trust.</strong> If it helps, practice with a friend, mentor, or counselor who can give you honest feedback.</span>
+                <li className="flex gap-4 p-4 rounded-xl bg-primary/5 border border-primary/10">
+                  <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-primary text-primary-foreground text-sm font-bold flex items-center justify-center">4</span>
+                  <span><strong className="text-foreground font-semibold">Share with someone you trust.</strong> If it helps, practice with a friend, mentor, or counselor who can give you honest feedback.</span>
                 </li>
               </ul>
-              <p className="text-sm text-foreground/80 italic border-l-4 border-primary/50 pl-4 py-2 bg-white/40 dark:bg-slate-900/30 rounded">
-                Take your time. There's no rush to use these right away. When you're ready, you'll have words that feel prepared, not panicked.
-              </p>
+              <div className="pt-4 border-t border-primary/10">
+                <p className="text-sm text-foreground/70 italic pl-4 border-l-2 border-primary/40">
+                  Take your time. There's no rush to use these right away. When you're ready, you'll have words that feel prepared, not panicked.
+                </p>
+              </div>
             </div>
           </div>
         )}
 
         {showLetterGuidance && (
-          <div className="bg-gradient-to-br from-chart-2/5 to-chart-2/10 rounded-2xl p-6 md:p-8 border-2 border-chart-2/20 shadow-lg space-y-5">
-  <h3 className="text-lg font-bold text-foreground flex items-center gap-3">
-    <div className="w-10 h-10 rounded-xl bg-chart-2/20 flex items-center justify-center">
-      <FileText className="w-5 h-5 text-chart-2" aria-hidden="true" />
-    </div>
-    Before you send your letter
-  </h3>
-  <ul className="space-y-4 text-sm text-muted-foreground">
-    <li className="flex gap-4 bg-white/60 dark:bg-slate-900/40 p-4 rounded-xl">
-      <span className="flex-shrink-0 w-8 h-8 rounded-full bg-chart-2 text-white text-sm font-bold flex items-center justify-center shadow-md">
-        1
-      </span>
-      <span>
-        <strong className="text-foreground">Add anything that feels important. </strong>
-        If you like this letter but want to say more or adjust the wording, copy it into a word-processing document or another AI tool and add your own details in your voice.
-      </span>
-    </li>
-    <li className="flex gap-4 bg-white/60 dark:bg-slate-900/40 p-4 rounded-xl">
-      <span className="flex-shrink-0 w-8 h-8 rounded-full bg-chart-2 text-white text-sm font-bold flex items-center justify-center shadow-md">
-        2
-      </span>
-      <span>
-        <strong className="text-foreground">Check for accuracy.</strong> Review dates, names, charges, and employer details. Small errors can undermine your message.
-      </span>
-    </li>
-    <li className="flex gap-4 bg-white/60 dark:bg-slate-900/40 p-4 rounded-xl">
-      <span className="flex-shrink-0 w-8 h-8 rounded-full bg-chart-2 text-white text-sm font-bold flex items-center justify-center shadow-md">
-        3
-      </span>
-      <span>
-        <strong className="text-foreground">Make sure it feels honest.</strong> If anything doesn't sit right with you, edit it. You should feel comfortable with every word.
-      </span>
-    </li>
-    <li className="flex gap-4 bg-white/60 dark:bg-slate-900/40 p-4 rounded-xl">
-      <span className="flex-shrink-0 w-8 h-8 rounded-full bg-chart-2 text-white text-sm font-bold flex items-center justify-center shadow-md">
-        4
-      </span>
-      <span>
-        <strong className="text-foreground">Get a second opinion if you can.</strong> Consider sharing it with a trusted friend, reentry counselor, or legal aid organization before sending.
-      </span>
-    </li>
-    <li className="flex gap-4 bg-white/60 dark:bg-slate-900/40 p-4 rounded-xl">
-      <span className="flex-shrink-0 w-8 h-8 rounded-full bg-chart-2 text-white text-sm font-bold flex items-center justify-center shadow-md">
-        5
-      </span>
-      <span>
-        <strong className="text-foreground">Know your timeline.</strong> Pre-adverse action notices usually give you a window to respond. Check the deadline on your notice.
-      </span>
-    </li>
-  </ul>
-  <p className="text-sm text-foreground/80 italic border-l-4 border-chart-2/50 pl-4 py-2 bg-white/40 dark:bg-slate-900/30 rounded">
-    This letter is a tool to help you respond thoughtfully. You deserve to be heard, and taking time to get it right is a sign of strength.
-  </p>
-</div>
-
+          <div className="paper-card rounded-2xl p-6 md:p-8 border border-chart-2/20 space-y-6 font-manrope">
+            <h3 className="text-xl font-bold text-foreground flex items-center gap-3 font-fraunces">
+              <div className="w-10 h-10 rounded-xl bg-chart-2/10 flex items-center justify-center ring-1 ring-chart-2/20">
+                <FileText className="w-5 h-5 text-chart-2" aria-hidden="true" />
+              </div>
+              Before you send your letter
+            </h3>
+            <ul className="space-y-3 text-sm text-muted-foreground">
+              <li className="flex gap-4 p-4 rounded-xl bg-chart-2/5 border border-chart-2/10">
+                <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-chart-2 text-white text-sm font-bold flex items-center justify-center">
+                  1
+                </span>
+                <span>
+                  <strong className="text-foreground font-semibold">Add anything that feels important. </strong>
+                  If you like this letter but want to say more or adjust the wording, copy it into a word-processing document or another AI tool and add your own details in your voice.
+                </span>
+              </li>
+              <li className="flex gap-4 p-4 rounded-xl bg-chart-2/5 border border-chart-2/10">
+                <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-chart-2 text-white text-sm font-bold flex items-center justify-center">
+                  2
+                </span>
+                <span>
+                  <strong className="text-foreground font-semibold">Check for accuracy.</strong> Review dates, names, charges, and employer details. Small errors can undermine your message.
+                </span>
+              </li>
+              <li className="flex gap-4 p-4 rounded-xl bg-chart-2/5 border border-chart-2/10">
+                <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-chart-2 text-white text-sm font-bold flex items-center justify-center">
+                  3
+                </span>
+                <span>
+                  <strong className="text-foreground font-semibold">Make sure it feels honest.</strong> If anything doesn't sit right with you, edit it. You should feel comfortable with every word.
+                </span>
+              </li>
+              <li className="flex gap-4 p-4 rounded-xl bg-chart-2/5 border border-chart-2/10">
+                <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-chart-2 text-white text-sm font-bold flex items-center justify-center">
+                  4
+                </span>
+                <span>
+                  <strong className="text-foreground font-semibold">Get a second opinion if you can.</strong> Consider sharing it with a trusted friend, reentry counselor, or legal aid organization before sending.
+                </span>
+              </li>
+              <li className="flex gap-4 p-4 rounded-xl bg-chart-2/5 border border-chart-2/10">
+                <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-chart-2 text-white text-sm font-bold flex items-center justify-center">
+                  5
+                </span>
+                <span>
+                  <strong className="text-foreground font-semibold">Know your timeline.</strong> Pre-adverse action notices usually give you a window to respond. Check the deadline on your notice.
+                </span>
+              </li>
+            </ul>
+            <div className="pt-4 border-t border-chart-2/10">
+              <p className="text-sm text-foreground/70 italic pl-4 border-l-2 border-chart-2/40">
+                This letter is a tool to help you respond thoughtfully. You deserve to be heard, and taking time to get it right is a sign of strength.
+              </p>
+            </div>
+          </div>
         )}
       </div>
     </section>
@@ -428,30 +431,141 @@ export default function Results() {
 
   return (
     <Layout onLogoClick={handleLogoClick} onFaqClick={handleFaqClick}>
+      {/* Google Fonts */}
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Manrope:wght@300..800&display=swap" rel="stylesheet" />
+
+      <style>{`
+        /* Dot pattern background */
+        .dot-pattern {
+          background-color: #FAFAF9;
+          background-image: radial-gradient(circle, #0D9488 0.5px, transparent 0.5px);
+          background-size: 24px 24px;
+          background-position: 0 0, 12px 12px;
+        }
+
+        .dot-pattern-dark {
+          background-color: #0f172a;
+          background-image: radial-gradient(circle, rgba(13, 148, 136, 0.15) 0.5px, transparent 0.5px);
+          background-size: 24px 24px;
+        }
+
+        /* Paper texture overlay */
+        .paper-texture::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+          pointer-events: none;
+          opacity: 0.4;
+        }
+
+        /* Typography */
+        .font-fraunces {
+          font-family: 'Fraunces', serif;
+          font-optical-sizing: auto;
+        }
+
+        .font-manrope {
+          font-family: 'Manrope', sans-serif;
+        }
+
+        /* Elevated paper cards */
+        .paper-card {
+          background: white;
+          box-shadow:
+            0 1px 2px rgba(0, 0, 0, 0.04),
+            0 2px 6px rgba(0, 0, 0, 0.04),
+            0 4px 12px rgba(0, 0, 0, 0.03),
+            0 8px 24px rgba(0, 0, 0, 0.02);
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .paper-card:hover {
+          box-shadow:
+            0 2px 4px rgba(0, 0, 0, 0.05),
+            0 4px 8px rgba(0, 0, 0, 0.05),
+            0 8px 16px rgba(0, 0, 0, 0.04),
+            0 16px 32px rgba(0, 0, 0, 0.03);
+          transform: translateY(-2px);
+        }
+
+        /* Dark mode paper */
+        .dark .paper-card {
+          background: #1e293b;
+          box-shadow:
+            0 1px 2px rgba(0, 0, 0, 0.2),
+            0 2px 6px rgba(0, 0, 0, 0.15),
+            0 4px 12px rgba(0, 0, 0, 0.1),
+            0 0 0 1px rgba(148, 163, 184, 0.1);
+        }
+
+        /* Decorative accent lines */
+        .accent-line {
+          position: relative;
+        }
+
+        .accent-line::after {
+          content: '';
+          position: absolute;
+          bottom: -8px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 60px;
+          height: 3px;
+          background: linear-gradient(90deg, transparent, #0D9488, transparent);
+          border-radius: 2px;
+        }
+
+        /* Stagger animations */
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .animate-fadeInUp {
+          animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+        .delay-400 { animation-delay: 400ms; }
+      `}</style>
+
       <section
-        className="py-8 md:py-12 px-4 sm:px-6 lg:px-8 min-h-screen bg-gradient-to-b from-white via-primary/5 to-slate-100/50 dark:from-slate-950 dark:via-primary/10 dark:to-slate-900 relative overflow-hidden"
+        className="py-8 md:py-12 px-4 sm:px-6 lg:px-8 min-h-screen dot-pattern dark:dot-pattern-dark relative overflow-hidden"
         aria-labelledby="results-heading"
       >
-        {/* Decorative background elements */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-80 h-80 bg-chart-2/10 rounded-full blur-3xl" />
-        </div>
+        {/* Paper texture overlay */}
+        <div className="paper-texture absolute inset-0 pointer-events-none" />
+
+        {/* Subtle decorative corner accents */}
+        <div className="absolute top-0 left-0 w-32 h-32 border-l-2 border-t-2 border-primary/10 pointer-events-none" />
+        <div className="absolute bottom-0 right-0 w-32 h-32 border-r-2 border-b-2 border-chart-2/10 pointer-events-none" />
 
         <div className="max-w-3xl mx-auto space-y-8 relative z-10">
-          <Card className="border-2 border-amber-300 dark:border-amber-700 bg-gradient-to-br from-amber-50 to-amber-100/50 dark:from-amber-950/30 dark:to-amber-900/20 shadow-lg">
-            <CardContent className="pt-6">
+          {/* Disclaimer Card - Refined */}
+          <div className="paper-card rounded-2xl border border-amber-200 dark:border-amber-800/30 bg-amber-50/80 dark:bg-amber-950/20 backdrop-blur-sm animate-fadeInUp opacity-0">
+            <div className="p-6">
               <div className="flex gap-4">
                 <div className="flex-shrink-0">
-                  <div className="w-12 h-12 rounded-xl bg-amber-200/50 dark:bg-amber-800/30 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-xl bg-white dark:bg-amber-900/30 flex items-center justify-center ring-1 ring-amber-200 dark:ring-amber-800/50">
                     <AlertTriangle
-                      className="w-6 h-6 text-amber-700 dark:text-amber-400"
+                      className="w-6 h-6 text-amber-600 dark:text-amber-400"
                       aria-hidden="true"
                     />
                   </div>
                 </div>
-                <div className="space-y-2">
-                  <h2 className="text-lg font-bold text-amber-900 dark:text-amber-200">
+                <div className="space-y-2 font-manrope">
+                  <h2 className="text-lg font-bold text-amber-900 dark:text-amber-200 tracking-tight">
                     Important Disclaimer
                   </h2>
                   <p className="text-sm text-amber-800 dark:text-amber-300 leading-relaxed">
@@ -462,8 +576,8 @@ export default function Results() {
                   </p>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
 
           {status === "partial_fail" && errors.length > 0 && (
             <PartialFailureAlert
@@ -473,18 +587,23 @@ export default function Results() {
             />
           )}
 
-          <div className="text-center space-y-5 py-6">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/10 shadow-lg ring-2 ring-primary/20 ring-offset-2 mx-auto">
-              <FileText className="w-8 h-8 text-primary" aria-hidden="true" />
+          {/* Hero Section - Editorial Style */}
+          <div className="text-center space-y-6 py-8 animate-fadeInUp delay-100 opacity-0">
+            <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-white dark:bg-slate-800 shadow-lg ring-1 ring-primary/10 mx-auto paper-card">
+              <FileText className="w-10 h-10 text-primary" aria-hidden="true" />
             </div>
-            <h1
-              id="results-heading"
-              className="text-3xl md:text-4xl font-bold text-foreground"
-            >
-              Your Documents Are Ready
-            </h1>
-            <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto">
-              Review and download your personalized documents below.
+            <div className="space-y-3 accent-line pb-4">
+              <h1
+                id="results-heading"
+                className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground font-fraunces tracking-tight"
+              >
+                Your Documents
+                <br />
+                <span className="text-primary italic">Are Ready</span>
+              </h1>
+            </div>
+            <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto font-manrope leading-relaxed">
+              Review and download your personalized documents below. Take your time—these are yours to refine and use when you're ready.
             </p>
           </div>
 
@@ -501,7 +620,7 @@ export default function Results() {
 
           <div className="space-y-6">
             {(activeTab === "narratives" || !hasBoth) && hasNarratives && (
-              <div data-testid="section-narratives">
+              <div data-testid="section-narratives" className="animate-fadeInUp delay-200 opacity-0">
                 <NarrativeCarousel
                   narratives={narratives}
                   onCopy={handleCopyNarrative}
@@ -515,7 +634,7 @@ export default function Results() {
             )}
 
             {(activeTab === "letter" || !hasBoth) && hasLetter && responseLetter && (
-              <div data-testid="section-letter">
+              <div data-testid="section-letter" className="animate-fadeInUp delay-200 opacity-0">
                 <ResponseLetterPanel
                   letter={responseLetter}
                   onCopy={handleCopyLetter}
@@ -549,11 +668,11 @@ export default function Results() {
             )}
           </div>
 
-          <div className="pt-8 border-t-2 border-border/50 space-y-6">
+          <div className="pt-8 border-t border-border/30 space-y-6 animate-fadeInUp delay-300 opacity-0">
             {(hasNarratives || hasLetter) && (
               <Button
                 size="lg"
-                className="w-full group shadow-lg hover:shadow-xl transition-all"
+                className="w-full group shadow-md hover:shadow-lg transition-all font-manrope"
                 onClick={handleDownloadAllDocuments}
                 data-testid="button-download-all"
               >
@@ -562,22 +681,22 @@ export default function Results() {
               </Button>
             )}
 
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-6 bg-muted/30 p-6 rounded-2xl border border-border/50">
-              <p className="text-sm font-medium text-muted-foreground text-center sm:text-left">
+            <div className="paper-card flex flex-col sm:flex-row items-center justify-between gap-6 p-6 rounded-2xl border border-border/30">
+              <p className="text-sm font-medium text-muted-foreground text-center sm:text-left font-manrope">
                 Need to make changes? You can start over anytime.
               </p>
               <div className="flex flex-wrap gap-3">
                 <Button
                   variant="outline"
                   onClick={handleStartOver}
-                  className="group border-2"
+                  className="group border font-manrope"
                   data-testid="button-start-over"
                 >
                   <Home className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" aria-hidden="true" />
                   Start Over
                 </Button>
                 <Button
-                  className="bg-chart-2 hover:bg-chart-2/90 text-white shadow-md hover:shadow-lg transition-all group"
+                  className="bg-chart-2 hover:bg-chart-2/90 text-white shadow-md hover:shadow-lg transition-all group font-manrope"
                   onClick={handleLearnMoreClick}
                   data-testid="button-learn-more-results"
                 >
@@ -587,169 +706,134 @@ export default function Results() {
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Donation CTA Section */}
-          <section className="mt-12 mb-8">
-            <style>{`
-              @keyframes heart-pulse {
-                0%, 100% {
-                  transform: scale(1);
-                }
-                50% {
-                  transform: scale(1.15);
-                }
-              }
+        {/* Two-column layout on desktop: "How to use what you created" and "Did this help you?" */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-12 mt-12 mb-8">
+            <ResultsGuidanceSection
+              hasNarratives={hasNarratives}
+              hasLetter={hasLetter}
+              activeResultType={activeTab}
+            />
 
-              @keyframes float-gentle {
-                0%, 100% {
+            {/* Donation CTA Section - Refined Editorial */}
+            <section className="animate-fadeInUp delay-400 opacity-0">
+              <style>{`
+                @keyframes gentle-pulse {
+                  0%, 100% {
+                    transform: scale(1);
+                  }
+                  50% {
+                    transform: scale(1.05);
+                  }
+                }
+
+                .donate-card {
+                  background:
+                    linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.95)),
+                    repeating-linear-gradient(
+                      45deg,
+                      transparent,
+                      transparent 10px,
+                      rgba(249, 115, 22, 0.02) 10px,
+                      rgba(249, 115, 22, 0.02) 20px
+                    );
+                }
+
+                .dark .donate-card {
+                  background:
+                    linear-gradient(to bottom, rgba(30, 41, 59, 0.95), rgba(30, 41, 59, 0.98)),
+                    repeating-linear-gradient(
+                      45deg,
+                      transparent,
+                      transparent 10px,
+                      rgba(249, 115, 22, 0.05) 10px,
+                      rgba(249, 115, 22, 0.05) 20px
+                    );
+                }
+
+                .donate-button {
+                  background: #f97316;
+                  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                }
+
+                .donate-button:hover {
+                  background: #ea580c;
+                  transform: translateY(-2px);
+                  box-shadow: 0 12px 24px rgba(249, 115, 22, 0.3);
+                }
+
+                .donate-button:active {
                   transform: translateY(0px);
                 }
-                50% {
-                  transform: translateY(-8px);
-                }
-              }
+              `}</style>
 
-              @keyframes glow-pulse {
-                0%, 100% {
-                  opacity: 0.4;
-                }
-                50% {
-                  opacity: 0.7;
-                }
-              }
+              <div className="paper-card donate-card rounded-3xl border-2 border-orange-100 dark:border-orange-900/30 overflow-hidden h-full flex flex-col">
+                {/* Decorative top border accent */}
+                <div className="h-1 bg-gradient-to-r from-transparent via-orange-500 to-transparent" />
 
-              .heart-pulse {
-                animation: heart-pulse 2s ease-in-out infinite;
-              }
-
-              .float-gentle {
-                animation: float-gentle 3s ease-in-out infinite;
-              }
-
-              .glow-pulse {
-                animation: glow-pulse 3s ease-in-out infinite;
-              }
-
-              .donate-gradient {
-                background: linear-gradient(135deg,
-                  #fff7ed 0%,
-                  #ffedd5 25%,
-                  #fed7aa 50%,
-                  #fdba74 75%,
-                  #fb923c 100%
-                );
-                background-size: 200% 200%;
-                animation: gradient-shift 8s ease infinite;
-              }
-
-              @keyframes gradient-shift {
-                0%, 100% { background-position: 0% 50%; }
-                50% { background-position: 100% 50%; }
-              }
-
-              .donate-button-bg {
-                background: linear-gradient(135deg, #f97316 0%, #fb923c 50%, #fdba74 100%);
-                background-size: 200% 200%;
-                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-              }
-
-              .donate-button-bg:hover {
-                background-position: 100% 50%;
-                transform: translateY(-2px) scale(1.02);
-                box-shadow: 0 12px 32px rgba(249, 115, 22, 0.4), 0 0 0 4px rgba(249, 115, 22, 0.1);
-              }
-
-              .donate-button-bg:active {
-                transform: translateY(0px) scale(0.98);
-              }
-            `}</style>
-
-            <div className="relative overflow-hidden rounded-3xl border-2 border-orange-200 shadow-2xl">
-              {/* Background with gradient */}
-              <div className="donate-gradient absolute inset-0" />
-
-              {/* Decorative floating elements */}
-              <div className="absolute top-8 right-8 w-32 h-32 bg-orange-300/30 rounded-full blur-3xl glow-pulse" />
-              <div className="absolute bottom-8 left-8 w-40 h-40 bg-amber-300/20 rounded-full blur-3xl glow-pulse" style={{ animationDelay: '1s' }} />
-              <div className="absolute top-1/2 left-1/4 w-24 h-24 bg-orange-400/20 rounded-full blur-2xl float-gentle" />
-
-              {/* Content */}
-              <div className="relative px-6 py-12 md:px-12 md:py-16">
-                <div className="max-w-3xl mx-auto text-center space-y-8">
-                  {/* Heart icon with pulse */}
-                  <div className="inline-flex items-center justify-center">
-                    <div className="relative">
-                      {/* Glow ring */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-orange-400 to-amber-500 rounded-full blur-xl opacity-50 scale-110" />
-                      {/* Heart container */}
-                      <div className="relative w-20 h-20 rounded-full bg-gradient-to-br from-orange-500 to-amber-600 flex items-center justify-center shadow-2xl">
-                        <Heart className="w-10 h-10 text-white heart-pulse" fill="white" />
+                <div className="px-6 py-8 md:px-8 md:py-10 flex-1 flex flex-col">
+                  <div className="max-w-2xl mx-auto text-center space-y-6 flex-1 flex flex-col justify-center">
+                    {/* Heart icon - subtle and refined */}
+                    <div className="inline-flex items-center justify-center">
+                      <div className="w-16 h-16 rounded-2xl bg-orange-50 dark:bg-orange-900/20 flex items-center justify-center ring-1 ring-orange-200 dark:ring-orange-800/50">
+                        <Heart
+                          className="w-8 h-8 text-orange-600 dark:text-orange-500"
+                          fill="currentColor"
+                          style={{ animation: 'gentle-pulse 3s ease-in-out infinite' }}
+                        />
                       </div>
                     </div>
-                  </div>
 
-                  {/* Heading */}
-                  <div className="space-y-4">
-                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
-                      <span className="italic" style={{ fontFamily: 'DM Sans, sans-serif', fontStyle: 'italic' }}>
-                        Did this help you?
-                      </span>
-                    </h2>
-                    <p className="text-xl md:text-2xl text-gray-800 leading-relaxed font-medium">
-                      Help us keep Reframe.me{' '}
-                      <span className="font-bold text-orange-700">free and private</span>{' '}
-                      for the next person.
-                    </p>
-                  </div>
+                    {/* Heading - Editorial typography */}
+                    <div className="space-y-3">
+                      <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground font-fraunces leading-tight tracking-tight">
+                        <span className="italic">Did this help you?</span>
+                      </h2>
+                      <p className="text-lg md:text-xl text-foreground/80 leading-relaxed font-manrope font-medium">
+                        Help us keep Reframe.me{' '}
+                        <span className="font-bold text-orange-600 dark:text-orange-500">free and private</span>{' '}
+                        for the next person.
+                      </p>
+                    </div>
 
-                  {/* Description */}
-                  <div className="max-w-2xl mx-auto">
-                    <p className="text-base md:text-lg text-gray-700 leading-relaxed">
-                      Your support covers AI costs, hosting, and development time—so people with records
-                      can keep using this tool without ads, tracking, or paywalls.
-                    </p>
-                  </div>
+                    {/* Description */}
+                    <div className="max-w-xl mx-auto border-l-2 border-orange-200 dark:border-orange-800/50 pl-4">
+                      <p className="text-sm md:text-base text-muted-foreground leading-relaxed font-manrope text-left">
+                        Your support covers AI costs, hosting, and development time—so people with records
+                        can keep using this tool without ads, tracking, or paywalls.
+                      </p>
+                    </div>
 
-                  {/* CTA Buttons */}
-                  <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-                    <Link href="/donate">
-                      <button
-                        className="donate-button-bg group relative px-10 py-5 rounded-2xl text-white font-bold text-lg shadow-xl overflow-hidden min-w-[240px]"
-                      >
-                        {/* Shimmer effect */}
-                        <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+                    {/* CTA Button - Clean and bold */}
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+                      <Link href="/donate">
+                        <button
+                          className="donate-button group px-8 py-4 rounded-xl text-white font-bold text-base shadow-lg overflow-hidden min-w-[220px] font-manrope"
+                        >
+                          <span className="flex items-center justify-center gap-3">
+                            <Heart className="w-5 h-5 transition-transform group-hover:scale-110" fill="currentColor" />
+                            Support Reframe.me
+                          </span>
+                        </button>
+                      </Link>
+                    </div>
 
-                        <span className="relative flex items-center justify-center gap-3">
-                          <Heart className="w-5 h-5 transition-transform group-hover:scale-125" fill="currentColor" />
-                          Support Reframe.me
-                        </span>
-                      </button>
-                    </Link>
-                  </div>
-
-                  {/* Subtle reassurance */}
-                  <div className="pt-4">
-                    <p className="text-sm text-gray-600 italic">
-                      Whether you can donate or not, this tool is here for you.
-                    </p>
-                  </div>
-
-                  {/* Visual accent - sparkle decorations */}
-                  <div className="flex items-center justify-center gap-4 pt-2">
-                    <Sparkles className="w-5 h-5 text-orange-400/60" />
-                    <div className="h-px w-16 bg-gradient-to-r from-transparent via-orange-300 to-transparent" />
-                    <Sparkles className="w-5 h-5 text-orange-400/60" />
+                    {/* Subtle reassurance */}
+                    <div className="pt-1">
+                      <p className="text-xs text-muted-foreground italic font-manrope">
+                        Whether you can donate or not, this tool is here for you.
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
-          </section>
 
-          <ResultsGuidanceSection
-            hasNarratives={hasNarratives}
-            hasLetter={hasLetter}
-            activeResultType={activeTab}
-          />
+                {/* Decorative bottom border accent */}
+                <div className="h-1 bg-gradient-to-r from-transparent via-orange-500 to-transparent" />
+              </div>
+            </section>
+          </div>
         </div>
       </section>
 

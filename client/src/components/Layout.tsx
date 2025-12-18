@@ -38,7 +38,7 @@ export default function Layout({ children, onLogoClick, onFaqClick }: LayoutProp
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@500;600;700&display=swap');
 
         @keyframes shimmer {
           0% { background-position: -200% center; }

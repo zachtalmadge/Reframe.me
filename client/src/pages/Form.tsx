@@ -82,17 +82,99 @@ export default function Form() {
 
   return (
     <Layout onLogoClick={handleLogoClick} onFaqClick={handleFaqClick}>
+      {/* Google Fonts */}
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Manrope:wght@300..800&display=swap" rel="stylesheet" />
+
+      <style>{`
+        /* Dot pattern background */
+        .dot-pattern {
+          background-color: #FAFAF9;
+          background-image: radial-gradient(circle, #0D9488 0.5px, transparent 0.5px);
+          background-size: 24px 24px;
+          background-position: 0 0, 12px 12px;
+        }
+
+        .dot-pattern-dark {
+          background-color: #0f172a;
+          background-image: radial-gradient(circle, rgba(13, 148, 136, 0.15) 0.5px, transparent 0.5px);
+          background-size: 24px 24px;
+        }
+
+        /* Paper texture overlay */
+        .paper-texture::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+          pointer-events: none;
+          opacity: 0.4;
+        }
+
+        /* Typography */
+        .font-fraunces {
+          font-family: 'Fraunces', serif;
+          font-optical-sizing: auto;
+        }
+
+        .font-manrope {
+          font-family: 'Manrope', sans-serif;
+        }
+
+        /* Fade in animation */
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .animate-fadeInUp {
+          animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        /* Shimmer animation for progress bar */
+        @keyframes shimmer {
+          0% {
+            background-position: -200% 0;
+          }
+          100% {
+            background-position: 200% 0;
+          }
+        }
+
+        .animate-shimmer {
+          animation: shimmer 2s infinite;
+        }
+
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+      `}</style>
+
       <section
-        className="py-8 md:py-12 px-4 sm:px-6 lg:px-8 min-h-screen bg-gradient-to-b from-slate-50 via-white to-primary/5 dark:from-slate-900 dark:via-slate-950 dark:to-primary/10"
+        className="py-8 md:py-12 px-4 sm:px-6 lg:px-8 min-h-screen dot-pattern dark:dot-pattern-dark relative overflow-hidden"
         aria-labelledby="form-heading"
       >
-        <div className="max-w-2xl mx-auto">
-          <div className="mb-6">
+        {/* Paper texture overlay */}
+        <div className="paper-texture absolute inset-0 pointer-events-none" />
+
+        {/* Subtle decorative corner accents */}
+        <div className="absolute top-0 left-0 w-32 h-32 border-l-2 border-t-2 border-primary/10 pointer-events-none" />
+        <div className="absolute bottom-0 right-0 w-32 h-32 border-r-2 border-b-2 border-chart-2/10 pointer-events-none" />
+
+        <div className="max-w-2xl mx-auto relative z-10">
+          <div className="mb-6 animate-fadeInUp opacity-0">
             <Link href="/selection">
               <Button
-                variant="ghost"
+                variant="outline"
                 size="sm"
-                className="text-muted-foreground"
+                className="bg-white dark:bg-slate-800 hover:bg-gray-50 dark:hover:bg-slate-700 border-2 shadow-sm"
                 data-testid="button-back-selection"
               >
                 <ArrowLeft className="w-4 h-4 mr-2" aria-hidden="true" />
@@ -101,20 +183,20 @@ export default function Form() {
             </Link>
           </div>
 
-          <div className="text-center space-y-5 mb-10">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center mx-auto shadow-lg ring-2 ring-primary/10 ring-offset-2">
+          <div className="text-center space-y-5 mb-10 animate-fadeInUp delay-100 opacity-0">
+            <div className="w-16 h-16 rounded-2xl bg-white dark:bg-slate-800 flex items-center justify-center mx-auto shadow-lg border-2 border-primary/20">
               <Icon className="w-8 h-8 text-primary" aria-hidden="true" />
             </div>
 
             <div className="space-y-3">
               <h1
                 id="form-heading"
-                className="text-3xl md:text-4xl font-bold leading-tight text-foreground"
+                className="text-3xl md:text-4xl font-bold leading-tight text-foreground font-fraunces"
               >
                 {title}
               </h1>
               <p
-                className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto"
+                className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto font-manrope"
                 data-testid="text-tool-description"
               >
                 {description}
@@ -123,12 +205,14 @@ export default function Form() {
           </div>
 
           {!isRestoring && (
-            <FormWizard 
-              key={restoredState ? "restored" : "fresh"}
-              tool={tool} 
-              onComplete={handleFormComplete}
-              initialState={restoredState}
-            />
+            <div className="animate-fadeInUp delay-200 opacity-0">
+              <FormWizard
+                key={restoredState ? "restored" : "fresh"}
+                tool={tool}
+                onComplete={handleFormComplete}
+                initialState={restoredState}
+              />
+            </div>
           )}
         </div>
       </section>

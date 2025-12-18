@@ -106,10 +106,10 @@ export function ChipInput({
             disabled={!canAdd}
             className={cn(
               "h-7 px-2 text-xs font-medium rounded-md transition-colors flex items-center",
-              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-1",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-1",
               canAdd
-                ? "bg-orange-500 text-white hover:bg-orange-600"
-                : "bg-orange-500/40 text-white/70 cursor-not-allowed"
+                ? "bg-purple-500 text-white hover:bg-purple-600"
+                : "bg-purple-500/40 text-white/70 cursor-not-allowed"
             )}
             aria-label="Add item"
             data-testid={testId ? `${testId}-add-button` : "chip-add-button"}

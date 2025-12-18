@@ -33,7 +33,7 @@ export function OilFrameworkInfo() {
       </div>
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="max-w-md max-h-[85vh] flex flex-col">
+        <DialogContent className="max-w-md md:max-w-2xl lg:max-w-3xl max-h-[85vh] flex flex-col">
           <DialogHeader>
             <DialogTitle>The O.I.L. Framework</DialogTitle>
           </DialogHeader>

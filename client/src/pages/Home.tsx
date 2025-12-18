@@ -1027,62 +1027,52 @@ export default function Home() {
       </section>
 
       {/* Donate CTA - Gift Giving Theme */}
-      <section className="relative py-20 md:py-28 px-4 sm:px-6 lg:px-8 overflow-x-hidden overflow-y-visible"
-        style={{
-          background: 'linear-gradient(165deg, #f8fafc 0%, #e0f2fe 25%, #f0fdfa 50%, #fef3c7 75%, #fef2f2 100%)'
-        }}
+      <section className="relative py-20 md:py-28 px-4 sm:px-6 lg:px-8 overflow-hidden dot-pattern dark:dot-pattern-dark"
       >
         <style>{`
           @import url('https://fonts.googleapis.com/css2?family=Literata:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+          /* Dot pattern background */
+          .dot-pattern {
+            background-color: #FAFAF9;
+            background-image: radial-gradient(circle, #0D9488 0.5px, transparent 0.5px);
+            background-size: 24px 24px;
+            background-position: 0 0, 12px 12px;
+          }
+
+          .dot-pattern-dark {
+            background-color: #0f172a;
+            background-image: radial-gradient(circle, rgba(13, 148, 136, 0.15) 0.5px, transparent 0.5px);
+            background-size: 24px 24px;
+          }
+
+          /* Paper texture overlay */
+          .paper-texture::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            opacity: 0.4;
+          }
         `}</style>
 
-        {/* Atmospheric background layers - extended from previous section */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {/* Organic blob shapes - brand colors */}
-          <div
-            className="absolute top-0 right-0 w-[600px] h-[600px] opacity-20 blur-3xl"
-            style={{
-              background: 'radial-gradient(circle, #14b8a6 0%, transparent 70%)'
-            }}
-          />
-          <div
-            className="absolute bottom-0 left-0 w-[500px] h-[500px] opacity-20 blur-3xl"
-            style={{
-              background: 'radial-gradient(circle, #f97316 0%, transparent 70%)'
-            }}
-          />
-          <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] opacity-15 blur-3xl"
-            style={{
-              background: 'radial-gradient(circle, #f472b6 0%, transparent 70%)'
-            }}
-          />
-        </div>
+        {/* Paper texture overlay */}
+        <div className="paper-texture absolute inset-0 pointer-events-none" />
+
+        {/* Subtle decorative corner accents */}
+        <div className="absolute top-0 left-0 w-32 h-32 border-l-2 border-t-2 border-primary/10 pointer-events-none" />
+        <div className="absolute bottom-0 right-0 w-32 h-32 border-r-2 border-b-2 border-chart-2/10 pointer-events-none" />
 
         <div className="relative max-w-5xl mx-auto">
           <div className="relative">
             {/* Main content card */}
             <div
-              className="relative rounded-3xl p-10 md:p-16 text-center overflow-hidden"
+              className="relative rounded-3xl p-10 md:p-16 text-center overflow-hidden bg-white dark:bg-slate-800 border-2 border-primary/20"
               style={{
-                background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 253, 250, 0.9) 50%, rgba(254, 243, 199, 0.95) 100%)',
-                border: '3px solid rgba(20, 184, 166, 0.3)',
-                boxShadow: '0 25px 70px rgba(20, 184, 166, 0.15), inset 0 2px 0 rgba(255, 255, 255, 0.9)'
+                boxShadow: '0 1px 2px rgba(0, 0, 0, 0.04), 0 2px 6px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.03), 0 8px 24px rgba(0, 0, 0, 0.02)'
               }}
             >
-              {/* Decorative corner accents */}
-              <div
-                className="absolute top-0 left-0 w-20 h-20 opacity-20"
-                style={{
-                  background: 'linear-gradient(135deg, #14b8a6 0%, transparent 100%)'
-                }}
-              />
-              <div
-                className="absolute bottom-0 right-0 w-24 h-24 opacity-20"
-                style={{
-                  background: 'linear-gradient(-45deg, #f97316 0%, transparent 100%)'
-                }}
-              />
 
               {/* Heart icon with glow */}
               <div className="relative inline-block mb-8">

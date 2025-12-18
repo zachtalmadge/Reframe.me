@@ -128,6 +128,7 @@ export function Step1Background({
                 size="sm"
                 onClick={handleAddOffense}
                 disabled={!canAddAnother}
+                className="bg-purple-500 hover:bg-purple-600 text-white border-purple-600 hover:border-purple-700"
                 data-testid="button-add-offense"
               >
                 <Plus className="w-4 h-4 mr-1" aria-hidden="true" />

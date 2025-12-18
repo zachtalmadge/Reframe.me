@@ -243,7 +243,31 @@ export default function Faq() {
   return (
     <Layout>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+        /* Dot pattern background */
+        .dot-pattern {
+          background-color: #FAFAF9;
+          background-image: radial-gradient(circle, #0D9488 0.5px, transparent 0.5px);
+          background-size: 24px 24px;
+          background-position: 0 0, 12px 12px;
+        }
+
+        .dot-pattern-dark {
+          background-color: #0f172a;
+          background-image: radial-gradient(circle, rgba(13, 148, 136, 0.15) 0.5px, transparent 0.5px);
+          background-size: 24px 24px;
+        }
+
+        /* Paper texture overlay */
+        .paper-texture::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+          pointer-events: none;
+          opacity: 0.4;
+        }
 
         @keyframes float-in {
           from {
@@ -303,27 +327,15 @@ export default function Faq() {
       `}</style>
 
       <section
-        className="py-12 md:py-20 px-4 sm:px-6 lg:px-8 min-h-screen relative overflow-hidden"
-        style={{
-          background: 'linear-gradient(180deg, #fafaf9 0%, #f0fdfa 30%, #fff7ed 60%, #fafaf9 100%)'
-        }}
+        className="py-12 md:py-20 px-4 sm:px-6 lg:px-8 min-h-screen dot-pattern dark:dot-pattern-dark relative overflow-hidden"
         aria-labelledby="faq-heading"
       >
-        {/* Decorative background elements */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div
-            className="absolute top-20 right-1/4 w-[400px] h-[400px] rounded-full opacity-30 blur-3xl"
-            style={{
-              background: 'radial-gradient(circle, rgba(20, 184, 166, 0.15) 0%, transparent 70%)'
-            }}
-          />
-          <div
-            className="absolute bottom-40 left-1/4 w-[350px] h-[350px] rounded-full opacity-30 blur-3xl"
-            style={{
-              background: 'radial-gradient(circle, rgba(249, 115, 22, 0.12) 0%, transparent 70%)'
-            }}
-          />
-        </div>
+        {/* Paper texture overlay */}
+        <div className="paper-texture absolute inset-0 pointer-events-none" />
+
+        {/* Subtle decorative corner accents */}
+        <div className="absolute top-0 left-0 w-32 h-32 border-l-2 border-t-2 border-primary/10 pointer-events-none" />
+        <div className="absolute bottom-0 right-0 w-32 h-32 border-r-2 border-b-2 border-chart-2/10 pointer-events-none" />
 
         <div className="max-w-4xl mx-auto relative z-10">
           {/* Hero section */}
@@ -336,7 +348,7 @@ export default function Faq() {
             <h1
               id="faq-heading"
               className="text-4xl md:text-5xl font-bold leading-tight bg-gradient-to-br from-gray-900 via-teal-800 to-gray-900 bg-clip-text text-transparent pb-2"
-              style={{ fontFamily: 'DM Sans, system-ui, sans-serif', letterSpacing: '-0.03em' }}
+              style={{ fontFamily: 'Fraunces, Georgia, serif', letterSpacing: '-0.03em' }}
             >
               Everything You Need to Know
             </h1>
@@ -498,7 +510,11 @@ export default function Faq() {
               <Link href="/selection">
                 <Button
                   size="lg"
-                  className="group bg-white text-teal-700 hover:bg-teal-50 min-h-[56px] mt-5 px-10 text-lg font-semibold shadow-2xl hover:shadow-xl transition-all duration-300 hover:scale-105"
+                  className="group min-h-[56px] mt-5 px-10 text-lg font-semibold shadow-2xl hover:shadow-xl transition-all duration-300 hover:scale-105"
+                  style={{
+                    background: 'linear-gradient(135deg, #f97316 0%, #fb923c 100%)',
+                    color: 'white'
+                  }}
                   data-testid="button-get-started-faq"
                 >
                   Begin Your Journey
