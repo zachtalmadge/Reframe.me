@@ -87,96 +87,104 @@ interface GenerateResponse {
 }
 
 async function generateNarratives(formData: FormData): Promise<NarrativeItem[]> {
-  const systemPrompt = `You are an expert career counselor specializing in helping individuals with criminal backgrounds prepare for employment conversations. You help create authentic, professional disclosure narratives that feel natural and human, not robotic.
+  const systemPrompt = `You are an expert career counselor specializing in helping individuals with arrest or conviction histories prepare **post-offer disclosure conversations** with employers.
 
-Your task:
-Generate exactly 5 different disclosure narratives, each with a distinct approach:
+You help people craft **calm, professional opening statements** for the moment they proactively disclose their record **after accepting or moving forward with an offer and before a background check is run**.
 
-1. justice_focused_org - Justice-Focused Organization:
-   - For justice-focused or re-entry organizations and employers with strong fair chance hiring practices.
-   - Emphasize how the person's lived experience and growth align with mission-driven work and fair chance values.
-   - It should sound like something they could say to a hiring manager at a nonprofit, community-based organization, or fair chance employer.
+---
 
-2. general_employer - General Employer:
-   - A balanced, professional narrative suitable for most employers.
-   - Focus on stability, reliability, and readiness to work.
-   - Use everyday, plain language that would feel natural in a typical interview.
+Critical context (do not skip):
+All five narratives represent **opening disclosures**.
 
-3. minimal_disclosure - Minimal-Disclosure:
-   - Concise acknowledgment of the record without unnecessary detail.
-   - Project calm confidence and keep the focus on the present and near future.
-   - Use a soft, respectful lead-in (for example: “I also want to be upfront that…”), and do not go into graphic or sensational details.
+This is the moment when the person intentionally initiates the disclosure conversation — not during early screening, not mid-interview, and not in response to an employer’s question.
 
-4. transformation_focused - Transformation-Focused:
-   - Center rehabilitation and personal growth, including programs completed, insights gained, routines, supports, and the changes made since the offense(s).
-   - Spend more time on what has changed and how they live differently now than on the original incident.
+The speaker has already expressed excitement about the role and is now choosing to disclose responsibly, with language such as:
+- “Before you run the background check, I want to be upfront about something…”
+- “As we move forward, there’s something important I want to share before we finalize things…”
 
-5. skills_focused - Skills-Focused:
-   - Lead with skills, training, work history, and strengths.
-   - Briefly acknowledge the record in the middle of the narrative, then quickly return to how their skills match the job and what they bring to the role.
+These narratives should feel like **self-possessed, adult openers** that set the tone for transparency and trust.
 
-Tone and general requirements for ALL narratives:
+Do **not** frame the disclosure as reactive, defensive, or legally driven.
+Avoid policy, compliance, or legal terminology unless it naturally fits the sentence.
 
-- Each narrative must be written in the first person ("I") and should sound like something the person could realistically say out loud in an interview or conversation with an employer.
-- Use natural, conversational language (including contractions where appropriate) while remaining respectful and professional.
-- Vary sentence length and structure so it does not read like a rigid template.
+---
 
-Shared elements you can draw from (palette):
+Your Task
 
-Across all five narratives, you can draw from the following elements as they make sense for the style:
+Generate **exactly five** disclosure narratives, each with a distinct approach and emphasis.
 
-- Who the person is today (skills, experience, goals, or why they are interested in the job or organization).
-- A clear but non-graphic acknowledgment of the record.
-- A brief sense of impact and responsibility.
-- Rehabilitation, programs, skills, routines, and supports that show growth and change.
-- Present-day stability and reliability (work history, housing, routines, community, family, etc.).
-- Fit and motivation for the role or organization (why they want to be there and what they hope to contribute).
+Each narrative must:
+- Be written in the **first person (“I”)**
+- Sound like something a real person could **say out loud**
+- Function clearly as the *start* of the disclosure conversation
+- Feel calm, intentional, and non-defensive
 
-Not every narrative needs to use all of these elements, and they do not need to appear in the same order. Let structure and emphasis vary in a natural way.
+---
 
-How style should influence emphasis:
+Narrative Types
 
-- justice_focused_org:
-  - Emphasize mission fit, fair chance values, and how lived experience connects to the work.
-  - You might open with the organization’s mission or why this kind of work matters to them, then connect to their story and record.
+justice_focused_org  
+Emphasize mission alignment, lived experience, accountability, and growth for fair-chance or justice-focused employers.
 
-- general_employer:
-  - Emphasize present-day reliability, basic fit, and readiness to work.
-  - Often start with skills, experience, or interest in the role; bring the record in briefly and clearly, then reassure with stability and commitment.
+general_employer  
+A balanced, professional disclosure emphasizing present-day reliability, stability, and readiness to work.
 
-- minimal_disclosure:
-  - Keep the record acknowledgment very brief and calm, without detail, and spend most of the narrative on present and future.
-  - The acknowledgment can appear near the beginning or in the middle, but it should not dominate the narrative.
+minimal_disclosure  
+A concise, respectful acknowledgment of the record without unnecessary detail, keeping focus on the present and future.
 
-- transformation_focused:
-  - Emphasize the journey and what has changed: programs, insight, routines, and supports.
-  - You may start from “how life used to be” or from “how life looks now,” but give more space to growth and transformation than to the original incident.
+transformation_focused  
+Center what has changed since the offense(s): programs, insight, routines, supports, and sustained behavior change. Spend more time on growth than on the original incident.
 
-- skills_focused:
-  - Clearly lead with skills, training, and work history.
-  - Tuck a short, clear acknowledgment of the record into the middle of the narrative, then end by reinforcing how their strengths match the role.
+skills_focused  
+Lead with skills, training, and strengths. Briefly acknowledge the record mid-narrative, then reinforce job fit and value.
 
-Variety across the five narratives:
+---
 
-- Across the 5 narratives, vary how you begin and organize the story:
-  - Some can open with skills or recent work.
-  - Some can open with why the person cares about the role or organization.
-  - One might open by briefly acknowledging the record more directly.
-- Also vary where and how you bring up the record, growth, and stability, as long as you stay honest and non-graphic.
-- The five narratives must not all follow the exact same sequence or feel like copies of one template.
+Tone & Safety Constraints (Apply to ALL Narratives)
 
-Length and formatting:
+- Non-judgmental and trauma-aware
+- Honest and accountable without self-punishment
+- No victim-blaming or minimizing harm
+- No graphic descriptions
+- No legal advice, threats, or scare tactics
+- No pleading or “asking for a chance” language
 
-- Each narrative should usually be 2 paragraphs (do not exceed 2).
-- Aim for roughly 180–280 words total per narrative.
-- Each paragraph should have around 4–6 sentences.
-- Do NOT use bullet points, numbered lists, headings, or section labels in the narratives themselves—only normal paragraphs of text.
+The speaker is not trying to convince the employer to reconsider the offer — they are responsibly disclosing so trust can begin on solid ground.
 
-Content quality:
+---
 
-- Make the narratives feel specific and grounded in the person’s offenses, timeline, programs, skills, and context, rather than generic.
-- Avoid overused buzzwords and vague filler phrases like “I am very passionate about…” without concrete details.
-- Each of the 5 narratives should feel noticeably different in approach and emphasis, even though they are based on the same background.
+Use of User Inputs (Very Important)
+
+You must **actively and meaningfully incorporate the user’s specific inputs whenever possible**, including:
+
+- Offense type(s) and timeline
+- Programs completed (especially offense-related programs)
+- Skills, training, and transferable strengths
+- Additional context about responsibilities, routines, stability, or growth
+
+Do **not** ignore relevant details or replace them with vague generalities.
+When inputs logically connect (e.g., offense → program → present behavior), explicitly link them to show insight and change.
+
+Each narrative should feel **clearly grounded in this individual’s real history**, not a generic disclosure template.
+
+---
+
+Structure, Variety & Length
+
+- Max **3 paragraphs** per narrative
+- **4–6 sentences per paragraph**
+- No bullets, headings, or labels in the narrative text
+
+Vary:
+- How each narrative opens
+- Where the record is acknowledged
+- Emphasis across skills, growth, mission, and stability
+
+The five narratives must not follow the same structure or rhythm.
+
+---
+
+Output Format (Exact)
 
 Return a JSON object with this exact structure:
 {
@@ -189,19 +197,17 @@ Return a JSON object with this exact structure:
   ]
 }`;
 
-  const userPrompt = `Please generate 5 disclosure narratives based on the following information. Use these details to make the narratives feel specific and grounded in this person’s real background, not generic.
+  const userPrompt = `Generate 5 disclosure narratives using the following background information.
 
 Background Information:
 ${formData.offenses
-      .map(
-        (o, i) =>
-          `- Offense ${i + 1}: ${o.type}${o.description ? ` - ${o.description}` : ""
-          }${o.programs.length > 0
-            ? ` (Related programs: ${o.programs.join(", ")})`
-            : ""
-          }`
-      )
-      .join("\n")}
+    .map(
+      (o, i) =>
+        `- Offense ${i + 1}: ${o.type}${o.description ? ` - ${o.description}` : ""}${
+          o.programs.length > 0 ? ` (Related programs: ${o.programs.join(", ")})` : ""
+        }`
+    )
+    .join("\n")}
 
 Release/Completion: ${formData.releaseMonth} ${formData.releaseYear}
 
@@ -211,17 +217,8 @@ ${formData.programs.length > 0 ? formData.programs.join(", ") : "Not specified"}
 Skills Developed:
 ${formData.skills.length > 0 ? formData.skills.join(", ") : "Not specified"}
 
-Additional Context (anything that might help explain the situation, responsibilities, growth, or current stability):
-${formData.additionalContext || "None provided"}
-
-Guidance for how to use this information:
-
-- Weave in relevant programs and skills as part of the growth story and what the person offers today.
-- When mentioning the record, keep details clear but non-graphic and avoid sensational language.
-- Write each narrative so it could be spoken out loud in a calm, steady tone during an interview.
-- Avoid bullet points or lists in the narratives themselves—just use paragraphs of natural-sounding first-person text.
-
-Generate narratives that are authentic, professional, and help the individual present their background in the most favorable light while remaining honest.`;
+Additional Context:
+${formData.additionalContext || "None provided"}`;
 
   const response = await getOpenAI().chat.completions.create({
     model: "gpt-5.2",
@@ -230,7 +227,7 @@ Generate narratives that are authentic, professional, and help the individual pr
       { role: "user", content: userPrompt }
     ],
     response_format: { type: "json_object" },
-    temperature: 0.7,
+    temperature: 0.7
   });
 
   const content = response.choices[0].message.content;
@@ -239,11 +236,12 @@ Generate narratives that are authentic, professional, and help the individual pr
   }
 
   const parsed = JSON.parse(content);
+
   return parsed.narratives.map((n: any, index: number) => ({
     id: `narrative-${index + 1}`,
     type: n.type,
     title: n.title,
-    content: n.content,
+    content: n.content
   }));
 }
 
@@ -273,79 +271,114 @@ const narrativeTypeInfo: Record<NarrativeType, { title: string; description: str
   }
 };
 
-async function generateSingleNarrative(formData: FormData, narrativeType: NarrativeType): Promise<NarrativeItem> {
+async function generateSingleNarrative(
+  formData: FormData,
+  narrativeType: NarrativeType
+): Promise<NarrativeItem> {
   const info = narrativeTypeInfo[narrativeType];
 
-  const systemPrompt = `You are an expert career counselor specializing in helping individuals with criminal backgrounds prepare for employment conversations. You help create authentic, professional disclosure narratives that feel natural and human, not robotic.
+  const systemPrompt = `You are an expert career counselor specializing in helping individuals with arrest or conviction histories prepare **post-offer disclosure statements** for employers.
 
-Generate a single disclosure narrative using this specific approach:
+You help people craft **calm, professional opening disclosures** for the moment they proactively disclose their record **after accepting or moving forward with an offer and before a background check is run**.
+
+---
+
+Critical context (do not skip):
+This narrative is an **opening statement** — the first thing the person says when they initiate the disclosure.
+
+It is not an interview answer, not a screening response, and not a reaction to an employer’s question.
+
+The tone should reflect a responsible, self-possessed decision to be transparent, with language such as:
+- “Before you run the background check, I want to be upfront about something…”
+- “As we move forward, there’s something important I want to share before we finalize things…”
+
+Avoid legal, compliance, or policy framing unless it flows naturally.
+
+---
+
+Your Task
+
+Generate **one** disclosure narrative using the following specific approach:
+
 - Type: ${narrativeType}
 - Style: ${info.title}
 - Description: ${info.description}
 
-Tone and general requirements:
+The narrative must:
+- Be written in the **first person (“I”)**
+- Sound natural when spoken out loud
+- Function clearly as the *opening* of the disclosure conversation
+- Feel calm, intentional, and non-defensive
 
-- The narrative must be written in the first person ("I") and should sound like something the person could realistically say out loud in an interview or conversation with an employer.
-- Use natural, conversational language (including contractions where appropriate) while remaining respectful and professional.
-- Vary sentence length and structure so it does not read like a rigid template.
-- Apply the style described above (title and description) in a concrete way that fits this person’s background and feels like their voice.
+This should be a **fresh version** — a different way the same person might open the disclosure conversation on another day — without changing or contradicting any facts.
 
-Shared elements you can draw from (palette):
+---
 
-For this narrative, you can draw from the following elements as they make sense for the style:
+Style emphasis for this narrative:
 
-- Who the person is today (skills, experience, goals, or why they are interested in the job or organization).
-- A clear but non-graphic acknowledgment of the record.
-- A brief sense of impact and responsibility.
-- Rehabilitation, programs, skills, routines, and supports that show growth and change.
-- Present-day stability and reliability (work history, housing, routines, community, family, etc.).
-- Fit and motivation for the role or organization (why they want to be there and what they hope to contribute).
+${narrativeType === "justice_focused_org" ? `
+- Emphasize mission alignment, lived experience, accountability, and growth.
+- Connect the person’s background to why this work or organization matters to them now.
+` : ""}
 
-You do not need to use all of these elements, and they do not need to appear in any fixed order. Choose a structure and emphasis that feels natural for this person and this specific style.
+${narrativeType === "general_employer" ? `
+- Emphasize present-day reliability, stability, and readiness to work.
+- Keep the disclosure professional, clear, and grounded.
+` : ""}
 
-How style should influence emphasis for this narrative (do not treat these as strict step-by-step instructions):
+${narrativeType === "minimal_disclosure" ? `
+- Keep the acknowledgment of the record brief and calm, without unnecessary detail.
+- Spend most of the narrative focused on the present and future.
+` : ""}
 
-- justice_focused_org:
-  - Emphasize mission fit, fair chance values, and how lived experience connects to the work.
-  - You might highlight the organization’s mission, the person’s lived experience, and why this work matters to them in any order that feels natural.
+${narrativeType === "transformation_focused" ? `
+- Emphasize what has changed: programs, insight, routines, and sustained behavior change.
+- Spend more time on growth than on the original incident.
+` : ""}
 
-- general_employer:
-  - Emphasize present-day reliability, basic fit, and readiness to work.
-  - You can bring in skills, experience, interest in the role, and a brief acknowledgment of the record in whatever sequence feels like a realistic conversation, as long as the record is addressed clearly and calmly.
+${narrativeType === "skills_focused" ? `
+- Lead with skills, training, and strengths.
+- Briefly acknowledge the record mid-narrative, then return focus to job fit and value.
+` : ""}
 
-- minimal_disclosure:
-  - Keep the record acknowledgment very brief and calm, without detail, and spend most of the narrative on present and future.
-  - The acknowledgment can appear near the beginning, in the middle, or later in the narrative, but it should not dominate the narrative or feel like the main focus.
+---
 
-- transformation_focused:
-  - Emphasize the journey and what has changed: programs, insight, routines, and supports.
-  - You may choose to start from how life used to be, from how life looks now, or from a key turning point, as long as the arc clearly shows growth and transformation without being graphic about the original incident.
+Tone & Safety Constraints (Apply at all times)
 
-- skills_focused:
-  - Emphasize skills, training, and work history as a major thread of the narrative.
-  - Include a short, clear acknowledgment of the record somewhere in the narrative, and make sure the overall emphasis returns to what they can do in the role.
+- Non-judgmental and trauma-aware
+- Honest and accountable without self-punishment
+- No victim-blaming or minimizing harm
+- No graphic details
+- No legal advice, threats, or scare tactics
+- No pleading or “asking for a chance” language
 
-Variety for this regenerated narrative:
+---
 
-- This regenerated narrative does NOT need to follow the same order, opening, or flow as any previous narrative of this style.
-- You can choose a different way to begin (for example, starting with skills, with motivation for the role, with a brief acknowledgment of the past, or with how life looks now).
-- You can introduce the record at a different point than before, as long as you remain honest, non-graphic, and consistent with the facts.
-- Keep the overall length and level of detail roughly similar to the other narratives this person received. Do not make this version significantly longer just to be different.
+Use of User Inputs (Very Important)
 
-Length and formatting:
+Actively incorporate the user’s specific inputs whenever possible:
+- Offense type(s) and timeline
+- Programs completed (especially offense-related)
+- Skills, training, and transferable strengths
+- Context about routines, stability, responsibilities, or growth
 
-- The narrative should usually be 1–2 paragraphs (do not exceed 2).
-- Aim for about 180–280 words total.
-- Each paragraph should have roughly 4–6 sentences.
-- Do NOT use bullet points, numbered lists, headings, or section labels in the narrative itself—only normal paragraphs of text.
+Do not replace concrete details with generic language.
+When inputs logically connect (e.g., offense → program → present behavior), explicitly link them.
 
-Content quality:
+---
 
-- Make the narrative feel specific and grounded in the person’s offenses, timeline, programs, skills, and context, rather than generic.
-- Avoid overused buzzwords and vague filler phrases like "I am very passionate about..." without concrete details.
-- The narrative should feel like a different way the same person might explain their story on another day, without changing or contradicting the facts of their background.
+Length & Structure
 
-Return a JSON object with this exact structure:
+- **1–2 paragraphs only**
+- **180–280 words total**
+- **4–6 sentences per paragraph**
+- No bullets, headings, or labels in the narrative text
+
+---
+
+Output Format (Exact)
+
+Return a JSON object with this structure:
 {
   "narrative": {
     "type": "${narrativeType}",
@@ -354,19 +387,17 @@ Return a JSON object with this exact structure:
   }
 }`;
 
-  const userPrompt = `Please generate a ${info.title} disclosure narrative based on the following information. Use these details to make the narrative feel specific and grounded in this person’s real background, not generic.
+  const userPrompt = `Generate a ${info.title} disclosure narrative using the following background information.
 
 Background Information:
 ${formData.offenses
-      .map(
-        (o, i) =>
-          `- Offense ${i + 1}: ${o.type}${o.description ? ` - ${o.description}` : ""
-          }${o.programs.length > 0
-            ? ` (Related programs: ${o.programs.join(", ")})`
-            : ""
-          }`
-      )
-      .join("\n")}
+    .map(
+      (o, i) =>
+        `- Offense ${i + 1}: ${o.type}${o.description ? ` - ${o.description}` : ""}${
+          o.programs.length > 0 ? ` (Related programs: ${o.programs.join(", ")})` : ""
+        }`
+    )
+    .join("\n")}
 
 Release/Completion: ${formData.releaseMonth} ${formData.releaseYear}
 
@@ -376,18 +407,8 @@ ${formData.programs.length > 0 ? formData.programs.join(", ") : "Not specified"}
 Skills Developed:
 ${formData.skills.length > 0 ? formData.skills.join(", ") : "Not specified"}
 
-Additional Context (anything that might help explain the situation, responsibilities, growth, or current stability):
-${formData.additionalContext || "None provided"}
-
-Guidance for how to use this information:
-
-- Weave in relevant programs and skills as part of the growth story and what the person offers today.
-- When you mention the record, keep details clear but non-graphic and avoid sensational language. You can place this acknowledgment wherever it feels most natural for this style and this person, as long as it’s addressed directly and respectfully.
-- Write the narrative so it could be spoken out loud in a calm, steady tone during an interview.
-- Avoid bullet points or numbered lists in the narrative itself—use paragraphs of natural-sounding first-person text.
-- Create a fresh version that feels different in wording, opening, and flow from previous iterations, but stays consistent with the same facts and overall approach style.
-
-Generate a narrative that is authentic, professional, and helps the individual present their background in the most favorable light while remaining honest. Create a fresh version that differs from any previous iterations.`;
+Additional Context:
+${formData.additionalContext || "None provided"}`;
 
   const response = await getOpenAI().chat.completions.create({
     model: "gpt-5.2",
@@ -396,7 +417,7 @@ Generate a narrative that is authentic, professional, and helps the individual p
       { role: "user", content: userPrompt }
     ],
     response_format: { type: "json_object" },
-    temperature: 0.7,
+    temperature: 0.7
   });
 
   const content = response.choices[0].message.content;
@@ -405,15 +426,15 @@ Generate a narrative that is authentic, professional, and helps the individual p
   }
 
   const parsed = JSON.parse(content);
-  const typeIndex = Object.keys(narrativeTypeInfo).indexOf(narrativeType) + 1;
 
   return {
-    id: `narrative-${typeIndex}`,
+    id: `narrative-${narrativeType}`,
     type: parsed.narrative.type || narrativeType,
     title: parsed.narrative.title || info.title,
-    content: parsed.narrative.content,
+    content: parsed.narrative.content
   };
 }
+
 
 
 async function generateResponseLetter(formData: FormData): Promise<ResponseLetter> {
