@@ -6,6 +6,12 @@ Reframe.me is a free, privacy-focused web application that helps people with cri
 
 **Status**: Live at [reframeme.app](https://reframeme.app) and actively maintained. See [CLAUDE.md](./CLAUDE.md) for detailed development status.
 
+## 📋 TODO
+
+### Code Quality & Architecture
+- [ ] **Refactor React components** - Break down large components into smaller, reusable, properly modular pieces
+- [ ] **Refactor Express server** - Organize server code into modular structure (controllers, services, middleware)
+
 ## 📑 Table of Contents
 
 - [What It Does](#-what-it-does)
