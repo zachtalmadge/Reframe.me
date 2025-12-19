@@ -209,7 +209,7 @@ export function FormWizard({ tool, onComplete, initialState }: FormWizardProps) 
         stepTitle={stepTitle}
       />
 
-      <div className="min-h-[400px] bg-white dark:bg-slate-800 rounded-2xl p-6 md:p-8 border-2 border-primary/20 shadow-md">
+      <div className="min-h-[400px] bg-white dark:bg-slate-800 rounded-2xl p-6 md:p-8 border-2 border-primary/20 shadow-md overflow-hidden">
         {renderStep()}
       </div>
 

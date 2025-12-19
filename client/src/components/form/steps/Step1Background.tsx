@@ -119,16 +119,16 @@ export function Step1Background({
 
       <div className="space-y-6">
         <div className="space-y-4">
-          <div className="flex items-center justify-between gap-4 flex-wrap">
-            <Label className="text-base font-medium">Your Background</Label>
-            <div className="flex flex-col items-end gap-1">
+          <div className="flex items-center justify-between gap-4 flex-wrap sm:flex-nowrap">
+            <Label className="text-base font-medium w-full sm:w-auto">Your Background</Label>
+            <div className="flex flex-col items-start sm:items-end gap-1 w-full sm:w-auto">
               <Button
                 type="button"
                 variant="outline"
                 size="sm"
                 onClick={handleAddOffense}
                 disabled={!canAddAnother}
-                className="bg-purple-500 hover:bg-purple-600 text-white border-purple-600 hover:border-purple-700"
+                className="bg-purple-500 hover:bg-purple-600 text-white border-purple-600 hover:border-purple-700 w-full sm:w-auto"
                 data-testid="button-add-offense"
               >
                 <Plus className="w-4 h-4 mr-1" aria-hidden="true" />
@@ -315,7 +315,7 @@ export function Step1Background({
           <Label className="text-base font-medium">Release Date</Label>
 
           {/* Native month picker for mobile (iOS/Android) */}
-          <div className="md:hidden">
+          <div className="md:hidden overflow-hidden">
             <Input
               type="month"
               id="release-date-mobile"
@@ -333,7 +333,8 @@ export function Step1Background({
               }}
               max={`${currentYear}-12`}
               min={`${currentYear - 49}-01`}
-              className="w-full"
+              className="w-full max-w-full"
+              style={{ WebkitAppearance: 'none' }}
               data-testid="input-release-date-mobile"
             />
           </div>
