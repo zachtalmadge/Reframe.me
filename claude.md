@@ -30,6 +30,16 @@ Reframe.me is a web application that helps justice-involved individuals prepare 
 ✅ Repository clean with latest improvements committed
 ✅ **Application deployed at [reframeme.app](https://reframeme.app)**
 
+## 📋 TODO
+
+### Code Quality & Refactoring
+- [ ] **Refactor React components** - Break down large components (Form.tsx, Results.tsx, etc.) into smaller, reusable, properly modular pieces following single responsibility principle
+- [ ] **Refactor Express server** - Organize server code into modular structure:
+  - Separate controllers for business logic
+  - Service layer for AI integration and document generation
+  - Middleware for authentication, error handling, validation
+  - Route handlers should be thin and delegate to controllers
+
 ## 🎯 Next Steps
 
 ### For Local Development
