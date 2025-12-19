@@ -87,7 +87,7 @@ interface GenerateResponse {
 }
 
 async function generateNarratives(formData: FormData): Promise<NarrativeItem[]> {
-  const systemPrompt = `You are an expert career counselor specializing in helping individuals with arrest or conviction histories prepare **post-offer disclosure conversations** with employers.
+const systemPrompt = `You are an expert career counselor specializing in helping individuals with arrest or conviction histories prepare **post-offer disclosure conversations** with employers.
 
 You help people craft **calm, professional opening statements** for the moment they proactively disclose their record **after accepting or moving forward with an offer and before a background check is run**.
 
@@ -98,14 +98,22 @@ All five narratives represent **opening disclosures**.
 
 This is the moment when the person intentionally initiates the disclosure conversation — not during early screening, not mid-interview, and not in response to an employer’s question.
 
-The speaker has already expressed excitement about the role and is now choosing to disclose responsibly, with language such as:
-- “Before you run the background check, I want to be upfront about something…”
-- “As we move forward, there’s something important I want to share before we finalize things…”
+The speaker has already expressed excitement about the role and is now choosing to disclose responsibly, in order to build trust and avoid surprises — not to persuade, impress, or re-sell themselves.
 
-These narratives should feel like **self-possessed, adult openers** that set the tone for transparency and trust.
+IMPORTANT: Avoid repeating the same opener across narratives.
+- Do NOT start more than ONE narrative with “Before you run the background check…” or any close variation (e.g., “before you run this check,” “before screening,” “before the background check”).
+- Across the five narratives, each opener must be meaningfully different in wording and approach.
+- At most ONE narrative may explicitly mention a background check in the opening sentence.
+
+Examples of different opener styles (use as inspiration only; do not copy repeatedly):
+- Excitement + transparency: “I’m really looking forward to getting started, and I want to share something important up front…”
+- Forward-motion framing: “As we move into next steps, there’s something I want to address directly…”
+- Responsibility framing: “I want to be transparent about something that may come up when my history is reviewed…”
+- Values framing (justice-focused): “I appreciate that your organization looks at the whole person, and I want to be honest about my background…”
+- Calm, minimal framing: “There’s one part of my history I want to name clearly, so there are no surprises…”
 
 Do **not** frame the disclosure as reactive, defensive, or legally driven.
-Avoid policy, compliance, or legal terminology unless it naturally fits the sentence.
+Avoid policy, compliance, or procedural language unless it naturally fits the sentence.
 
 ---
 
@@ -133,10 +141,10 @@ minimal_disclosure
 A concise, respectful acknowledgment of the record without unnecessary detail, keeping focus on the present and future.
 
 transformation_focused  
-Center what has changed since the offense(s): programs, insight, routines, supports, and sustained behavior change. Spend more time on growth than on the original incident.
+Center what has changed since the offense(s): insight, routines, supports, and sustained behavior change. Spend more time on growth than on the original incident.
 
 skills_focused  
-Lead with skills, training, and strengths. Briefly acknowledge the record mid-narrative, then reinforce job fit and value.
+Lead with skills, training, and strengths. Briefly acknowledge the record, then return focus to how the person shows up and works today.
 
 ---
 
@@ -147,25 +155,56 @@ Tone & Safety Constraints (Apply to ALL Narratives)
 - No victim-blaming or minimizing harm
 - No graphic descriptions
 - No legal advice, threats, or scare tactics
-- No pleading or “asking for a chance” language
+- No pleading, convincing, or “asking for a chance” language
 
-The speaker is not trying to convince the employer to reconsider the offer — they are responsibly disclosing so trust can begin on solid ground.
+Post-offer tone requirement:
+The speaker is **not** trying to earn the job or prove they deserve it. The offer has been made.  
+The purpose of the narrative is **transparent disclosure and trust-building**, not persuasion.
+
+Avoid sales-oriented framing such as:
+- “I’d be a great fit because…”
+- “I hope you’ll consider me…”
+- “This shows I’m rehabilitated…”
+
+Prefer grounded, trust-forward framing such as:
+- “I want you to hear this directly from me…”
+- “I’m sharing this so there are no surprises…”
+- “I understand trust is earned, and I’m prepared to do that through my work.”
 
 ---
 
 Use of User Inputs (Very Important)
 
 You must **actively and meaningfully incorporate the user’s specific inputs whenever possible**, including:
-
 - Offense type(s) and timeline
-- Programs completed (especially offense-related programs)
+- Programs completed (especially offense-related)
 - Skills, training, and transferable strengths
 - Additional context about responsibilities, routines, stability, or growth
 
 Do **not** ignore relevant details or replace them with vague generalities.
-When inputs logically connect (e.g., offense → program → present behavior), explicitly link them to show insight and change.
+When inputs logically connect (e.g., offense → program → present behavior), explicitly link them.
 
 Each narrative should feel **clearly grounded in this individual’s real history**, not a generic disclosure template.
+
+---
+
+Programs & Rehabilitation Framing (Critical)
+
+When the user provides programs or classes, do **not** present them like credentials, certifications, or résumé achievements.
+
+Instead, frame programs as **things I learned through my experience** and **practices I use now**.
+
+Prefer language like:
+- “Through my experience and the work I did in programs like X, I learned…”
+- “What I took from that work was…”
+- “I still use those tools today, especially when…”
+
+Avoid box-checking or sales language such as:
+- Repeatedly listing program names
+- Presenting completion as proof of worthiness
+- Framing programs as something meant to impress the employer
+
+Mention a program once for context if helpful, then focus on **insight, behavior, and present-day application**.
 
 ---
 
@@ -175,7 +214,7 @@ Structure, Variety & Length
 - **4–6 sentences per paragraph**
 - No bullets, headings, or labels in the narrative text
 
-Vary:
+Vary across the five narratives:
 - How each narrative opens
 - Where the record is acknowledged
 - Emphasis across skills, growth, mission, and stability
@@ -195,7 +234,9 @@ Return a JSON object with this exact structure:
     { "type": "transformation_focused", "title": "Transformation-Focused", "content": "..." },
     { "type": "skills_focused", "title": "Skills-Focused", "content": "..." }
   ]
-}`;
+}
+`;
+
 
   const userPrompt = `Generate 5 disclosure narratives using the following background information.
 
@@ -454,8 +495,17 @@ Context:
 Tone and perspective:
 - Write in the first person ("I") as the candidate.
 - Sound like a thoughtful, professional person speaking for themselves, not a lawyer or a judge.
-- Use plain, professional language that could realistically be spoken or read in a workplace context.
+- Use plain, professional language that could realistically be read in a workplace context.
 - Keep the tone accountable, calm, and hopeful. Avoid begging, dramatizing, or sounding defensive.
+
+CRITICAL: No meta / no instruction references:
+- The letter must NEVER mention the prompt, instructions, settings, toggles, checkboxes, flags, or the user’s input process.
+- Do NOT write phrases like: “because you told me…”, “as requested…”, “you indicated…”, “based on the toggle…”, “according to the instructions…”, “the form says…”, “the clarifying relevance setting…”.
+- Only include text that a candidate would reasonably write to an employer.
+
+Opening requirement (critical):
+- The first 1–2 sentences must be employer-facing: thank the employer for the opportunity to respond and acknowledge the pre-adverse action notice/background check review.
+- The opening must NOT explain what you were asked to include or why you are writing beyond normal workplace context.
 
 Use of the OIL framework:
 - The inputs will include three OIL sections: Ownership, Impact, Lessons Learned.
@@ -466,29 +516,14 @@ Use of the OIL framework:
   - Do not invent specific stories, dramatic details, or descriptions of particular people harmed.
   - Rely on the known facts (offenses, programs, skills, time since release) to speak concretely about growth.
 
-${formData.clarifyingRelevanceEnabled
-  ? `Clarifying charge relevance (clarifying relevance enabled):
-- The inputs include a boolean flag indicating that the candidate wants to include a section stating that their record does NOT relate to the job.
-- In this case:
-  - Look at the offense descriptions and the job posting responsibilities.
-  - If it appears reasonable that the conviction does not directly relate to the core duties of the role (for example, an older drug offense for an office-based data job):
-    - Include a short paragraph that calmly states that, based on the nature of the job, the conviction does not interfere with the candidate’s ability to perform the role.
-    - It can be similar in spirit to: "It is important to note that these charges are not connected to my professional responsibilities in this role and do not affect my ability to perform the job effectively."
-    - Keep the language honest and measured, not defensive or absolute.
-  - If the conviction appears closely related to the core duties (for example, driving offenses for driving jobs, financial crimes for financial roles, or similar clear conflicts):
-    - Do NOT claim that the conviction is unrelated to the job or has no impact.
-    - In this case, do not include a "this does not relate to the job" paragraph. Focus instead on Ownership, Impact, Lessons Learned, and the candidate’s current skills, stability, and safeguards.
-`
-  : `Clarifying charge relevance (clarifying relevance disabled):
-- The inputs include a boolean flag indicating that the candidate does NOT want to include a paragraph claiming that their record does not relate to the job.
-- In this case:
-  - Assume there may be some connection between the record and the role.
-  - Do NOT include any paragraph that says or implies that the conviction is unrelated to the job or has no impact.
-  - You should still account for the employer’s likely concern by:
-    - Acknowledging that you understand why the conviction may raise questions for this role (in calm, professional language).
-    - Emphasizing the time since the offense, any treatment or rehabilitation, vocational training, and current stability and reliability.
-    - Framing it around: "Here is what I have done to change, and here is how I now show reliability and good judgment," rather than "this does not matter at all."
-`}
+Clarifying charge relevance guidance (do not mention any settings; apply honestly based on the facts):
+- Review the offense descriptions, timing, and the job responsibilities (if provided).
+- If it is honestly supportable that the record does NOT directly relate to the job’s core duties:
+  - Include a short, measured paragraph noting that the conviction does not interfere with the candidate’s ability to perform the role.
+  - Keep language careful and non-absolute (avoid guarantees).
+- If the record appears closely related to the core duties or creates a clear job-relevant concern:
+  - Do NOT claim it is unrelated or “doesn’t matter.”
+  - Instead, acknowledge why the employer may have concerns and emphasize growth, safeguards, stability, and present-day judgment.
 
 Use of resume, job posting, programs, and skills:
 - When resume and job posting text are provided:
@@ -497,24 +532,25 @@ Use of resume, job posting, programs, and skills:
 - When resume and job posting are not provided:
   - Still highlight skills, programs, and strengths drawn from the other inputs.
 - When mentioning rehabilitation programs, skills, and strengths:
-  - Use specific names or categories from the inputs (for example, substance use treatment program, vocational training, teamwork with diverse people), not vague references.
+  - Use specific names or categories from the inputs, not vague references.
+  - Frame programs as learning and present-day practice (what I learned, what I do differently now), not as credentials or box-checking.
 
 Safety and ethical constraints:
 - Do NOT blame or criticize people who may have been harmed by the offense.
-- Do NOT minimize the seriousness of the offense (for example, avoid saying it was "not a big deal").
-- Do NOT include graphic, sensational, or emotionally manipulative descriptions of the offense.
-- Do NOT invent new factual details about the offense, victims, supervision conditions, or personal life that are not reasonably implied by the inputs.
+- Do NOT minimize the seriousness of the offense.
+- Do NOT include graphic, sensational, or emotionally manipulative descriptions.
+- Do NOT invent new factual details about the offense, victims, supervision conditions, or personal life that are not implied by the inputs.
 - Do NOT provide legal advice, cite laws, or tell the employer what they are required to do.
 - Do NOT threaten legal action or make demands. The tone should be a respectful request for reconsideration.
 
 Length and structure:
 - The letter should normally be about 3–5 paragraphs and roughly 300–500 words, unless the inputs are extremely minimal.
 - Include:
-  - A brief opening that acknowledges the background check and thanks the employer for the opportunity to respond.
+  - A brief opening that acknowledges the background check / pre-adverse action notice and thanks the employer for the opportunity to respond.
   - One or more body paragraphs that reflect Ownership, Impact, and Lessons Learned, grounded in the provided information.
-  - Depending on the offense/job relationship and the clarifying relevance setting, either:
-    - A short paragraph that calmly notes the conviction does not interfere with performing the job (when honestly supportable and clarifying relevance is enabled), or
-    - A short paragraph that acknowledges the employer’s concern and emphasizes growth, safeguards, and current reliability (when there may be a connection to the role, or when clarifying relevance is disabled).
+  - A short paragraph addressing job-related relevance honestly:
+    - Either a measured “does not interfere with job duties” paragraph when supportable, OR
+    - An acknowledgment of the employer’s concern with emphasis on growth, safeguards, and reliability when there may be a connection.
   - A paragraph that reinforces qualifications and fit for this specific role at this specific employer.
   - A closing that respectfully asks for reconsideration and expresses appreciation.
 
@@ -529,7 +565,8 @@ Return a JSON object with this exact structure:
 
 The "content" field must contain the full letter text, including [Date], [Employer Name], salutation, body paragraphs, and professional closing.`;
 
-  const userPrompt = `Please generate a pre-adverse action response letter based on the following information. Use these details to make the letter feel specific and grounded in this person’s real background, not generic.
+  // Trimmed user prompt: facts only (no "settings" narration that can leak into the letter)
+  const userPrompt = `Generate a pre-adverse action response letter using the following information.
 
 Position Applied For:
 ${formData.jobTitle || "Not specified"}
@@ -539,13 +576,11 @@ ${formData.employerName || "Not specified"}
 
 Background Information (offenses and timing):
 ${formData.offenses
-      .map(
-        (o, i) =>
-          `- Offense ${i + 1}: ${o.type}${
-            o.description ? ` - ${o.description}` : ""
-          }`
-      )
-      .join("\n")}
+    .map(
+      (o, i) =>
+        `- Offense ${i + 1}: ${o.type}${o.description ? ` - ${o.description}` : ""}`
+    )
+    .join("\n")}
 
 Release/Completion:
 ${formData.releaseMonth} ${formData.releaseYear}
@@ -561,22 +596,15 @@ ${formData.impact || "Not specified"}
 Lessons Learned (what has changed, including programs, skills, and routines):
 ${formData.lessonsLearned || "Not specified"}
 
-Clarifying relevance setting:
-${
-  formData.clarifyingRelevanceEnabled
-    ? "The candidate has indicated that they would like to include a paragraph stating that their record does not relate to this job, but you should only include such a paragraph if that is honestly supportable based on the offenses and job description. If it appears closely related to the core duties, do not make that claim."
-    : "The candidate has NOT requested a 'this does not relate to the job' paragraph. Assume there may be some connection between the record and the role, and follow the system instructions for this case."
-}
-
 ${
   formData.useResumeAndJobPosting && formData.resumeText
-    ? `Candidate's Resume (use this to highlight qualifications and fit for the role):
+    ? `Candidate's Resume:
 ${formData.resumeText}
 `
     : ""
 }${
     formData.useResumeAndJobPosting && formData.jobPostingText
-      ? `Job Posting (use this to align qualifications to what the employer is seeking and to connect specific requirements to the candidate's experience):
+      ? `Job Posting:
 ${formData.jobPostingText}
 `
       : ""
@@ -588,13 +616,8 @@ ${formData.programs.length > 0 ? formData.programs.join(", ") : "Not specified"}
 Skills and Strengths Developed:
 ${formData.skills.length > 0 ? formData.skills.join(", ") : "Not specified"}
 
-Additional guidance for this letter:
-- Use the candidate’s own words from Ownership, Impact, and Lessons Learned where they have provided them, lightly editing for clarity and tone.
-- When any OIL field is "Not specified", include only brief, general statements for that dimension and do not invent detailed stories or new facts.
-- When programs and skills are provided, connect them to current reliability, work habits, and readiness for this specific job.
-- Base everything you write only on the information above. Do not make up new factual details.
-
-Generate a professional, compelling letter that acknowledges the background check findings, reflects accountability and growth, handles the relevance of the record to the job in an honest way according to the clarifying relevance setting, reinforces the candidate’s fit for the role, and respectfully asks the employer to reconsider.`;
+Additional Context:
+${formData.additionalContext || "None provided"}`;
 
   const response = await getOpenAI().chat.completions.create({
     model: "gpt-5.2",
@@ -603,7 +626,7 @@ Generate a professional, compelling letter that acknowledges the background chec
       { role: "user", content: userPrompt }
     ],
     response_format: { type: "json_object" },
-    temperature: 0.7,
+    temperature: 0.7
   });
 
   const content = response.choices[0].message.content;
@@ -612,12 +635,14 @@ Generate a professional, compelling letter that acknowledges the background chec
   }
 
   const parsed = JSON.parse(content);
+
   return {
     id: "response-letter-1",
     title: parsed.letter.title,
-    content: parsed.letter.content,
+    content: parsed.letter.content
   };
 }
+
 
 
 export async function registerRoutes(
