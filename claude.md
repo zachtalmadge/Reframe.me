@@ -141,7 +141,6 @@ reframe.me/
 │   ├── routes/                # API routes
 │   │   ├── index.ts           # Route registration
 │   │   └── documents.routes.ts # Document endpoints
-│   ├── storage.ts             # In-memory storage (legacy)
 │   ├── static.ts              # Static file serving
 │   └── vite.ts                # Vite dev server setup
 ├── shared/                     # Shared TypeScript code
@@ -231,11 +230,10 @@ rm -rf dist .vite
 
 ## 📝 Notes
 
-- The app currently uses **in-memory storage** for user sessions (see `server/storage.ts`)
 - Form data is stored in **browser localStorage** only
-- Results are **not persisted** to the database
-- This is by design for privacy - no user data is stored server-side
-- The `users` table in the schema appears to be unused legacy code from the Replit template
+- Results are **not persisted** server-side
+- This is by design for privacy - no user data is stored on the backend
+- The `users` table in the schema is unused legacy code from the Replit template
 
 ## 🎨 Design System
 

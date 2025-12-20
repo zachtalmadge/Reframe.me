@@ -50,7 +50,6 @@ server/
 │   └── errorHandler.ts (11 lines)
 ├── static/
 │   └── index.ts (18 lines) - ✅ REFACTORED
-├── storage.ts     - In-memory storage (legacy, unused)
 └── vite.ts        - Vite dev server setup
 ```
 
@@ -67,7 +66,6 @@ server/
 ├── index.ts       (140 lines) - Entry point, middleware, initialization
 ├── routes.ts      (783 lines) - Types, OpenAI client, generation logic, routes
 ├── static.ts      (20 lines)  - Static file serving
-├── storage.ts                 - In-memory storage (legacy, unused)
 └── vite.ts                    - Vite dev server setup
 ```
 
@@ -146,8 +144,7 @@ server/
 │   ├── index.ts                                - Exports registerRoutes(), wires all route modules
 │   └── documents.routes.ts                     - Document generation route handlers
 ├── static.ts                                   - Static file serving (unchanged)
-├── vite.ts                                     - Vite dev server setup (unchanged)
-└── storage.ts                                  - In-memory storage (legacy, unused)
+└── vite.ts                                     - Vite dev server setup (unchanged)
 ```
 
 ### Proposed File Responsibilities
