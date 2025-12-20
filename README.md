@@ -131,8 +131,6 @@ reframe.me/
 │   ├── middleware/      # Request/error handling
 │   ├── static.ts        # Static file serving
 │   └── vite.ts          # Vite dev server
-├── shared/              # Shared types and schemas
-│   └── schema.ts        # Database schema (legacy)
 └── script/              # Build scripts
     └── build.ts         # Production build
 ```
@@ -166,8 +164,7 @@ npm run db:push      # Push database schema changes
 
 1. **Frontend changes**: Edit files in `client/src/`
 2. **Backend changes**: Edit files in `server/`
-3. **Database schema**: Edit `shared/schema.ts` then run `npm run db:push`
-4. **UI components**: Using shadcn/ui components in `client/src/components/ui/`
+3. **UI components**: Using shadcn/ui components in `client/src/components/ui/`
 
 ## 🎨 Design Philosophy
 

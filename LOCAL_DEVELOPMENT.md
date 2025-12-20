@@ -65,7 +65,6 @@ The application will be available at `http://localhost:5000`
 
 - **Frontend**: React code in `client/src/`
 - **Backend**: Express API in `server/`
-- **Shared**: Database schema in `shared/schema.ts`
 
 ### Hot Reload
 The dev server supports hot module replacement. Changes to frontend code will reload automatically.

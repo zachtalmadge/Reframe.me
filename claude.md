@@ -143,8 +143,6 @@ reframe.me/
 │   │   └── documents.routes.ts # Document endpoints
 │   ├── static.ts              # Static file serving
 │   └── vite.ts                # Vite dev server setup
-├── shared/                     # Shared TypeScript code
-│   └── schema.ts              # Drizzle DB schema (legacy)
 ├── docs/                       # Documentation
 │   └── backend-express-architecture.md  # Backend refactoring docs
 ├── script/                     # Build scripts
