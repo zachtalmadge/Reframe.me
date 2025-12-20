@@ -2,6 +2,17 @@ import { getOpenAI } from "../config/openaiClient.js";
 import type { FormData, NarrativeItem, NarrativeType, ResponseLetter } from "../types/documents.js";
 import { narrativeTypeInfo } from "../types/documents.js";
 
+/**
+ * Generates all 5 disclosure narrative types in a single AI call.
+ *
+ * Uses OpenAI GPT-5.2 to create personalized disclosure narratives based on the user's
+ * background information. Returns all 5 narrative types (justice-focused, general,
+ * minimal, transformation-focused, and skills-focused).
+ *
+ * @param formData - User's complete background information from the form
+ * @returns Promise resolving to array of 5 NarrativeItem objects
+ * @throws Error if OpenAI API call fails or response parsing fails
+ */
 export async function generateNarratives(formData: FormData): Promise<NarrativeItem[]> {
 const systemPrompt = `You are an expert career counselor specializing in helping individuals with arrest or conviction histories prepare **post-offer disclosure conversations** with employers.
 
@@ -202,7 +213,18 @@ ${formData.additionalContext || "None provided"}`;
   }));
 }
 
-
+/**
+ * Regenerates a single specific narrative type.
+ *
+ * Uses OpenAI GPT-5.2 to create a fresh version of one narrative type. Used when
+ * the user wants to regenerate a specific narrative without regenerating all 5.
+ * Produces a shorter output (1-2 paragraphs) compared to the initial generation.
+ *
+ * @param formData - User's complete background information from the form
+ * @param narrativeType - Which narrative type to generate (e.g., "transformation_focused")
+ * @returns Promise resolving to a single NarrativeItem object
+ * @throws Error if OpenAI API call fails or response parsing fails
+ */
 export async function generateSingleNarrative(
   formData: FormData,
   narrativeType: NarrativeType
@@ -367,8 +389,17 @@ ${formData.additionalContext || "None provided"}`;
   };
 }
 
-
-
+/**
+ * Generates a pre-adverse action response letter.
+ *
+ * Uses OpenAI GPT-5.2 to create a professional letter responding to potential job offer
+ * rescission based on background check results. Incorporates the OIL framework (Ownership,
+ * Impact, Lessons Learned) and optionally integrates resume and job posting details.
+ *
+ * @param formData - User's complete background information from the form
+ * @returns Promise resolving to a ResponseLetter object (3-5 paragraphs, 300-500 words)
+ * @throws Error if OpenAI API call fails or response parsing fails
+ */
 export async function generateResponseLetter(formData: FormData): Promise<ResponseLetter> {
   const systemPrompt = `You are an expert in Fair Chance hiring and employment communication. You help individuals with criminal records craft professional pre-adverse action response letters that are honest, respectful, and persuasive, without giving legal advice.
 

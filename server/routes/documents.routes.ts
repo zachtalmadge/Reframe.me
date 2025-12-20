@@ -13,6 +13,17 @@ import {
 
 export const documentsRouter = Router();
 
+/**
+ * POST /api/generate-documents
+ *
+ * Generates disclosure narratives and/or response letter based on user selection.
+ *
+ * Request body: { selection: ToolType, formData: FormData }
+ * Response: GenerateResponse with status ("success" | "partial_fail" | "total_fail"),
+ *           narratives array, responseLetter object, and errors array
+ *
+ * Handles partial failures gracefully - if one document type fails, the other may still succeed.
+ */
 documentsRouter.post("/generate-documents", async (req: Request, res: Response) => {
   try {
     const { selection, formData } = req.body as GenerateRequest;
@@ -92,6 +103,16 @@ documentsRouter.post("/generate-documents", async (req: Request, res: Response) 
   }
 });
 
+/**
+ * POST /api/regenerate-narrative
+ *
+ * Regenerates a single specific narrative type.
+ *
+ * Request body: { narrativeType: NarrativeType, formData: FormData }
+ * Response: { narrative: NarrativeItem } or { error: string }
+ *
+ * Used when user wants to regenerate one narrative without regenerating all 5.
+ */
 documentsRouter.post("/regenerate-narrative", async (req: Request, res: Response) => {
   try {
     const { narrativeType, formData } = req.body as { narrativeType: NarrativeType; formData: FormData };
@@ -120,6 +141,16 @@ documentsRouter.post("/regenerate-narrative", async (req: Request, res: Response
   }
 });
 
+/**
+ * POST /api/regenerate-letter
+ *
+ * Regenerates the pre-adverse action response letter.
+ *
+ * Request body: { formData: FormData }
+ * Response: { letter: ResponseLetter } or { error: string }
+ *
+ * Used when user wants to regenerate the response letter with fresh wording.
+ */
 documentsRouter.post("/regenerate-letter", async (req: Request, res: Response) => {
   try {
     const { formData } = req.body as { formData: FormData };
