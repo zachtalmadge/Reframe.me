@@ -24,10 +24,18 @@ The second wave of refactoring organized routes into a modular structure:
 - ✅ Deleted `server/routes.ts` - Replaced with modular route structure
 - ✅ Updated `server/index.ts` - Now imports from `routes/index.js`
 
+**Wave 3: COMPLETED (2025-12-20)**
+
+The third wave of refactoring extracted middleware into dedicated modules:
+
+- ✅ `server/middleware/requestLogger.ts` - Request logging middleware (38 lines)
+- ✅ `server/middleware/errorHandler.ts` - Error handling middleware (11 lines)
+- ✅ Updated `server/index.ts` - Imports and uses middleware modules (~70 lines, down from 140)
+
 **Current Structure:**
 ```
 server/
-├── index.ts       (140 lines) - Entry point, middleware, initialization ✅ UPDATED
+├── index.ts       (~70 lines) - Entry point, initialization ✅ REFACTORED
 ├── static.ts      (20 lines)  - Static file serving
 ├── config/
 │   └── openaiClient.ts (26 lines)
@@ -36,16 +44,16 @@ server/
 ├── services/
 │   └── documentGeneration.service.ts (572 lines)
 ├── routes/
-│   ├── index.ts (13 lines) - ✅ NEW
-│   └── documents.routes.ts (145 lines) - ✅ NEW
+│   ├── index.ts (13 lines)
+│   └── documents.routes.ts (145 lines)
+├── middleware/
+│   ├── requestLogger.ts (38 lines) - ✅ NEW
+│   └── errorHandler.ts (11 lines) - ✅ NEW
 ├── storage.ts     - In-memory storage (legacy, unused)
 └── vite.ts        - Vite dev server setup
 ```
 
-**Remaining Work (Wave 3):**
-- Extract middleware from `index.ts` into separate files:
-  - `middleware/requestLogger.ts`
-  - `middleware/errorHandler.ts`
+**All Waves Complete!** The Express server has been fully refactored into a modular, maintainable architecture.
 
 ---
 
@@ -180,12 +188,14 @@ export function getOpenAI(): OpenAI
 
 ---
 
-#### `server/middleware/requestLogger.ts` (~30 lines)
+#### `server/middleware/requestLogger.ts` (38 lines) ✅ IMPLEMENTED
 **Responsibilities:**
 - Export request/response logging middleware
 - Export `log()` utility function
 - Capture request timing, method, path, status code
 - Capture and log JSON responses for `/api/*` routes
+- Wrap `res.json()` to intercept response bodies
+- Only log requests to `/api/*` paths to reduce noise
 
 **Exports:**
 ```typescript
@@ -193,29 +203,45 @@ export function log(message: string, source?: string): void
 export function requestLogger(): RequestHandler
 ```
 
+**Implementation Details:**
+- Middleware wraps `res.json()` to capture JSON response bodies
+- Measures request duration from start to finish
+- Logs format: `METHOD /path STATUS in Xms :: {"response":"json"}`
+- Only logs API routes (paths starting with `/api`)
+- Used by `server/index.ts` after body parsing middleware
+
 **Rationale:**
 - Separates cross-cutting concerns
 - Makes logging logic reusable and testable
 - Clear single responsibility
+- Easy to modify logging behavior in one place
 
 ---
 
-#### `server/middleware/errorHandler.ts` (~15 lines)
+#### `server/middleware/errorHandler.ts` (11 lines) ✅ IMPLEMENTED
 **Responsibilities:**
 - Export error-handling middleware
 - Extract status code from error object (default: 500)
-- Send JSON error responses
-- Re-throw errors for logging
+- Send JSON error responses with format `{ message }`
+- Re-throw errors after responding (for logging/debugging)
 
 **Exports:**
 ```typescript
 export function errorHandler(): ErrorRequestHandler
 ```
 
+**Implementation Details:**
+- Extracts status from `err.status` or `err.statusCode`, defaults to 500
+- Extracts message from `err.message`, defaults to "Internal Server Error"
+- Returns JSON response: `res.status(status).json({ message })`
+- Re-throws error after responding (allows upstream error handlers)
+- Registered in `server/index.ts` after route registration, before static/Vite
+
 **Rationale:**
 - Centralized error handling logic
 - Follows Express error-handling middleware pattern
 - Easy to extend for error logging services (Sentry, etc.)
+- Consistent error response format across all routes
 
 ---
 
