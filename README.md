@@ -122,12 +122,17 @@ reframe.me/
 │   │   ├── pages/       # Route pages
 │   │   ├── lib/         # Utilities and helpers
 │   │   └── hooks/       # Custom React hooks
-├── server/              # Express backend
+├── server/              # Express backend (modular architecture)
 │   ├── index.ts         # Server entry point
-│   ├── routes.ts        # API routes
-│   └── storage.ts       # Data storage interface
+│   ├── config/          # Configuration
+│   ├── types/           # TypeScript types
+│   ├── services/        # Business logic (AI generation)
+│   ├── routes/          # API routes
+│   ├── middleware/      # Request/error handling
+│   ├── static.ts        # Static file serving
+│   └── vite.ts          # Vite dev server
 ├── shared/              # Shared types and schemas
-│   └── schema.ts        # Database schema
+│   └── schema.ts        # Database schema (legacy)
 └── script/              # Build scripts
     └── build.ts         # Production build
 ```

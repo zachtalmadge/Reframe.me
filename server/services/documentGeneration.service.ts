@@ -1,92 +1,19 @@
-import type { Express, Request, Response } from "express";
-import { createServer, type Server } from "http";
-import { storage } from "./storage.js";
-import OpenAI from "openai";
+import { getOpenAI } from "../config/openaiClient.js";
+import type { FormData, NarrativeItem, NarrativeType, ResponseLetter } from "../types/documents.js";
+import { narrativeTypeInfo } from "../types/documents.js";
 
 /**
- * Lazy-load OpenAI client to avoid ES module hoisting issue.
+ * Generates all 5 disclosure narrative types in a single AI call.
  *
- * IMPORTANT: This pattern is necessary because ES modules execute imports
- * before runtime code. If we instantiate OpenAI at module level (e.g.,
- * `const openai = new OpenAI(...)`), it would execute BEFORE dotenv loads
- * environment variables in server/index.ts, resulting in undefined API keys.
+ * Uses OpenAI GPT-5.2 to create personalized disclosure narratives based on the user's
+ * background information. Returns all 5 narrative types (justice-focused, general,
+ * minimal, transformation-focused, and skills-focused).
  *
- * Lazy loading defers OpenAI instantiation until the first API call at runtime,
- * ensuring environment variables are available from dotenv.
- *
- * @returns {OpenAI} Singleton OpenAI client instance
+ * @param formData - User's complete background information from the form
+ * @returns Promise resolving to array of 5 NarrativeItem objects
+ * @throws Error if OpenAI API call fails or response parsing fails
  */
-let openaiClient: OpenAI | null = null;
-function getOpenAI(): OpenAI {
-  if (!openaiClient) {
-    openaiClient = new OpenAI({
-      apiKey: process.env.AI_INTEGRATIONS_OPENAI_API_KEY,
-      baseURL: process.env.AI_INTEGRATIONS_OPENAI_BASE_URL,
-    });
-  }
-  return openaiClient;
-}
-
-type ToolType = "narrative" | "responseLetter" | "both";
-
-interface Offense {
-  id: string;
-  type: string;
-  description: string;
-  programs: string[];
-}
-
-interface FormData {
-  offenses: Offense[];
-  releaseMonth: string;
-  releaseYear: string;
-  programs: string[];
-  skills: string[];
-  additionalContext: string;
-  jobTitle: string;
-  employerName: string;
-  ownership: string;
-  impact: string;
-  lessonsLearned: string;
-  clarifyingRelevanceEnabled: boolean;
-  clarifyingRelevance: string;
-  qualifications: string;
-  useResumeAndJobPosting: boolean;
-  resumeText: string;
-  jobPostingText: string;
-}
-
-interface GenerateRequest {
-  selection: ToolType;
-  formData: FormData;
-}
-
-interface NarrativeItem {
-  id: string;
-  type: "justice_focused_org" | "general_employer" | "minimal_disclosure" | "transformation_focused" | "skills_focused";
-  title: string;
-  content: string;
-}
-
-interface ResponseLetter {
-  id: string;
-  title: string;
-  content: string;
-}
-
-interface DocumentError {
-  documentType: "narrative" | "responseLetter";
-  detail: string;
-}
-
-interface GenerateResponse {
-  status: "success" | "partial_fail" | "total_fail";
-  narratives: NarrativeItem[];
-  responseLetter: ResponseLetter | null;
-  errors: DocumentError[];
-}
-
-async function generateNarratives(formData: FormData): Promise<NarrativeItem[]> {
+export async function generateNarratives(formData: FormData): Promise<NarrativeItem[]> {
 const systemPrompt = `You are an expert career counselor specializing in helping individuals with arrest or conviction histories prepare **post-offer disclosure conversations** with employers.
 
 You help people craft **calm, professional opening statements** for the moment they proactively disclose their record **after accepting or moving forward with an offer and before a background check is run**.
@@ -96,21 +23,21 @@ You help people craft **calm, professional opening statements** for the moment t
 Critical context (do not skip):
 All five narratives represent **opening disclosures**.
 
-This is the moment when the person intentionally initiates the disclosure conversation — not during early screening, not mid-interview, and not in response to an employer’s question.
+This is the moment when the person intentionally initiates the disclosure conversation — not during early screening, not mid-interview, and not in response to an employer's question.
 
 The speaker has already expressed excitement about the role and is now choosing to disclose responsibly, in order to build trust and avoid surprises — not to persuade, impress, or re-sell themselves.
 
 IMPORTANT: Avoid repeating the same opener across narratives.
-- Do NOT start more than ONE narrative with “Before you run the background check…” or any close variation (e.g., “before you run this check,” “before screening,” “before the background check”).
+- Do NOT start more than ONE narrative with "Before you run the background check…" or any close variation (e.g., "before you run this check," "before screening," "before the background check").
 - Across the five narratives, each opener must be meaningfully different in wording and approach.
 - At most ONE narrative may explicitly mention a background check in the opening sentence.
 
 Examples of different opener styles (use as inspiration only; do not copy repeatedly):
-- Excitement + transparency: “I’m really looking forward to getting started, and I want to share something important up front…”
-- Forward-motion framing: “As we move into next steps, there’s something I want to address directly…”
-- Responsibility framing: “I want to be transparent about something that may come up when my history is reviewed…”
-- Values framing (justice-focused): “I appreciate that your organization looks at the whole person, and I want to be honest about my background…”
-- Calm, minimal framing: “There’s one part of my history I want to name clearly, so there are no surprises…”
+- Excitement + transparency: "I'm really looking forward to getting started, and I want to share something important up front…"
+- Forward-motion framing: "As we move into next steps, there's something I want to address directly…"
+- Responsibility framing: "I want to be transparent about something that may come up when my history is reviewed…"
+- Values framing (justice-focused): "I appreciate that your organization looks at the whole person, and I want to be honest about my background…"
+- Calm, minimal framing: "There's one part of my history I want to name clearly, so there are no surprises…"
 
 Do **not** frame the disclosure as reactive, defensive, or legally driven.
 Avoid policy, compliance, or procedural language unless it naturally fits the sentence.
@@ -122,7 +49,7 @@ Your Task
 Generate **exactly five** disclosure narratives, each with a distinct approach and emphasis.
 
 Each narrative must:
-- Be written in the **first person (“I”)**
+- Be written in the **first person ("I")**
 - Sound like something a real person could **say out loud**
 - Function clearly as the *start* of the disclosure conversation
 - Feel calm, intentional, and non-defensive
@@ -131,19 +58,19 @@ Each narrative must:
 
 Narrative Types
 
-justice_focused_org  
+justice_focused_org
 Emphasize mission alignment, lived experience, accountability, and growth for fair-chance or justice-focused employers.
 
-general_employer  
+general_employer
 A balanced, professional disclosure emphasizing present-day reliability, stability, and readiness to work.
 
-minimal_disclosure  
+minimal_disclosure
 A concise, respectful acknowledgment of the record without unnecessary detail, keeping focus on the present and future.
 
-transformation_focused  
+transformation_focused
 Center what has changed since the offense(s): insight, routines, supports, and sustained behavior change. Spend more time on growth than on the original incident.
 
-skills_focused  
+skills_focused
 Lead with skills, training, and strengths. Briefly acknowledge the record, then return focus to how the person shows up and works today.
 
 ---
@@ -155,27 +82,27 @@ Tone & Safety Constraints (Apply to ALL Narratives)
 - No victim-blaming or minimizing harm
 - No graphic descriptions
 - No legal advice, threats, or scare tactics
-- No pleading, convincing, or “asking for a chance” language
+- No pleading, convincing, or "asking for a chance" language
 
 Post-offer tone requirement:
-The speaker is **not** trying to earn the job or prove they deserve it. The offer has been made.  
+The speaker is **not** trying to earn the job or prove they deserve it. The offer has been made.
 The purpose of the narrative is **transparent disclosure and trust-building**, not persuasion.
 
 Avoid sales-oriented framing such as:
-- “I’d be a great fit because…”
-- “I hope you’ll consider me…”
-- “This shows I’m rehabilitated…”
+- "I'd be a great fit because…"
+- "I hope you'll consider me…"
+- "This shows I'm rehabilitated…"
 
 Prefer grounded, trust-forward framing such as:
-- “I want you to hear this directly from me…”
-- “I’m sharing this so there are no surprises…”
-- “I understand trust is earned, and I’m prepared to do that through my work.”
+- "I want you to hear this directly from me…"
+- "I'm sharing this so there are no surprises…"
+- "I understand trust is earned, and I'm prepared to do that through my work."
 
 ---
 
 Use of User Inputs (Very Important)
 
-You must **actively and meaningfully incorporate the user’s specific inputs whenever possible**, including:
+You must **actively and meaningfully incorporate the user's specific inputs whenever possible**, including:
 - Offense type(s) and timeline
 - Programs completed (especially offense-related)
 - Skills, training, and transferable strengths
@@ -184,7 +111,7 @@ You must **actively and meaningfully incorporate the user’s specific inputs wh
 Do **not** ignore relevant details or replace them with vague generalities.
 When inputs logically connect (e.g., offense → program → present behavior), explicitly link them.
 
-Each narrative should feel **clearly grounded in this individual’s real history**, not a generic disclosure template.
+Each narrative should feel **clearly grounded in this individual's real history**, not a generic disclosure template.
 
 ---
 
@@ -195,9 +122,9 @@ When the user provides programs or classes, do **not** present them like credent
 Instead, frame programs as **things I learned through my experience** and **practices I use now**.
 
 Prefer language like:
-- “Through my experience and the work I did in programs like X, I learned…”
-- “What I took from that work was…”
-- “I still use those tools today, especially when…”
+- "Through my experience and the work I did in programs like X, I learned…"
+- "What I took from that work was…"
+- "I still use those tools today, especially when…"
 
 Avoid box-checking or sales language such as:
 - Repeatedly listing program names
@@ -286,33 +213,19 @@ ${formData.additionalContext || "None provided"}`;
   }));
 }
 
-
-type NarrativeType = "justice_focused_org" | "general_employer" | "minimal_disclosure" | "transformation_focused" | "skills_focused";
-
-const narrativeTypeInfo: Record<NarrativeType, { title: string; description: string }> = {
-  justice_focused_org: {
-    title: "Justice-Focused Organization",
-    description: "For justice-focused or re-entry organizations and employers with strong fair chance hiring practices, highlighting how your lived experience and growth align with mission-driven work and fair chance values."
-  },
-  general_employer: {
-    title: "General Employer",
-    description: "A balanced, professional narrative that works for most employers and focuses on stability, reliability, and readiness to work."
-  },
-  minimal_disclosure: {
-    title: "Minimal-Disclosure",
-    description: "A concise narrative that acknowledges your record without going into unnecessary detail, keeping the focus on the present."
-  },
-  transformation_focused: {
-    title: "Transformation-Focused",
-    description: "Centers your rehabilitation and personal growth, emphasizing programs completed, insights gained, and the changes you've made."
-  },
-  skills_focused: {
-    title: "Skills-Focused",
-    description: "Leads with your skills, training, and strengths, briefly acknowledging your record and returning quickly to what you bring to the job."
-  }
-};
-
-async function generateSingleNarrative(
+/**
+ * Regenerates a single specific narrative type.
+ *
+ * Uses OpenAI GPT-5.2 to create a fresh version of one narrative type. Used when
+ * the user wants to regenerate a specific narrative without regenerating all 5.
+ * Produces a shorter output (1-2 paragraphs) compared to the initial generation.
+ *
+ * @param formData - User's complete background information from the form
+ * @param narrativeType - Which narrative type to generate (e.g., "transformation_focused")
+ * @returns Promise resolving to a single NarrativeItem object
+ * @throws Error if OpenAI API call fails or response parsing fails
+ */
+export async function generateSingleNarrative(
   formData: FormData,
   narrativeType: NarrativeType
 ): Promise<NarrativeItem> {
@@ -327,11 +240,11 @@ You help people craft **calm, professional opening disclosures** for the moment 
 Critical context (do not skip):
 This narrative is an **opening statement** — the first thing the person says when they initiate the disclosure.
 
-It is not an interview answer, not a screening response, and not a reaction to an employer’s question.
+It is not an interview answer, not a screening response, and not a reaction to an employer's question.
 
 The tone should reflect a responsible, self-possessed decision to be transparent, with language such as:
-- “Before you run the background check, I want to be upfront about something…”
-- “As we move forward, there’s something important I want to share before we finalize things…”
+- "Before you run the background check, I want to be upfront about something…"
+- "As we move forward, there's something important I want to share before we finalize things…"
 
 Avoid legal, compliance, or policy framing unless it flows naturally.
 
@@ -346,7 +259,7 @@ Generate **one** disclosure narrative using the following specific approach:
 - Description: ${info.description}
 
 The narrative must:
-- Be written in the **first person (“I”)**
+- Be written in the **first person ("I")**
 - Sound natural when spoken out loud
 - Function clearly as the *opening* of the disclosure conversation
 - Feel calm, intentional, and non-defensive
@@ -359,7 +272,7 @@ Style emphasis for this narrative:
 
 ${narrativeType === "justice_focused_org" ? `
 - Emphasize mission alignment, lived experience, accountability, and growth.
-- Connect the person’s background to why this work or organization matters to them now.
+- Connect the person's background to why this work or organization matters to them now.
 ` : ""}
 
 ${narrativeType === "general_employer" ? `
@@ -391,13 +304,13 @@ Tone & Safety Constraints (Apply at all times)
 - No victim-blaming or minimizing harm
 - No graphic details
 - No legal advice, threats, or scare tactics
-- No pleading or “asking for a chance” language
+- No pleading or "asking for a chance" language
 
 ---
 
 Use of User Inputs (Very Important)
 
-Actively incorporate the user’s specific inputs whenever possible:
+Actively incorporate the user's specific inputs whenever possible:
 - Offense type(s) and timeline
 - Programs completed (especially offense-related)
 - Skills, training, and transferable strengths
@@ -476,9 +389,18 @@ ${formData.additionalContext || "None provided"}`;
   };
 }
 
-
-
-async function generateResponseLetter(formData: FormData): Promise<ResponseLetter> {
+/**
+ * Generates a pre-adverse action response letter.
+ *
+ * Uses OpenAI GPT-5.2 to create a professional letter responding to potential job offer
+ * rescission based on background check results. Incorporates the OIL framework (Ownership,
+ * Impact, Lessons Learned) and optionally integrates resume and job posting details.
+ *
+ * @param formData - User's complete background information from the form
+ * @returns Promise resolving to a ResponseLetter object (3-5 paragraphs, 300-500 words)
+ * @throws Error if OpenAI API call fails or response parsing fails
+ */
+export async function generateResponseLetter(formData: FormData): Promise<ResponseLetter> {
   const systemPrompt = `You are an expert in Fair Chance hiring and employment communication. You help individuals with criminal records craft professional pre-adverse action response letters that are honest, respectful, and persuasive, without giving legal advice.
 
 Context:
@@ -499,8 +421,8 @@ Tone and perspective:
 - Keep the tone accountable, calm, and hopeful. Avoid begging, dramatizing, or sounding defensive.
 
 CRITICAL: No meta / no instruction references:
-- The letter must NEVER mention the prompt, instructions, settings, toggles, checkboxes, flags, or the user’s input process.
-- Do NOT write phrases like: “because you told me…”, “as requested…”, “you indicated…”, “based on the toggle…”, “according to the instructions…”, “the form says…”, “the clarifying relevance setting…”.
+- The letter must NEVER mention the prompt, instructions, settings, toggles, checkboxes, flags, or the user's input process.
+- Do NOT write phrases like: "because you told me…", "as requested…", "you indicated…", "based on the toggle…", "according to the instructions…", "the form says…", "the clarifying relevance setting…".
 - Only include text that a candidate would reasonably write to an employer.
 
 Opening requirement (critical):
@@ -518,11 +440,11 @@ Use of the OIL framework:
 
 Clarifying charge relevance guidance (do not mention any settings; apply honestly based on the facts):
 - Review the offense descriptions, timing, and the job responsibilities (if provided).
-- If it is honestly supportable that the record does NOT directly relate to the job’s core duties:
-  - Include a short, measured paragraph noting that the conviction does not interfere with the candidate’s ability to perform the role.
+- If it is honestly supportable that the record does NOT directly relate to the job's core duties:
+  - Include a short, measured paragraph noting that the conviction does not interfere with the candidate's ability to perform the role.
   - Keep language careful and non-absolute (avoid guarantees).
 - If the record appears closely related to the core duties or creates a clear job-relevant concern:
-  - Do NOT claim it is unrelated or “doesn’t matter.”
+  - Do NOT claim it is unrelated or "doesn't matter."
   - Instead, acknowledge why the employer may have concerns and emphasize growth, safeguards, stability, and present-day judgment.
 
 Use of resume, job posting, programs, and skills:
@@ -549,8 +471,8 @@ Length and structure:
   - A brief opening that acknowledges the background check / pre-adverse action notice and thanks the employer for the opportunity to respond.
   - One or more body paragraphs that reflect Ownership, Impact, and Lessons Learned, grounded in the provided information.
   - A short paragraph addressing job-related relevance honestly:
-    - Either a measured “does not interfere with job duties” paragraph when supportable, OR
-    - An acknowledgment of the employer’s concern with emphasis on growth, safeguards, and reliability when there may be a connection.
+    - Either a measured "does not interfere with job duties" paragraph when supportable, OR
+    - An acknowledgment of the employer's concern with emphasis on growth, safeguards, and reliability when there may be a connection.
   - A paragraph that reinforces qualifications and fit for this specific role at this specific employer.
   - A closing that respectfully asks for reconsideration and expresses appreciation.
 
@@ -641,142 +563,4 @@ ${formData.additionalContext || "None provided"}`;
     title: parsed.letter.title,
     content: parsed.letter.content
   };
-}
-
-
-
-export async function registerRoutes(
-  httpServer: Server,
-  app: Express
-): Promise<Server> {
-
-  app.post("/api/generate-documents", async (req: Request, res: Response) => {
-    try {
-      const { selection, formData } = req.body as GenerateRequest;
-
-      if (!selection || !formData) {
-        return res.status(400).json({
-          status: "total_fail",
-          narratives: [],
-          responseLetter: null,
-          errors: [{ documentType: "narrative", detail: "Missing selection or formData in request" }]
-        });
-      }
-
-      const needsNarratives = selection === "narrative" || selection === "both";
-      const needsResponseLetter = selection === "responseLetter" || selection === "both";
-
-      const result: GenerateResponse = {
-        status: "success",
-        narratives: [],
-        responseLetter: null,
-        errors: []
-      };
-
-      let narrativesSuccess = true;
-      let responseLetterSuccess = true;
-
-      if (needsNarratives) {
-        try {
-          result.narratives = await generateNarratives(formData);
-          console.log('📊 ANALYTICS: Generated 5 narratives');
-        } catch (error) {
-          narrativesSuccess = false;
-          result.errors.push({
-            documentType: "narrative",
-            detail: error instanceof Error ? error.message : "Failed to generate narratives"
-          });
-        }
-      }
-
-      if (needsResponseLetter) {
-        try {
-          result.responseLetter = await generateResponseLetter(formData);
-          console.log('📊 ANALYTICS: Generated response letter');
-        } catch (error) {
-          responseLetterSuccess = false;
-          result.errors.push({
-            documentType: "responseLetter",
-            detail: error instanceof Error ? error.message : "Failed to generate response letter"
-          });
-        }
-      }
-
-      if (needsNarratives && needsResponseLetter) {
-        if (!narrativesSuccess && !responseLetterSuccess) {
-          result.status = "total_fail";
-          return res.status(500).json(result);
-        } else if (!narrativesSuccess || !responseLetterSuccess) {
-          result.status = "partial_fail";
-        }
-      } else if (needsNarratives && !narrativesSuccess) {
-        result.status = "total_fail";
-        return res.status(500).json(result);
-      } else if (needsResponseLetter && !responseLetterSuccess) {
-        result.status = "total_fail";
-        return res.status(500).json(result);
-      }
-
-      return res.json(result);
-    } catch (error) {
-      console.error("Error in generate-documents:", error);
-      return res.status(500).json({
-        status: "total_fail",
-        narratives: [],
-        responseLetter: null,
-        errors: [{ documentType: "narrative", detail: error instanceof Error ? error.message : "Unknown server error" }]
-      });
-    }
-  });
-
-  app.post("/api/regenerate-narrative", async (req: Request, res: Response) => {
-    try {
-      const { narrativeType, formData } = req.body as { narrativeType: NarrativeType; formData: FormData };
-
-      if (!narrativeType || !formData) {
-        return res.status(400).json({
-          error: "Missing narrativeType or formData in request"
-        });
-      }
-
-      const validTypes: NarrativeType[] = ["justice_focused_org", "general_employer", "minimal_disclosure", "transformation_focused", "skills_focused"];
-      if (!validTypes.includes(narrativeType)) {
-        return res.status(400).json({
-          error: "Invalid narrative type"
-        });
-      }
-
-      const narrative = await generateSingleNarrative(formData, narrativeType);
-      console.log(`📊 ANALYTICS: Regenerated narrative (${narrativeType})`);
-      return res.json({ narrative });
-    } catch (error) {
-      console.error("Error in regenerate-narrative:", error);
-      return res.status(500).json({
-        error: error instanceof Error ? error.message : "Failed to regenerate narrative"
-      });
-    }
-  });
-
-  app.post("/api/regenerate-letter", async (req: Request, res: Response) => {
-    try {
-      const { formData } = req.body as { formData: FormData };
-
-      if (!formData) {
-        return res.status(400).json({
-          error: "Missing formData in request"
-        });
-      }
-
-      const letter = await generateResponseLetter(formData);
-      console.log('📊 ANALYTICS: Regenerated response letter');
-      return res.json({ letter });
-    } catch (error) {
-      console.error("Error in regenerate-letter:", error);
-      return res.status(500).json({
-        error: error instanceof Error ? error.message : "Failed to regenerate letter"
-      });
-    }
-  });
-
-  return httpServer;
 }

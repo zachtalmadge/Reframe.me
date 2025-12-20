@@ -56,10 +56,10 @@ Preferred communication style: Simple, everyday language.
 - Rationale: Clear separation between API and static assets, supports SPA routing patterns
 
 **Storage Layer**
-- Storage interface defined in `server/storage.ts` with CRUD operations
-- **In-Memory Storage** implementation (`MemStorage`) for development
-- Interface supports migration to persistent database (Postgres with Drizzle ORM configured)
-- Rationale: Interface abstraction allows swapping storage implementations without changing business logic
+- No server-side storage implemented (removed in favor of privacy-first design)
+- Form data stored in browser localStorage only
+- Results not persisted server-side
+- Rationale: Privacy by design - no user data stored on backend
 
 ### Data Storage Solutions
 
