@@ -32,7 +32,7 @@ Reframe.me is a web application that helps justice-involved individuals prepare 
 
 ## 📋 TODO
 
-### Backend Refactoring (In Progress)
+### Backend Refactoring (Completed ✅)
 - [x] **Wave 1: Extract services and types** (Completed 2025-12-20)
   - ✅ Created `server/config/openaiClient.ts` - OpenAI singleton
   - ✅ Created `server/types/documents.ts` - TypeScript domain types
@@ -41,10 +41,13 @@ Reframe.me is a web application that helps justice-involved individuals prepare 
   - ✅ Created `server/routes/index.ts` - Route registration
   - ✅ Created `server/routes/documents.routes.ts` - Document endpoints
   - ✅ Replaced monolithic `routes.ts` with modular structure
-- [ ] **Wave 3: Extract middleware**
-  - [ ] Create `server/middleware/requestLogger.ts`
-  - [ ] Create `server/middleware/errorHandler.ts`
-  - [ ] Update `server/index.ts` to import middleware
+- [x] **Wave 3: Extract middleware** (Completed 2025-12-20)
+  - ✅ Created `server/middleware/requestLogger.ts` - Request logging
+  - ✅ Created `server/middleware/errorHandler.ts` - Error handling
+  - ✅ Updated `server/index.ts` to import middleware
+- [x] **Wave 4: Modularize static file serving** (Completed 2025-12-20)
+  - ✅ Refactored `server/static.ts` → `server/static/index.ts`
+  - ✅ Consistent folder-based module structure
 
 ### Frontend Refactoring
 - [ ] **Refactor React components** - Break down large components (Form.tsx, Results.tsx, etc.) into smaller, reusable, properly modular pieces following single responsibility principle
@@ -141,7 +144,11 @@ reframe.me/
 │   ├── routes/                # API routes
 │   │   ├── index.ts           # Route registration
 │   │   └── documents.routes.ts # Document endpoints
-│   ├── static.ts              # Static file serving
+│   ├── middleware/            # Express middleware
+│   │   ├── requestLogger.ts   # Request logging
+│   │   └── errorHandler.ts    # Error handling
+│   ├── static/                # Static file serving
+│   │   └── index.ts           # SPA static file handler
 │   └── vite.ts                # Vite dev server setup
 ├── docs/                       # Documentation
 │   └── backend-express-architecture.md  # Backend refactoring docs
@@ -281,6 +288,13 @@ If you want to contribute or test changes locally, follow the setup steps above 
   - [x] Created routes/index.ts for route registration
   - [x] Created routes/documents.routes.ts for endpoints
   - [x] Updated documentation with architecture diagrams
+- [x] **Wave 3:** Extracted middleware
+  - [x] Created middleware/requestLogger.ts for request logging
+  - [x] Created middleware/errorHandler.ts for error handling
+  - [x] Integrated middleware into server/index.ts
+- [x] **Wave 4:** Modularized static file serving
+  - [x] Refactored static.ts → static/index.ts for consistency
+  - [x] Achieved fully modular backend architecture
 
 ### Code Quality & Deployment
 - [x] Repository clean (no uncommitted changes)
