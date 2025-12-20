@@ -17,6 +17,3 @@ attached_assets
 # Editor
 .vscode
 .idea
-
-CHANGELOG.md
-.env.example
