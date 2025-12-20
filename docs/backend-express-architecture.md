@@ -36,7 +36,6 @@ The third wave of refactoring extracted middleware into dedicated modules:
 ```
 server/
 ├── index.ts       (~70 lines) - Entry point, initialization ✅ REFACTORED
-├── static.ts      (20 lines)  - Static file serving
 ├── config/
 │   └── openaiClient.ts (26 lines)
 ├── types/
@@ -47,8 +46,10 @@ server/
 │   ├── index.ts (13 lines)
 │   └── documents.routes.ts (145 lines)
 ├── middleware/
-│   ├── requestLogger.ts (38 lines) - ✅ NEW
-│   └── errorHandler.ts (11 lines) - ✅ NEW
+│   ├── requestLogger.ts (38 lines)
+│   └── errorHandler.ts (11 lines)
+├── static/
+│   └── index.ts (18 lines) - ✅ REFACTORED
 ├── storage.ts     - In-memory storage (legacy, unused)
 └── vite.ts        - Vite dev server setup
 ```
@@ -357,6 +358,38 @@ export async function registerRoutes(
 - Same signature ensures no changes needed in `index.ts`
 - Easy to add new route modules in the future
 - Maintains backward compatibility
+
+---
+
+#### `server/static/index.ts` (18 lines) ✅ IMPLEMENTED
+**Responsibilities:**
+- Export static file serving function for production builds
+- Resolve public directory path relative to built server code
+- Validate that build directory exists
+- Serve static files from the build directory
+- Provide SPA fallback routing to `index.html`
+
+**Exports:**
+```typescript
+export function serveStatic(app: Express): void
+```
+
+**Implementation Details:**
+- Resolves `distPath` as `path.resolve(__dirname, "public")`
+- Throws error if build directory doesn't exist: `"Could not find the build directory: {path}, make sure to build the client first"`
+- Uses `express.static(distPath)` to serve static files
+- Catch-all route `app.use("*")` serves `index.html` for SPA routing
+- Only called in production: `if (NODE_ENV === "production") serveStatic(app)`
+
+**Production vs Development:**
+- **Production**: Uses `serveStatic(app)` to serve pre-built static files from `public/`
+- **Development**: Uses Vite dev server via `setupVite(httpServer, app)` for hot reload
+
+**Rationale:**
+- Consistent module structure with other backend modules
+- Clear separation of static file serving logic
+- Easy to modify static serving behavior in one place
+- Maintains same public path resolution and error handling
 
 ---
 

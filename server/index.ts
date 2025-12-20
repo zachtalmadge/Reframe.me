@@ -27,7 +27,7 @@ if (missingEnvVars.length > 0) {
 // Now import other modules (after env vars are loaded)
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes/index.js";
-import { serveStatic } from "./static.js";
+import { serveStatic } from "./static/index.js";
 import { createServer } from "http";
 import { requestLogger, log } from "./middleware/requestLogger.js";
 import { errorHandler } from "./middleware/errorHandler.js";
