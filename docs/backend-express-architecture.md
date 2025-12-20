@@ -8,33 +8,44 @@
 
 **Wave 1: COMPLETED (2025-12-20)**
 
-The first wave of refactoring has been successfully completed. The monolithic `routes.ts` file (783 lines) has been split into modular components:
+The first wave of refactoring split the monolithic `routes.ts` file (783 lines) into modular components:
 
 - ✅ `server/config/openaiClient.ts` - OpenAI client singleton (26 lines)
 - ✅ `server/types/documents.ts` - TypeScript domain types (87 lines)
 - ✅ `server/services/documentGeneration.service.ts` - AI generation logic (572 lines)
 - ✅ `server/routes.ts` - Refactored route handlers (151 lines)
 
+**Wave 2: COMPLETED (2025-12-20)**
+
+The second wave of refactoring organized routes into a modular structure:
+
+- ✅ `server/routes/index.ts` - Route registration orchestration (13 lines)
+- ✅ `server/routes/documents.routes.ts` - Document generation endpoints (145 lines)
+- ✅ Deleted `server/routes.ts` - Replaced with modular route structure
+- ✅ Updated `server/index.ts` - Now imports from `routes/index.js`
+
 **Current Structure:**
 ```
 server/
-├── index.ts       (140 lines) - Entry point, middleware, initialization
-├── routes.ts      (151 lines) - Route handlers ONLY ✅ REFACTORED
+├── index.ts       (140 lines) - Entry point, middleware, initialization ✅ UPDATED
 ├── static.ts      (20 lines)  - Static file serving
 ├── config/
-│   └── openaiClient.ts (26 lines) - ✅ NEW
+│   └── openaiClient.ts (26 lines)
 ├── types/
-│   └── documents.ts (87 lines) - ✅ NEW
+│   └── documents.ts (87 lines)
 ├── services/
-│   └── documentGeneration.service.ts (572 lines) - ✅ NEW
+│   └── documentGeneration.service.ts (572 lines)
+├── routes/
+│   ├── index.ts (13 lines) - ✅ NEW
+│   └── documents.routes.ts (145 lines) - ✅ NEW
 ├── storage.ts     - In-memory storage (legacy, unused)
 └── vite.ts        - Vite dev server setup
 ```
 
-**Remaining Work (Wave 2):**
-- Extract middleware from `index.ts` into separate files
-- Create `routes/index.ts` for route registration
-- Move document routes to `routes/documents.routes.ts`
+**Remaining Work (Wave 3):**
+- Extract middleware from `index.ts` into separate files:
+  - `middleware/requestLogger.ts`
+  - `middleware/errorHandler.ts`
 
 ---
 
@@ -251,37 +262,46 @@ export async function generateResponseLetter(formData: FormData): Promise<Respon
 
 ---
 
-#### `server/routes/documents.routes.ts` (~120 lines)
+#### `server/routes/documents.routes.ts` (145 lines) ✅ IMPLEMENTED
 **Responsibilities:**
 - Import service functions from `services/documentGeneration.service.ts`
 - Import types from `types/documents.ts`
-- Define Express route handlers for document generation
+- Define Express Router for document generation endpoints
 - Handle request validation
 - Call service layer functions
 - Format responses and errors
+- Preserve all analytics logging (`📊 ANALYTICS: ...`)
 
 **Route Handlers:**
-- `POST /api/generate-documents`: Generate narratives and/or response letter
-- `POST /api/regenerate-narrative`: Regenerate a specific narrative type
-- `POST /api/regenerate-letter`: Regenerate the response letter
+- `POST /generate-documents`: Generate narratives and/or response letter
+- `POST /regenerate-narrative`: Regenerate a specific narrative type
+- `POST /regenerate-letter`: Regenerate the response letter
 
 **Exports:**
 ```typescript
-export function registerDocumentRoutes(app: Express): void
+export const documentsRouter: Router
 ```
+
+**Implementation Details:**
+- Uses Express `Router()` for modular route definition
+- Routes are relative to the base path (no `/api` prefix here)
+- Preserves all status codes, error messages, and JSON response shapes
+- Maintains analytics console.log statements exactly as before
 
 **Rationale:**
 - Thin route handlers: Delegate to service layer
 - HTTP concerns only: Validation, request/response formatting
+- Router pattern enables easy mounting at different paths
 - Easy to add new endpoints or modify existing ones
 
 ---
 
-#### `server/routes/index.ts` (~15 lines)
+#### `server/routes/index.ts` (13 lines) ✅ IMPLEMENTED
 **Responsibilities:**
 - Import and orchestrate all route modules
 - Export `registerRoutes(httpServer, app)` function
-- Wire up document routes and any future route modules
+- Wire up document routes under `/api` base path
+- Maintain same signature as original `routes.ts`
 
 **Exports:**
 ```typescript
@@ -290,20 +310,27 @@ export async function registerRoutes(httpServer: Server, app: Express): Promise<
 
 **Implementation:**
 ```typescript
-import { registerDocumentRoutes } from './documents.routes.js';
+import type { Express } from "express";
+import type { Server } from "http";
+import { documentsRouter } from "./documents.routes.js";
 
-export async function registerRoutes(httpServer: Server, app: Express): Promise<Server> {
-  registerDocumentRoutes(app);
-  // Future: registerAuthRoutes(app);
-  // Future: registerAnalyticsRoutes(app);
+export async function registerRoutes(
+  httpServer: Server,
+  app: Express
+): Promise<Server> {
+  // Register document generation routes under /api
+  app.use("/api", documentsRouter);
+
   return httpServer;
 }
 ```
 
 **Rationale:**
-- Central route registration
-- Easy to add new route modules
-- Maintains backward compatibility with `index.ts`
+- Central route registration point
+- Mounts documentsRouter at `/api` to maintain API contract
+- Same signature ensures no changes needed in `index.ts`
+- Easy to add new route modules in the future
+- Maintains backward compatibility
 
 ---
 
