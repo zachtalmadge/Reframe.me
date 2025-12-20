@@ -4,6 +4,40 @@
 
 ---
 
+## ✅ Refactoring Status
+
+**Wave 1: COMPLETED (2025-12-20)**
+
+The first wave of refactoring has been successfully completed. The monolithic `routes.ts` file (783 lines) has been split into modular components:
+
+- ✅ `server/config/openaiClient.ts` - OpenAI client singleton (26 lines)
+- ✅ `server/types/documents.ts` - TypeScript domain types (87 lines)
+- ✅ `server/services/documentGeneration.service.ts` - AI generation logic (572 lines)
+- ✅ `server/routes.ts` - Refactored route handlers (151 lines)
+
+**Current Structure:**
+```
+server/
+├── index.ts       (140 lines) - Entry point, middleware, initialization
+├── routes.ts      (151 lines) - Route handlers ONLY ✅ REFACTORED
+├── static.ts      (20 lines)  - Static file serving
+├── config/
+│   └── openaiClient.ts (26 lines) - ✅ NEW
+├── types/
+│   └── documents.ts (87 lines) - ✅ NEW
+├── services/
+│   └── documentGeneration.service.ts (572 lines) - ✅ NEW
+├── storage.ts     - In-memory storage (legacy, unused)
+└── vite.ts        - Vite dev server setup
+```
+
+**Remaining Work (Wave 2):**
+- Extract middleware from `index.ts` into separate files
+- Create `routes/index.ts` for route registration
+- Move document routes to `routes/documents.routes.ts`
+
+---
+
 ## Current (Pre-Refactor) Structure
 
 ### File Organization
