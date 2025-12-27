@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { Link } from "wouter";
 import { ArrowLeft, Shield, Lock, Eye, Database, FileCheck, Heart } from "lucide-react";
-import Layout from "@/components/Layout";
 
 export default function TermsPrivacy() {
   useEffect(() => {
@@ -9,10 +8,9 @@ export default function TermsPrivacy() {
   }, []);
 
   return (
-    <Layout>
+    <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
-
+        /* Page-specific Terms & Privacy styles */
         .app-heading {
           font-family: 'DM Sans', system-ui, sans-serif;
           font-weight: 700;
@@ -26,28 +24,6 @@ export default function TermsPrivacy() {
 
         .body-text {
           font-family: 'DM Sans', system-ui, sans-serif;
-        }
-
-        /* Document texture overlay */
-        .document-texture {
-          background-image:
-            repeating-linear-gradient(
-              0deg,
-              transparent,
-              transparent 2px,
-              rgba(20, 184, 166, 0.015) 2px,
-              rgba(20, 184, 166, 0.015) 4px
-            );
-        }
-
-        /* Animated gradient border for commitment boxes */
-        @keyframes border-flow {
-          0%, 100% {
-            background-position: 0% 50%;
-          }
-          50% {
-            background-position: 100% 50%;
-          }
         }
 
         .commitment-box {
@@ -67,7 +43,6 @@ export default function TermsPrivacy() {
           ) 1;
         }
 
-        /* Section number styling */
         .section-number {
           font-family: 'DM Sans', system-ui, sans-serif;
           font-weight: 700;
@@ -90,7 +65,6 @@ export default function TermsPrivacy() {
           }
         }
 
-        /* Decorative quote styling */
         .decorative-quote {
           font-family: 'DM Sans', system-ui, sans-serif;
           font-size: 8rem;
@@ -102,18 +76,6 @@ export default function TermsPrivacy() {
           left: -20px;
           user-select: none;
           pointer-events: none;
-        }
-
-        /* Icon pulse effect */
-        @keyframes gentle-pulse {
-          0%, 100% {
-            opacity: 1;
-            transform: scale(1);
-          }
-          50% {
-            opacity: 0.8;
-            transform: scale(1.05);
-          }
         }
 
         .icon-pulse {
@@ -552,6 +514,6 @@ export default function TermsPrivacy() {
           </div>
         </div>
       </section>
-    </Layout>
+    </>
   );
 }
