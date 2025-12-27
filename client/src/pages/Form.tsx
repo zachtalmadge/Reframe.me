@@ -2,7 +2,6 @@ import { useState, useEffect, useCallback } from "react";
 import { Link, useSearch, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, FileText, Mail, Files } from "lucide-react";
-import Layout from "@/components/Layout";
 import { FormWizard } from "@/components/form";
 import { FormState, ToolType } from "@/lib/formState";
 import { saveFormData, loadFormData, clearFormData } from "@/lib/formPersistence";
@@ -81,37 +80,9 @@ export default function Form() {
   };
 
   return (
-    <Layout onLogoClick={handleLogoClick} onFaqClick={handleFaqClick}>
-      {/* Google Fonts */}
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Manrope:wght@300..800&display=swap" rel="stylesheet" />
-
+    <>
+      {/* Page-specific Form styles */}
       <style>{`
-        /* Dot pattern background */
-        .dot-pattern {
-          background-color: #FAFAF9;
-          background-image: radial-gradient(circle, #0D9488 0.5px, transparent 0.5px);
-          background-size: 24px 24px;
-          background-position: 0 0, 12px 12px;
-        }
-
-        .dot-pattern-dark {
-          background-color: #0f172a;
-          background-image: radial-gradient(circle, rgba(13, 148, 136, 0.15) 0.5px, transparent 0.5px);
-          background-size: 24px 24px;
-        }
-
-        /* Paper texture overlay */
-        .paper-texture::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-          pointer-events: none;
-          opacity: 0.4;
-        }
-
         /* Typography */
         .font-fraunces {
           font-family: 'Fraunces', serif;
@@ -122,30 +93,8 @@ export default function Form() {
           font-family: 'Manrope', sans-serif;
         }
 
-        /* Fade in animation */
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
         .animate-fadeInUp {
           animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-
-        /* Shimmer animation for progress bar */
-        @keyframes shimmer {
-          0% {
-            background-position: -200% 0;
-          }
-          100% {
-            background-position: 200% 0;
-          }
         }
 
         .animate-shimmer {
@@ -222,6 +171,6 @@ export default function Form() {
         onConfirm={handleConfirmLeave}
         onCancel={handleCancelLeave}
       />
-    </Layout>
+    </>
   );
 }

@@ -2,7 +2,6 @@ import { useEffect, useState, useCallback } from "react";
 import { useSearch, useLocation } from "wouter";
 import { AlertCircle, ArrowLeft, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Layout from "@/components/Layout";
 import {
   ToolType,
   FormState,
@@ -301,10 +300,9 @@ export default function Loading() {
 
   if (generationState.status === "error") {
     return (
-      <Layout onLogoClick={handleLogoClick} onFaqClick={handleFaqClick}>
+      <>
+        {/* Page-specific Loading error styles */}
         <style>{`
-          @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Nunito:wght@400;600;700;800&display=swap');
-
           .error-serif {
             font-family: 'Libre Baskerville', Georgia, serif;
             letter-spacing: -0.01em;
@@ -467,15 +465,14 @@ export default function Loading() {
           onConfirm={handleConfirmLeave}
           onCancel={handleCancelLeave}
         />
-      </Layout>
+      </>
     );
   }
 
   return (
-    <Layout onLogoClick={handleLogoClick} onFaqClick={handleFaqClick}>
+    <>
+      {/* Page-specific Loading styles */}
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Nunito:wght@400;600;700;800&display=swap');
-
         .loading-serif {
           font-family: 'Libre Baskerville', Georgia, serif;
           letter-spacing: -0.01em;
@@ -830,6 +827,6 @@ export default function Loading() {
         onConfirm={handleConfirmLeave}
         onCancel={handleCancelLeave}
       />
-    </Layout>
+    </>
   );
 }
