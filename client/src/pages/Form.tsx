@@ -1,11 +1,11 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { Link, useSearch, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, FileText, Mail, Files } from "lucide-react";
 import { FormWizard } from "@/components/form";
 import { FormState, ToolType } from "@/lib/formState";
 import { saveFormData, loadFormData, clearFormData } from "@/lib/formPersistence";
-import { LeaveConfirmationModal } from "@/components/LeaveConfirmationModal";
+import { useProtectedPage } from "@/hooks/useProtectedPage";
 
 const toolInfo: Record<
   ToolType,
@@ -29,37 +29,19 @@ const toolInfo: Record<
 };
 
 export default function Form() {
+  // Register this page as protected from navigation
+  useProtectedPage();
+
   const [, navigate] = useLocation();
   const searchString = useSearch();
   const params = new URLSearchParams(searchString);
   const toolParam = params.get("tool") as ToolType | null;
-  
+
   const [restoredState, setRestoredState] = useState<FormState | undefined>(undefined);
   const [isRestoring, setIsRestoring] = useState(true);
-  const [showLeaveAlert, setShowLeaveAlert] = useState(false);
-  const [pendingNavTarget, setPendingNavTarget] = useState<string>("/");
 
   const tool = toolParam && toolInfo[toolParam] ? toolParam : "narrative";
   const { title, description, icon: Icon } = toolInfo[tool];
-
-  const handleLogoClick = useCallback(() => {
-    setPendingNavTarget("/");
-    setShowLeaveAlert(true);
-  }, []);
-
-  const handleFaqClick = useCallback(() => {
-    setPendingNavTarget("/faq");
-    setShowLeaveAlert(true);
-  }, []);
-
-  const handleConfirmLeave = useCallback(() => {
-    clearFormData();
-    navigate(pendingNavTarget);
-  }, [navigate, pendingNavTarget]);
-
-  const handleCancelLeave = useCallback(() => {
-    setShowLeaveAlert(false);
-  }, []);
 
   useEffect(() => {
     const persisted = loadFormData();
@@ -165,12 +147,6 @@ export default function Form() {
           )}
         </div>
       </section>
-
-      <LeaveConfirmationModal
-        open={showLeaveAlert}
-        onConfirm={handleConfirmLeave}
-        onCancel={handleCancelLeave}
-      />
     </>
   );
 }

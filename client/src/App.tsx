@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { clearFormData } from "@/lib/formPersistence";
 import { clearResults } from "@/lib/resultsPersistence";
+import { NavigationGuardProvider } from "@/contexts/NavigationGuardContext";
 import AppShell from "@/components/AppShell";
 import Home from "@/pages/Home";
 import Selection from "@/pages/Selection";
@@ -78,9 +79,11 @@ function App() {
       <TooltipProvider>
         <Toaster />
         <AppInitializer>
-          <AppShell>
-            <Router />
-          </AppShell>
+          <NavigationGuardProvider>
+            <AppShell>
+              <Router />
+            </AppShell>
+          </NavigationGuardProvider>
         </AppInitializer>
       </TooltipProvider>
     </QueryClientProvider>

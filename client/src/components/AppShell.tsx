@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { Link } from "wouter";
+import { useNavigationGuard } from "@/hooks/useNavigationGuard";
 
 interface AppShellProps {
   children: ReactNode;
@@ -9,7 +10,8 @@ interface AppShellProps {
  * AppShell - Global application layout
  *
  * Provides consistent header, footer, and main content structure for all pages.
- * This component is purely structural - no inline styles, no route logic, no custom props.
+ * Uses navigation guard context to intercept navigation and show confirmation
+ * modals when leaving protected pages (Form, Loading, Results).
  *
  * All styles are defined in:
  * - Global CSS files (fonts.css, animations.css, backgrounds.css)
@@ -17,6 +19,8 @@ interface AppShellProps {
  * - Component-specific CSS modules (if needed)
  */
 export default function AppShell({ children }: AppShellProps) {
+  const { requestNavigation } = useNavigationGuard();
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
       {/* Header */}
@@ -35,9 +39,13 @@ export default function AppShell({ children }: AppShellProps) {
 
         <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-12 relative">
           <div className="flex h-20 items-center justify-between">
-            <Link
+            <a
               href="/"
-              className="group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 rounded-lg px-2 -ml-2"
+              onClick={(e) => {
+                e.preventDefault();
+                requestNavigation("/");
+              }}
+              className="group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 rounded-lg px-2 -ml-2 cursor-pointer"
               data-testid="link-home"
               aria-label="Reframe.me home"
             >
@@ -60,16 +68,20 @@ export default function AppShell({ children }: AppShellProps) {
                   </span>
                 </div>
               </div>
-            </Link>
+            </a>
 
             <nav className="flex items-center gap-2 sm:gap-4">
-              <Link
+              <a
                 href="/faq"
-                className="faq-button text-sm font-medium text-teal-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 rounded-lg px-3 py-2 sm:px-4 relative overflow-hidden"
+                onClick={(e) => {
+                  e.preventDefault();
+                  requestNavigation("/faq");
+                }}
+                className="faq-button text-sm font-medium text-teal-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 rounded-lg px-3 py-2 sm:px-4 relative overflow-hidden cursor-pointer"
                 data-testid="link-faq"
               >
                 <span className="relative z-10">FAQ</span>
-              </Link>
+              </a>
               <Link
                 href="/donate"
                 className="donate-button text-sm font-semibold px-3 py-2 sm:px-4 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 flex items-center justify-center"
@@ -300,42 +312,46 @@ export default function AppShell({ children }: AppShellProps) {
 
                 <div className="space-y-4">
                   {/* FAQ Link */}
-                  <Link href="/faq">
-                    <button
-                      className="text-sm font-bold hover:translate-x-1 transition-all duration-200 flex items-center gap-2 group"
-                      style={{
-                        fontFamily: 'DM Sans, sans-serif',
-                        color: '#14b8a6'
-                      }}
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      requestNavigation("/faq");
+                    }}
+                    className="text-sm font-bold hover:translate-x-1 transition-all duration-200 flex items-center gap-2 group cursor-pointer"
+                    style={{
+                      fontFamily: 'DM Sans, sans-serif',
+                      color: '#14b8a6'
+                    }}
+                  >
+                    FAQ
+                    <span
+                      className="opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                      aria-hidden="true"
                     >
-                      FAQ
-                      <span
-                        className="opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-                        aria-hidden="true"
-                      >
-                        →
-                      </span>
-                    </button>
-                  </Link>
+                      →
+                    </span>
+                  </button>
 
                   {/* Terms & Privacy Link */}
-                  <Link href="/terms-privacy">
-                    <button
-                      className="text-sm font-bold hover:translate-x-1 transition-all duration-200 flex items-center gap-2 group"
-                      style={{
-                        fontFamily: 'DM Sans, sans-serif',
-                        color: '#14b8a6'
-                      }}
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      requestNavigation("/terms-privacy");
+                    }}
+                    className="text-sm font-bold hover:translate-x-1 transition-all duration-200 flex items-center gap-2 group cursor-pointer"
+                    style={{
+                      fontFamily: 'DM Sans, sans-serif',
+                      color: '#14b8a6'
+                    }}
+                  >
+                    Terms & Privacy
+                    <span
+                      className="opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                      aria-hidden="true"
                     >
-                      Terms & Privacy
-                      <span
-                        className="opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-                        aria-hidden="true"
-                      >
-                        →
-                      </span>
-                    </button>
-                  </Link>
+                      →
+                    </span>
+                  </button>
 
                   {/* Disclaimer */}
                   <div

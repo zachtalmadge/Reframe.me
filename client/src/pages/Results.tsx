@@ -7,6 +7,7 @@ import { LeaveConfirmationModal } from "@/components/LeaveConfirmationModal";
 import { ToolType } from "@/lib/formState";
 import { loadResults, NarrativeItem, ResponseLetter, clearResults, GenerationResult, updateResults } from "@/lib/resultsPersistence";
 import { loadFormData, clearFormData } from "@/lib/formPersistence";
+import { useProtectedPage } from "@/hooks/useProtectedPage";
 import { useDocumentActions } from "@/hooks/useDocumentActions";
 import { NarrativeCarousel } from "@/components/results/NarrativeCarousel";
 import { ResponseLetterPanel } from "@/components/results/ResponseLetterPanel";
@@ -162,6 +163,9 @@ function ResultsGuidanceSection({
 }
 
 export default function Results() {
+  // Register this page as protected from navigation
+  useProtectedPage();
+
   const [, navigate] = useLocation();
   const searchString = useSearch();
   const params = new URLSearchParams(searchString);
@@ -267,16 +271,6 @@ export default function Results() {
     clearResults();
     clearRegenerationCounts();
     navigate("/");
-  };
-
-  const handleLogoClick = () => {
-    setExitDestination("home");
-    setExitModalOpen(true);
-  };
-
-  const handleFaqClick = () => {
-    setExitDestination("faq");
-    setExitModalOpen(true);
   };
 
   const handleLearnMoreClick = () => {
