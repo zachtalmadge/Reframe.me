@@ -3,7 +3,6 @@ import { useSearch, useLocation, Link } from "wouter";
 import { Download, Home, AlertTriangle, BookOpen, MessageCircle, FileText, Loader2, Heart, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import Layout from "@/components/Layout";
 import { LeaveConfirmationModal } from "@/components/LeaveConfirmationModal";
 import { ToolType } from "@/lib/formState";
 import { loadResults, NarrativeItem, ResponseLetter, clearResults, GenerationResult, updateResults } from "@/lib/resultsPersistence";
@@ -416,130 +415,19 @@ export default function Results() {
 
   if (isLoading) {
     return (
-      <Layout>
-        <div className="flex items-center justify-center min-h-screen">
-          <div className="text-center space-y-4">
-            <Loader2 className="w-12 h-12 animate-spin mx-auto text-primary" />
-            <p className="text-muted-foreground">
-              Loading your results{loadAttempts > 0 ? ` (attempt ${loadAttempts + 1})` : ''}...
-            </p>
-          </div>
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center space-y-4">
+          <Loader2 className="w-12 h-12 animate-spin mx-auto text-primary" />
+          <p className="text-muted-foreground">
+            Loading your results{loadAttempts > 0 ? ` (attempt ${loadAttempts + 1})` : ''}...
+          </p>
         </div>
-      </Layout>
+      </div>
     );
   }
 
   return (
-    <Layout onLogoClick={handleLogoClick} onFaqClick={handleFaqClick}>
-      {/* Google Fonts */}
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Manrope:wght@300..800&display=swap" rel="stylesheet" />
-
-      <style>{`
-        /* Dot pattern background */
-        .dot-pattern {
-          background-color: #FAFAF9;
-          background-image: radial-gradient(circle, #0D9488 0.5px, transparent 0.5px);
-          background-size: 24px 24px;
-          background-position: 0 0, 12px 12px;
-        }
-
-        .dot-pattern-dark {
-          background-color: #0f172a;
-          background-image: radial-gradient(circle, rgba(13, 148, 136, 0.15) 0.5px, transparent 0.5px);
-          background-size: 24px 24px;
-        }
-
-        /* Paper texture overlay */
-        .paper-texture::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-          pointer-events: none;
-          opacity: 0.4;
-        }
-
-        /* Typography */
-        .font-fraunces {
-          font-family: 'Fraunces', serif;
-          font-optical-sizing: auto;
-        }
-
-        .font-manrope {
-          font-family: 'Manrope', sans-serif;
-        }
-
-        /* Elevated paper cards */
-        .paper-card {
-          background: white;
-          box-shadow:
-            0 1px 2px rgba(0, 0, 0, 0.04),
-            0 2px 6px rgba(0, 0, 0, 0.04),
-            0 4px 12px rgba(0, 0, 0, 0.03),
-            0 8px 24px rgba(0, 0, 0, 0.02);
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .paper-card:hover {
-          box-shadow:
-            0 2px 4px rgba(0, 0, 0, 0.05),
-            0 4px 8px rgba(0, 0, 0, 0.05),
-            0 8px 16px rgba(0, 0, 0, 0.04),
-            0 16px 32px rgba(0, 0, 0, 0.03);
-          transform: translateY(-2px);
-        }
-
-        /* Dark mode paper */
-        .dark .paper-card {
-          background: #1e293b;
-          box-shadow:
-            0 1px 2px rgba(0, 0, 0, 0.2),
-            0 2px 6px rgba(0, 0, 0, 0.15),
-            0 4px 12px rgba(0, 0, 0, 0.1),
-            0 0 0 1px rgba(148, 163, 184, 0.1);
-        }
-
-        /* Decorative accent lines */
-        .accent-line {
-          position: relative;
-        }
-
-        .accent-line::after {
-          content: '';
-          position: absolute;
-          bottom: -8px;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 60px;
-          height: 3px;
-          background: linear-gradient(90deg, transparent, #0D9488, transparent);
-          border-radius: 2px;
-        }
-
-        /* Stagger animations */
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        .animate-fadeInUp {
-          animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-
-        .delay-100 { animation-delay: 100ms; }
-        .delay-200 { animation-delay: 200ms; }
-        .delay-300 { animation-delay: 300ms; }
-        .delay-400 { animation-delay: 400ms; }
-      `}</style>
-
+    <>
       <section
         className="py-8 md:py-12 px-4 sm:px-6 lg:px-8 min-h-screen dot-pattern dark:dot-pattern-dark relative overflow-hidden"
         aria-labelledby="results-heading"
@@ -754,56 +642,6 @@ export default function Results() {
 
             {/* Donation CTA Section - Refined Editorial */}
             <section className="animate-fadeInUp delay-400 opacity-0">
-              <style>{`
-                @keyframes gentle-pulse {
-                  0%, 100% {
-                    transform: scale(1);
-                  }
-                  50% {
-                    transform: scale(1.05);
-                  }
-                }
-
-                .donate-card {
-                  background:
-                    linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.95)),
-                    repeating-linear-gradient(
-                      45deg,
-                      transparent,
-                      transparent 10px,
-                      rgba(249, 115, 22, 0.02) 10px,
-                      rgba(249, 115, 22, 0.02) 20px
-                    );
-                }
-
-                .dark .donate-card {
-                  background:
-                    linear-gradient(to bottom, rgba(30, 41, 59, 0.95), rgba(30, 41, 59, 0.98)),
-                    repeating-linear-gradient(
-                      45deg,
-                      transparent,
-                      transparent 10px,
-                      rgba(249, 115, 22, 0.05) 10px,
-                      rgba(249, 115, 22, 0.05) 20px
-                    );
-                }
-
-                .donate-button {
-                  background: #f97316;
-                  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                }
-
-                .donate-button:hover {
-                  background: #ea580c;
-                  transform: translateY(-2px);
-                  box-shadow: 0 12px 24px rgba(249, 115, 22, 0.3);
-                }
-
-                .donate-button:active {
-                  transform: translateY(0px);
-                }
-              `}</style>
-
               <div className="paper-card donate-card rounded-3xl border-2 border-orange-100 dark:border-orange-900/30 overflow-hidden h-full flex flex-col">
                 {/* Decorative top border accent */}
                 <div className="h-1 bg-gradient-to-r from-transparent via-orange-500 to-transparent" />
@@ -882,6 +720,6 @@ export default function Results() {
         confirmText="Leave anyway"
         cancelText="Stay on this page"
       />
-    </Layout>
+    </>
   );
 }
