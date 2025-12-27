@@ -8,7 +8,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import Layout from "@/components/Layout";
 
 type ToolSelection = "narrative" | "responseLetter" | "both" | null;
 
@@ -86,55 +85,9 @@ export default function Selection() {
   };
 
   return (
-    <Layout>
-      {/* Custom CSS for animations */}
+    <>
+      {/* Page-specific Selection animation utilities */}
       <style>{`
-        /* Dot pattern background */
-        .dot-pattern {
-          background-color: #FAFAF9;
-          background-image: radial-gradient(circle, #0D9488 0.5px, transparent 0.5px);
-          background-size: 24px 24px;
-          background-position: 0 0, 12px 12px;
-        }
-
-        .dot-pattern-dark {
-          background-color: #0f172a;
-          background-image: radial-gradient(circle, rgba(13, 148, 136, 0.15) 0.5px, transparent 0.5px);
-          background-size: 24px 24px;
-        }
-
-        /* Paper texture overlay */
-        .paper-texture::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-          pointer-events: none;
-          opacity: 0.4;
-        }
-
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @keyframes slideInRight {
-          from {
-            opacity: 0;
-            transform: translateX(-30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-
         .animate-fade-in-up {
           animation: fadeInUp 0.8s ease-out forwards;
         }
@@ -561,6 +514,6 @@ export default function Selection() {
 
         </div>
       </section>
-    </Layout>
+    </>
   );
 }

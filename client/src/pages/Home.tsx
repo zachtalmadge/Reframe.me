@@ -18,7 +18,6 @@ import {
   Anchor,
   Target,
 } from "lucide-react";
-import Layout from "@/components/Layout";
 import { useInView } from "@/hooks/useInView";
 
 const howItWorksSteps = [
@@ -242,15 +241,15 @@ export default function Home() {
   };
 
   return (
-    <Layout>
+    <>
       <style>{`
+        /* Page-specific Home styles */
+
         /* Prevent horizontal scroll - using clip instead of hidden to preserve sticky */
         body, html {
           overflow-x: clip;
           max-width: 100vw;
         }
-
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
 
         @keyframes shimmer-hero {
           0% { background-position: 0% 50%; }
@@ -2308,6 +2307,6 @@ export default function Home() {
       </section>
       {/* End How It Works - Modern Process Flow */}
 
-    </Layout>
+    </>
   );
 }
