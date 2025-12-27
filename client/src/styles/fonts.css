@@ -1,0 +1,28 @@
+/**
+ * Global Font Imports
+ *
+ * Consolidated from multiple inline style blocks across:
+ * - Layout.tsx
+ * - Form.tsx
+ * - Loading.tsx
+ * - Donate.tsx
+ * - Faq.tsx
+ * - TermsPrivacy.tsx
+ *
+ * This file loads all fonts used across the application in one place.
+ */
+
+/* Fraunces - Serif display font used for headings and logo */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&display=swap');
+
+/* DM Sans - Primary sans-serif font for UI elements */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap');
+
+/* Manrope - Alternative sans-serif used in form */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300..800&display=swap');
+
+/* Libre Baskerville - Serif font used in loading page */
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap');
+
+/* Nunito - Sans-serif font used in loading page */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');

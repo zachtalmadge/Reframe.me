@@ -1,0 +1,183 @@
+/**
+ * Global Background Patterns
+ *
+ * Consolidated from multiple inline style blocks across:
+ * - Selection.tsx
+ * - Form.tsx
+ * - Donate.tsx
+ * - Faq.tsx
+ * - TermsPrivacy.tsx
+ *
+ * This file contains all shared background pattern utilities used across the application.
+ */
+
+/* ============================================
+   Dot Pattern Backgrounds
+   ============================================ */
+
+/**
+ * Dot Pattern - Light theme
+ * Teal dots on light stone background
+ * Used in: Selection, Form, Donate, Faq pages
+ */
+.dot-pattern {
+  background-color: #FAFAF9;
+  background-image: radial-gradient(circle, #0D9488 0.5px, transparent 0.5px);
+  background-size: 24px 24px;
+  background-position: 0 0, 12px 12px;
+}
+
+/**
+ * Dot Pattern - Dark theme
+ * Subtle teal dots on dark slate background
+ * Used in: Selection, Form, Donate, Faq pages (dark mode variants)
+ */
+.dot-pattern-dark {
+  background-color: #0f172a;
+  background-image: radial-gradient(circle, rgba(13, 148, 136, 0.15) 0.5px, transparent 0.5px);
+  background-size: 24px 24px;
+}
+
+/* ============================================
+   Texture Overlays
+   ============================================ */
+
+/**
+ * Paper Texture - Subtle noise overlay
+ * Creates a paper-like texture effect using SVG noise
+ * Used in: Selection, Form, Faq pages
+ *
+ * Usage: Apply to a container with relative positioning
+ */
+.paper-texture::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+/**
+ * Document Texture - Horizontal line texture
+ * Creates a lined paper effect
+ * Used in: TermsPrivacy page
+ */
+.document-texture {
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(20, 184, 166, 0.015) 2px,
+      rgba(20, 184, 166, 0.015) 4px
+    );
+}
+
+/* ============================================
+   Gradient Backgrounds
+   ============================================ */
+
+/**
+ * Gradient Shimmer - Animated multi-color gradient
+ * Used in: Faq page CTA section
+ */
+.gradient-shimmer {
+  background: linear-gradient(
+    135deg,
+    rgba(20, 184, 166, 0.03) 0%,
+    rgba(249, 115, 22, 0.03) 25%,
+    rgba(20, 184, 166, 0.03) 50%,
+    rgba(249, 115, 22, 0.03) 75%,
+    rgba(20, 184, 166, 0.03) 100%
+  );
+  background-size: 300% 300%;
+  animation: shimmer-bg 10s ease infinite;
+}
+
+/**
+ * Horizon Line - Animated gradient line
+ * Used in: Layout header bottom border
+ */
+.horizon-line {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(20, 184, 166, 0.1) 10%,
+    rgba(20, 184, 166, 0.2) 25%,
+    rgba(249, 115, 22, 0.15) 50%,
+    rgba(20, 184, 166, 0.2) 75%,
+    rgba(20, 184, 166, 0.1) 90%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 8s ease-in-out infinite;
+}
+
+/* ============================================
+   Decorative Background Elements
+   ============================================ */
+
+/**
+ * Radial Glow - Teal
+ * Soft teal radial gradient for decorative backgrounds
+ */
+.radial-glow-teal {
+  background: radial-gradient(circle, rgba(20, 184, 166, 0.3) 0%, transparent 70%);
+}
+
+/**
+ * Radial Glow - Orange
+ * Soft orange radial gradient for decorative backgrounds
+ */
+.radial-glow-orange {
+  background: radial-gradient(circle, rgba(249, 115, 22, 0.3) 0%, transparent 70%);
+}
+
+/**
+ * Radial Glow - Purple
+ * Soft purple radial gradient for decorative backgrounds
+ */
+.radial-glow-purple {
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 70%);
+}
+
+/* ============================================
+   Utility Background Classes
+   ============================================ */
+
+/**
+ * Glass Effect Base
+ * Semi-transparent background with blur
+ */
+.bg-glass {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/**
+ * Glass Effect - Teal tint
+ */
+.bg-glass-teal {
+  background: rgba(20, 184, 166, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/**
+ * Glass Effect - Orange tint
+ */
+.bg-glass-orange {
+  background: rgba(249, 115, 22, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/**
+ * Paper Card - White card with subtle shadow and texture
+ */
+.paper-card {
+  background: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1);
+}
