@@ -6,5 +6,6 @@ import "./index.css";
 import "./styles/fonts.css";
 import "./styles/animations.css";
 import "./styles/backgrounds.css";
+import "./styles/layout.css";
 
 createRoot(document.getElementById("root")!).render(<App />);

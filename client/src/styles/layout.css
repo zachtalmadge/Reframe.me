@@ -1,0 +1,267 @@
+/**
+ * Layout & AppShell Styles
+ *
+ * Component-specific styles for the global AppShell (header/footer).
+ * Extracted from Layout.tsx inline styles.
+ *
+ * These styles are specific to the header/footer chrome and not
+ * shared across other components.
+ */
+
+/* ============================================
+   Logo & Branding
+   ============================================ */
+
+/**
+ * Logo Text - Gradient text with Fraunces font
+ */
+.logo-text {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 700;
+  background: linear-gradient(135deg, #0d9488 0%, #14b8a6 50%, #0891b2 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+  letter-spacing: -0.03em;
+}
+
+.logo-text::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, #14b8a6 20%, #f97316 50%, #14b8a6 80%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.group:hover .logo-text::after {
+  opacity: 0.6;
+}
+
+/**
+ * Logo Tagline - Subtitle text
+ */
+.logo-tagline {
+  font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+  font-weight: 500;
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  color: #64748b;
+  opacity: 0.7;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-top: 4px;
+}
+
+.group:hover .logo-tagline {
+  opacity: 1;
+  color: #0d9488;
+  letter-spacing: 0.03em;
+}
+
+/**
+ * Logo Accent - Decorative vertical bar
+ */
+.logo-accent {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.group:hover .logo-accent {
+  height: 2.5rem;
+  opacity: 1;
+  box-shadow: 0 0 12px rgba(20, 184, 166, 0.3);
+}
+
+/* ============================================
+   Navigation Buttons
+   ============================================ */
+
+/**
+ * FAQ Button - Glass effect with teal tint
+ */
+.faq-button {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Non-iOS fallback */
+.faq-button {
+  background: linear-gradient(135deg, rgba(20, 184, 166, 0.08) 0%, rgba(14, 165, 233, 0.08) 100%);
+  border: 1px solid rgba(20, 184, 166, 0.15);
+}
+
+.faq-button:hover {
+  background: linear-gradient(135deg, rgba(20, 184, 166, 0.12) 0%, rgba(14, 165, 233, 0.12) 100%);
+  border-color: rgba(20, 184, 166, 0.3);
+  box-shadow: 0 2px 8px rgba(20, 184, 166, 0.15);
+  transform: translateY(-1px);
+}
+
+/* iOS Liquid Glass override */
+@supports (-webkit-touch-callout: none) {
+  .faq-button {
+    background: linear-gradient(135deg, rgba(20, 184, 166, 0.15) 0%, rgba(14, 165, 233, 0.12) 100%);
+    border: 1.5px solid rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow:
+      0 4px 16px rgba(20, 184, 166, 0.2),
+      inset 0 1px 2px rgba(255, 255, 255, 0.6),
+      inset 0 -1px 2px rgba(0, 0, 0, 0.05);
+  }
+
+  .faq-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0.1) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0.8;
+    z-index: 1;
+  }
+
+  .faq-button::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    background: radial-gradient(
+      circle at 50% 50%,
+      rgba(20, 184, 166, 0.4),
+      rgba(14, 165, 233, 0.3)
+    );
+    filter: blur(10px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .faq-button:hover::after {
+    opacity: 1;
+  }
+
+  .faq-button:active {
+    transform: scale(0.96) translateZ(0);
+    -webkit-transform: scale(0.96) translateZ(0);
+  }
+}
+
+/**
+ * Donate Button - Orange gradient with glass effect
+ */
+.donate-button {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Non-iOS fallback - pulse animation */
+.donate-button {
+  animation: gentle-pulse 4s ease-in-out infinite;
+}
+
+.donate-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.35);
+}
+
+/* iOS Liquid Glass override */
+@supports (-webkit-touch-callout: none) {
+  .donate-button {
+    background: linear-gradient(135deg, rgba(249, 115, 22, 0.85) 0%, rgba(251, 146, 60, 0.9) 100%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow:
+      0 8px 32px rgba(249, 115, 22, 0.35),
+      0 2px 8px rgba(0, 0, 0, 0.15),
+      inset 0 1px 2px rgba(255, 255, 255, 0.4),
+      inset 0 -2px 4px rgba(0, 0, 0, 0.1);
+    animation: none;
+  }
+
+  .donate-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0.1) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0.8;
+    z-index: 1;
+  }
+
+  .donate-button::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    background: radial-gradient(
+      circle at 50% 50%,
+      rgba(249, 115, 22, 0.6),
+      rgba(251, 146, 60, 0.4)
+    );
+    filter: blur(12px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .donate-button:hover::after {
+    opacity: 1;
+  }
+
+  .donate-button:hover {
+    transform: translateY(-1px);
+  }
+
+  .donate-button:active {
+    transform: scale(0.96) translateZ(0);
+    -webkit-transform: scale(0.96) translateZ(0);
+    background: linear-gradient(135deg, rgba(249, 115, 22, 0.9) 0%, rgba(234, 88, 12, 0.95) 100%) !important;
+    box-shadow:
+      0 4px 16px rgba(249, 115, 22, 0.4),
+      0 1px 4px rgba(0, 0, 0, 0.2),
+      inset 0 1px 2px rgba(255, 255, 255, 0.3),
+      inset 0 -1px 2px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Shimmer effect on active */
+  .donate-button:active::before {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.4) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    background-size: 200% 100%;
+    animation: ios-shimmer 0.6s ease-out;
+  }
+}
