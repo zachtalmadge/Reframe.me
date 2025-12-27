@@ -82,9 +82,13 @@ export default function AppShell({ children }: AppShellProps) {
               >
                 <span className="relative z-10">FAQ</span>
               </a>
-              <Link
+              <a
                 href="/donate"
-                className="donate-button text-sm font-semibold px-3 py-2 sm:px-4 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 flex items-center justify-center"
+                onClick={(e) => {
+                  e.preventDefault();
+                  requestNavigation("/donate");
+                }}
+                className="donate-button text-sm font-semibold px-3 py-2 sm:px-4 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 flex items-center justify-center cursor-pointer"
                 style={{
                   background: 'linear-gradient(135deg, #f97316 0%, #fb923c 100%)',
                   color: 'white'
@@ -92,7 +96,7 @@ export default function AppShell({ children }: AppShellProps) {
                 data-testid="link-donate"
               >
                 Donate
-              </Link>
+              </a>
             </nav>
           </div>
         </div>
