@@ -1,0 +1,248 @@
+/**
+ * Global Animation Keyframes
+ *
+ * Consolidated from multiple inline style blocks across:
+ * - Layout.tsx
+ * - Selection.tsx
+ * - Form.tsx
+ * - Loading.tsx
+ * - Donate.tsx
+ * - Faq.tsx
+ * - TermsPrivacy.tsx
+ *
+ * This file contains all shared animation keyframes used across the application.
+ */
+
+/* ============================================
+   Layout & Navigation Animations
+   ============================================ */
+
+/**
+ * Shimmer - Horizontal gradient shimmer effect
+ * Used in: Layout.tsx (horizon-line)
+ */
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+/**
+ * Horizon Rise - Scale and fade in effect
+ * Used in: Layout.tsx (decorative elements)
+ */
+@keyframes horizon-rise {
+  from {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+/**
+ * Gentle Pulse - Subtle box-shadow pulse effect
+ * Used in: Layout.tsx (donate button), TermsPrivacy.tsx (icons)
+ */
+@keyframes gentle-pulse {
+  0%, 100% {
+    box-shadow: 0 2px 8px rgba(249, 115, 22, 0.25), 0 0 0 0 rgba(249, 115, 22, 0);
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 2px 8px rgba(249, 115, 22, 0.25), 0 0 0 4px rgba(249, 115, 22, 0.15);
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+/**
+ * iOS Shimmer - iOS-specific shimmer for active states
+ * Used in: Layout.tsx (donate button active state)
+ */
+@keyframes ios-shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+/* ============================================
+   Page Content Animations
+   ============================================ */
+
+/**
+ * Float In - Fade and slide up effect
+ * Used in: Faq.tsx (FAQ cards)
+ */
+@keyframes float-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/**
+ * Shimmer Background - Animated gradient background
+ * Used in: Faq.tsx (gradient shimmer effect)
+ */
+@keyframes shimmer-bg {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/**
+ * Shimmer Flow - Gradient flow animation
+ * Used in: Donate.tsx (decorative effects)
+ */
+@keyframes shimmer-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/**
+ * Gentle Breathe - Scale and opacity breathing effect
+ * Used in: Donate.tsx (decorative elements)
+ */
+@keyframes gentle-breathe {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+}
+
+/**
+ * Border Flow - Animated border gradient
+ * Used in: TermsPrivacy.tsx (commitment boxes)
+ */
+@keyframes border-flow {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* ============================================
+   Utility Animation Classes
+   ============================================ */
+
+/**
+ * Fade In Up - Standard fade and slide up
+ * Can be used with delay classes
+ */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/**
+ * Fade In - Simple opacity fade
+ */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/**
+ * Slide In Right - Slide from right
+ */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/**
+ * Slide In Left - Slide from left
+ */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ============================================
+   Animation Utility Classes
+   ============================================ */
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+.animate-shimmer {
+  animation: shimmer 8s ease-in-out infinite;
+}
+
+.animate-gentle-pulse {
+  animation: gentle-pulse 4s ease-in-out infinite;
+}
+
+.animate-float-in {
+  animation: float-in 0.6s ease-out forwards;
+}
+
+/* Delay utilities for staggered animations */
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
+.delay-600 { animation-delay: 0.6s; }
+.delay-700 { animation-delay: 0.7s; }
+.delay-800 { animation-delay: 0.8s; }

@@ -1,8 +1,7 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { useSearch, useLocation } from "wouter";
 import { AlertCircle, ArrowLeft, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Layout from "@/components/Layout";
 import {
   ToolType,
   FormState,
@@ -14,7 +13,7 @@ import {
 import { loadFormData, clearFormData } from "@/lib/formPersistence";
 import { saveResults, loadResults, GenerationResult } from "@/lib/resultsPersistence";
 import { DisclaimerModal } from "@/components/disclaimer/DisclaimerModal";
-import { LeaveConfirmationModal } from "@/components/LeaveConfirmationModal";
+import { useProtectedPage } from "@/hooks/useProtectedPage";
 
 const loadingMessages = [
   "Analyzing your information...",
@@ -70,6 +69,9 @@ async function generateDocuments(
 }
 
 export default function Loading() {
+  // Register this page as protected from navigation
+  useProtectedPage();
+
   const [, navigate] = useLocation();
   const searchString = useSearch();
   const params = new URLSearchParams(searchString);
@@ -82,8 +84,6 @@ export default function Loading() {
   const [showQuotes, setShowQuotes] = useState(false);
   const [quoteIndex, setQuoteIndex] = useState(0);
   const [isQuoteVisible, setIsQuoteVisible] = useState(true);
-  const [showLeaveAlert, setShowLeaveAlert] = useState(false);
-  const [pendingNavTarget, setPendingNavTarget] = useState<string>("/");
 
   useEffect(() => {
     if (generationState.status !== "loading") return;
@@ -276,35 +276,15 @@ export default function Loading() {
     navigate(`/form?tool=${tool}`);
   }, [navigate, tool]);
 
-  const handleDisclaimerContinue = useCallback(() => {
+  const handleDisclaimerContinue = () => {
     navigate(`/results?tool=${tool}`);
-  }, [navigate, tool]);
-
-  const handleLogoClick = useCallback(() => {
-    setPendingNavTarget("/");
-    setShowLeaveAlert(true);
-  }, []);
-
-  const handleFaqClick = useCallback(() => {
-    setPendingNavTarget("/faq");
-    setShowLeaveAlert(true);
-  }, []);
-
-  const handleConfirmLeave = useCallback(() => {
-    clearFormData();
-    navigate(pendingNavTarget);
-  }, [navigate, pendingNavTarget]);
-
-  const handleCancelLeave = useCallback(() => {
-    setShowLeaveAlert(false);
-  }, []);
+  };
 
   if (generationState.status === "error") {
     return (
-      <Layout onLogoClick={handleLogoClick} onFaqClick={handleFaqClick}>
+      <>
+        {/* Page-specific Loading error styles */}
         <style>{`
-          @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Nunito:wght@400;600;700;800&display=swap');
-
           .error-serif {
             font-family: 'Libre Baskerville', Georgia, serif;
             letter-spacing: -0.01em;
@@ -462,20 +442,14 @@ export default function Loading() {
             )}
           </div>
         </section>
-        <LeaveConfirmationModal
-          open={showLeaveAlert}
-          onConfirm={handleConfirmLeave}
-          onCancel={handleCancelLeave}
-        />
-      </Layout>
+      </>
     );
   }
 
   return (
-    <Layout onLogoClick={handleLogoClick} onFaqClick={handleFaqClick}>
+    <>
+      {/* Page-specific Loading styles */}
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Nunito:wght@400;600;700;800&display=swap');
-
         .loading-serif {
           font-family: 'Libre Baskerville', Georgia, serif;
           letter-spacing: -0.01em;
@@ -824,12 +798,6 @@ export default function Loading() {
         open={showDisclaimer}
         onContinue={handleDisclaimerContinue}
       />
-
-      <LeaveConfirmationModal
-        open={showLeaveAlert}
-        onConfirm={handleConfirmLeave}
-        onCancel={handleCancelLeave}
-      />
-    </Layout>
+    </>
   );
 }

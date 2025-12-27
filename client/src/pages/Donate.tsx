@@ -13,7 +13,6 @@ import {
   ArrowUp,
   ChevronDown,
 } from "lucide-react";
-import Layout from "@/components/Layout";
 
 export default function Donate() {
   const [showBackToTop, setShowBackToTop] = useState(false);
@@ -67,44 +66,11 @@ export default function Donate() {
   ];
 
   return (
-    <Layout>
+    <>
       <div style={{ overflowX: 'hidden', width: '100%', position: 'relative' }}>
 
-       {/* Style block */}
+       {/* Page-specific Donate styles */}
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap');
-
-        /* Dot pattern background */
-        .dot-pattern {
-          background-color: #FAFAF9;
-          background-image: radial-gradient(circle, #0D9488 0.5px, transparent 0.5px);
-          background-size: 24px 24px;
-          background-position: 0 0, 12px 12px;
-        }
-
-        .dot-pattern-dark {
-          background-color: #0f172a;
-          background-image: radial-gradient(circle, rgba(13, 148, 136, 0.15) 0.5px, transparent 0.5px);
-          background-size: 24px 24px;
-        }
-
-        @keyframes shimmer-flow {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-
-        @keyframes gentle-breathe {
-          0%, 100% {
-            transform: scale(1);
-            opacity: 0.9;
-          }
-          50% {
-            transform: scale(1.02);
-            opacity: 1;
-          }
-        }
-
         @keyframes float-subtle {
           0%, 100% {
             transform: translateY(0px);
@@ -266,17 +232,6 @@ export default function Donate() {
           section:nth-child(2) { animation-delay: 0.1s; }
           section:nth-child(3) { animation-delay: 0.2s; }
           section:nth-child(4) { animation-delay: 0.3s; }
-        }
-
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
         }
       `}</style>
        {/* End Style block */} 
@@ -1015,7 +970,7 @@ export default function Donate() {
 
       </div>
       {/* End overflow div line 71 */}
-      
-    </Layout>
+
+    </>
   );
 }

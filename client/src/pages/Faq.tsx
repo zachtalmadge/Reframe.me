@@ -1,7 +1,6 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, MessageSquare, FileText, Scale, Shield, Lightbulb, Users, AlertCircle, BookOpen, RefreshCw } from "lucide-react";
-import Layout from "@/components/Layout";
 import { useState, useEffect } from "react";
 import {
   Accordion,
@@ -241,51 +240,9 @@ export default function Faq() {
   }, []);
 
   return (
-    <Layout>
+    <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap');
-
-        /* Dot pattern background */
-        .dot-pattern {
-          background-color: #FAFAF9;
-          background-image: radial-gradient(circle, #0D9488 0.5px, transparent 0.5px);
-          background-size: 24px 24px;
-          background-position: 0 0, 12px 12px;
-        }
-
-        .dot-pattern-dark {
-          background-color: #0f172a;
-          background-image: radial-gradient(circle, rgba(13, 148, 136, 0.15) 0.5px, transparent 0.5px);
-          background-size: 24px 24px;
-        }
-
-        /* Paper texture overlay */
-        .paper-texture::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-          pointer-events: none;
-          opacity: 0.4;
-        }
-
-        @keyframes float-in {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @keyframes shimmer-bg {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-
+        /* Page-specific FAQ styles */
         .faq-question {
           font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
           letter-spacing: -0.02em;
@@ -306,19 +263,6 @@ export default function Faq() {
         .faq-card:nth-child(8) { animation-delay: 0.4s; }
         .faq-card:nth-child(9) { animation-delay: 0.45s; }
         .faq-card:nth-child(10) { animation-delay: 0.5s; }
-
-        .gradient-shimmer {
-          background: linear-gradient(
-            135deg,
-            rgba(20, 184, 166, 0.03) 0%,
-            rgba(249, 115, 22, 0.03) 25%,
-            rgba(20, 184, 166, 0.03) 50%,
-            rgba(249, 115, 22, 0.03) 75%,
-            rgba(20, 184, 166, 0.03) 100%
-          );
-          background-size: 300% 300%;
-          animation: shimmer-bg 10s ease infinite;
-        }
 
         .category-badge {
           backdrop-filter: blur(8px);
@@ -529,6 +473,6 @@ export default function Faq() {
           </div>
         </div>
       </section>
-    </Layout>
+    </>
   );
 }
