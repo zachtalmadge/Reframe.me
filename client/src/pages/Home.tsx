@@ -282,7 +282,6 @@ export default function Home() {
         }
       `}</style>
 
-      {/* Hero Section */}
       <HeroSection
         heroMounted={heroMounted}
         currentPairIndex={currentPairIndex}
@@ -291,27 +290,19 @@ export default function Home() {
         isMobile={isMobile}
         beforeAfterPairs={beforeAfterPairs}
       />
-      {/* End Hero Section*/}
 
-      {/* Why This Part of the Process Matters Section (with Is This For Me) */}
       <WhyProcessMattersSection
         isThisForMeOpen={isThisForMeOpen}
         setIsThisForMeOpen={setIsThisForMeOpen}
         isThisForMeRef={isThisForMeRef}
         handleCloseIsThisForMe={handleCloseIsThisForMe}
       />
-      {/* End Why This Part of the Process Matters Section (with Is This For Me) */}
 
-      {/* Donate CTA */}
       <DonateCTASection />
-      {/* End Donate CTA */}
 
-      {/* What We Offer - Bento Grid */}
       <ToolsBentoSection />
-      {/* End What We Offer - Bento Grid */}
 
 
-      {/* Testimonials and Donate CTA */}
       <TestimonialsSection
         stories={stories}
         storyIndex={storyIndex}
@@ -322,15 +313,12 @@ export default function Home() {
         nextStory={nextStory}
         prefersReducedMotion={prefersReducedMotion}
       />
-      {/* End Testimonials and Donate CTA */}
 
-      {/* How It Works - Modern Process Flow */}
       <HowItWorksSection
         howItWorksRef={howItWorksRef}
         howItWorksInView={howItWorksInView}
         howItWorksSteps={howItWorksSteps}
       />
-      {/* End How It Works - Modern Process Flow */}
 
     </>
   );
