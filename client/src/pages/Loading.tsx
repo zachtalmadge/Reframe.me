@@ -15,14 +15,10 @@ import { saveResults, loadResults, GenerationResult } from "@/lib/resultsPersist
 import { DisclaimerModal } from "@/components/disclaimer/DisclaimerModal";
 import { useProtectedPage } from "@/hooks/useProtectedPage";
 import { generateDocuments } from "./loading/utils/generateDocuments";
+import { useMessageCycle } from "./loading/hooks/useMessageCycle";
+import { loadingMessages } from "./loading/data/loadingContent";
 import "./loading/styles/loading.css";
 import "./loading/styles/error.css";
-
-const loadingMessages = [
-  "Analyzing your information...",
-  "Preparing your documents...",
-  "Almost there...",
-];
 
 const motivationalQuotes = [
   { text: "It always seems impossible until it is done.", author: "Nelson Mandela" },
@@ -42,32 +38,15 @@ export default function Loading() {
   const tool = (params.get("tool") as ToolType) || "narrative";
 
   const [generationState, setGenerationState] = useState<GenerationState>(initialGenerationState);
-  const [messageIndex, setMessageIndex] = useState(0);
   const [showDisclaimer, setShowDisclaimer] = useState(false);
-  const [isMessageVisible, setIsMessageVisible] = useState(true);
-  const [showQuotes, setShowQuotes] = useState(false);
   const [quoteIndex, setQuoteIndex] = useState(0);
   const [isQuoteVisible, setIsQuoteVisible] = useState(true);
 
-  useEffect(() => {
-    if (generationState.status !== "loading") return;
-
-    if (messageIndex >= loadingMessages.length - 1) {
-      setShowQuotes(true);
-      return;
-    }
-
-    const timer = setTimeout(() => {
-      setIsMessageVisible(false);
-
-      setTimeout(() => {
-        setMessageIndex((prev) => prev + 1);
-        setIsMessageVisible(true);
-      }, 300);
-    }, 2000);
-
-    return () => clearTimeout(timer);
-  }, [generationState.status, messageIndex]);
+  // Message cycling with proper timer cleanup
+  const { messageIndex, isMessageVisible, showQuotes } = useMessageCycle(
+    generationState.status === "loading",
+    loadingMessages
+  );
 
   useEffect(() => {
     if (!showQuotes || generationState.status !== "loading") return;
