@@ -11,7 +11,7 @@ import AppShell from "@/components/AppShell";
 import Home from "@/pages/Home";
 import Selection from "@/pages/Selection";
 import Form from "@/pages/Form";
-import Loading from "@/pages/Loading";
+import Loading from "@/pages/loading";
 import Results from "@/pages/Results";
 import Faq from "@/pages/Faq";
 import Donate from "@/pages/Donate";
