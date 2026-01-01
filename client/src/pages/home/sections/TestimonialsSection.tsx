@@ -4,13 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Heart } from "lucide-react";
 import { stories } from "../data/home.constants";
 
-interface TestimonialsSectionProps {
-  prefersReducedMotion: boolean;
-}
-
-export default function TestimonialsSection({
-  prefersReducedMotion,
-}: TestimonialsSectionProps) {
+export default function TestimonialsSection() {
   const [storyIndex, setStoryIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
@@ -198,8 +192,7 @@ export default function TestimonialsSection({
                     >
                       {/* Quote text */}
                       <blockquote
-                        className={`testimonial-quote text-2xl md:text-4xl lg:text-5xl leading-tight md:leading-tight lg:leading-tight font-normal italic mb-10 md:mb-12 relative ${prefersReducedMotion ? '' : ''
-                          }`}
+                        className="testimonial-quote text-2xl md:text-4xl lg:text-5xl leading-tight md:leading-tight lg:leading-tight font-normal italic mb-10 md:mb-12 relative"
                         style={{
                           color: '#0f172a',
                           letterSpacing: '-0.02em',
