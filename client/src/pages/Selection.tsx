@@ -46,22 +46,6 @@ export default function Selection() {
 
   return (
     <>
-      {/* Page-specific Selection animation utilities */}
-      <style>{`
-        .animate-fade-in-up {
-          animation: fadeInUp 0.8s ease-out forwards;
-        }
-
-        .animate-slide-in-right {
-          animation: slideInRight 0.7s ease-out forwards;
-        }
-
-        .stagger-1 { animation-delay: 0.3s; }
-        .stagger-2 { animation-delay: 0.5s; }
-        .stagger-3 { animation-delay: 0.7s; }
-        .stagger-4 { animation-delay: 0.9s; }
-      `}</style>
-
       <section
         className="min-h-screen py-8 md:py-16 px-4 sm:px-6 lg:px-8 dot-pattern dark:dot-pattern-dark relative overflow-hidden"
         aria-labelledby="selection-heading"
