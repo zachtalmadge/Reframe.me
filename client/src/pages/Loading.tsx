@@ -14,6 +14,7 @@ import { loadFormData, clearFormData } from "@/lib/formPersistence";
 import { saveResults, loadResults, GenerationResult } from "@/lib/resultsPersistence";
 import { DisclaimerModal } from "@/components/disclaimer/DisclaimerModal";
 import { useProtectedPage } from "@/hooks/useProtectedPage";
+import { generateDocuments } from "./loading/utils/generateDocuments";
 
 const loadingMessages = [
   "Analyzing your information...",
@@ -28,45 +29,6 @@ const motivationalQuotes = [
   { text: "Challenges are what make life interesting; overcoming them is what makes life meaningful.", author: "Joshua J. Marine" },
   { text: "Hardships often prepare ordinary people for an extraordinary destiny.", author: "C.S. Lewis" },
 ];
-
-async function generateDocuments(
-  selection: ToolType,
-  formData: FormState,
-  timeoutMs: number = 60000 // 60 seconds
-): Promise<GenerationResult> {
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
-
-  try {
-    const response = await fetch("/api/generate-documents", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        selection,
-        formData,
-      }),
-      signal: controller.signal,
-    });
-
-    clearTimeout(timeoutId);
-
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.errors?.[0]?.detail || `Server error: ${response.status}`);
-    }
-
-    return response.json();
-  } catch (err: any) {
-    clearTimeout(timeoutId);
-
-    if (err.name === 'AbortError') {
-      throw new Error('Request timed out. Please check your connection and try again.');
-    }
-    throw err;
-  }
-}
 
 export default function Loading() {
   // Register this page as protected from navigation
