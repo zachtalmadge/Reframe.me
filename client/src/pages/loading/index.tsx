@@ -3,18 +3,15 @@ import { useSearch, useLocation } from "wouter";
 import { ToolType } from "@/lib/formState";
 import { DisclaimerModal } from "@/components/disclaimer/DisclaimerModal";
 import { useProtectedPage } from "@/hooks/useProtectedPage";
-import { useMessageCycle } from "./loading/hooks/useMessageCycle";
-import { useQuoteCycle } from "./loading/hooks/useQuoteCycle";
-import { useDocumentGeneration } from "./loading/hooks/useDocumentGeneration";
-import { loadingMessages, motivationalQuotes } from "./loading/data/loadingContent";
-import { validateToolParam } from "./loading/utils/validateToolParam";
-import { LoadingOrb } from "./loading/sections/LoadingOrb";
-import { StatusMessageCard } from "./loading/sections/StatusMessageCard";
-import { MotivationalQuoteCard } from "./loading/sections/MotivationalQuoteCard";
-import { ErrorView } from "./loading/sections/ErrorView";
-import { LoadingView } from "./loading/sections/LoadingView";
-import "./loading/styles/loading.css";
-import "./loading/styles/error.css";
+import { useMessageCycle } from "./hooks/useMessageCycle";
+import { useQuoteCycle } from "./hooks/useQuoteCycle";
+import { useDocumentGeneration } from "./hooks/useDocumentGeneration";
+import { loadingMessages, motivationalQuotes } from "./data/loadingContent";
+import { validateToolParam } from "./utils/validateToolParam";
+import { ErrorView } from "./sections/ErrorView";
+import { LoadingView } from "./sections/LoadingView";
+import "./styles/loading.css";
+import "./styles/error.css";
 
 export default function Loading() {
   // Register this page as protected from navigation
