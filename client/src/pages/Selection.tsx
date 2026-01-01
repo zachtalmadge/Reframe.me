@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
-import { FileText, Mail, ArrowLeft, ArrowRight, Files, Check, Shield, MessageSquare, ChevronDown, Sparkles } from "lucide-react";
+import { FileText, Mail, ArrowLeft, ArrowRight, Files, Check, Shield, MessageSquare, ChevronDown } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import BottomTagline from "./selection/sections/BottomTagline";
 
 type ToolSelection = "narrative" | "responseLetter" | "both" | null;
 
@@ -504,12 +505,7 @@ export default function Selection() {
             </div>
 
             {/* Bottom tagline */}
-            <div className="text-center pt-4">
-              <p className="text-sm md:text-base text-muted-foreground flex items-center justify-center gap-2">
-                <Sparkles className="w-4 h-4 text-teal-500" aria-hidden="true" />
-                <span className="font-medium">Private, secure, and completely confidential</span>
-              </p>
-            </div>
+            <BottomTagline />
           </div>
 
         </div>
