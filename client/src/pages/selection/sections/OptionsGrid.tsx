@@ -1,25 +1,47 @@
+import { useState, useRef } from "react";
 import { Check } from "lucide-react";
 import type { ToolSelection, SelectionOption } from "../types/selection.types";
 
 interface OptionsGridProps {
   options: SelectionOption[];
   selected: ToolSelection;
-  hoveredCard: ToolSelection;
   onSelect: (optionId: ToolSelection) => void;
-  onKeyDown: (e: React.KeyboardEvent, optionId: ToolSelection) => void;
-  onHoverEnter: (optionId: ToolSelection) => void;
-  onHoverLeave: () => void;
+  onFirstSelection?: () => void;
 }
 
 export default function OptionsGrid({
   options,
   selected,
-  hoveredCard,
   onSelect,
-  onKeyDown,
-  onHoverEnter,
-  onHoverLeave,
+  onFirstSelection,
 }: OptionsGridProps) {
+  // Internal state - no longer props
+  const [hoveredCard, setHoveredCard] = useState<ToolSelection>(null);
+  const hasCalledFirstSelection = useRef(false);
+
+  // Internal keyboard handler
+  const handleKeyDown = (e: React.KeyboardEvent, optionId: ToolSelection) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      handleSelection(optionId);
+    }
+  };
+
+  // Internal selection handler that calls parent + first-selection callback
+  const handleSelection = (optionId: ToolSelection) => {
+    onSelect(optionId);  // Always notify parent
+
+    // Call onFirstSelection only once
+    if (!hasCalledFirstSelection.current && onFirstSelection) {
+      onFirstSelection();
+      hasCalledFirstSelection.current = true;
+    }
+  };
+
+  // Internal hover handlers
+  const handleHoverEnter = (optionId: ToolSelection) => setHoveredCard(optionId);
+  const handleHoverLeave = () => setHoveredCard(null);
+
   return (
     <div
       role="radiogroup"
@@ -83,10 +105,10 @@ export default function OptionsGrid({
             type="button"
             role="radio"
             aria-checked={isSelected}
-            onClick={() => onSelect(option.id)}
-            onKeyDown={(e) => onKeyDown(e, option.id)}
-            onMouseEnter={() => onHoverEnter(option.id)}
-            onMouseLeave={onHoverLeave}
+            onClick={() => handleSelection(option.id)}
+            onKeyDown={(e) => handleKeyDown(e, option.id)}
+            onMouseEnter={() => handleHoverEnter(option.id)}
+            onMouseLeave={handleHoverLeave}
             className={`
               group relative text-left rounded-3xl p-8 md:p-10 transition-all duration-500 ease-out
               bg-white dark:bg-slate-800 overflow-hidden

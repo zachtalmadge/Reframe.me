@@ -15,7 +15,6 @@ export default function Selection() {
   const [selected, setSelected] = useState<ToolSelection>(null);
   const [hasMadeSelection, setHasMadeSelection] = useState(false);
   const [accordionValue, setAccordionValue] = useState<string>("");
-  const [hoveredCard, setHoveredCard] = useState<ToolSelection>(null);
   const [, navigate] = useLocation();
 
   // Scroll to top when component mounts
@@ -32,16 +31,10 @@ export default function Selection() {
 
   const handleSelect = (optionId: ToolSelection) => {
     setSelected(optionId);
-    if (!hasMadeSelection) {
-      setHasMadeSelection(true);
-    }
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent, optionId: ToolSelection) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      handleSelect(optionId);
-    }
+  const handleFirstSelection = () => {
+    setHasMadeSelection(true);
   };
 
   return (
@@ -75,11 +68,8 @@ export default function Selection() {
           <OptionsGrid
             options={options}
             selected={selected}
-            hoveredCard={hoveredCard}
             onSelect={handleSelect}
-            onKeyDown={handleKeyDown}
-            onHoverEnter={setHoveredCard}
-            onHoverLeave={() => setHoveredCard(null)}
+            onFirstSelection={handleFirstSelection}
           />
 
           {/* CTA Section - Editorial Style */}
