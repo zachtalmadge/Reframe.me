@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
-import { FileText, Mail, ArrowRight, Files, Check } from "lucide-react";
 import BackToHomeRow from "./selection/sections/BackToHomeRow";
 import BottomTagline from "./selection/sections/BottomTagline";
 import SelectionHero from "./selection/sections/SelectionHero";
@@ -9,48 +8,8 @@ import PrivacyNotice from "./selection/sections/PrivacyNotice";
 import ContinueCTA from "./selection/sections/ContinueCTA";
 import QuickAnswersAccordion from "./selection/sections/QuickAnswersAccordion";
 import OptionsGrid from "./selection/sections/OptionsGrid";
-
-type ToolSelection = "narrative" | "responseLetter" | "both" | null;
-
-interface SelectionOption {
-  id: ToolSelection;
-  title: string;
-  description: string;
-  detail: string;
-  icon: typeof FileText;
-  accentColor: string;
-  number: string;
-}
-
-const options: SelectionOption[] = [
-  {
-    id: "narrative",
-    title: "Disclosure Narratives",
-    description: "Five personalized approaches to discuss your background with confidence and clarity.",
-    detail: "Perfect for after you recieve an offer with potential employers",
-    icon: FileText,
-    accentColor: "teal",
-    number: "01",
-  },
-  {
-    id: "responseLetter",
-    title: "Response Letter",
-    description: "A professional response to pre-adverse action notices that highlights your growth.",
-    detail: "Addresses background check concerns while showcasing your transformation",
-    icon: Mail,
-    accentColor: "orange",
-    number: "02",
-  },
-  {
-    id: "both",
-    title: "Complete Package",
-    description: "Everything you need to navigate the employment process with full preparation.",
-    detail: "Both narratives and response letter for comprehensive readiness",
-    icon: Files,
-    accentColor: "purple",
-    number: "03",
-  },
-];
+import type { ToolSelection } from "./selection/types/selection.types";
+import { options } from "./selection/data/selection.constants";
 
 export default function Selection() {
   const [selected, setSelected] = useState<ToolSelection>(null);

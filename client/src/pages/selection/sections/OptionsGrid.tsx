@@ -1,16 +1,5 @@
-import { FileText, Mail, Files, Check } from "lucide-react";
-
-type ToolSelection = "narrative" | "responseLetter" | "both" | null;
-
-interface SelectionOption {
-  id: ToolSelection;
-  title: string;
-  description: string;
-  detail: string;
-  icon: typeof FileText;
-  accentColor: string;
-  number: string;
-}
+import { Check } from "lucide-react";
+import type { ToolSelection, SelectionOption } from "../types/selection.types";
 
 interface OptionsGridProps {
   options: SelectionOption[];

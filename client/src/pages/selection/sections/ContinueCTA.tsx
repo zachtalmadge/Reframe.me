@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-
-type ToolSelection = "narrative" | "responseLetter" | "both" | null;
+import type { ToolSelection } from "../types/selection.types";
 
 interface ContinueCTAProps {
   selected: ToolSelection;
