@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
-import { FileText, Mail, ArrowLeft, ArrowRight, Files, Check, Shield, MessageSquare, ChevronDown } from "lucide-react";
+import { FileText, Mail, ArrowRight, Files, Check, Shield, MessageSquare, ChevronDown } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import BackToHomeRow from "./selection/sections/BackToHomeRow";
 import BottomTagline from "./selection/sections/BottomTagline";
 
 type ToolSelection = "narrative" | "responseLetter" | "both" | null;
@@ -115,19 +116,7 @@ export default function Selection() {
         <div className="absolute bottom-0 right-0 w-32 h-32 border-r-2 border-b-2 border-chart-2/10 pointer-events-none" />
         <div className="max-w-6xl mx-auto relative z-10">
           {/* Back Button */}
-          <div className="mb-12 md:mb-16 opacity-0 animate-fade-in-up">
-            <Link href="/">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="text-muted-foreground hover:text-foreground hover:bg-primary/5 transition-all duration-200 group -ml-2"
-                data-testid="button-back-home"
-              >
-                <ArrowLeft className="w-4 h-4 mr-2 transition-transform duration-200 group-hover:-translate-x-1" aria-hidden="true" />
-                Back to Home
-              </Button>
-            </Link>
-          </div>
+          <BackToHomeRow />
 
           {/* Hero Section - Editorial Style */}
           <div className="mb-16 md:mb-24 max-w-4xl">
