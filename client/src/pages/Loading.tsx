@@ -20,6 +20,7 @@ import { useQuoteCycle } from "./loading/hooks/useQuoteCycle";
 import { loadingMessages, motivationalQuotes } from "./loading/data/loadingContent";
 import { LoadingOrb } from "./loading/sections/LoadingOrb";
 import { StatusMessageCard } from "./loading/sections/StatusMessageCard";
+import { MotivationalQuoteCard } from "./loading/sections/MotivationalQuoteCard";
 import "./loading/styles/loading.css";
 import "./loading/styles/error.css";
 
@@ -419,68 +420,11 @@ export default function Loading() {
             />
 
             {/* Motivational quotes section */}
-            <div
-              className={`transition-all duration-700 ease-in-out ${
-                showQuotes ? "max-h-96 opacity-100" : "max-h-0 opacity-0 overflow-hidden"
-              }`}
-              aria-hidden="true"
-            >
-              <div className="relative rounded-3xl overflow-hidden p-10 md:p-14"
-                style={{
-                  background: 'linear-gradient(135deg, rgba(254,252,232,0.5) 0%, rgba(255,255,255,0.8) 50%, rgba(254,243,199,0.4) 100%)',
-                  border: '1.5px solid rgba(249, 115, 22, 0.12)',
-                  boxShadow: '0 12px 40px rgba(249, 115, 22, 0.08)'
-                }}
-              >
-                {/* Quote marks decoration */}
-                <div className="absolute top-6 left-6 text-6xl md:text-7xl opacity-10 loading-serif"
-                  style={{ color: '#ea580c' }}
-                >
-                  "
-                </div>
-
-                <div className="relative space-y-8">
-                  <div className="w-20 h-0.5 mx-auto rounded-full"
-                    style={{
-                      background: 'linear-gradient(90deg, transparent 0%, #f97316 50%, transparent 100%)'
-                    }}
-                  />
-
-                  <blockquote
-                    className={`loading-serif italic text-xl md:text-2xl lg:text-3xl leading-relaxed text-center transition-all duration-700 flex items-center justify-center ${
-                      isQuoteVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-                    }`}
-                    style={{
-                      color: '#78350f',
-                      lineHeight: '1.6',
-                      minHeight: '140px'
-                    }}
-                    data-testid="text-motivational-quote"
-                  >
-                    <span>{motivationalQuotes[quoteIndex].text}</span>
-                  </blockquote>
-
-                  <p
-                    className={`loading-sans text-base md:text-lg font-bold text-center transition-all duration-700 ${
-                      isQuoteVisible ? "opacity-100" : "opacity-0"
-                    }`}
-                    style={{
-                      color: '#92400e',
-                      letterSpacing: '0.05em'
-                    }}
-                    data-testid="text-quote-author"
-                  >
-                    — {motivationalQuotes[quoteIndex].author}
-                  </p>
-
-                  <div className="w-20 h-0.5 mx-auto rounded-full"
-                    style={{
-                      background: 'linear-gradient(90deg, transparent 0%, #f97316 50%, transparent 100%)'
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
+            <MotivationalQuoteCard
+              quote={motivationalQuotes[quoteIndex]}
+              isVisible={isQuoteVisible}
+              showQuotes={showQuotes}
+            />
 
             {/* Subtle timing note */}
             <div className="text-center pt-4">
