@@ -1,23 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { Link } from "wouter";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import {
-  FileText,
-  Mail,
-  ArrowRight,
-  Clock,
-  Shield,
-  Heart,
-  ChevronLeft,
-  ChevronRight,
-  ChevronDown,
-  Users,
-  Search,
-  TrendingUp,
-  Anchor,
-  Target,
-} from "lucide-react";
 import { useInView } from "@/hooks/useInView";
 import DonateCTASection from "./home/sections/DonateCTASection";
 import ToolsBentoSection from "./home/sections/ToolsBentoSection";
@@ -246,7 +227,6 @@ export default function Home() {
       <DonateCTASection />
 
       <ToolsBentoSection />
-
 
       <TestimonialsSection
         stories={stories}
