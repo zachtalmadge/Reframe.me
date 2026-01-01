@@ -1,21 +1,16 @@
 import React from "react";
-import type { RefObject } from "react";
-import type { HowItWorksStep } from "../types/home.types";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { useInView } from "@/hooks/useInView";
+import { howItWorksSteps } from "../data/home.constants";
 
-interface HowItWorksSectionProps {
-  howItWorksRef: RefObject<HTMLElement>;
-  howItWorksInView: boolean;
-  howItWorksSteps: HowItWorksStep[];
-}
-
-export default function HowItWorksSection({
-  howItWorksRef,
-  howItWorksInView,
-  howItWorksSteps,
-}: HowItWorksSectionProps) {
+export default function HowItWorksSection() {
+  const { ref: howItWorksRef, isInView: howItWorksInView } = useInView({
+    threshold: 0.2,
+    rootMargin: "0px 0px -5% 0px",
+    triggerOnce: false,
+  });
   return (
     <section
       ref={howItWorksRef as React.RefObject<HTMLElement>}

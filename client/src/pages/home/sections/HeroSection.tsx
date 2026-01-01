@@ -1,25 +1,122 @@
+import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Clock, Heart } from "lucide-react";
-import type { BeforeAfterPair } from "../types/home.types";
-
-interface HeroSectionProps {
-  heroMounted: boolean;
-  currentPairIndex: number;
-  showBefore: boolean;
-  showAfter: boolean;
-  isMobile: boolean;
-  beforeAfterPairs: BeforeAfterPair[];
-}
-
-export default function HeroSection({
-  heroMounted,
-  currentPairIndex,
-  showBefore,
-  showAfter,
-  isMobile,
+import {
   beforeAfterPairs,
-}: HeroSectionProps) {
+  BEFORE_DELAY,
+  AFTER_DELAY,
+  VISIBLE_DURATION,
+  GAP_DURATION,
+} from "../data/home.constants";
+
+export default function HeroSection() {
+  // Detect mobile synchronously before any state initialization
+  const isMobile = typeof window !== 'undefined' &&
+    (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.innerWidth <= 768);
+
+  const [heroMounted, setHeroMounted] = useState(false);
+  const [showBefore, setShowBefore] = useState(false);
+  const [showAfter, setShowAfter] = useState(false);
+  const [currentPairIndex, setCurrentPairIndex] = useState(0);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [animationReady, setAnimationReady] = useState(false);
+
+  useEffect(() => {
+    const prefersReduced = window.matchMedia?.(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    setPrefersReducedMotion(prefersReduced);
+
+    if (prefersReduced) {
+      setHeroMounted(true);
+      setShowBefore(true);
+      setShowAfter(true);
+      setAnimationReady(true);
+    } else {
+      // On mobile, add significant delay to ensure DOM is ready
+      if (isMobile) {
+        setTimeout(() => {
+          requestAnimationFrame(() => {
+            setHeroMounted(true);
+            setAnimationReady(true);
+          });
+        }, 500);
+      } else {
+        requestAnimationFrame(() => {
+          setHeroMounted(true);
+          setAnimationReady(true);
+        });
+      }
+    }
+  }, [isMobile]);
+
+  useEffect(() => {
+    if (!animationReady || prefersReducedMotion) {
+      return;
+    }
+
+    const timeouts: NodeJS.Timeout[] = [];
+
+    function runCycle(index: number) {
+      if (isMobile) {
+        // Mobile: Set states to hidden first, then wait for next frame
+        setCurrentPairIndex(index);
+        setShowBefore(false);
+        setShowAfter(false);
+
+        requestAnimationFrame(() => {
+          // Force a reflow
+          void document.body.offsetHeight;
+
+          requestAnimationFrame(() => {
+            // Now start the fade-in sequence
+            timeouts.push(setTimeout(() => {
+              requestAnimationFrame(() => {
+                setShowBefore(true);
+              });
+            }, BEFORE_DELAY + 200)); // Add extra delay on mobile
+
+            timeouts.push(setTimeout(() => {
+              requestAnimationFrame(() => {
+                setShowAfter(true);
+              });
+            }, AFTER_DELAY + 200)); // Add extra delay on mobile
+          });
+        });
+      } else {
+        // Desktop: Original simple timing
+        setCurrentPairIndex(index);
+        setShowBefore(false);
+        setShowAfter(false);
+
+        timeouts.push(setTimeout(() => setShowBefore(true), BEFORE_DELAY));
+        timeouts.push(setTimeout(() => setShowAfter(true), AFTER_DELAY));
+      }
+
+      const fadeOutTime = AFTER_DELAY + VISIBLE_DURATION + (isMobile ? 200 : 0);
+      timeouts.push(
+        setTimeout(() => {
+          setShowBefore(false);
+          setShowAfter(false);
+        }, fadeOutTime)
+      );
+
+      const nextStartTime = fadeOutTime + GAP_DURATION;
+      timeouts.push(
+        setTimeout(() => {
+          runCycle((index + 1) % beforeAfterPairs.length);
+        }, nextStartTime)
+      );
+    }
+
+    // Start the cycle
+    runCycle(0);
+
+    return () => {
+      timeouts.forEach(clearTimeout);
+    };
+  }, [animationReady, prefersReducedMotion, isMobile]);
   return (
     <section
       className="relative py-16 md:py-24 overflow-x-hidden overflow-y-visible"

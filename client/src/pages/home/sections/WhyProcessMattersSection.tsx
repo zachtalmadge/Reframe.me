@@ -1,19 +1,22 @@
-import type { Dispatch, SetStateAction, RefObject } from "react";
+import { useState, useRef } from "react";
 import { ChevronDown, Users, Search, TrendingUp, Target } from "lucide-react";
 
-interface WhyProcessMattersSectionProps {
-  isThisForMeOpen: boolean;
-  setIsThisForMeOpen: Dispatch<SetStateAction<boolean>>;
-  isThisForMeRef: RefObject<HTMLDivElement>;
-  handleCloseIsThisForMe: () => void;
-}
+export default function WhyProcessMattersSection() {
+  const [isThisForMeOpen, setIsThisForMeOpen] = useState(false);
+  const isThisForMeRef = useRef<HTMLDivElement>(null);
 
-export default function WhyProcessMattersSection({
-  isThisForMeOpen,
-  setIsThisForMeOpen,
-  isThisForMeRef,
-  handleCloseIsThisForMe,
-}: WhyProcessMattersSectionProps) {
+  const handleCloseIsThisForMe = () => {
+    setIsThisForMeOpen(false);
+    // Scroll to top of section smoothly on mobile
+    if (isThisForMeRef.current && window.innerWidth <= 768) {
+      setTimeout(() => {
+        isThisForMeRef.current?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }, 100);
+    }
+  };
   return (
     <section
       className="relative py-20 md:py-32 px-4 sm:px-6 lg:px-8 overflow-x-hidden overflow-y-visible"

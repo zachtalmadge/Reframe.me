@@ -1,30 +1,32 @@
-import type { Dispatch, SetStateAction } from "react";
-import type { Story } from "../types/home.types";
+import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Heart } from "lucide-react";
+import { stories } from "../data/home.constants";
 
-interface TestimonialsSectionProps {
-  stories: Story[];
-  storyIndex: number;
-  isPaused: boolean;
-  setIsPaused: Dispatch<SetStateAction<boolean>>;
-  goToStory: (index: number) => void;
-  prevStory: () => void;
-  nextStory: () => void;
-  prefersReducedMotion: boolean;
-}
+export default function TestimonialsSection() {
+  const [storyIndex, setStoryIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
 
-export default function TestimonialsSection({
-  stories,
-  storyIndex,
-  isPaused,
-  setIsPaused,
-  goToStory,
-  prevStory,
-  nextStory,
-  prefersReducedMotion,
-}: TestimonialsSectionProps) {
+  useEffect(() => {
+    if (isPaused) return;
+    const interval = setInterval(() => {
+      setStoryIndex((prev) => (prev + 1) % stories.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [isPaused]);
+
+  const goToStory = (index: number) => {
+    setStoryIndex(index);
+  };
+
+  const prevStory = () => {
+    setStoryIndex((prev) => (prev - 1 + stories.length) % stories.length);
+  };
+
+  const nextStory = () => {
+    setStoryIndex((prev) => (prev + 1) % stories.length);
+  };
   return (
     <section
       className="relative py-20 md:py-32 px-4 sm:px-6 lg:px-8 overflow-x-hidden overflow-y-visible"
@@ -190,8 +192,7 @@ export default function TestimonialsSection({
                     >
                       {/* Quote text */}
                       <blockquote
-                        className={`testimonial-quote text-2xl md:text-4xl lg:text-5xl leading-tight md:leading-tight lg:leading-tight font-normal italic mb-10 md:mb-12 relative ${prefersReducedMotion ? '' : ''
-                          }`}
+                        className="testimonial-quote text-2xl md:text-4xl lg:text-5xl leading-tight md:leading-tight lg:leading-tight font-normal italic mb-10 md:mb-12 relative"
                         style={{
                           color: '#0f172a',
                           letterSpacing: '-0.02em',
