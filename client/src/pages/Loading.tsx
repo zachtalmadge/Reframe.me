@@ -7,6 +7,7 @@ import { useMessageCycle } from "./loading/hooks/useMessageCycle";
 import { useQuoteCycle } from "./loading/hooks/useQuoteCycle";
 import { useDocumentGeneration } from "./loading/hooks/useDocumentGeneration";
 import { loadingMessages, motivationalQuotes } from "./loading/data/loadingContent";
+import { validateToolParam } from "./loading/utils/validateToolParam";
 import { LoadingOrb } from "./loading/sections/LoadingOrb";
 import { StatusMessageCard } from "./loading/sections/StatusMessageCard";
 import { MotivationalQuoteCard } from "./loading/sections/MotivationalQuoteCard";
@@ -22,7 +23,7 @@ export default function Loading() {
   const [, navigate] = useLocation();
   const searchString = useSearch();
   const params = new URLSearchParams(searchString);
-  const tool = (params.get("tool") as ToolType) || "narrative";
+  const tool = validateToolParam(params.get("tool"));
 
   // Document generation with proper error handling and retry logic
   // Note: We need to pass the reset callback, but it depends on hooks defined below.
