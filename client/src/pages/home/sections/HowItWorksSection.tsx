@@ -1,5 +1,6 @@
 import React from "react";
 import type { RefObject } from "react";
+import type { HowItWorksStep } from "../types/home.types";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
@@ -7,7 +8,7 @@ import { ArrowRight } from "lucide-react";
 interface HowItWorksSectionProps {
   howItWorksRef: RefObject<HTMLElement>;
   howItWorksInView: boolean;
-  howItWorksSteps: Array<{ title: string; description: string }>;
+  howItWorksSteps: HowItWorksStep[];
 }
 
 export default function HowItWorksSection({

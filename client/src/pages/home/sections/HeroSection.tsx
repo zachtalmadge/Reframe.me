@@ -1,6 +1,7 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Clock, Heart } from "lucide-react";
+import type { BeforeAfterPair } from "../types/home.types";
 
 interface HeroSectionProps {
   heroMounted: boolean;
@@ -8,7 +9,7 @@ interface HeroSectionProps {
   showBefore: boolean;
   showAfter: boolean;
   isMobile: boolean;
-  beforeAfterPairs: Array<{ before: string; after: string }>;
+  beforeAfterPairs: BeforeAfterPair[];
 }
 
 export default function HeroSection({
