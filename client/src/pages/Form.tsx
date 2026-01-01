@@ -2,39 +2,14 @@ import { FormWizard } from "@/components/form";
 import { useFormPageController } from "./form/hooks/useFormPageController";
 import { BackToSelectionRow } from "./form/sections/BackToSelectionRow";
 import { FormToolHeader } from "./form/sections/FormToolHeader";
+import "./form/styles/form.css";
 
 export default function Form() {
   const { tool, title, description, Icon, restoredState, isRestoring, handleFormComplete } =
     useFormPageController();
 
   return (
-    <>
-      {/* Page-specific Form styles */}
-      <style>{`
-        /* Typography */
-        .font-fraunces {
-          font-family: 'Fraunces', serif;
-          font-optical-sizing: auto;
-        }
-
-        .font-manrope {
-          font-family: 'Manrope', sans-serif;
-        }
-
-        .animate-fadeInUp {
-          animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-
-        .animate-shimmer {
-          animation: shimmer 2s infinite;
-        }
-
-        .delay-100 { animation-delay: 100ms; }
-        .delay-200 { animation-delay: 200ms; }
-        .delay-300 { animation-delay: 300ms; }
-      `}</style>
-
-      <section
+    <section
         className="py-8 md:py-12 px-4 sm:px-6 lg:px-8 min-h-screen dot-pattern dark:dot-pattern-dark relative overflow-hidden"
         aria-labelledby="form-heading"
       >
@@ -60,6 +35,5 @@ export default function Form() {
           )}
         </div>
       </section>
-    </>
   );
 }
