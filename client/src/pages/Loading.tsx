@@ -53,8 +53,12 @@ export default function Loading() {
     resetQuotes();
   }, [resetMessages, resetQuotes]);
 
-  // Start generation on mount
+  // Start generation on mount (with strict mode protection)
+  const hasStartedRef = useRef(false);
   useEffect(() => {
+    // Prevent double-invoke in React 18 strict mode during development
+    if (hasStartedRef.current) return;
+    hasStartedRef.current = true;
     startGeneration();
   }, [startGeneration]);
 
