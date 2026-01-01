@@ -248,6 +248,23 @@
 .delay-800 { animation-delay: 0.8s; }
 
 /* ============================================
+   Selection Page Animations
+   ============================================ */
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.7s ease-out forwards;
+}
+
+.stagger-1 { animation-delay: 0.3s; }
+.stagger-2 { animation-delay: 0.5s; }
+.stagger-3 { animation-delay: 0.7s; }
+.stagger-4 { animation-delay: 0.9s; }
+
+/* ============================================
    Home Page Animations
    ============================================ */
 
