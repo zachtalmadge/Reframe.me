@@ -36,8 +36,6 @@ export default function Home() {
   const [showBefore, setShowBefore] = useState(false);
   const [showAfter, setShowAfter] = useState(false);
   const [currentPairIndex, setCurrentPairIndex] = useState(0);
-  const [storyIndex, setStoryIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [isThisForMeOpen, setIsThisForMeOpen] = useState(false);
   const [animationReady, setAnimationReady] = useState(false);
@@ -139,26 +137,6 @@ export default function Home() {
     };
   }, [animationReady, prefersReducedMotion, isMobile]);
 
-  useEffect(() => {
-    if (isPaused) return;
-    const interval = setInterval(() => {
-      setStoryIndex((prev) => (prev + 1) % stories.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [isPaused]);
-
-  const goToStory = (index: number) => {
-    setStoryIndex(index);
-  };
-
-  const prevStory = () => {
-    setStoryIndex((prev) => (prev - 1 + stories.length) % stories.length);
-  };
-
-  const nextStory = () => {
-    setStoryIndex((prev) => (prev + 1) % stories.length);
-  };
-
   const handleCloseIsThisForMe = () => {
     setIsThisForMeOpen(false);
     // Scroll to top of section smoothly on mobile
@@ -195,13 +173,6 @@ export default function Home() {
       <ToolsBentoSection />
 
       <TestimonialsSection
-        stories={stories}
-        storyIndex={storyIndex}
-        isPaused={isPaused}
-        setIsPaused={setIsPaused}
-        goToStory={goToStory}
-        prevStory={prevStory}
-        nextStory={nextStory}
         prefersReducedMotion={prefersReducedMotion}
       />
 
