@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useSearch, useLocation } from "wouter";
 import { AlertCircle, ArrowLeft, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
