@@ -1,6 +1,5 @@
 import { useEffect, useCallback, useRef } from "react";
 import { useSearch, useLocation } from "wouter";
-import { ToolType } from "@/lib/formState";
 import { DisclaimerModal } from "@/components/disclaimer/DisclaimerModal";
 import { useProtectedPage } from "@/hooks/useProtectedPage";
 import { useMessageCycle } from "./hooks/useMessageCycle";
