@@ -174,40 +174,6 @@ export default function Home() {
 
   return (
     <>
-      <style>{`
-        /* Page-specific Home styles */
-
-        /* Prevent horizontal scroll - using clip instead of hidden to preserve sticky */
-        body, html {
-          overflow-x: clip;
-          max-width: 100vw;
-        }
-
-        @keyframes shimmer-hero {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-
-        .gradient-shimmer-hero {
-          background: linear-gradient(
-            135deg,
-            rgba(20, 184, 166, 0.03) 0%,
-            rgba(249, 115, 22, 0.03) 25%,
-            rgba(20, 184, 166, 0.03) 50%,
-            rgba(249, 115, 22, 0.03) 75%,
-            rgba(20, 184, 166, 0.03) 100%
-          );
-          background-size: 300% 300%;
-          animation: shimmer-hero 10s ease infinite;
-        }
-
-        .hero-heading {
-          font-family: 'Fraunces', Georgia, serif;
-          letter-spacing: -0.03em;
-        }
-      `}</style>
-
       <HeroSection
         heroMounted={heroMounted}
         currentPairIndex={currentPairIndex}

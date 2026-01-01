@@ -181,3 +181,20 @@
   background: white;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1);
 }
+
+/* ============================================
+   Home Page Backgrounds
+   ============================================ */
+
+.gradient-shimmer-hero {
+  background: linear-gradient(
+    135deg,
+    rgba(20, 184, 166, 0.03) 0%,
+    rgba(249, 115, 22, 0.03) 25%,
+    rgba(20, 184, 166, 0.03) 50%,
+    rgba(249, 115, 22, 0.03) 75%,
+    rgba(20, 184, 166, 0.03) 100%
+  );
+  background-size: 300% 300%;
+  animation: shimmer-hero 10s ease infinite;
+}

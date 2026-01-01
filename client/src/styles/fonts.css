@@ -26,3 +26,12 @@
 
 /* Nunito - Sans-serif font used in loading page */
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
+
+/* ============================================
+   Home Page Typography
+   ============================================ */
+
+.hero-heading {
+  font-family: 'Fraunces', Georgia, serif;
+  letter-spacing: -0.03em;
+}
