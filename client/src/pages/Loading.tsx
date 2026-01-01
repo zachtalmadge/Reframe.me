@@ -15,6 +15,8 @@ import { saveResults, loadResults, GenerationResult } from "@/lib/resultsPersist
 import { DisclaimerModal } from "@/components/disclaimer/DisclaimerModal";
 import { useProtectedPage } from "@/hooks/useProtectedPage";
 import { generateDocuments } from "./loading/utils/generateDocuments";
+import "./loading/styles/loading.css";
+import "./loading/styles/error.css";
 
 const loadingMessages = [
   "Analyzing your information...",
@@ -245,36 +247,6 @@ export default function Loading() {
   if (generationState.status === "error") {
     return (
       <>
-        {/* Page-specific Loading error styles */}
-        <style>{`
-          .error-serif {
-            font-family: 'Libre Baskerville', Georgia, serif;
-            letter-spacing: -0.01em;
-          }
-
-          .error-sans {
-            font-family: 'Nunito', system-ui, sans-serif;
-          }
-
-          @keyframes error-float {
-            0%, 100% {
-              transform: translateY(0px);
-            }
-            50% {
-              transform: translateY(-8px);
-            }
-          }
-
-          @keyframes error-pulse-glow {
-            0%, 100% {
-              box-shadow: 0 0 20px rgba(220, 38, 38, 0.3);
-            }
-            50% {
-              box-shadow: 0 0 40px rgba(220, 38, 38, 0.5);
-            }
-          }
-        `}</style>
-
         <section
           className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 min-h-screen relative overflow-hidden"
           style={{
@@ -410,122 +382,6 @@ export default function Loading() {
 
   return (
     <>
-      {/* Page-specific Loading styles */}
-      <style>{`
-        .loading-serif {
-          font-family: 'Libre Baskerville', Georgia, serif;
-          letter-spacing: -0.01em;
-        }
-
-        .loading-sans {
-          font-family: 'Nunito', system-ui, sans-serif;
-        }
-
-        @keyframes breathe-in-out {
-          0%, 100% {
-            transform: scale(1);
-            opacity: 0.6;
-          }
-          50% {
-            transform: scale(1.15);
-            opacity: 0.85;
-          }
-        }
-
-        @keyframes ink-spread {
-          0% {
-            transform: scale(0.3);
-            opacity: 0.8;
-          }
-          50% {
-            opacity: 0.4;
-          }
-          100% {
-            transform: scale(2);
-            opacity: 0;
-          }
-        }
-
-        @keyframes ripple-soft {
-          0% {
-            transform: scale(0.95);
-            opacity: 0;
-          }
-          30% {
-            opacity: 0.5;
-          }
-          100% {
-            transform: scale(1.8);
-            opacity: 0;
-          }
-        }
-
-        @keyframes float-gentle {
-          0%, 100% {
-            transform: translate(0, 0) rotate(0deg);
-          }
-          25% {
-            transform: translate(10px, -10px) rotate(5deg);
-          }
-          50% {
-            transform: translate(-5px, -20px) rotate(-3deg);
-          }
-          75% {
-            transform: translate(-10px, -10px) rotate(2deg);
-          }
-        }
-
-        @keyframes page-turn {
-          0% {
-            transform: perspective(1000px) rotateY(-5deg);
-          }
-          100% {
-            transform: perspective(1000px) rotateY(5deg);
-          }
-        }
-
-        .ink-blob {
-          position: absolute;
-          border-radius: 50%;
-          animation: ink-spread 8s ease-out infinite;
-        }
-
-        .ink-blob:nth-child(1) {
-          top: 20%;
-          left: 15%;
-          width: 200px;
-          height: 200px;
-          background: radial-gradient(circle, rgba(13, 148, 136, 0.12) 0%, transparent 70%);
-          animation-delay: 0s;
-        }
-
-        .ink-blob:nth-child(2) {
-          bottom: 30%;
-          right: 20%;
-          width: 250px;
-          height: 250px;
-          background: radial-gradient(circle, rgba(249, 115, 22, 0.1) 0%, transparent 70%);
-          animation-delay: 3s;
-        }
-
-        .ink-blob:nth-child(3) {
-          top: 50%;
-          left: 50%;
-          width: 180px;
-          height: 180px;
-          background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, transparent 70%);
-          animation-delay: 6s;
-        }
-
-        .breathing-circle {
-          animation: breathe-in-out 7s ease-in-out infinite;
-        }
-
-        .ripple-ring {
-          animation: ripple-soft 5s ease-out infinite;
-        }
-      `}</style>
-
       <section
         className="py-12 md:py-20 px-4 sm:px-6 lg:px-8 min-h-screen relative overflow-hidden"
         style={{
