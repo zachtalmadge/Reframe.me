@@ -37,9 +37,7 @@ export default function Home() {
   const [showAfter, setShowAfter] = useState(false);
   const [currentPairIndex, setCurrentPairIndex] = useState(0);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-  const [isThisForMeOpen, setIsThisForMeOpen] = useState(false);
   const [animationReady, setAnimationReady] = useState(false);
-  const isThisForMeRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const prefersReduced = window.matchMedia?.(
@@ -137,19 +135,6 @@ export default function Home() {
     };
   }, [animationReady, prefersReducedMotion, isMobile]);
 
-  const handleCloseIsThisForMe = () => {
-    setIsThisForMeOpen(false);
-    // Scroll to top of section smoothly on mobile
-    if (isThisForMeRef.current && window.innerWidth <= 768) {
-      setTimeout(() => {
-        isThisForMeRef.current?.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-      }, 100);
-    }
-  };
-
   return (
     <>
       <HeroSection
@@ -161,12 +146,7 @@ export default function Home() {
         beforeAfterPairs={beforeAfterPairs}
       />
 
-      <WhyProcessMattersSection
-        isThisForMeOpen={isThisForMeOpen}
-        setIsThisForMeOpen={setIsThisForMeOpen}
-        isThisForMeRef={isThisForMeRef}
-        handleCloseIsThisForMe={handleCloseIsThisForMe}
-      />
+      <WhyProcessMattersSection />
 
       <DonateCTASection />
 
