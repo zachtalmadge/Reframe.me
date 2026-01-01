@@ -1,65 +1,10 @@
-import { useState, useEffect } from "react";
-import { Link, useSearch, useLocation } from "wouter";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, FileText, Mail, Files } from "lucide-react";
 import { FormWizard } from "@/components/form";
-import { FormState, ToolType } from "@/lib/formState";
-import { saveFormData, loadFormData, clearFormData } from "@/lib/formPersistence";
-import { useProtectedPage } from "@/hooks/useProtectedPage";
-
-const toolInfo: Record<
-  ToolType,
-  { title: string; description: string; icon: typeof FileText }
-> = {
-  narrative: {
-    title: "Disclosure Narratives",
-    description: "You're creating five personalized disclosure narratives.",
-    icon: FileText,
-  },
-  responseLetter: {
-    title: "Response Letter",
-    description: "You're creating a pre-adverse action response letter.",
-    icon: Mail,
-  },
-  both: {
-    title: "Both Documents",
-    description: "You're creating disclosure narratives and a response letter.",
-    icon: Files,
-  },
-};
+import { useFormPageController } from "./form/hooks/useFormPageController";
+import { BackToSelectionRow } from "./form/sections/BackToSelectionRow";
 
 export default function Form() {
-  // Register this page as protected from navigation
-  useProtectedPage();
-
-  const [, navigate] = useLocation();
-  const searchString = useSearch();
-  const params = new URLSearchParams(searchString);
-  const toolParam = params.get("tool") as ToolType | null;
-
-  const [restoredState, setRestoredState] = useState<FormState | undefined>(undefined);
-  const [isRestoring, setIsRestoring] = useState(true);
-
-  const tool = toolParam && toolInfo[toolParam] ? toolParam : "narrative";
-  const { title, description, icon: Icon } = toolInfo[tool];
-
-  useEffect(() => {
-    const persisted = loadFormData();
-    if (persisted && persisted.tool === tool) {
-      const restoredFormState: FormState = {
-        ...persisted.formState,
-        errors: {},
-      };
-      setRestoredState(restoredFormState);
-    }
-    setIsRestoring(false);
-  }, [tool]);
-
-  const handleFormComplete = (data: FormState) => {
-    saveFormData(data, tool);
-    window.scrollTo(0, 0);
-    navigate(`/loading?tool=${tool}`);
-  };
+  const { tool, title, description, Icon, restoredState, isRestoring, handleFormComplete } =
+    useFormPageController();
 
   return (
     <>
@@ -100,19 +45,7 @@ export default function Form() {
         <div className="absolute bottom-0 right-0 w-32 h-32 border-r-2 border-b-2 border-chart-2/10 pointer-events-none" />
 
         <div className="max-w-2xl mx-auto relative z-10">
-          <div className="mb-6 animate-fadeInUp opacity-0">
-            <Link href="/selection">
-              <Button
-                variant="outline"
-                size="sm"
-                className="bg-white dark:bg-slate-800 hover:bg-gray-50 dark:hover:bg-slate-700 border-2 shadow-sm"
-                data-testid="button-back-selection"
-              >
-                <ArrowLeft className="w-4 h-4 mr-2" aria-hidden="true" />
-                Back to Selection
-              </Button>
-            </Link>
-          </div>
+          <BackToSelectionRow />
 
           <div className="text-center space-y-5 mb-10 animate-fadeInUp delay-100 opacity-0">
             <div className="w-16 h-16 rounded-2xl bg-white dark:bg-slate-800 flex items-center justify-center mx-auto shadow-lg border-2 border-primary/20">
