@@ -1,10 +1,11 @@
 import type { Dispatch, SetStateAction } from "react";
+import type { Story } from "../types/home.types";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Heart } from "lucide-react";
 
 interface TestimonialsSectionProps {
-  stories: Array<{ role: string; quote: string }>;
+  stories: Story[];
   storyIndex: number;
   isPaused: boolean;
   setIsPaused: Dispatch<SetStateAction<boolean>>;
