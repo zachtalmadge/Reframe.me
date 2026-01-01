@@ -18,7 +18,10 @@ interface DocumentGenerationResult {
   handleRetry: () => void;
 }
 
-export function useDocumentGeneration(tool: ToolType): DocumentGenerationResult {
+export function useDocumentGeneration(
+  tool: ToolType,
+  onRetryReset?: () => void
+): DocumentGenerationResult {
   const [, navigate] = useLocation();
   const [generationState, setGenerationState] = useState<GenerationState>(initialGenerationState);
   const [showDisclaimer, setShowDisclaimer] = useState(false);
@@ -163,9 +166,12 @@ export function useDocumentGeneration(tool: ToolType): DocumentGenerationResult 
   }, [navigate, tool]);
 
   const handleRetry = useCallback(() => {
-    // Note: UI state reset (message/quote indices) will be handled in Step 12
+    // Reset UI state (message/quote cycles) before restarting generation
+    if (onRetryReset) {
+      onRetryReset();
+    }
     startGeneration();
-  }, [startGeneration]);
+  }, [startGeneration, onRetryReset]);
 
   return {
     generationState,

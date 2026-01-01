@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 interface QuoteCycleState {
   quoteIndex: number;
   isQuoteVisible: boolean;
+  reset: () => void;
 }
 
 export function useQuoteCycle(
@@ -35,5 +36,10 @@ export function useQuoteCycle(
     };
   }, [showQuotes, isLoading, quotesCount]);
 
-  return { quoteIndex, isQuoteVisible };
+  const reset = useCallback(() => {
+    setQuoteIndex(0);
+    setIsQuoteVisible(true);
+  }, []);
+
+  return { quoteIndex, isQuoteVisible, reset };
 }

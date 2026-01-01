@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 interface MessageCycleState {
   messageIndex: number;
   isMessageVisible: boolean;
   showQuotes: boolean;
+  reset: () => void;
 }
 
 export function useMessageCycle(
@@ -41,5 +42,11 @@ export function useMessageCycle(
     };
   }, [isLoading, messageIndex, messages.length]);
 
-  return { messageIndex, isMessageVisible, showQuotes };
+  const reset = useCallback(() => {
+    setMessageIndex(0);
+    setIsMessageVisible(true);
+    setShowQuotes(false);
+  }, []);
+
+  return { messageIndex, isMessageVisible, showQuotes, reset };
 }

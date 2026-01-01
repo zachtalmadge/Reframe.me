@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useRef } from "react";
 import { useSearch, useLocation } from "wouter";
 import { ToolType } from "@/lib/formState";
 import { DisclaimerModal } from "@/components/disclaimer/DisclaimerModal";
@@ -25,20 +25,33 @@ export default function Loading() {
   const tool = (params.get("tool") as ToolType) || "narrative";
 
   // Document generation with proper error handling and retry logic
-  const { generationState, showDisclaimer, startGeneration, handleRetry } = useDocumentGeneration(tool);
+  // Note: We need to pass the reset callback, but it depends on hooks defined below.
+  // We'll use a ref pattern to avoid circular dependencies.
+  const resetCallbackRef = useRef<(() => void) | null>(null);
+
+  const { generationState, showDisclaimer, startGeneration, handleRetry } = useDocumentGeneration(
+    tool,
+    () => resetCallbackRef.current?.()
+  );
 
   // Message cycling with proper timer cleanup
-  const { messageIndex, isMessageVisible, showQuotes } = useMessageCycle(
+  const { messageIndex, isMessageVisible, showQuotes, reset: resetMessages } = useMessageCycle(
     generationState.status === "loading",
     loadingMessages
   );
 
   // Quote cycling with proper timer cleanup
-  const { quoteIndex, isQuoteVisible } = useQuoteCycle(
+  const { quoteIndex, isQuoteVisible, reset: resetQuotes } = useQuoteCycle(
     showQuotes,
     generationState.status === "loading",
     motivationalQuotes.length
   );
+
+  // Set up the combined reset callback
+  resetCallbackRef.current = useCallback(() => {
+    resetMessages();
+    resetQuotes();
+  }, [resetMessages, resetQuotes]);
 
   // Start generation on mount
   useEffect(() => {
