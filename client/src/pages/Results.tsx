@@ -5,8 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { LeaveConfirmationModal } from "@/components/LeaveConfirmationModal";
 import { ToolType } from "@/lib/formState";
-import { NarrativeItem, ResponseLetter, clearResults, GenerationResult, updateResults } from "@/lib/resultsPersistence";
-import { loadFormData, clearFormData } from "@/lib/formPersistence";
+import { NarrativeItem, ResponseLetter, GenerationResult, updateResults } from "@/lib/resultsPersistence";
+import { loadFormData } from "@/lib/formPersistence";
 import { useProtectedPage } from "@/hooks/useProtectedPage";
 import { useDocumentActions } from "@/hooks/useDocumentActions";
 import { NarrativeCarousel } from "@/components/results/NarrativeCarousel";
@@ -17,7 +17,6 @@ import { useToast } from "@/hooks/use-toast";
 import { regenerateNarrative, regenerateLetter } from "@/lib/api";
 import {
   saveRegenerationCounts,
-  clearRegenerationCounts,
   incrementNarrativeCount,
   incrementLetterCount,
   RegenerationCounts,
@@ -25,6 +24,7 @@ import {
 } from "@/lib/regenerationPersistence";
 import ResultsGuidanceSection from "./results/sections/ResultsGuidanceSection";
 import { useResultsLoader } from "./results/hooks/useResultsLoader";
+import { useResultsExitActions } from "./results/hooks/useResultsExitActions";
 
 export default function Results() {
   // Register this page as protected from navigation
@@ -68,8 +68,15 @@ export default function Results() {
   });
   const [letterError, setLetterError] = useState<string | null>(null);
 
-  const [exitModalOpen, setExitModalOpen] = useState(false);
-  const [exitDestination, setExitDestination] = useState<"home" | "faq" | null>(null);
+  // Exit actions and modal state
+  const {
+    exitModalOpen,
+    exitDestination,
+    handleStartOver,
+    handleLearnMoreClick,
+    handleConfirmExit,
+    handleCancelExit,
+  } = useResultsExitActions();
 
   const {
     handleCopyNarrative,
@@ -84,35 +91,6 @@ export default function Results() {
   const hasNarratives = showNarratives && narratives.length > 0;
   const hasLetter = showResponseLetter && responseLetter !== null;
   const hasBoth = hasNarratives && hasLetter;
-
-  const handleStartOver = () => {
-    clearFormData();
-    clearResults();
-    clearRegenerationCounts();
-    navigate("/");
-  };
-
-  const handleLearnMoreClick = () => {
-    setExitDestination("faq");
-    setExitModalOpen(true);
-  };
-
-  const handleConfirmExit = () => {
-    setExitModalOpen(false);
-    clearFormData();
-    clearResults();
-    clearRegenerationCounts();
-    if (exitDestination === "home") {
-      navigate("/");
-    } else if (exitDestination === "faq") {
-      navigate("/faq");
-    }
-  };
-
-  const handleCancelExit = () => {
-    setExitModalOpen(false);
-    setExitDestination(null);
-  };
 
   const handleDownloadAllDocuments = () => {
     handleDownloadAll(narratives, responseLetter);
