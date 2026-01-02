@@ -15,17 +15,10 @@ export default function Form() {
     useFormPageController();
 
   return (
-    // Main form container with:
-    // - Responsive padding (py-8 on mobile, py-12 on desktop)
-    // - Dot pattern background (defined in form.css)
-    // - Full viewport height to prevent layout shift
-    // - Overflow hidden to contain absolutely positioned decorative elements
     <section
         className="py-8 md:py-12 px-4 sm:px-6 lg:px-8 min-h-screen dot-pattern dark:dot-pattern-dark relative overflow-hidden"
         aria-labelledby="form-heading"
       >
-        {/* Paper texture overlay - adds subtle texture over the dot pattern
-            pointer-events-none ensures it doesn't interfere with user interactions */}
         <div className="paper-texture absolute inset-0 pointer-events-none" />
 
         {/* Decorative corner accents for visual interest

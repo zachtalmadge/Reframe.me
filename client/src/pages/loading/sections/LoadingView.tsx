@@ -56,7 +56,7 @@ export function LoadingView({
                 textShadow: '0 2px 4px rgba(13, 148, 136, 0.1)'
               }}
             >
-              Crafting your{' '}
+              Crafting Your{' '}
               <span style={{
                 background: 'linear-gradient(135deg, #0d9488 0%, #f97316 100%)',
                 WebkitBackgroundClip: 'text',
