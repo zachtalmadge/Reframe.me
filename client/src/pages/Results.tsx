@@ -1,22 +1,21 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSearch, useLocation, Link } from "wouter";
 import { Download, Home, AlertTriangle, BookOpen, FileText, Loader2, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { LeaveConfirmationModal } from "@/components/LeaveConfirmationModal";
 import { ToolType } from "@/lib/formState";
-import { loadResults, NarrativeItem, ResponseLetter, clearResults, GenerationResult, updateResults } from "@/lib/resultsPersistence";
+import { NarrativeItem, ResponseLetter, clearResults, GenerationResult, updateResults } from "@/lib/resultsPersistence";
 import { loadFormData, clearFormData } from "@/lib/formPersistence";
 import { useProtectedPage } from "@/hooks/useProtectedPage";
 import { useDocumentActions } from "@/hooks/useDocumentActions";
 import { NarrativeCarousel } from "@/components/results/NarrativeCarousel";
 import { ResponseLetterPanel } from "@/components/results/ResponseLetterPanel";
-import { DocumentSwitcher, DocumentTab } from "@/components/results/DocumentSwitcher";
+import { DocumentSwitcher } from "@/components/results/DocumentSwitcher";
 import { PartialFailureAlert } from "@/components/results/PartialFailureAlert";
 import { useToast } from "@/hooks/use-toast";
 import { regenerateNarrative, regenerateLetter } from "@/lib/api";
 import {
-  loadRegenerationCounts,
   saveRegenerationCounts,
   clearRegenerationCounts,
   incrementNarrativeCount,
@@ -25,6 +24,7 @@ import {
   NarrativeType,
 } from "@/lib/regenerationPersistence";
 import ResultsGuidanceSection from "./results/sections/ResultsGuidanceSection";
+import { useResultsLoader } from "./results/hooks/useResultsLoader";
 
 export default function Results() {
   // Register this page as protected from navigation
@@ -35,16 +35,28 @@ export default function Results() {
   const params = new URLSearchParams(searchString);
   const tool = (params.get("tool") as ToolType) || "narrative";
 
-  const [narratives, setNarratives] = useState<NarrativeItem[]>([]);
-  const [responseLetter, setResponseLetter] = useState<ResponseLetter | null>(null);
-  const [status, setStatus] = useState<GenerationResult["status"]>("success");
-  const [errors, setErrors] = useState<GenerationResult["errors"]>([]);
-  const [activeTab, setActiveTab] = useState<DocumentTab>("narratives");
+  // Load results with retry logic
+  const {
+    isLoading,
+    loadAttempts,
+    narratives,
+    responseLetter,
+    status,
+    errors,
+    sessionId,
+    regenCounts,
+    activeTab,
+    setActiveTab,
+    setNarratives,
+    setResponseLetter,
+    setStatus,
+    setErrors,
+    setRegenCounts,
+  } = useResultsLoader();
+
   const [isRetrying, setIsRetrying] = useState(false);
   const { toast } = useToast();
 
-  const [sessionId, setSessionId] = useState<string>("");
-  const [regenCounts, setRegenCounts] = useState<RegenerationCounts | null>(null);
   const [regeneratingType, setRegeneratingType] = useState<NarrativeType | null>(null);
   const [isLetterRegenerating, setIsLetterRegenerating] = useState(false);
   const [narrativeErrors, setNarrativeErrors] = useState<Record<NarrativeType, string | null>>({
@@ -55,8 +67,6 @@ export default function Results() {
     skills_focused: null,
   });
   const [letterError, setLetterError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [loadAttempts, setLoadAttempts] = useState(0);
 
   const [exitModalOpen, setExitModalOpen] = useState(false);
   const [exitDestination, setExitDestination] = useState<"home" | "faq" | null>(null);
@@ -68,61 +78,6 @@ export default function Results() {
     handleDownloadLetter,
     handleDownloadAll,
   } = useDocumentActions();
-
-  useEffect(() => {
-    const MAX_ATTEMPTS = 5;
-    const RETRY_DELAY = 150; // ms
-
-    console.log('[Results] Starting load with retry logic');
-
-    const loadWithRetry = async () => {
-      for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
-        try {
-          console.log(`[Results] Load attempt ${attempt + 1}/${MAX_ATTEMPTS}`);
-          const persisted = loadResults();
-
-          if (persisted) {
-            console.log('[Results] Data loaded successfully:', { tool: persisted.tool, narrativesCount: persisted.result.narratives.length });
-            // Success - set all data
-            setNarratives(persisted.result.narratives);
-            setResponseLetter(persisted.result.responseLetter);
-            setStatus(persisted.result.status);
-            setErrors(persisted.result.errors || []);
-            setSessionId(persisted.sessionId);
-
-            const counts = loadRegenerationCounts(persisted.sessionId);
-            setRegenCounts(counts);
-
-            if (persisted.tool === "responseLetter" ||
-                (persisted.tool === "both" &&
-                 persisted.result.narratives.length === 0 &&
-                 persisted.result.responseLetter)) {
-              setActiveTab("letter");
-            }
-
-            setIsLoading(false);
-            return;
-          }
-
-          // Retry with exponential backoff
-          const delay = RETRY_DELAY * Math.pow(1.5, attempt);
-          console.log(`[Results] No data found, retrying in ${Math.round(delay)}ms...`);
-          setLoadAttempts(attempt + 1);
-          if (attempt < MAX_ATTEMPTS - 1) {
-            await new Promise(resolve => setTimeout(resolve, delay));
-          }
-        } catch (e) {
-          console.error(`[Results] Load attempt ${attempt + 1} failed:`, e);
-        }
-      }
-
-      // All retries exhausted - redirect
-      console.error('[Results] FAILED to load results after maximum attempts, redirecting to home');
-      navigate("/");
-    };
-
-    loadWithRetry();
-  }, [navigate]);
 
   const showNarratives = tool === "narrative" || tool === "both";
   const showResponseLetter = tool === "responseLetter" || tool === "both";
