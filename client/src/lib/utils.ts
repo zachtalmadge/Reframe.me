@@ -1,8 +1,38 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
+import { ToolType } from "./formState"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
+}
+
+/**
+ * Validates and normalizes the tool parameter from URL query string.
+ *
+ * @param toolParam - Raw tool param from URLSearchParams
+ * @returns Valid ToolType, defaults to "narrative" if invalid
+ */
+export function validateToolParam(toolParam: string | null): ToolType {
+  const validTools: ToolType[] = ["narrative", "responseLetter", "both"];
+
+  if (toolParam && validTools.includes(toolParam as ToolType)) {
+    return toolParam as ToolType;
+  }
+
+  return "narrative";
+}
+
+/**
+ * Determines which document types should be shown based on tool type.
+ *
+ * @param tool - Validated ToolType
+ * @returns Object indicating which document types to display
+ */
+export function getDocumentVisibility(tool: ToolType) {
+  return {
+    showNarratives: tool === "narrative" || tool === "both",
+    showResponseLetter: tool === "responseLetter" || tool === "both",
+  };
 }
 
 export function calculateTimeSinceRelease(month: string, year: string): string {
