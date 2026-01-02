@@ -62,7 +62,7 @@ export default function ResultsDocumentsSection({
   return (
     <>
       {hasBoth && (
-        <div className="flex justify-center">
+        <div className="flex justify-center animate-fadeInUp delay-150 opacity-0">
           <DocumentSwitcher
             activeTab={activeTab}
             onTabChange={setActiveTab}
