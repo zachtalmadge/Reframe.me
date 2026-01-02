@@ -7,7 +7,6 @@ import { FormState, FormAction } from "@/lib/formState";
 interface Step5OwnershipProps {
   state: FormState;
   dispatch: React.Dispatch<FormAction>;
-  errors: Record<string, string>;
 }
 
 export function Step5Ownership({

@@ -30,10 +30,11 @@ export async function generateDocuments(
     }
 
     return response.json();
-  } catch (err: any) {
+  } catch (err) {
     clearTimeout(timeoutId);
 
-    if (err.name === 'AbortError') {
+    // Type-safe check for AbortError
+    if (err instanceof DOMException && err.name === 'AbortError') {
       throw new Error('Request timed out. Please check your connection and try again.');
     }
     throw err;

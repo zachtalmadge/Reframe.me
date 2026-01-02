@@ -62,8 +62,9 @@ export function saveResults(
     try {
       sessionStorage.setItem(RESULTS_KEY, serialized);
       return { success: true };
-    } catch (quotaError: any) {
-      if (quotaError.name === 'QuotaExceededError') {
+    } catch (quotaError) {
+      // Type-safe check for QuotaExceededError
+      if (quotaError instanceof DOMException && quotaError.name === 'QuotaExceededError') {
         console.error('Storage quota exceeded, clearing and retrying');
         clearResults();
         sessionStorage.setItem(RESULTS_KEY, serialized);

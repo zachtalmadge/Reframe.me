@@ -7,7 +7,6 @@ import { FormState, FormAction } from "@/lib/formState";
 interface Step6ImpactProps {
   state: FormState;
   dispatch: React.Dispatch<FormAction>;
-  errors: Record<string, string>;
 }
 
 export function Step6Impact({ state, dispatch }: Step6ImpactProps) {

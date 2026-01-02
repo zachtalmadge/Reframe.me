@@ -7,6 +7,11 @@ export interface Offense {
   programs: string[];
 }
 
+// Type helper: Creates discriminated union of field-value pairs
+type FieldValueMap<T> = {
+  [K in keyof T]: { field: K; value: T[K] }
+}[keyof T];
+
 export interface FormState {
   currentStep: number;
   offenses: Offense[];
@@ -29,11 +34,30 @@ export interface FormState {
   errors: Record<string, string>;
 }
 
+// Type-safe SET_FIELD: field determines allowed value type
+type SetFieldAction = {
+  type: "SET_FIELD";
+} & FieldValueMap<FormState>;
+
+// Type-safe UPDATE_OFFENSE: field determines allowed value type
+type UpdateOffenseAction = {
+  type: "UPDATE_OFFENSE";
+  id: string;
+} & FieldValueMap<Offense>;
+
+/**
+ * Type-safe form actions where SET_FIELD and UPDATE_OFFENSE enforce
+ * that the value type matches the field type.
+ *
+ * Examples:
+ *   ✅ { type: "SET_FIELD", field: "clarifyingRelevanceEnabled", value: true }
+ *   ❌ { type: "SET_FIELD", field: "clarifyingRelevanceEnabled", value: "string" }
+ */
 export type FormAction =
-  | { type: "SET_FIELD"; field: keyof FormState; value: unknown }
+  | SetFieldAction
   | { type: "ADD_OFFENSE" }
   | { type: "REMOVE_OFFENSE"; id: string }
-  | { type: "UPDATE_OFFENSE"; id: string; field: keyof Offense; value: unknown }
+  | UpdateOffenseAction
   | { type: "ADD_OFFENSE_PROGRAM"; offenseId: string; program: string }
   | { type: "REMOVE_OFFENSE_PROGRAM"; offenseId: string; index: number }
   | { type: "ADD_CHIP"; field: "programs" | "skills"; value: string }
