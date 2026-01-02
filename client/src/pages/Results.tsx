@@ -2,21 +2,18 @@ import { useState } from "react";
 import { useSearch, useLocation } from "wouter";
 import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { LeaveConfirmationModal } from "@/components/LeaveConfirmationModal";
 import { ToolType } from "@/lib/formState";
 import { NarrativeItem, ResponseLetter, GenerationResult } from "@/lib/resultsPersistence";
 import { useProtectedPage } from "@/hooks/useProtectedPage";
 import { useDocumentActions } from "@/hooks/useDocumentActions";
-import { NarrativeCarousel } from "@/components/results/NarrativeCarousel";
-import { ResponseLetterPanel } from "@/components/results/ResponseLetterPanel";
-import { DocumentSwitcher } from "@/components/results/DocumentSwitcher";
 import { PartialFailureAlert } from "@/components/results/PartialFailureAlert";
 import { useToast } from "@/hooks/use-toast";
 import { NarrativeType } from "@/lib/regenerationPersistence";
 import ResultsGuidanceSection from "./results/sections/ResultsGuidanceSection";
 import ResultsDisclaimerCard from "./results/sections/ResultsDisclaimerCard";
 import ResultsHero from "./results/sections/ResultsHero";
+import ResultsDocumentsSection from "./results/sections/ResultsDocumentsSection";
 import ResultsActionsPanel from "./results/sections/ResultsActionsPanel";
 import ResultsDonateCTA from "./results/sections/ResultsDonateCTA";
 import { useResultsLoader } from "./results/hooks/useResultsLoader";
@@ -150,66 +147,28 @@ export default function Results() {
 
           <ResultsHero />
 
-          {hasBoth && (
-            <div className="flex justify-center">
-              <DocumentSwitcher
-                activeTab={activeTab}
-                onTabChange={setActiveTab}
-                hasNarratives={hasNarratives}
-                hasLetter={hasLetter}
-              />
-            </div>
-          )}
-
-          <div className="space-y-6">
-            {(activeTab === "narratives" || !hasBoth) && hasNarratives && (
-              <div data-testid="section-narratives" className="animate-fadeInUp delay-200 opacity-0">
-                <NarrativeCarousel
-                  narratives={narratives}
-                  onCopy={handleCopyNarrative}
-                  onDownload={handleDownloadNarrative}
-                  onRegenerate={handleRegenerateNarrative}
-                  regeneratingType={regeneratingType}
-                  regenCounts={regenCounts?.narratives || {} as Record<NarrativeType, number>}
-                  regenErrors={narrativeErrors}
-                />
-              </div>
-            )}
-
-            {(activeTab === "letter" || !hasBoth) && hasLetter && responseLetter && (
-              <div data-testid="section-letter" className="animate-fadeInUp delay-200 opacity-0">
-                <ResponseLetterPanel
-                  letter={responseLetter}
-                  onCopy={handleCopyLetter}
-                  onDownload={handleDownloadLetter}
-                  onRegenerate={handleRegenerateLetter}
-                  isRegenerating={isLetterRegenerating}
-                  regenCount={regenCounts?.letter || 0}
-                  regenError={letterError}
-                />
-              </div>
-            )}
-
-            {showNarratives && narratives.length === 0 && !hasLetter && (
-              <Card>
-                <CardContent className="py-8 text-center">
-                  <p className="text-muted-foreground">
-                    No narratives were generated. Please try again.
-                  </p>
-                </CardContent>
-              </Card>
-            )}
-
-            {showResponseLetter && !responseLetter && !hasNarratives && (
-              <Card>
-                <CardContent className="py-8 text-center">
-                  <p className="text-muted-foreground">
-                    No response letter was generated. Please try again.
-                  </p>
-                </CardContent>
-              </Card>
-            )}
-          </div>
+          <ResultsDocumentsSection
+            hasBoth={hasBoth}
+            hasNarratives={hasNarratives}
+            hasLetter={hasLetter}
+            showNarratives={showNarratives}
+            showResponseLetter={showResponseLetter}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            narratives={narratives}
+            responseLetter={responseLetter}
+            onCopyNarrative={handleCopyNarrative}
+            onDownloadNarrative={handleDownloadNarrative}
+            onRegenerateNarrative={handleRegenerateNarrative}
+            regeneratingType={regeneratingType}
+            regenCounts={regenCounts}
+            narrativeErrors={narrativeErrors}
+            onCopyLetter={handleCopyLetter}
+            onDownloadLetter={handleDownloadLetter}
+            onRegenerateLetter={handleRegenerateLetter}
+            isLetterRegenerating={isLetterRegenerating}
+            letterError={letterError}
+          />
 
           <ResultsActionsPanel
             hasNarratives={hasNarratives}
