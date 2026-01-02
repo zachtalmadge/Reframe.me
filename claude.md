@@ -18,7 +18,7 @@ Reframe.me is a web application that helps justice-involved individuals prepare 
 
 ### Current Status
 
-📋 **Planning phase** - Donate page modularization plan created
+📋 **Planning phase** - Multiple page refactor plans created (Donate, FAQ)
 
 ---
 
@@ -35,6 +35,20 @@ Reframe.me is a web application that helps justice-involved individuals prepare 
 - Component-owned state moved down (heroMounted → Hero, openFaq → FAQ, showBackToTop → Back to Top)
 - Orchestrator retains only cross-section refs + handlers (~80-100 lines)
 **Next Step**: Execute Step 0 (folder setup) - `mkdir -p client/src/pages/donate/sections client/src/pages/donate/data`
+
+### FAQ Page Refactor - Phase 1 Planning
+
+**Status**: Plan created, ready for execution
+**Plan Document**: `docs/faq-page-orchestrator-refactor-plan.md` (8-step plan)
+**Goal**: Extract orchestrator pattern from 479-line Faq.tsx with 100% visual parity
+**Architecture**:
+- Style block → FaqStyles component
+- Data extraction → faq.constants.tsx (11 FAQs with JSX answers)
+- 6 section components extracted (Hero, Important Disclaimer, FAQ List, Bottom Disclaimer, CTA, Styles)
+- Component-owned state moved down (openItem → FaqList)
+- Orchestrator retains only page-level scroll effect (~80-100 lines)
+**Critical Risk**: nth-child animation delays require exact DOM hierarchy preservation
+**Next Step**: Execute Step 0 (folder setup) - `mkdir -p client/src/pages/faq/sections client/src/pages/faq/data`
 
 ---
 
@@ -136,7 +150,8 @@ reframe.me/
 ├── docs/                       # Documentation
 │   ├── backend-express-architecture.md
 │   ├── results-refactor-plan.md  # 14-step refactor plan (completed)
-│   └── donate-orchestrator-refactor-plan.md  # 15-step refactor plan (pending)
+│   ├── donate-orchestrator-refactor-plan.md  # 15-step refactor plan (pending)
+│   └── faq-page-orchestrator-refactor-plan.md  # 8-step refactor plan (pending)
 ├── script/                     # Build scripts
 │   └── build.ts               # Production build script
 ├── .env                       # Environment variables (not in git)
