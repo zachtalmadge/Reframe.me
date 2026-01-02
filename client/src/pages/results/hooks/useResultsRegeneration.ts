@@ -20,8 +20,8 @@ export interface UseResultsRegenerationParams {
   setResponseLetter: (letter: ResponseLetter | null) => void;
   status: GenerationResult["status"];
   errors: DocumentError[];
-  regenCounts: RegenerationCounts | null;
-  setRegenCounts: (counts: RegenerationCounts | null) => void;
+  regenCounts: RegenerationCounts;
+  setRegenCounts: (counts: RegenerationCounts) => void;
 }
 
 export interface UseResultsRegenerationReturn {
@@ -94,8 +94,7 @@ export function useResultsRegeneration({
       };
       updateResults(updatedResult);
 
-      const currentCounts = regenCounts || loadRegenerationCounts(sessionId);
-      const newCounts = incrementNarrativeCount(currentCounts, narrativeType);
+      const newCounts = incrementNarrativeCount(regenCounts, narrativeType);
       setRegenCounts(newCounts);
       saveRegenerationCounts(newCounts);
 
@@ -142,8 +141,7 @@ export function useResultsRegeneration({
       };
       updateResults(updatedResult);
 
-      const currentCounts = regenCounts || loadRegenerationCounts(sessionId);
-      const newCounts = incrementLetterCount(currentCounts);
+      const newCounts = incrementLetterCount(regenCounts);
       setRegenCounts(newCounts);
       saveRegenerationCounts(newCounts);
 

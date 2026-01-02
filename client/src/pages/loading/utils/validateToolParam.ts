@@ -1,6 +1,6 @@
 import { ToolType } from "@/lib/formState";
 
-const VALID_TOOL_TYPES: ToolType[] = ["narrative", "response-letter"];
+const VALID_TOOL_TYPES: ToolType[] = ["narrative", "responseLetter", "both"];
 
 export function validateToolParam(param: string | null): ToolType {
   if (param && VALID_TOOL_TYPES.includes(param as ToolType)) {

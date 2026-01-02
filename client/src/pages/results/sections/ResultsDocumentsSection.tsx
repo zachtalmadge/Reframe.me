@@ -3,7 +3,7 @@ import { NarrativeCarousel } from "@/components/results/NarrativeCarousel";
 import { ResponseLetterPanel } from "@/components/results/ResponseLetterPanel";
 import { DocumentSwitcher, DocumentTab } from "@/components/results/DocumentSwitcher";
 import { NarrativeItem, ResponseLetter } from "@/lib/resultsPersistence";
-import { NarrativeType, RegenerationCounts } from "@/lib/regenerationPersistence";
+import { NarrativeType } from "@/lib/regenerationPersistence";
 
 interface ResultsDocumentsSectionProps {
   // Display state
@@ -20,18 +20,19 @@ interface ResultsDocumentsSectionProps {
   responseLetter: ResponseLetter | null;
 
   // Narrative actions
-  onCopyNarrative: (narrative: NarrativeItem) => void;
+  onCopyNarrative: (narrative: NarrativeItem) => Promise<boolean> | boolean;
   onDownloadNarrative: (narrative: NarrativeItem) => void;
   onRegenerateNarrative: (type: NarrativeType) => Promise<void>;
   regeneratingType: NarrativeType | null;
-  regenCounts: RegenerationCounts | null;
+  regenNarrativeCounts: Record<NarrativeType, number>;
   narrativeErrors: Record<NarrativeType, string | null>;
 
   // Letter actions
-  onCopyLetter: (letter: ResponseLetter) => void;
+  onCopyLetter: (letter: ResponseLetter) => Promise<boolean> | boolean;
   onDownloadLetter: (letter: ResponseLetter) => void;
   onRegenerateLetter: () => Promise<void>;
   isLetterRegenerating: boolean;
+  regenLetterCount: number;
   letterError: string | null;
 }
 
@@ -49,12 +50,13 @@ export default function ResultsDocumentsSection({
   onDownloadNarrative,
   onRegenerateNarrative,
   regeneratingType,
-  regenCounts,
+  regenNarrativeCounts,
   narrativeErrors,
   onCopyLetter,
   onDownloadLetter,
   onRegenerateLetter,
   isLetterRegenerating,
+  regenLetterCount,
   letterError,
 }: ResultsDocumentsSectionProps) {
   return (
@@ -79,7 +81,7 @@ export default function ResultsDocumentsSection({
               onDownload={onDownloadNarrative}
               onRegenerate={onRegenerateNarrative}
               regeneratingType={regeneratingType}
-              regenCounts={regenCounts?.narratives || {} as Record<NarrativeType, number>}
+              regenCounts={regenNarrativeCounts}
               regenErrors={narrativeErrors}
             />
           </div>
@@ -93,7 +95,7 @@ export default function ResultsDocumentsSection({
               onDownload={onDownloadLetter}
               onRegenerate={onRegenerateLetter}
               isRegenerating={isLetterRegenerating}
-              regenCount={regenCounts?.letter || 0}
+              regenCount={regenLetterCount}
               regenError={letterError}
             />
           </div>

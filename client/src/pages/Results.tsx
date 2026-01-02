@@ -1,120 +1,37 @@
-import { useState } from "react";
-import { useSearch, useLocation } from "wouter";
+import { useSearch } from "wouter";
 import { Loader2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { LeaveConfirmationModal } from "@/components/LeaveConfirmationModal";
-import { ToolType } from "@/lib/formState";
-import { NarrativeItem, ResponseLetter, GenerationResult } from "@/lib/resultsPersistence";
 import { useProtectedPage } from "@/hooks/useProtectedPage";
-import { useDocumentActions } from "@/hooks/useDocumentActions";
 import { PartialFailureAlert } from "@/components/results/PartialFailureAlert";
-import { useToast } from "@/hooks/use-toast";
-import { NarrativeType } from "@/lib/regenerationPersistence";
+import { validateToolParam } from "@/lib/utils";
 import ResultsGuidanceSection from "./results/sections/ResultsGuidanceSection";
 import ResultsDisclaimerCard from "./results/sections/ResultsDisclaimerCard";
 import ResultsHero from "./results/sections/ResultsHero";
 import ResultsDocumentsSection from "./results/sections/ResultsDocumentsSection";
 import ResultsActionsPanel from "./results/sections/ResultsActionsPanel";
 import ResultsDonateCTA from "./results/sections/ResultsDonateCTA";
-import { useResultsLoader } from "./results/hooks/useResultsLoader";
-import { useResultsExitActions } from "./results/hooks/useResultsExitActions";
-import { useResultsRegeneration } from "./results/hooks/useResultsRegeneration";
+import { useResultsPage } from "./results/hooks/useResultsPage";
 
 export default function Results() {
   // Register this page as protected from navigation
   useProtectedPage();
 
-  const [, navigate] = useLocation();
+  // Validate tool param from URL
   const searchString = useSearch();
   const params = new URLSearchParams(searchString);
-  const tool = (params.get("tool") as ToolType) || "narrative";
+  const tool = validateToolParam(params.get("tool"));
 
-  // Load results with retry logic
-  const {
-    isLoading,
-    loadAttempts,
-    narratives,
-    responseLetter,
-    status,
-    errors,
-    sessionId,
-    regenCounts,
-    activeTab,
-    setActiveTab,
-    setNarratives,
-    setResponseLetter,
-    setStatus,
-    setErrors,
-    setRegenCounts,
-  } = useResultsLoader();
+  // Single facade hook that composes all results logic
+  const results = useResultsPage({ tool });
 
-  const [isRetrying, setIsRetrying] = useState(false);
-  const { toast } = useToast();
-
-  // Regeneration logic
-  const {
-    handleRegenerateNarrative,
-    regeneratingType,
-    narrativeErrors,
-    handleRegenerateLetter,
-    isLetterRegenerating,
-    letterError,
-  } = useResultsRegeneration({
-    sessionId,
-    narratives,
-    setNarratives,
-    responseLetter,
-    setResponseLetter,
-    status,
-    errors,
-    regenCounts,
-    setRegenCounts,
-  });
-
-  // Exit actions and modal state
-  const {
-    exitModalOpen,
-    exitDestination,
-    handleStartOver,
-    handleLearnMoreClick,
-    handleConfirmExit,
-    handleCancelExit,
-  } = useResultsExitActions();
-
-  const {
-    handleCopyNarrative,
-    handleCopyLetter,
-    handleDownloadNarrative,
-    handleDownloadLetter,
-    handleDownloadAll,
-  } = useDocumentActions();
-
-  const showNarratives = tool === "narrative" || tool === "both";
-  const showResponseLetter = tool === "responseLetter" || tool === "both";
-  const hasNarratives = showNarratives && narratives.length > 0;
-  const hasLetter = showResponseLetter && responseLetter !== null;
-  const hasBoth = hasNarratives && hasLetter;
-
-  const handleDownloadAllDocuments = () => {
-    handleDownloadAll(narratives, responseLetter);
-  };
-
-  const handleRetryFailed = () => {
-    setIsRetrying(true);
-    toast({
-      title: "Retry not available yet",
-      description: "Regeneration functionality will be added in a future update. Please start over to generate new documents.",
-    });
-    setTimeout(() => setIsRetrying(false), 1000);
-  };
-
-  if (isLoading) {
+  // Show loading state
+  if (results.ui.isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center space-y-4">
           <Loader2 className="w-12 h-12 animate-spin mx-auto text-primary" />
           <p className="text-muted-foreground">
-            Loading your results{loadAttempts > 0 ? ` (attempt ${loadAttempts + 1})` : ''}...
+            Loading your results{results.ui.loadAttempts > 0 ? ` (attempt ${results.ui.loadAttempts + 1})` : ''}...
           </p>
         </div>
       </div>
@@ -137,45 +54,46 @@ export default function Results() {
         <div className="max-w-3xl mx-auto space-y-8 relative z-10">
           <ResultsDisclaimerCard />
 
-          {status === "partial_fail" && errors.length > 0 && (
+          {results.data.status === "partial_fail" && results.data.errors.length > 0 && (
             <PartialFailureAlert
-              errors={errors}
-              onRetry={handleRetryFailed}
-              isRetrying={isRetrying}
+              errors={results.data.errors}
+              onRetry={results.actions.retryPartialFail}
+              isRetrying={results.state.isRetrying}
             />
           )}
 
           <ResultsHero />
 
           <ResultsDocumentsSection
-            hasBoth={hasBoth}
-            hasNarratives={hasNarratives}
-            hasLetter={hasLetter}
-            showNarratives={showNarratives}
-            showResponseLetter={showResponseLetter}
-            activeTab={activeTab}
-            setActiveTab={setActiveTab}
-            narratives={narratives}
-            responseLetter={responseLetter}
-            onCopyNarrative={handleCopyNarrative}
-            onDownloadNarrative={handleDownloadNarrative}
-            onRegenerateNarrative={handleRegenerateNarrative}
-            regeneratingType={regeneratingType}
-            regenCounts={regenCounts}
-            narrativeErrors={narrativeErrors}
-            onCopyLetter={handleCopyLetter}
-            onDownloadLetter={handleDownloadLetter}
-            onRegenerateLetter={handleRegenerateLetter}
-            isLetterRegenerating={isLetterRegenerating}
-            letterError={letterError}
+            hasBoth={results.ui.hasBoth}
+            hasNarratives={results.ui.hasNarratives}
+            hasLetter={results.ui.hasLetter}
+            showNarratives={results.ui.showNarratives}
+            showResponseLetter={results.ui.showResponseLetter}
+            activeTab={results.ui.activeTab}
+            setActiveTab={results.ui.setActiveTab}
+            narratives={results.data.narratives}
+            responseLetter={results.data.responseLetter}
+            onCopyNarrative={results.actions.copyNarrative}
+            onDownloadNarrative={results.actions.downloadNarrative}
+            onRegenerateNarrative={results.actions.regenerateNarrative}
+            regeneratingType={results.state.regeneratingType}
+            regenNarrativeCounts={results.data.regenNarrativeCounts}
+            narrativeErrors={results.state.narrativeErrors}
+            onCopyLetter={results.actions.copyLetter}
+            onDownloadLetter={results.actions.downloadLetter}
+            onRegenerateLetter={results.actions.regenerateLetter}
+            isLetterRegenerating={results.state.isLetterRegenerating}
+            regenLetterCount={results.data.regenLetterCount}
+            letterError={results.state.letterError}
           />
 
           <ResultsActionsPanel
-            hasNarratives={hasNarratives}
-            hasLetter={hasLetter}
-            onDownloadAll={handleDownloadAllDocuments}
-            onStartOver={handleStartOver}
-            onLearnMore={handleLearnMoreClick}
+            hasNarratives={results.ui.hasNarratives}
+            hasLetter={results.ui.hasLetter}
+            onDownloadAll={results.actions.downloadAll}
+            onStartOver={results.actions.startOver}
+            onLearnMore={results.actions.learnMore}
           />
         </div>
 
@@ -183,9 +101,9 @@ export default function Results() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-12 mt-12 mb-8">
             <ResultsGuidanceSection
-              hasNarratives={hasNarratives}
-              hasLetter={hasLetter}
-              activeResultType={activeTab}
+              hasNarratives={results.ui.hasNarratives}
+              hasLetter={results.ui.hasLetter}
+              activeResultType={results.ui.activeTab}
             />
 
             <ResultsDonateCTA />
@@ -194,9 +112,9 @@ export default function Results() {
       </section>
 
       <LeaveConfirmationModal
-        open={exitModalOpen}
-        onConfirm={handleConfirmExit}
-        onCancel={handleCancelExit}
+        open={results.state.exitModalOpen}
+        onConfirm={results.actions.confirmExit}
+        onCancel={results.actions.cancelExit}
         title="Before you leave this page"
         description="Don't forget to copy or download your results before you leave. We don't want you to lose something important by accident. Once you leave this page, you'll need to start over to generate new narratives or letters."
         warning="⚠️ Make sure you've saved your documents before leaving."
