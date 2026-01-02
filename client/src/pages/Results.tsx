@@ -5,8 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { LeaveConfirmationModal } from "@/components/LeaveConfirmationModal";
 import { ToolType } from "@/lib/formState";
-import { NarrativeItem, ResponseLetter, GenerationResult, updateResults } from "@/lib/resultsPersistence";
-import { loadFormData } from "@/lib/formPersistence";
+import { NarrativeItem, ResponseLetter, GenerationResult } from "@/lib/resultsPersistence";
 import { useProtectedPage } from "@/hooks/useProtectedPage";
 import { useDocumentActions } from "@/hooks/useDocumentActions";
 import { NarrativeCarousel } from "@/components/results/NarrativeCarousel";
@@ -14,17 +13,11 @@ import { ResponseLetterPanel } from "@/components/results/ResponseLetterPanel";
 import { DocumentSwitcher } from "@/components/results/DocumentSwitcher";
 import { PartialFailureAlert } from "@/components/results/PartialFailureAlert";
 import { useToast } from "@/hooks/use-toast";
-import { regenerateNarrative, regenerateLetter } from "@/lib/api";
-import {
-  saveRegenerationCounts,
-  incrementNarrativeCount,
-  incrementLetterCount,
-  RegenerationCounts,
-  NarrativeType,
-} from "@/lib/regenerationPersistence";
+import { NarrativeType } from "@/lib/regenerationPersistence";
 import ResultsGuidanceSection from "./results/sections/ResultsGuidanceSection";
 import { useResultsLoader } from "./results/hooks/useResultsLoader";
 import { useResultsExitActions } from "./results/hooks/useResultsExitActions";
+import { useResultsRegeneration } from "./results/hooks/useResultsRegeneration";
 
 export default function Results() {
   // Register this page as protected from navigation
@@ -57,16 +50,25 @@ export default function Results() {
   const [isRetrying, setIsRetrying] = useState(false);
   const { toast } = useToast();
 
-  const [regeneratingType, setRegeneratingType] = useState<NarrativeType | null>(null);
-  const [isLetterRegenerating, setIsLetterRegenerating] = useState(false);
-  const [narrativeErrors, setNarrativeErrors] = useState<Record<NarrativeType, string | null>>({
-    justice_focused_org: null,
-    general_employer: null,
-    minimal_disclosure: null,
-    transformation_focused: null,
-    skills_focused: null,
+  // Regeneration logic
+  const {
+    handleRegenerateNarrative,
+    regeneratingType,
+    narrativeErrors,
+    handleRegenerateLetter,
+    isLetterRegenerating,
+    letterError,
+  } = useResultsRegeneration({
+    sessionId,
+    narratives,
+    setNarratives,
+    responseLetter,
+    setResponseLetter,
+    status,
+    errors,
+    regenCounts,
+    setRegenCounts,
   });
-  const [letterError, setLetterError] = useState<string | null>(null);
 
   // Exit actions and modal state
   const {
@@ -103,105 +105,6 @@ export default function Results() {
       description: "Regeneration functionality will be added in a future update. Please start over to generate new documents.",
     });
     setTimeout(() => setIsRetrying(false), 1000);
-  };
-
-  const handleRegenerateNarrative = async (narrativeType: NarrativeType) => {
-    const formData = loadFormData();
-    if (!formData) {
-      toast({
-        title: "Unable to regenerate",
-        description: "Form data is no longer available. Please start over.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    setRegeneratingType(narrativeType);
-    setNarrativeErrors(prev => ({ ...prev, [narrativeType]: null }));
-
-    const { currentStep, errors: _errors, ...cleanFormData } = formData.formState;
-    const response = await regenerateNarrative(narrativeType, cleanFormData);
-
-    if (response.error) {
-      setNarrativeErrors(prev => ({ ...prev, [narrativeType]: response.error! }));
-      setRegeneratingType(null);
-      return;
-    }
-
-    if (response.narrative) {
-      const updatedNarratives = narratives.map(n => 
-        n.type === narrativeType ? response.narrative! : n
-      );
-      setNarratives(updatedNarratives);
-
-      const updatedResult: GenerationResult = {
-        status,
-        narratives: updatedNarratives,
-        responseLetter,
-        errors,
-      };
-      updateResults(updatedResult);
-
-      const currentCounts = regenCounts || loadRegenerationCounts(sessionId);
-      const newCounts = incrementNarrativeCount(currentCounts, narrativeType);
-      setRegenCounts(newCounts);
-      saveRegenerationCounts(newCounts);
-
-      toast({
-        title: "Narrative regenerated",
-        description: "Your narrative has been updated with a fresh version.",
-      });
-    }
-
-    setRegeneratingType(null);
-  };
-
-  const handleRegenerateLetter = async () => {
-    const formData = loadFormData();
-    if (!formData) {
-      toast({
-        title: "Unable to regenerate",
-        description: "Form data is no longer available. Please start over.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    setIsLetterRegenerating(true);
-    setLetterError(null);
-
-    const { currentStep, errors: _errors, ...cleanFormData } = formData.formState;
-    const response = await regenerateLetter(cleanFormData);
-
-    if (response.error) {
-      setLetterError(response.error);
-      setIsLetterRegenerating(false);
-      return;
-    }
-
-    if (response.letter) {
-      setResponseLetter(response.letter);
-
-      const updatedResult: GenerationResult = {
-        status,
-        narratives,
-        responseLetter: response.letter,
-        errors,
-      };
-      updateResults(updatedResult);
-
-      const currentCounts = regenCounts || loadRegenerationCounts(sessionId);
-      const newCounts = incrementLetterCount(currentCounts);
-      setRegenCounts(newCounts);
-      saveRegenerationCounts(newCounts);
-
-      toast({
-        title: "Letter regenerated",
-        description: "Your response letter has been updated with a fresh version.",
-      });
-    }
-
-    setIsLetterRegenerating(false);
   };
 
   if (isLoading) {
