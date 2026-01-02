@@ -10,25 +10,16 @@ import {
   Share2,
   MessageSquare,
   Briefcase,
-  ArrowUp,
   ChevronDown,
 } from "lucide-react";
 import { DonateStyles } from "./donate/sections/DonateStyles";
+import { DonateBackToTopButton } from "./donate/sections/DonateBackToTopButton";
 
 export default function Donate() {
-  const [showBackToTop, setShowBackToTop] = useState(false);
   const qrSectionRef = useRef<HTMLElement>(null);
   const transparencySectionRef = useRef<HTMLElement>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [heroMounted, setHeroMounted] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setShowBackToTop(window.scrollY > 400);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -43,10 +34,6 @@ export default function Donate() {
 
   const scrollToTransparency = () => {
     transparencySectionRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const toggleFaq = (index: number) => {
@@ -792,22 +779,10 @@ export default function Donate() {
       </section>
       {/* End Closing CTA - Emotional Impact */}
 
-
-      {/* Back to Top Button */}
-      {showBackToTop && (
-        <button
-          onClick={scrollToTop}
-          className="fixed bottom-8 right-8 w-16 h-16 rounded-full shadow-2xl hover:shadow-3xl hover:scale-110 transition-all duration-300 z-50 flex items-center justify-center shimmer-gradient"
-          aria-label="Back to top"
-        >
-          <ArrowUp className="w-7 h-7 text-white" />
-        </button>
-      )}
-      {/* End Back to Top Button */}
-
       </div>
       {/* End overflow div line 71 */}
 
+      <DonateBackToTopButton />
     </>
   );
 }
