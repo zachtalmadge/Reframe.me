@@ -1,18 +1,6 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
-
-const faqItems = [
-  {
-    question: "Do you sell or share my information?",
-    answer:
-      "No. Donations don't change how your data is handled. The goal is to keep this tool as safe and respectful as possible for people with records.",
-  },
-  {
-    question: "Can organizations support this?",
-    answer:
-      "Yes. Re-entry programs, legal clinics, or employers who want to sponsor usage or collaborate can reach out for partnership options.",
-  },
-];
+import { FAQ_ITEMS } from "../data/donate.constants";
 
 export function DonateFaqSection() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -32,7 +20,7 @@ export function DonateFaqSection() {
         </div>
 
         <div className="space-y-4">
-          {faqItems.map((item, index) => (
+          {FAQ_ITEMS.map((item, index) => (
             <div
               key={index}
               className="faq-item rounded-2xl border-2 border-gray-200 bg-white overflow-hidden shadow-md"

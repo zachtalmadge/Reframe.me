@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Share2, MessageSquare, Briefcase } from "lucide-react";
+import { OTHER_WAYS_ITEMS } from "../data/donate.constants";
 
 export function DonateOtherWaysSection() {
   return (
@@ -15,23 +15,7 @@ export function DonateOtherWaysSection() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {[
-            {
-              icon: Share2,
-              text: "Share Reframe.me with a re-entry coach, legal aid group, or workforce program.",
-              color: "teal",
-            },
-            {
-              icon: MessageSquare,
-              text: "Send feedback about what's confusing or what would make this more helpful.",
-              color: "orange",
-            },
-            {
-              icon: Briefcase,
-              text: "If you work in hiring, consider how fair-chance practices and tools like this can be part of your process.",
-              color: "purple",
-            },
-          ].map((item, i) => (
+          {OTHER_WAYS_ITEMS.map((item, i) => (
             <Card
               key={i}
               className="card-3d border-0 shadow-xl overflow-hidden bg-white hover:shadow-2xl"

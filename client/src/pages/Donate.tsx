@@ -1,17 +1,4 @@
-import { useEffect, useRef, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import {
-  Heart,
-  Shield,
-  Sparkles,
-  Users,
-  Lock,
-  Share2,
-  MessageSquare,
-  Briefcase,
-  ChevronDown,
-} from "lucide-react";
+import { useRef } from "react";
 import { DonateStyles } from "./donate/sections/DonateStyles";
 import { DonateHeroSection } from "./donate/sections/DonateHeroSection";
 import { DonatePaymentSection } from "./donate/sections/DonatePaymentSection";

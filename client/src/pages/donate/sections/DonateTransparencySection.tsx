@@ -1,4 +1,5 @@
 import { forwardRef } from 'react';
+import { TRANSPARENCY_ITEMS } from "../data/donate.constants";
 
 interface DonateTransparencySectionProps {}
 
@@ -20,23 +21,7 @@ export const DonateTransparencySection = forwardRef<HTMLElement, DonateTranspare
           </div>
 
           <div className="space-y-6 mb-12">
-            {[
-              {
-                title: "AI and infrastructure costs",
-                desc: "LLM subscription and tokens for generating narratives and letters, plus hosting and basic infrastructure.",
-                color: "teal",
-              },
-              {
-                title: "Ongoing development",
-                desc: "Time spent improving prompts, fixing bugs, polishing the UI, and responding to feedback from people using the tool in real hiring situations.",
-                color: "orange",
-              },
-              {
-                title: "Creator time & sustainability",
-                desc: "A portion supports my time working on Reframe.me so this project can keep going instead of burning out.",
-                color: "purple",
-              },
-            ].map((item, i) => (
+            {TRANSPARENCY_ITEMS.map((item, i) => (
               <div
                 key={i}
                 className="relative rounded-2xl border-2 bg-white p-8 shadow-lg transition-all duration-500 hover:shadow-2xl hover:-translate-y-1 overflow-hidden group"
