@@ -1,11 +1,12 @@
 import { MessageSquare, FileText, Scale, Shield, Lightbulb, Users, AlertCircle, BookOpen, RefreshCw } from "lucide-react";
+import { FaqItem, FAQ_CATEGORIES } from "../types/faq.types";
 
-export const faqs = [
+export const faqs: FaqItem[] = [
   {
     id: "why-different-versions",
     question: "Why might I want different ways to talk about my record?",
     icon: MessageSquare,
-    category: "Your Story",
+    category: FAQ_CATEGORIES.YOUR_STORY,
     answer: (
       <div className="space-y-3 text-muted-foreground">
         <p>
@@ -27,7 +28,7 @@ export const faqs = [
     id: "what-is-pre-adverse-letter",
     question: "What is a pre-adverse action response letter, and when would I use one?",
     icon: FileText,
-    category: "Letters & Responses",
+    category: FAQ_CATEGORIES.LETTERS_RESPONSES,
     answer: (
       <div className="space-y-3 text-muted-foreground">
         <p>
@@ -54,7 +55,7 @@ export const faqs = [
     id: "when-disclose",
     question: "When should I disclose my record?",
     icon: Lightbulb,
-    category: "Disclosure Timing",
+    category: FAQ_CATEGORIES.DISCLOSURE_TIMING,
     answer: (
       <div className="space-y-3 text-muted-foreground">
         <p>
@@ -73,7 +74,7 @@ export const faqs = [
     id: "pre-adverse-rights",
     question: "What are my rights during a pre-adverse action notice?",
     icon: Scale,
-    category: "Your Rights",
+    category: FAQ_CATEGORIES.YOUR_RIGHTS,
     answer: (
       <div className="space-y-3 text-muted-foreground">
         <p>
@@ -92,7 +93,7 @@ export const faqs = [
     id: "letter-effectiveness",
     question: "Does this letter actually work?",
     icon: Shield,
-    category: "Effectiveness",
+    category: FAQ_CATEGORIES.EFFECTIVENESS,
     answer: (
       <div className="space-y-3 text-muted-foreground">
         <p>
@@ -111,7 +112,7 @@ export const faqs = [
     id: "privacy-data",
     question: "Is my information stored or shared?",
     icon: Shield,
-    category: "Privacy & Security",
+    category: FAQ_CATEGORIES.PRIVACY_SECURITY,
     answer: (
       <div className="space-y-3 text-muted-foreground">
         <p>
@@ -130,7 +131,7 @@ export const faqs = [
     id: "job-guarantee",
     question: "Can this guarantee I get a job or keep a job?",
     icon: Users,
-    category: "Expectations",
+    category: FAQ_CATEGORIES.EXPECTATIONS,
     answer: (
       <div className="space-y-3 text-muted-foreground">
         <p>
@@ -149,7 +150,7 @@ export const faqs = [
     id: "legal-advice",
     question: "Is this legal advice? Are you my lawyer?",
     icon: AlertCircle,
-    category: "Legal Disclaimer",
+    category: FAQ_CATEGORIES.LEGAL_DISCLAIMER,
     answer: (
       <div className="space-y-3 text-muted-foreground">
         <p>
@@ -168,7 +169,7 @@ export const faqs = [
     id: "who-is-this-for",
     question: "Who is Reframe.me for (and not for)?",
     icon: BookOpen,
-    category: "About This Tool",
+    category: FAQ_CATEGORIES.ABOUT_TOOL,
     answer: (
       <div className="space-y-3 text-muted-foreground">
         <p>
@@ -187,7 +188,7 @@ export const faqs = [
     id: "legal-proceedings",
     question: "Can I use this letter in court or for legal proceedings?",
     icon: Scale,
-    category: "Legal Use",
+    category: FAQ_CATEGORIES.LEGAL_USE,
     answer: (
       <div className="space-y-3 text-muted-foreground">
         <p>
@@ -206,7 +207,7 @@ export const faqs = [
     id: "reuse-materials",
     question: "Can I reuse a narrative or letter for different jobs?",
     icon: RefreshCw,
-    category: "Usage Tips",
+    category: FAQ_CATEGORIES.USAGE_TIPS,
     answer: (
       <div className="space-y-3 text-muted-foreground">
         <p>

@@ -1,4 +1,5 @@
 import { AlertCircle } from "lucide-react";
+import { DISCLAIMER_TEXT } from "../types/faq.types";
 
 export function FaqImportantDisclaimer() {
   return (
@@ -20,11 +21,11 @@ export function FaqImportantDisclaimer() {
         </div>
 
         <p className="text-sm text-gray-700 leading-relaxed">
-          Reframe.me is not a law firm and does not provide legal advice. The information here is for educational purposes only. We cannot guarantee hiring outcomes—every situation is unique, and employment laws vary by location and industry.
+          {DISCLAIMER_TEXT.NOT_LAW_FIRM} {DISCLAIMER_TEXT.EDUCATIONAL_ONLY} {DISCLAIMER_TEXT.NO_GUARANTEES}
         </p>
 
         <p className="text-sm text-gray-700 leading-relaxed">
-          When possible, consult with a qualified attorney or legal aid organization about your specific circumstances.
+          {DISCLAIMER_TEXT.CONSULT_ATTORNEY}
         </p>
       </div>
     </div>

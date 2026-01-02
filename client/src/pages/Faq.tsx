@@ -1,10 +1,12 @@
 import { useEffect } from "react";
-import { FaqStyles } from "./faq/sections/FaqStyles";
-import { FaqHeroSection } from "./faq/sections/FaqHeroSection";
-import { FaqImportantDisclaimer } from "./faq/sections/FaqImportantDisclaimer";
-import { FaqList } from "./faq/sections/FaqList";
-import { FaqBottomDisclaimer } from "./faq/sections/FaqBottomDisclaimer";
-import { FaqCtaSection } from "./faq/sections/FaqCtaSection";
+import {
+  FaqStyles,
+  FaqHeroSection,
+  FaqImportantDisclaimer,
+  FaqList,
+  FaqBottomDisclaimer,
+  FaqCtaSection,
+} from "./faq/sections";
 
 export default function Faq() {
   useEffect(() => {
