@@ -1,6 +1,6 @@
 # Reframe.me - Development Status
 
-**Last Updated**: 2026-01-01
+**Last Updated**: 2026-01-02
 
 ## 📊 Current State
 
@@ -17,50 +17,24 @@ Reframe.me is a web application that helps justice-involved individuals prepare 
 - **Deployment**: Vercel
 
 ### Current Status
-✅ Project migrated from Replit to local development
-✅ Vercel deployment configuration created
-✅ Documentation completed (README, QUICKSTART, deployment guides)
-✅ `.env.example` template created
-✅ `.gitignore` updated for security
-✅ iOS 26 design system implemented (glass navbar, modern buttons)
-✅ Home page backgrounds and styling updated
-✅ Donate CTAs added
-✅ Mobile retry functionality with silent error handling
-✅ **Application deployed at [reframeme.app](https://reframeme.app)**
-✅ Backend fully refactored (modular structure)
-🚧 **Frontend refactoring in progress** - Results page modularization
+
+📋 **Planning phase** - Donate page modularization plan created
 
 ---
 
 ## 📋 Active Development
 
-### Frontend Refactoring - Results Page (IN PROGRESS 🚧)
+### Donate Page Refactor - Phase 1 Planning
 
-**Goal**: Refactor Results.tsx from 720 lines to ~150-200 lines
-**Plan**: `/docs/results-refactor-plan.md`
-**Progress**: Steps 1-3 of 14 completed
-
-#### Completed ✅
-- [x] **Step 1**: Created folder structure (`results/hooks/`, `results/sections/`, `results/utils/`)
-- [x] **Step 2**: Extracted `ResultsGuidanceSection` to sections/ (584 lines, -136 from original)
-- [x] **Step 3**: Created `useResultsLoader` hook (538 lines, -182 from original, -25% total)
-
-#### In Progress 🚧
-- [ ] **Step 4**: Create `useResultsExitActions` hook
-- [ ] **Step 5**: Create `useResultsRegeneration` hook
-- [ ] **Step 6**: Extract `ResultsDisclaimerCard` component
-- [ ] **Step 7**: Extract `ResultsHero` component
-- [ ] **Step 8**: Extract `ResultsDocumentsSection` component
-- [ ] **Step 9**: Extract `ResultsActionsPanel` component
-- [ ] **Step 10**: Extract `ResultsDonateCTA` component
-- [ ] **Step 11**: Verify Results.tsx is clean and minimal
-- [ ] **Step 12**: Full regression testing
-- [ ] **Step 13**: Update documentation
-
-#### Next Steps
-After Results page refactor is complete:
-- Form.tsx refactoring (similar modular approach)
-- Other large component refactors as needed
+**Status**: Plan revised and finalized, ready for execution
+**Plan Document**: `docs/donate-orchestrator-refactor-plan.md` (15-step plan, revised)
+**Goal**: Extract orchestrator pattern from 977-line Donate.tsx with 100% visual parity
+**Architecture**:
+- Style block → DonateStyles component
+- 10 section components extracted (Hero, Payment, Support Matters, Transparency, Testimonial, Privacy, FAQ, Other Ways, Closing CTA, Back to Top)
+- Component-owned state moved down (heroMounted → Hero, openFaq → FAQ, showBackToTop → Back to Top)
+- Orchestrator retains only cross-section refs + handlers (~80-100 lines)
+**Next Step**: Execute Step 0 (folder setup) - `mkdir -p client/src/pages/donate/sections client/src/pages/donate/data`
 
 ---
 
@@ -72,40 +46,76 @@ reframe.me/
 │   ├── src/
 │   │   ├── components/         # React components
 │   │   │   ├── form/          # Multi-step form components
+│   │   │   │   ├── steps/     # Step components (Step1-Step9)
+│   │   │   │   ├── CharacterCountTextarea.tsx
+│   │   │   │   ├── ChipInput.tsx
+│   │   │   │   ├── FormWizard.tsx
+│   │   │   │   ├── OilFrameworkInfo.tsx
+│   │   │   │   ├── ProgressBar.tsx
+│   │   │   │   ├── StepImportanceAlert.tsx
+│   │   │   │   └── TypeChips.tsx
 │   │   │   ├── results/       # Results display components
+│   │   │   │   ├── DocumentSwitcher.tsx
+│   │   │   │   ├── NarrativeCard.tsx
+│   │   │   │   ├── NarrativeCarousel.tsx
+│   │   │   │   ├── PartialFailureAlert.tsx
+│   │   │   │   └── ResponseLetterPanel.tsx
+│   │   │   ├── disclaimer/    # Disclaimer components
+│   │   │   │   └── DisclaimerModal.tsx
 │   │   │   ├── ui/            # shadcn/ui components
-│   │   │   └── Layout.tsx     # Main layout wrapper
+│   │   │   ├── AppShell.tsx   # Main app shell
+│   │   │   └── LeaveConfirmationModal.tsx
 │   │   ├── pages/             # Route pages
-│   │   │   ├── home/          # Home page sections
-│   │   │   │   └── sections/
-│   │   │   ├── loading/       # Loading page (modular)
-│   │   │   │   ├── hooks/
-│   │   │   │   ├── sections/
-│   │   │   │   ├── utils/
-│   │   │   │   └── data/
-│   │   │   ├── results/       # Results page (REFACTORING 🚧)
-│   │   │   │   ├── hooks/
-│   │   │   │   │   └── useResultsLoader.ts
-│   │   │   │   ├── sections/
-│   │   │   │   │   └── ResultsGuidanceSection.tsx
-│   │   │   │   └── utils/
-│   │   │   ├── selection/     # Selection page
-│   │   │   │   └── sections/
-│   │   │   ├── form/          # Form page sections
-│   │   │   │   └── steps/
+│   │   │   ├── home/          # Home page (modular ✅)
+│   │   │   │   ├── sections/  # HeroSection, HowItWorksSection, etc.
+│   │   │   │   ├── data/      # home.constants.ts
+│   │   │   │   └── types/     # home.types.ts
+│   │   │   ├── selection/     # Selection page (modular ✅)
+│   │   │   │   ├── sections/  # SelectionHero, OptionsGrid, etc.
+│   │   │   │   ├── data/      # selection.constants.ts
+│   │   │   │   └── types/     # selection.types.ts
+│   │   │   ├── form/          # Form page (modular ✅)
+│   │   │   │   ├── sections/  # BackToSelectionRow, FormToolHeader
+│   │   │   │   ├── hooks/     # useFormPageController.ts
+│   │   │   │   ├── data/      # toolInfo.ts
+│   │   │   │   └── styles/    # form.css
+│   │   │   ├── loading/       # Loading page (modular ✅)
+│   │   │   │   ├── sections/  # LoadingView, ErrorView, etc.
+│   │   │   │   ├── hooks/     # useDocumentGeneration, useMessageCycle, etc.
+│   │   │   │   ├── utils/     # generateDocuments, validateToolParam
+│   │   │   │   ├── data/      # loadingContent.ts
+│   │   │   │   ├── styles/    # loading.css, error.css
+│   │   │   │   └── index.tsx  # Main loading page
+│   │   │   ├── results/       # Results page (modular ✅)
+│   │   │   │   ├── hooks/     # useResultsPage, useResultsLoader, etc.
+│   │   │   │   └── sections/  # ResultsHero, ResultsDocumentsSection, etc.
 │   │   │   ├── Home.tsx       # Landing page
-│   │   │   ├── Form.tsx       # Multi-step form
-│   │   │   ├── Results.tsx    # Generated content display (538 lines, target: ~150-200)
-│   │   │   └── Selection.tsx  # Tool selection
+│   │   │   ├── Selection.tsx  # Tool selection page
+│   │   │   ├── Form.tsx       # Multi-step form page
+│   │   │   ├── Results.tsx    # Generated content display (refactored ✅)
+│   │   │   ├── Donate.tsx     # Donation page
+│   │   │   ├── Faq.tsx        # FAQ page
+│   │   │   ├── TermsPrivacy.tsx # Terms and privacy page
+│   │   │   └── not-found.tsx  # 404 page
 │   │   ├── lib/               # Utilities
-│   │   │   ├── formState.ts
+│   │   │   ├── api.ts         # API client
+│   │   │   ├── formState.ts   # Form state management
 │   │   │   ├── formPersistence.ts
 │   │   │   ├── resultsPersistence.ts
 │   │   │   ├── regenerationPersistence.ts
-│   │   │   └── api.ts
+│   │   │   ├── pdfUtils.ts    # PDF generation
+│   │   │   ├── disclaimerContent.ts
+│   │   │   ├── queryClient.ts # React Query config
+│   │   │   ├── chipMicrocopy.ts
+│   │   │   ├── suggestionData.js
+│   │   │   └── utils.ts       # General utilities
 │   │   └── hooks/             # Custom React hooks
 │   │       ├── useProtectedPage.ts
-│   │       └── useDocumentActions.ts
+│   │       ├── useDocumentActions.ts
+│   │       ├── useNavigationGuard.ts
+│   │       ├── useInView.ts
+│   │       ├── use-mobile.tsx
+│   │       └── use-toast.ts
 ├── server/                     # Express backend (REFACTORED ✅)
 │   ├── index.ts               # Server entry point
 │   ├── config/                # Configuration
@@ -125,7 +135,8 @@ reframe.me/
 │   └── vite.ts                # Vite dev server setup
 ├── docs/                       # Documentation
 │   ├── backend-express-architecture.md
-│   └── results-refactor-plan.md  # 14-step refactor plan
+│   ├── results-refactor-plan.md  # 14-step refactor plan (completed)
+│   └── donate-orchestrator-refactor-plan.md  # 15-step refactor plan (pending)
 ├── script/                     # Build scripts
 │   └── build.ts               # Production build script
 ├── .env                       # Environment variables (not in git)
@@ -165,15 +176,25 @@ reframe.me/
 
 ### Frontend Architecture (Modular Pattern)
 
-**Modular Page Pattern** (used by `home/`, `loading/`, `selection/`, and in-progress `results/`):
+**Modular Page Pattern** (used by all major pages: `home/`, `selection/`, `form/`, `loading/`, `results/`):
 - Main page file at top level (e.g., `Results.tsx`)
 - Supporting code in subfolder (e.g., `results/`)
-- Structure: `hooks/`, `sections/`, `utils/`, `data/` as needed
+- Structure: `hooks/`, `sections/`, `utils/`, `data/`, `styles/` as needed
 
-**Results Page Refactor** (in progress):
-- **Hooks**: Extract complex logic (loading, regeneration, exit actions)
-- **Sections**: Extract large JSX blocks into dedicated components
-- **Target**: Reduce from 720 lines to ~150-200 lines
+**Results Page Refactor** (completed ✅):
+- **Hooks**: Complex logic extracted (loading, regeneration, exit actions, page orchestration)
+  - `useResultsPage.ts` - Main page orchestrator
+  - `useResultsLoader.ts` - Data loading logic
+  - `useResultsRegeneration.ts` - Regeneration logic
+  - `useResultsExitActions.ts` - Exit/navigation logic
+- **Sections**: Large JSX blocks extracted into dedicated components
+  - `ResultsHero.tsx` - Header section
+  - `ResultsDocumentsSection.tsx` - Main documents display
+  - `ResultsGuidanceSection.tsx` - Guidance content
+  - `ResultsActionsPanel.tsx` - Action buttons
+  - `ResultsDonateCTA.tsx` - Donation call-to-action
+  - `ResultsDisclaimerCard.tsx` - Disclaimer display
+- **Result**: Reduced from 538 lines to 280 lines (~48% reduction)
 
 ### Application Flow
 1. Home page → Selection page
@@ -200,94 +221,22 @@ For deployment configuration details, see `VERCEL_DEPLOYMENT.md`.
 
 ---
 
-## 🛠️ Local Development Setup
+## 💻 Development
 
-### Prerequisites
-- Node.js (v18+ recommended)
-- OpenAI API key
+**Local Setup:** See [QUICKSTART.md](./QUICKSTART.md) or [LOCAL_DEVELOPMENT.md](./LOCAL_DEVELOPMENT.md) for detailed setup instructions.
 
-### Step 1: Get OpenAI API Key
-
-1. Go to https://platform.openai.com/api-keys
-2. Sign in (create account if needed)
-3. Click "Create new secret key"
-4. Name it "Reframe.me Development"
-5. Copy the key (starts with `sk-proj-...` or `sk-...`)
-6. **Important**: Save it somewhere safe - you can only see it once!
-
-### Step 2: Configure Environment Variables
-
-Copy `.env.example` to `.env` and update with your values:
-
-```bash
-cp .env.example .env
-```
-
-Edit `.env`:
-
-```env
-# OpenAI API Configuration - Replace with your actual API key
-AI_INTEGRATIONS_OPENAI_API_KEY=sk-proj-your-actual-key-here
-AI_INTEGRATIONS_OPENAI_BASE_URL=https://api.openai.com/v1
-
-# Session Configuration - Generate with: openssl rand -base64 32
-SESSION_SECRET=your_generated_secret_here
-
-# Server Configuration
-NODE_ENV=development
-PORT=5000
-```
-
-### Step 3: Install Dependencies
-
+**Quick Start:**
 ```bash
 npm install
+npm run dev  # Starts on http://localhost:5000
 ```
 
-### Step 4: Start Development Server
+**Environment:** Requires OpenAI API key in `.env` (see `.env.example` template).
 
-```bash
-npm run dev
-```
-
-Visit http://localhost:5000
-
-### Step 5: Verify Everything Works
-
-1. Click "Get Started"
-2. Fill out the form
-3. Generate narratives/letter
-4. Verify content is generated successfully
-
-**Note:** The app does not require a database for local development. All form data is stored in browser localStorage, and results are not persisted server-side (by design for privacy).
-
----
-
-## 🐛 Troubleshooting
-
-### OpenAI API Errors
-- Verify API key is correct in `.env`
-- Check you have credits: https://platform.openai.com/usage
-- Ensure no extra spaces in the API key
-- Make sure the key starts with `sk-proj-` or `sk-`
-
-### Port 5000 already in use
-```bash
-# Find what's using port 5000
-lsof -i :5000
-
-# Kill the process or change PORT in .env to another port like 5001
-```
-
-### Build Errors
-```bash
-# Clear node_modules and reinstall
-rm -rf node_modules package-lock.json
-npm install
-
-# Clear build cache
-rm -rf dist .vite
-```
+**Privacy Model:**
+- Form data stored in browser localStorage only
+- Results NOT persisted server-side (by design)
+- No database required for local development
 
 ---
 
@@ -296,7 +245,6 @@ rm -rf dist .vite
 - Form data is stored in **browser localStorage** only
 - Results are **not persisted** server-side
 - This is by design for privacy - no user data is stored on the backend
-- The `users` table in the schema is unused legacy code from the Replit template
 
 ---
 
@@ -309,59 +257,6 @@ See `design_guidelines.md` for:
 - Accessibility requirements
 
 The app uses a calming, dignified design to reduce anxiety for users.
-
----
-
-## ✅ Completed Work
-
-### Codebase & Configuration
-- [x] Project structure reviewed and organized
-- [x] Dependencies installed and up to date
-- [x] `.env.example` template created
-- [x] `.gitignore` updated for security
-- [x] Documentation created (README, QUICKSTART, CLAUDE.md)
-- [x] Vercel deployment configuration ready
-
-### UI/UX Improvements
-- [x] iOS 26 design system (glass navbar, modern buttons)
-- [x] Home page backgrounds and visual design
-- [x] Donate CTAs and section reordering
-- [x] Mobile-optimized styling
-- [x] Silent retry functionality for improved UX
-
-### Backend Refactoring (Completed 2025-12-20 ✅)
-- [x] **Wave 1:** Extracted services, types, and configuration
-  - [x] Created modular service layer for AI generation
-  - [x] Separated TypeScript types into dedicated module
-  - [x] Extracted OpenAI client configuration
-- [x] **Wave 2:** Modularized routing structure
-  - [x] Replaced monolithic routes.ts with Router pattern
-  - [x] Created routes/index.ts for route registration
-  - [x] Created routes/documents.routes.ts for endpoints
-  - [x] Updated documentation with architecture diagrams
-- [x] **Wave 3:** Extracted middleware
-  - [x] Created middleware/requestLogger.ts for request logging
-  - [x] Created middleware/errorHandler.ts for error handling
-  - [x] Integrated middleware into server/index.ts
-- [x] **Wave 4:** Modularized static file serving
-  - [x] Refactored static.ts → static/index.ts for consistency
-  - [x] Achieved fully modular backend architecture
-
-### Frontend Refactoring (In Progress 🚧)
-- [x] **Results Page Refactor - Steps 1-3** (2026-01-01)
-  - [x] Created modular folder structure (`results/hooks/`, `results/sections/`, `results/utils/`)
-  - [x] Extracted `ResultsGuidanceSection` component to sections/
-  - [x] Created `useResultsLoader` hook (load-with-retry logic + state management)
-  - [x] Reduced Results.tsx from 720 lines to 538 lines (-25%)
-- [ ] **Results Page Refactor - Steps 4-13** (next)
-  - [ ] Extract remaining hooks (exit actions, regeneration)
-  - [ ] Extract remaining section components (disclaimer, hero, documents, actions, donate)
-  - [ ] Target: ~150-200 lines total
-
-### Code Quality & Deployment
-- [x] Repository clean (no uncommitted changes)
-- [x] All improvements committed with detailed commit messages
-- [x] **Application deployed and live at [reframeme.app](https://reframeme.app)**
 
 ---
 
