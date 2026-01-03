@@ -6,11 +6,13 @@ Reframe.me is a free, privacy-focused web application that helps people with cri
 
 **Status**: Live at [reframeme.app](https://reframeme.app) and actively maintained. See [CLAUDE.md](./CLAUDE.md) for detailed development status.
 
-## 📋 TODO
+## ✅ Recent Architecture Improvements
 
 ### Code Quality & Architecture
-- [ ] **Refactor React components** - Break down large components into smaller, reusable, properly modular pieces
-- [ ] **Refactor Express server** - Organize server code into modular structure (controllers, services, middleware)
+- ✅ **React Components Refactored** - All major pages now follow modular architecture pattern (Home, Selection, Form, Loading, Results, 404, Donate, FAQ)
+- ✅ **Express Server Refactored** - Modular structure with services, routes, middleware, and configuration
+- ✅ **404 Page Redesigned** - Beautiful, atmospheric error page with calm guidance and helpful navigation
+- ✅ **Routing System Centralized** - Type-safe routing configuration with helper functions (`client/src/lib/routing.ts`)
 
 ## 📑 Table of Contents
 
@@ -45,10 +47,12 @@ Reframe.me is a free, privacy-focused web application that helps people with cri
 
 ## ✨ Recent Updates
 
+- **404 Page Redesign** (2026-01-03): Beautiful atmospheric error page with calm guidance, helpful navigation, and modular architecture
+- **Centralized Routing System** (2026-01-03): Type-safe routing configuration with 11 helper functions for classification and behavior
+- **Modular Architecture**: All major pages refactored with hooks/, sections/, data/, and utils/ organization
+- **Backend Refactor**: Clean service-based architecture with separated concerns
 - **Modern Design System**: iOS 26-inspired UI with glass morphism effects
 - **Enhanced Mobile Experience**: Optimized navigation with responsive glass navbar
-- **Improved Error Handling**: Silent retry functionality for better reliability
-- **Donate Integration**: Support options integrated throughout the experience
 - **Live Application**: Currently deployed and accessible at [reframeme.app](https://reframeme.app)
 
 ## 🚀 Getting Started
@@ -116,23 +120,89 @@ PORT=5000
 
 ```
 reframe.me/
-├── client/              # React frontend
+├── client/                      # React frontend
 │   ├── src/
-│   │   ├── components/  # UI components
-│   │   ├── pages/       # Route pages
-│   │   ├── lib/         # Utilities and helpers
-│   │   └── hooks/       # Custom React hooks
-├── server/              # Express backend (modular architecture)
-│   ├── index.ts         # Server entry point
-│   ├── config/          # Configuration
-│   ├── types/           # TypeScript types
-│   ├── services/        # Business logic (AI generation)
-│   ├── routes/          # API routes
-│   ├── middleware/      # Request/error handling
-│   ├── static.ts        # Static file serving
-│   └── vite.ts          # Vite dev server
-└── script/              # Build scripts
-    └── build.ts         # Production build
+│   │   ├── components/         # Shared React components
+│   │   │   ├── form/          # Multi-step form components
+│   │   │   ├── results/       # Results display components
+│   │   │   ├── disclaimer/    # Disclaimer components
+│   │   │   ├── ui/            # shadcn/ui components
+│   │   │   ├── AppShell.tsx
+│   │   │   └── LeaveConfirmationModal.tsx
+│   │   ├── pages/             # Route pages (modular architecture)
+│   │   │   ├── home/          # Home page (modular ✅)
+│   │   │   │   ├── sections/  # HeroSection, HowItWorksSection, etc.
+│   │   │   │   ├── data/      # home.constants.ts
+│   │   │   │   └── types/     # home.types.ts
+│   │   │   ├── selection/     # Selection page (modular ✅)
+│   │   │   │   ├── sections/  # SelectionHero, OptionsGrid, etc.
+│   │   │   │   ├── data/      # selection.constants.ts
+│   │   │   │   └── types/     # selection.types.ts
+│   │   │   ├── form/          # Form page (modular ✅)
+│   │   │   │   ├── sections/  # BackToSelectionRow, FormToolHeader
+│   │   │   │   ├── hooks/     # useFormPageController.ts
+│   │   │   │   ├── data/      # toolInfo.ts
+│   │   │   │   └── styles/    # form.css
+│   │   │   ├── loading/       # Loading page (modular ✅)
+│   │   │   │   ├── sections/  # LoadingView, ErrorView, etc.
+│   │   │   │   ├── hooks/     # useDocumentGeneration, useMessageCycle
+│   │   │   │   ├── utils/     # generateDocuments, validateToolParam
+│   │   │   │   ├── data/      # loadingContent.ts
+│   │   │   │   └── styles/    # loading.css, error.css
+│   │   │   ├── results/       # Results page (modular ✅)
+│   │   │   │   ├── sections/  # ResultsHero, ResultsDocumentsSection, etc.
+│   │   │   │   └── hooks/     # useResultsPage, useResultsLoader, etc.
+│   │   │   ├── donate/        # Donate page (modular ✅)
+│   │   │   │   ├── sections/  # DonateHero, PaymentSection, etc.
+│   │   │   │   └── data/      # donate.constants.ts
+│   │   │   ├── faq/           # FAQ page (modular ✅)
+│   │   │   │   ├── sections/  # FaqHero, FaqList, etc.
+│   │   │   │   └── data/      # faq.constants.tsx
+│   │   │   ├── not-found/     # 404 page (modular ✅)
+│   │   │   │   └── sections/  # NotFoundHero, NotFoundActions, NotFoundHelp
+│   │   │   ├── Home.tsx
+│   │   │   ├── Selection.tsx
+│   │   │   ├── Form.tsx
+│   │   │   ├── Results.tsx
+│   │   │   ├── Donate.tsx
+│   │   │   ├── Faq.tsx
+│   │   │   ├── TermsPrivacy.tsx
+│   │   │   └── not-found.tsx
+│   │   ├── lib/               # Utilities and helpers
+│   │   │   ├── routing.ts     # Routing configuration & helpers (✅ NEW)
+│   │   │   ├── api.ts         # API client
+│   │   │   ├── formState.ts   # Form state management
+│   │   │   ├── pdfUtils.ts    # PDF generation
+│   │   │   └── queryClient.ts # React Query config
+│   │   └── hooks/             # Custom React hooks
+│   │       ├── useProtectedPage.ts
+│   │       ├── useDocumentActions.ts
+│   │       ├── useNavigationGuard.ts
+│   │       └── useInView.ts
+├── server/                     # Express backend (modular architecture ✅)
+│   ├── index.ts               # Server entry point
+│   ├── config/                # Configuration
+│   │   └── openaiClient.ts    # OpenAI client singleton
+│   ├── types/                 # TypeScript types
+│   │   └── documents.ts       # Document domain types
+│   ├── services/              # Business logic
+│   │   └── documentGeneration.service.ts  # AI generation
+│   ├── routes/                # API routes
+│   │   ├── index.ts           # Route registration
+│   │   └── documents.routes.ts # Document endpoints
+│   ├── middleware/            # Express middleware
+│   │   ├── requestLogger.ts   # Request logging
+│   │   └── errorHandler.ts    # Error handling
+│   ├── static/                # Static file serving
+│   │   └── index.ts           # SPA static file handler
+│   └── vite.ts                # Vite dev server setup
+├── docs/                       # Documentation
+│   ├── backend-express-architecture.md
+│   ├── results-refactor-plan.md
+│   ├── donate-orchestrator-refactor-plan.md
+│   └── faq-page-orchestrator-refactor-plan.md
+└── script/                     # Build scripts
+    └── build.ts               # Production build
 ```
 
 ## 🔒 Privacy & Security

@@ -17,3 +17,6 @@ attached_assets
 # Editor
 .vscode
 .idea
+
+# Documentation (personal reference)
+TYPESCRIPT_GUIDE.md
