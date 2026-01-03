@@ -18,6 +18,7 @@ Reframe.me is a web application that helps justice-involved individuals prepare 
 
 ### Current Status
 
+✅ **404 Page Redesigned** - Beautiful, modular 404 experience
 ✅ **404 Routing Fixed** - Modular routing architecture implemented
 📋 **Planning phase** - Multiple page refactor plans created (Donate, FAQ)
 
@@ -86,6 +87,44 @@ Reframe.me is a web application that helps justice-involved individuals prepare 
 - `client/src/lib/routing.ts` (NEW) - ~320 lines
 - `client/src/App.tsx` - Simplified AppInitializer
 
+### 404 Page Redesign (2026-01-03)
+
+**Status**: Completed ✅
+**Goal**: Transform bare-bones 404 page into a beautiful, modular error experience
+**Design Direction**: Refined atmospheric minimalism with "gentle guidance" theme
+
+**Solution**:
+- Redesigned 404 page with calm, supportive tone appropriate for justice-involved individuals
+- Created modular architecture following existing page patterns
+- Atmospheric background with radial glows, grain texture, floating geometric shapes
+- Clear navigation options with helpful links to popular destinations
+
+**Architecture**:
+- **NotFoundHero**: Main visual impact - headline, supportive message, decorative background with floating shapes
+- **NotFoundActions**: Primary CTA ("Back to Home") + secondary action ("Go Back")
+- **NotFoundHelp**: Helpful links grid to Home, FAQ, Donate, Terms & Privacy
+- **Orchestrator**: Small, clean composition (~20 lines)
+
+**Design Features**:
+- Teal (#0d9488, #14b8a6) + Orange (#f97316, #fb923c) color palette matching app design
+- Glassmorphism effects with backdrop-blur and semi-transparent backgrounds
+- CSS-only animations: entrance fades, floating shapes, pulse effects, hover interactions
+- Responsive design: mobile-first Tailwind classes, stacks on mobile
+- Accessibility: semantic HTML, aria-hidden for decorative elements, prefers-reduced-motion support
+
+**Files Created/Modified**:
+- `client/src/pages/not-found/sections/NotFoundHero.tsx` (NEW) - ~170 lines
+- `client/src/pages/not-found/sections/NotFoundActions.tsx` (NEW) - ~75 lines
+- `client/src/pages/not-found/sections/NotFoundHelp.tsx` (NEW) - ~130 lines
+- `client/src/pages/not-found.tsx` (MODIFIED) - Replaced with small orchestrator (~20 lines)
+
+**Benefits**:
+- ✅ Significantly improved aesthetics - atmospheric, polished, professional
+- ✅ Modular code structure following app conventions
+- ✅ Calm and dignified tone appropriate for the audience
+- ✅ Clear navigation pathways to help users recover
+- ✅ Maintains app's design language (teal/orange, atmospheric effects)
+
 ---
 
 ## 📁 Project Structure
@@ -139,6 +178,8 @@ reframe.me/
 │   │   │   ├── results/       # Results page (modular ✅)
 │   │   │   │   ├── hooks/     # useResultsPage, useResultsLoader, etc.
 │   │   │   │   └── sections/  # ResultsHero, ResultsDocumentsSection, etc.
+│   │   │   ├── not-found/     # 404 page (modular ✅)
+│   │   │   │   └── sections/  # NotFoundHero, NotFoundActions, NotFoundHelp
 │   │   │   ├── Home.tsx       # Landing page
 │   │   │   ├── Selection.tsx  # Tool selection page
 │   │   │   ├── Form.tsx       # Multi-step form page
@@ -146,7 +187,7 @@ reframe.me/
 │   │   │   ├── Donate.tsx     # Donation page
 │   │   │   ├── Faq.tsx        # FAQ page
 │   │   │   ├── TermsPrivacy.tsx # Terms and privacy page
-│   │   │   └── not-found.tsx  # 404 page
+│   │   │   └── not-found.tsx  # 404 page orchestrator (refactored ✅)
 │   │   ├── lib/               # Utilities
 │   │   │   ├── routing.ts     # Route configuration & helpers (✅ NEW)
 │   │   │   ├── api.ts         # API client
