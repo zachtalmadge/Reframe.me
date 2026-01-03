@@ -1,6 +1,6 @@
 # Reframe.me - Development Status
 
-**Last Updated**: 2026-01-02
+**Last Updated**: 2026-01-03
 
 ## 📊 Current State
 
@@ -18,6 +18,7 @@ Reframe.me is a web application that helps justice-involved individuals prepare 
 
 ### Current Status
 
+✅ **404 Routing Fixed** - Modular routing architecture implemented
 📋 **Planning phase** - Multiple page refactor plans created (Donate, FAQ)
 
 ---
@@ -49,6 +50,41 @@ Reframe.me is a web application that helps justice-involved individuals prepare 
 - Orchestrator retains only page-level scroll effect (~80-100 lines)
 **Critical Risk**: nth-child animation delays require exact DOM hierarchy preservation
 **Next Step**: Execute Step 0 (folder setup) - `mkdir -p client/src/pages/faq/sections client/src/pages/faq/data`
+
+---
+
+## ✅ Recent Completions
+
+### 404 Routing & Modular Route Configuration (2026-01-03)
+
+**Status**: Completed ✅
+**Goal**: Fix 404 routing issue and implement modular routing architecture
+**Problem Solved**: Invalid URLs were redirecting to home instead of showing 404 page
+**Solution**:
+- Created `client/src/lib/routing.ts` - Centralized routing configuration module
+- Type-safe route definitions (`RoutePath`, `RouteCategory`, `RouteConfig`)
+- 11 helper functions for route classification and behavior
+- Simplified `AppInitializer` from ~30 to ~20 lines using declarative helpers
+
+**Architecture**:
+- **Route Categories**: home, flow, protected, static
+- **Configuration Object**: `ROUTE_CONFIG` - single source of truth for all routes
+- **Helper Functions**:
+  - Classification: `isProtectedRoute()`, `isStaticPage()`, `isFlowRoute()`, `isHomePage()`, `isValidRoute()`
+  - Behavior: `shouldPreserveData()`, `allowsDirectAccess()`, `shouldRedirectToHome()`
+  - Utilities: `getRouteConfig()`, `getRedirectDestination()`, `logRouteAccess()`
+
+**Benefits**:
+- ✅ Invalid URLs now properly display 404 NotFound page
+- ✅ Single source of truth for route configuration
+- ✅ Type-safe with TypeScript autocomplete
+- ✅ Easy to extend when adding new routes
+- ✅ Self-documenting with JSDoc comments
+- ✅ Maintains all existing behavior (data preservation, flow enforcement)
+
+**Files Created/Modified**:
+- `client/src/lib/routing.ts` (NEW) - ~320 lines
+- `client/src/App.tsx` - Simplified AppInitializer
 
 ---
 
@@ -112,6 +148,7 @@ reframe.me/
 │   │   │   ├── TermsPrivacy.tsx # Terms and privacy page
 │   │   │   └── not-found.tsx  # 404 page
 │   │   ├── lib/               # Utilities
+│   │   │   ├── routing.ts     # Route configuration & helpers (✅ NEW)
 │   │   │   ├── api.ts         # API client
 │   │   │   ├── formState.ts   # Form state management
 │   │   │   ├── formPersistence.ts
@@ -190,6 +227,20 @@ reframe.me/
 - `docs/backend-express-architecture.md` - Detailed backend architecture and refactoring documentation
 
 ### Frontend Architecture (Modular Pattern)
+
+**Routing Configuration** (centralized in `client/src/lib/routing.ts`):
+- **Purpose**: Single source of truth for all route behaviors and classifications
+- **Type Definitions**:
+  - `RoutePath` - String literal union of all valid routes
+  - `RouteCategory` - Route classification (home | flow | protected | static)
+  - `RouteConfig` - Configuration interface with behavior properties
+- **Configuration Object**: `ROUTE_CONFIG` - Maps each route to its category, data preservation behavior, and access rules
+- **Helper Functions** (11 total):
+  - Classification: `isProtectedRoute()`, `isStaticPage()`, `isFlowRoute()`, `isHomePage()`, `isValidRoute()`
+  - Behavior: `shouldPreserveData()`, `allowsDirectAccess()`, `shouldRedirectToHome()`
+  - Utilities: `getRouteConfig()`, `getRedirectDestination()`, `logRouteAccess()`
+- **Usage**: AppInitializer uses helpers to determine data preservation and redirect behavior
+- **Benefits**: Type-safe, self-documenting, easy to extend, eliminates hardcoded route arrays
 
 **Modular Page Pattern** (used by all major pages: `home/`, `selection/`, `form/`, `loading/`, `results/`):
 - Main page file at top level (e.g., `Results.tsx`)

@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { clearFormData } from "@/lib/formPersistence";
 import { clearResults } from "@/lib/resultsPersistence";
+import { shouldPreserveData, shouldRedirectToHome, getRedirectDestination } from "@/lib/routing";
 import { NavigationGuardProvider } from "@/contexts/NavigationGuardContext";
 import AppShell from "@/components/AppShell";
 import Home from "@/pages/Home";
@@ -44,29 +45,22 @@ function AppInitializer({ children }: { children: React.ReactNode }) {
 
     console.log('[AppInitializer] Running initialization on route:', location);
 
-    // Protected routes where data should be preserved
-    const protectedRoutes = ['/loading', '/results'];
-    const isProtectedRoute = protectedRoutes.includes(location);
+    // Determine data preservation based on route configuration
+    const preserveData = shouldPreserveData(location);
 
-    // Static/informational pages that should be accessible directly
-    const staticPages = ['/faq', '/donate', '/terms-privacy'];
-    const isStaticPage = staticPages.includes(location);
-
-    console.log('[AppInitializer] Is protected route:', isProtectedRoute);
-
-    // Only clear data if NOT in generation flow
-    if (!isProtectedRoute) {
+    if (!preserveData) {
       console.log('[AppInitializer] Clearing form and results data');
       clearFormData();
       clearResults();
     } else {
-      console.log('[AppInitializer] Skipping data clear (protected route)');
+      console.log('[AppInitializer] Preserving data (protected route)');
     }
 
-    // Only redirect if not on home and not in protected flow or static page
-    if (location !== "/" && !isProtectedRoute && !isStaticPage) {
-      console.log('[AppInitializer] Redirecting to home from:', location);
-      navigate("/", { replace: true });
+    // Determine if redirect is needed
+    if (shouldRedirectToHome(location)) {
+      const destination = getRedirectDestination(location);
+      console.log('[AppInitializer] Redirecting to:', destination);
+      navigate(destination, { replace: true });
     }
   }, [location, navigate]);
 
