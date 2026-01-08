@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Heart } from "lucide-react";
+import { EmailCaptureForm } from "@/components/email-capture/EmailCaptureForm";
 
 interface DonateHeroSectionProps {
   scrollToQR: () => void;
@@ -133,6 +134,23 @@ export function DonateHeroSection({
             >
               How your support is used
             </button>
+          </div>
+
+          {/* Email Capture */}
+          <div
+            className={`max-w-md mx-auto pt-8 transition-all duration-700 ease-out ${
+              heroMounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            }`}
+            style={{ transitionDelay: '1000ms' }}
+          >
+            <EmailCaptureForm
+              source="donate"
+              variant="default"
+              title="Support the work + stay updated"
+              description="We'll share progress, impact, and new tools."
+              buttonText="Get updates"
+              className="bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm"
+            />
           </div>
         </div>
       </div>

@@ -1,3 +1,5 @@
+import { EmailCaptureForm } from "@/components/email-capture/EmailCaptureForm";
+
 interface AppFooterProps {
   onNavigate: (to: string) => void;
 }
@@ -111,6 +113,18 @@ export default function AppFooter({ onNavigate }: AppFooterProps) {
                 >
                   Your story matters
                 </p>
+              </div>
+
+              {/* Newsletter signup */}
+              <div className="pt-2">
+                <EmailCaptureForm
+                  source="footer"
+                  variant="footer"
+                  title="Newsletter"
+                  description="Monthly-ish updates + resources."
+                  buttonText="Join"
+                  privacyLine="Unsubscribe anytime."
+                />
               </div>
             </div>
 
