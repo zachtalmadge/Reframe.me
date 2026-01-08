@@ -18,114 +18,8 @@ Reframe.me is a web application that helps justice-involved individuals prepare 
 
 ### Current Status
 
-✅ **404 Page Redesigned** - Beautiful, modular 404 experience
-✅ **404 Routing Fixed** - Modular routing architecture implemented
-📋 **Planning phase** - Multiple page refactor plans created (Donate, FAQ)
-
 ---
 
-## 📋 Active Development
-
-### Donate Page Refactor - Phase 1 Planning
-
-**Status**: Plan revised and finalized, ready for execution
-**Plan Document**: `docs/donate-orchestrator-refactor-plan.md` (15-step plan, revised)
-**Goal**: Extract orchestrator pattern from 977-line Donate.tsx with 100% visual parity
-**Architecture**:
-- Style block → DonateStyles component
-- 10 section components extracted (Hero, Payment, Support Matters, Transparency, Testimonial, Privacy, FAQ, Other Ways, Closing CTA, Back to Top)
-- Component-owned state moved down (heroMounted → Hero, openFaq → FAQ, showBackToTop → Back to Top)
-- Orchestrator retains only cross-section refs + handlers (~80-100 lines)
-**Next Step**: Execute Step 0 (folder setup) - `mkdir -p client/src/pages/donate/sections client/src/pages/donate/data`
-
-### FAQ Page Refactor - Phase 1 Planning
-
-**Status**: Plan created, ready for execution
-**Plan Document**: `docs/faq-page-orchestrator-refactor-plan.md` (8-step plan)
-**Goal**: Extract orchestrator pattern from 479-line Faq.tsx with 100% visual parity
-**Architecture**:
-- Style block → FaqStyles component
-- Data extraction → faq.constants.tsx (11 FAQs with JSX answers)
-- 6 section components extracted (Hero, Important Disclaimer, FAQ List, Bottom Disclaimer, CTA, Styles)
-- Component-owned state moved down (openItem → FaqList)
-- Orchestrator retains only page-level scroll effect (~80-100 lines)
-**Critical Risk**: nth-child animation delays require exact DOM hierarchy preservation
-**Next Step**: Execute Step 0 (folder setup) - `mkdir -p client/src/pages/faq/sections client/src/pages/faq/data`
-
----
-
-## ✅ Recent Completions
-
-### 404 Routing & Modular Route Configuration (2026-01-03)
-
-**Status**: Completed ✅
-**Goal**: Fix 404 routing issue and implement modular routing architecture
-**Problem Solved**: Invalid URLs were redirecting to home instead of showing 404 page
-**Solution**:
-- Created `client/src/lib/routing.ts` - Centralized routing configuration module
-- Type-safe route definitions (`RoutePath`, `RouteCategory`, `RouteConfig`)
-- 11 helper functions for route classification and behavior
-- Simplified `AppInitializer` from ~30 to ~20 lines using declarative helpers
-
-**Architecture**:
-- **Route Categories**: home, flow, protected, static
-- **Configuration Object**: `ROUTE_CONFIG` - single source of truth for all routes
-- **Helper Functions**:
-  - Classification: `isProtectedRoute()`, `isStaticPage()`, `isFlowRoute()`, `isHomePage()`, `isValidRoute()`
-  - Behavior: `shouldPreserveData()`, `allowsDirectAccess()`, `shouldRedirectToHome()`
-  - Utilities: `getRouteConfig()`, `getRedirectDestination()`, `logRouteAccess()`
-
-**Benefits**:
-- ✅ Invalid URLs now properly display 404 NotFound page
-- ✅ Single source of truth for route configuration
-- ✅ Type-safe with TypeScript autocomplete
-- ✅ Easy to extend when adding new routes
-- ✅ Self-documenting with JSDoc comments
-- ✅ Maintains all existing behavior (data preservation, flow enforcement)
-
-**Files Created/Modified**:
-- `client/src/lib/routing.ts` (NEW) - ~320 lines
-- `client/src/App.tsx` - Simplified AppInitializer
-
-### 404 Page Redesign (2026-01-03)
-
-**Status**: Completed ✅
-**Goal**: Transform bare-bones 404 page into a beautiful, modular error experience
-**Design Direction**: Refined atmospheric minimalism with "gentle guidance" theme
-
-**Solution**:
-- Redesigned 404 page with calm, supportive tone appropriate for justice-involved individuals
-- Created modular architecture following existing page patterns
-- Atmospheric background with radial glows, grain texture, floating geometric shapes
-- Clear navigation options with helpful links to popular destinations
-
-**Architecture**:
-- **NotFoundHero**: Main visual impact - headline, supportive message, decorative background with floating shapes
-- **NotFoundActions**: Primary CTA ("Back to Home") + secondary action ("Go Back")
-- **NotFoundHelp**: Helpful links grid to Home, FAQ, Donate, Terms & Privacy
-- **Orchestrator**: Small, clean composition (~20 lines)
-
-**Design Features**:
-- Teal (#0d9488, #14b8a6) + Orange (#f97316, #fb923c) color palette matching app design
-- Glassmorphism effects with backdrop-blur and semi-transparent backgrounds
-- CSS-only animations: entrance fades, floating shapes, pulse effects, hover interactions
-- Responsive design: mobile-first Tailwind classes, stacks on mobile
-- Accessibility: semantic HTML, aria-hidden for decorative elements, prefers-reduced-motion support
-
-**Files Created/Modified**:
-- `client/src/pages/not-found/sections/NotFoundHero.tsx` (NEW) - ~170 lines
-- `client/src/pages/not-found/sections/NotFoundActions.tsx` (NEW) - ~75 lines
-- `client/src/pages/not-found/sections/NotFoundHelp.tsx` (NEW) - ~130 lines
-- `client/src/pages/not-found.tsx` (MODIFIED) - Replaced with small orchestrator (~20 lines)
-
-**Benefits**:
-- ✅ Significantly improved aesthetics - atmospheric, polished, professional
-- ✅ Modular code structure following app conventions
-- ✅ Calm and dignified tone appropriate for the audience
-- ✅ Clear navigation pathways to help users recover
-- ✅ Maintains app's design language (teal/orange, atmospheric effects)
-
----
 
 ## 📁 Project Structure
 
@@ -320,13 +214,6 @@ reframe.me/
 
 ---
 
-## 🌐 Live Application
-
-The application is deployed and accessible at **[reframeme.app](https://reframeme.app)**.
-
-For deployment configuration details, see `VERCEL_DEPLOYMENT.md`.
-
----
 
 ## 💻 Development
 
