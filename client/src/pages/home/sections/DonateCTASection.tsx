@@ -1,6 +1,7 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Heart } from "lucide-react";
+import { EmailCaptureForm } from "@/components/email-capture/EmailCaptureForm";
 
 export default function DonateCTASection() {
   return (
@@ -143,6 +144,18 @@ export default function DonateCTASection() {
               <div className="h-px w-16" style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(20, 184, 166, 0.5) 100%)' }} />
               <Heart className="w-4 h-4 text-orange-500" fill="currentColor" aria-hidden="true" />
               <div className="h-px w-16" style={{ background: 'linear-gradient(90deg, rgba(249, 115, 22, 0.5) 0%, transparent 100%)' }} />
+            </div>
+
+            {/* Email Capture */}
+            <div className="mt-10 max-w-md mx-auto">
+              <EmailCaptureForm
+                source="home"
+                variant="default"
+                title="Get free fair-chance job search support"
+                description="Occasional emails with templates and guidance. No spam."
+                buttonText="Get updates"
+                privacyLine="Email is separate from anything you write in Reframe."
+              />
             </div>
           </div>
         </div>

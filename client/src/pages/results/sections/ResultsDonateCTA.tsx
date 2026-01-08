@@ -1,5 +1,6 @@
 import { Heart } from "lucide-react";
 import { Link } from "wouter";
+import { EmailCaptureForm } from "@/components/email-capture/EmailCaptureForm";
 
 export default function ResultsDonateCTA() {
   return (
@@ -60,6 +61,18 @@ export default function ResultsDonateCTA() {
               <p className="text-xs text-muted-foreground italic font-manrope">
                 Whether you can donate or not, this tool is here for you.
               </p>
+            </div>
+
+            {/* Email Capture */}
+            <div className="pt-6 max-w-md mx-auto">
+              <EmailCaptureForm
+                source="results"
+                variant="default"
+                title="Want more tools like this?"
+                description="Get occasional templates + guidance for background check moments."
+                buttonText="Send me updates"
+                privacyLine="We don't store your narrative/letter. Email is only for updates."
+              />
             </div>
           </div>
         </div>
