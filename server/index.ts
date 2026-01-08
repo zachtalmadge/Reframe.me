@@ -1,9 +1,16 @@
 // Load environment variables FIRST, before any other imports
 import dotenv from 'dotenv';
 
-if (process.env.NODE_ENV === 'development') {
-  dotenv.config({ override: true });
-  console.log('✓ Loaded .env file (development mode)');
+// Preserve NODE_ENV from CLI before loading env files
+const nodeEnv = process.env.NODE_ENV;
+
+if (nodeEnv === 'development') {
+  // Load .env first, then .env.local (Vercel env pull destination) with override
+  dotenv.config();
+  dotenv.config({ path: '.env.local', override: true });
+  // Restore NODE_ENV (may have been overwritten by .env.local)
+  process.env.NODE_ENV = nodeEnv;
+  console.log('✓ Loaded .env and .env.local (development mode)');
 } else {
   dotenv.config();
   console.log('✓ Using environment variables (production mode)');

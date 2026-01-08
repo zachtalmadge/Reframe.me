@@ -20,3 +20,4 @@ attached_assets
 
 # Documentation (personal reference)
 TYPESCRIPT_GUIDE.md
+.env*.local
